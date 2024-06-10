@@ -53,7 +53,7 @@ SPDX-License-Identifier: MPL-2.0
 				on:click={() => {
 					download_code(true);
 				}}
-				class="m-auto p-2 bg-[#B07156] rounded-lg"
+				class="m-auto p-2 bg-[#004A93] rounded-lg"
 				>{$t('security_settings.backup_codes.download_code')}
 			</button>
 		</div>

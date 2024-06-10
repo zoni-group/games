@@ -34,7 +34,7 @@ SPDX-License-Identifier: MPL-2.0
 </script>
 
 <svelte:head>
-	<title>ClassQuiz - {data.user.username ? `@${data.user.username}` : 'User not found'}</title>
+	<title>Zoni Games - {data.user.username ? `@${data.user.username}` : 'User not found'}</title>
 </svelte:head>
 
 <div class="h-full">
@@ -64,7 +64,7 @@ SPDX-License-Identifier: MPL-2.0
 			{:else}
 				{#each data.quizzes as quiz}
 					<div
-						class="rounded-lg border-2 border-black hover:outline transition-all outline-[#B07156] -outline-offset-2 outline-8"
+						class="rounded-lg border-2 border-black hover:outline transition-all outline-[#004A93] -outline-offset-2 outline-8"
 					>
 						<div class="grid grid-cols-6 h-[25vh]">
 							<!--						<p

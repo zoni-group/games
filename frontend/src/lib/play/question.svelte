@@ -141,7 +141,7 @@ SPDX-License-Identifier: MPL-2.0
 		}
 	};
 	$: console.log(slider_value, 'values');
-	const default_colors = ['#D6EDC9', '#B07156', '#7F7057', '#4E6E58'];
+	const default_colors = ['#D6EDC9', '#004A93', '#7F7057', '#4E6E58'];
 </script>
 
 <div class="h-screen w-screen">
@@ -292,7 +292,7 @@ SPDX-License-Identifier: MPL-2.0
 					<div
 						class="w-full h-fit flex-row rounded-lg p-2 align-middle"
 						animate:flip={{ duration: 100 }}
-						style="background-color: {answer.color ?? '#b07156'}"
+						style="background-color: {answer.color ?? '#004A93'}"
 					>
 						<button
 							on:click={() => {

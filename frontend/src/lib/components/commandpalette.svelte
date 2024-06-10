@@ -252,7 +252,7 @@ SPDX-License-Identifier: MPL-2.0
 					<div
 						transition:fade|local={{ duration: 60 }}
 						class="p-2 transition rounded"
-						class:bg-[#B07156]={selected === i}
+						class:bg-[#004A93]={selected === i}
 						class:bg-gray-700={selected !== i}
 						on:mouseenter={() => (selected = i)}
 						on:mousedown={execute_action}

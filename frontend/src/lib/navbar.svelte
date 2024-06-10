@@ -49,11 +49,9 @@ SPDX-License-Identifier: MPL-2.0
 	<!-- Desktop navbar -->
 	<div class="hidden lg:flex lg:items-center lg:flex-row lg:justify-between">
 		<div class="lg:flex lg:items-center lg:flex-row gap-1">
-			<a
-				href="/"
-				class="font-black tracking-tight text-xl lg:text-2xl text-black marck-script link-hover px-3 lg:px-5"
-				>ClassQuiz</a
-			>
+			<a href="/" class="link-hover px-3 lg:px-5">
+				<img src="/zoni/images/zoni_logo.svg" alt="Zoni Logo" class="h-8 lg:h-10"> <!-- Adjust height as needed -->
+			</a>
 			<a class="btn-nav border-2 rounded" href="/play">{$t('words.play')}</a>
 			<a class="btn-nav" href="/explore">{$t('words.explore')}</a>
 			<a class="btn-nav" href="/search">{$t('words.search')}</a>
@@ -167,11 +165,9 @@ SPDX-License-Identifier: MPL-2.0
 	<div class="lg:hidden">
 		<!-- Navbar header -->
 		<div class="flex items-center justify-between">
-			<a
-				href="/"
-				class="font-black tracking-tight text-xl lg:text-2xl text-black marck-script link-hover px-3 lg:px-5"
-				>ClassQuiz</a
-			>
+			<a href="/" class="link-hover px-3 lg:px-5">
+				<img src="/zoni/images/zoni_logo.svg" alt="Zoni Logo" class="h-8 lg:h-10"> <!-- Adjust height as needed -->
+			</a>
 			<a class="btn-nav flex" href="/play">{$t('words.play')}</a>
 
 			<!-- Dark/Light mode toggle + Open/Close menu -->

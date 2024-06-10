@@ -77,7 +77,7 @@ SPDX-License-Identifier: MPL-2.0
 				<span class="italic text-center text-sm">{$t('uploader.search_english_only')}</span>
 
 				{#each data.hits as image}
-					<div class="rounded border-2 border-[#B07156] p-2 flex-col flex gap-2">
+					<div class="rounded border-2 border-[#004A93] p-2 flex-col flex gap-2">
 						<div>
 							<img
 								src={image.webformatURL}

@@ -157,7 +157,7 @@ SPDX-License-Identifier: MPL-2.0
 </script>
 
 <svelte:head>
-	<title>ClassQuiz - Settings</title>
+	<title>Zoni Games - Settings</title>
 </svelte:head>
 
 {#await getUser()}
