@@ -127,9 +127,9 @@ SPDX-License-Identifier: MPL-2.0
 </script>
 
 <svelte:head>
-	<title>ClassQuiz - {$t('index_page.meta.title')}</title>
+	<title>Zoni Games - {$t('index_page.meta.title')}</title>
 	<meta name="description" content={$t('index_page.meta.description')} />
-	<title>ClassQuiz - Home</title>
+	<title>Zoni Games - Home</title>
 	<meta
 		name="description"
 		content="ClassQuiz is a quiz-application like KAHOOT!, but open-source. You can create quizzes and play them remotely with other people."

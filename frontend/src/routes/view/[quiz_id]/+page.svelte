@@ -21,7 +21,7 @@ SPDX-License-Identifier: MPL-2.0
 	import ModComponent from './ModComponent.svelte';
 	import { get_foreground_color } from '$lib/helpers.ts';
 
-	const default_colors = ['#D6EDC9', '#B07156', '#7F7057', '#4E6E58'];
+	const default_colors = ['#D6EDC9', '#004A93', '#7F7057', '#4E6E58'];
 
 	const tippy = createTippy({
 		arrow: true,
@@ -77,7 +77,7 @@ SPDX-License-Identifier: MPL-2.0
 </script>
 
 <svelte:head>
-	<title>ClassQuiz - View {quiz.title}</title>
+	<title>Zoni Games - View {quiz.title}</title>
 </svelte:head>
 
 <div>

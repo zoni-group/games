@@ -133,7 +133,7 @@ SPDX-License-Identifier: MPL-2.0
 						</p>
 					{/if}
 					<button
-						class="pr-2 align-middle bg-[#B07156] pl-2 ml-auto whitespace-nowrap disabled:opacity-60 rounded-br-lg"
+						class="pr-2 align-middle bg-[#004A93] pl-2 ml-auto whitespace-nowrap disabled:opacity-60 rounded-br-lg"
 						disabled={schemaInvalid}
 					>
 						<span>{$t('words.save')}</span>

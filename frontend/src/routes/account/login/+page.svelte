@@ -79,7 +79,7 @@ SPDX-License-Identifier: MPL-2.0
 </script>
 
 <svelte:head>
-	<title>ClassQuiz - Login</title>
+	<title>Zoni Games - Login</title>
 </svelte:head>
 <div class="flex items-center justify-center h-full px-4">
 	{#if verified}

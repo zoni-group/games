@@ -21,7 +21,7 @@ SPDX-License-Identifier: MPL-2.0
 	export let bg_color: string;
 
 	const { t } = getLocalization();
-	const default_colors = ['#D6EDC9', '#B07156', '#7F7057', '#4E6E58'];
+	const default_colors = ['#D6EDC9', '#004A93', '#7F7057', '#4E6E58'];
 
 	let question_results = null;
 	export let final_results: Array<null> | Array<Array<PlayerAnswer>> = [null];

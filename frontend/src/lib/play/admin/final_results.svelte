@@ -68,7 +68,7 @@ SPDX-License-Identifier: MPL-2.0
 	</div>
 	{#if data[username]}
 		<div class="fixed bottom-0 left-0 flex justify-center w-full mb-6">
-			<div class="mx-auto p-2 border-[#B07156] border-4 rounded">
+			<div class="mx-auto p-2 border-[#004A93] border-4 rounded">
 				<p class="text-center">{$t('play_page.your_score', { score: data[username] })}</p>
 				{#each player_names as player, i}
 					{#if player === username}
