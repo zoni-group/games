@@ -161,7 +161,7 @@ SPDX-License-Identifier: MPL-2.0
 
 <svelte:window on:beforeunload={confirmUnload} />
 <svelte:head>
-	<title>Zoni Games - Play</title>
+	<title>Zoni® Games - Play</title>
 	<!--	{#if gameData !== undefined && game_mode !== 'kahoot'}
 		{#each gameData.questions as question}
 			{#if question.image !== undefined}

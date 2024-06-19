@@ -15,7 +15,7 @@ SPDX-License-Identifier: MPL-2.0
 </script>-->
 
 <svelte:head>
-	<title>Zoni Games/docs - Terms of Service</title>
+	<title>Zoni® Games/docs - Terms of Service</title>
 	<meta
 		name="description"
 		content="The terms of service of ClassQuiz, the open-source quiz-application"

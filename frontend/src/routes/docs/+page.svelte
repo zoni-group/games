@@ -4,7 +4,7 @@ SPDX-FileCopyrightText: 2023 Marlon W (Mawoka)
 SPDX-License-Identifier: MPL-2.0
 -->
 <svelte:head>
-	<title>Zoni Games/docs - Index</title>
+	<title>Zoni® Games/docs - Index</title>
 	<meta
 		name="description"
 		content="The overview about the docs for ClassQuiz, the open-source quiz-application"

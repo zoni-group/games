@@ -34,7 +34,7 @@ SPDX-License-Identifier: MPL-2.0
 </script>
 
 <svelte:head>
-	<title>Zoni Games - {data.user.username ? `@${data.user.username}` : 'User not found'}</title>
+	<title>Zoni® Games - {data.user.username ? `@${data.user.username}` : 'User not found'}</title>
 </svelte:head>
 
 <div class="h-full">
