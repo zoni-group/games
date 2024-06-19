@@ -36,10 +36,12 @@ SPDX-License-Identifier: MPL-2.0
 			.required()
 			.min(3, 'Username must be at least 3 characters long')
 			.max(20, 'Username must be at most 20 characters long'),
+/*			
 		privacy_accept: yup
 			.boolean()
 			.oneOf([true], 'You must accept the privacy policy to register!'),
 		tos_accept: yup.boolean().oneOf([true], 'You must accept the terms of service to register!')
+*/
 	});
 
 	const { form, errors, touched, isValid, isSubmitting } = createForm<
@@ -78,7 +80,7 @@ SPDX-License-Identifier: MPL-2.0
 </script>
 
 <svelte:head>
-	<title>Zoni Games - Register</title>
+	<title>Zoni® Games - Register</title>
 </svelte:head>
 <div class="flex items-center justify-center h-full px-4">
 	<div>
@@ -87,7 +89,7 @@ SPDX-License-Identifier: MPL-2.0
 		>
 			<div class="px-6 py-4">
 				<h2 class="text-3xl font-bold text-center text-gray-700 dark:text-white">
-					ClassQuiz
+					Zoni® Games
 				</h2>
 
 				<h3 class="mt-1 text-xl font-medium text-center text-gray-600 dark:text-gray-200">
@@ -180,13 +182,13 @@ SPDX-License-Identifier: MPL-2.0
 								</label>
 							</div>
 						</div>
+						<!--
 						<div
 							class="ring-1 ring-gray-500 focus:outline-none rounded-lg m-4 py-2"
 							class:ring-red-700={$errors.privacy_accept !== null}
 							class:ring-green-600={$touched.privacy_accept === true &&
 								$errors.privacy_accept === null}
 						>
-							<!--						<div class='flex items-center justify-between mt-4 w-full'>-->
 							<input type="checkbox" name="privacy_accept" class="ml-3" />
 							<label class="text-sm text-gray-600 dark:text-gray-200">
 								I've read the <a href="/docs/privacy-policy" class="underline"
@@ -200,7 +202,6 @@ SPDX-License-Identifier: MPL-2.0
 							class:ring-green-600={$touched.tos_accept === true &&
 								$errors.tos_accept === null}
 						>
-							<!--						<div class='flex items-center justify-between mt-4 w-full'>-->
 							<input type="checkbox" name="tos_accept" class="ml-3" />
 							<label class="text-sm text-gray-600 dark:text-gray-200">
 								I agree to the <a href="/docs/tos" class="underline"
@@ -208,6 +209,7 @@ SPDX-License-Identifier: MPL-2.0
 								>.
 							</label>
 						</div>
+						-->
 
 						<div class="flex items-center justify-between mt-4">
 							<a

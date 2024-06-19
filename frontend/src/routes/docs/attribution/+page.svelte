@@ -5,7 +5,7 @@ SPDX-License-Identifier: MPL-2.0
 -->
 
 <svelte:head>
-	<title>Zoni Games/docs - Attribution</title>
+	<title>Zoni® Games/docs - Attribution</title>
 	<meta name="description" content="People who helped making with ClassQuiz." />
 </svelte:head>
 <article

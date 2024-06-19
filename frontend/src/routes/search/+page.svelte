@@ -42,7 +42,7 @@ SPDX-License-Identifier: MPL-2.0
 </script>
 
 <svelte:head>
-	<title>Zoni Games - Search</title>
+	<title>Zoni® Games - Search</title>
 </svelte:head>
 
 <div>

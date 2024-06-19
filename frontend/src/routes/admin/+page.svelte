@@ -140,7 +140,7 @@ SPDX-License-Identifier: MPL-2.0
 
 <svelte:window on:beforeunload={confirmUnload} />
 <svelte:head>
-	<title>Zoni Games - Host</title>
+	<title>Zoni® Games - Host</title>
 </svelte:head>
 <div
 	class="min-h-screen min-w-full"

@@ -103,7 +103,7 @@ SPDX-License-Identifier: MPL-2.0
 </script>
 
 <svelte:head>
-	<title>Zoni Games - Import</title>
+	<title>Zoni® Games - Import</title>
 </svelte:head>
 
 <!--{#if is_loading}

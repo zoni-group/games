@@ -54,7 +54,7 @@ SPDX-License-Identifier: MPL-2.0
 </script>
 
 <svelte:head>
-	<title>Zoni Games - Create</title>
+	<title>Zoni® Games - Create</title>
 </svelte:head>
 
 {#if data !== undefined}
