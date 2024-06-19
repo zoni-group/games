@@ -1,8 +1,4 @@
-<!--
-SPDX-FileCopyrightText: 2023 Marlon W (Mawoka)
-
-SPDX-License-Identifier: MPL-2.0
--->
+# ClassQuiz - Zoni Fork
 
 <a href="https://github.com/mawoka-myblock/ClassQuiz/stargazers"><img alt="GitHub Repo stars" src="https://img.shields.io/github/stars/mawoka-myblock/classquiz?style=for-the-badge"></a>
 <a href="https://github.com/mawoka-myblock/ClassQuiz/graphs/contributors"><img alt="GitHub contributors" src="https://img.shields.io/github/contributors/mawoka-myblock/classquiz?color=green&style=for-the-badge"></a>
@@ -33,21 +29,17 @@ SPDX-License-Identifier: MPL-2.0
     </p>
 </div>
 
-
 ## About ClassQuiz
 
-ClassQuiz is a quiz app to learn interactively for students,
-but open-source which is very important if it is a product for educational
-purposes.
-You can create quizzes and play them remotely with other people.
-It is mainly made for teachers who create a
-quiz, so students can compete with their knowledge against each other.
+ClassQuiz is a quiz app to learn interactively for students, but open-source which is very important if it is a product for educational purposes. You can create quizzes and play them remotely with other people. It is mainly made for teachers who create a quiz, so students can compete with their knowledge against each other.
+
+## This Fork
+
+This is a forked repository maintained by Zoni for educational purposes. We have made customizations to better suit our specific needs. We would like to extend our gratitude to the original creator, Marlon W (Mawoka), for their fantastic work on the [ClassQuiz](https://github.com/mawoka-myblock/ClassQuiz) project.
 
 ## Try it
 
-There is a hosted version at [classquiz.de](https://classquiz.de?utm_medium=Github&utm_source=Readme). The server is
-located in Karlsruhe, Germany and hosted by [netcup](https://mawoka.eu/redir?token=2), so expect some latency depending
-on your location.
+There is a hosted version at [classquiz.de](https://classquiz.de?utm_medium=Github&utm_source=Readme). The server is located in Karlsruhe, Germany and hosted by [netcup](https://mawoka.eu/redir?token=2), so expect some latency depending on your location.
 
 ## Help/Community
 
@@ -61,16 +53,15 @@ Join our [Matrix Space](https://matrix.to/#/#classquiz:matrix.org) using [elemen
 
 ## Self-Host
 
-Please see https://classquiz.de/docs/self-host
+Please see [https://classquiz.de/docs/self-host](https://classquiz.de/docs/self-host)
 
 ## Development
 
-See https://classquiz.de/docs/develop
+See [https://classquiz.de/docs/develop](https://classquiz.de/docs/develop)
 
 ## Translation
 
 ClassQuiz uses [hosted Weblate](https://hosted.weblate.org/engage/classquiz/)
-
 
 <a href="https://hosted.weblate.org/engage/classquiz/">
 <img src="https://hosted.weblate.org/widgets/classquiz/-/frontend/multi-auto.svg" alt="Übersetzungsstatus" />
@@ -78,28 +69,21 @@ ClassQuiz uses [hosted Weblate](https://hosted.weblate.org/engage/classquiz/)
 
 ## Docs
 
-The docs are online at https://classquiz.de/docs
+The docs are online at [https://classquiz.de/docs](https://classquiz.de/docs)
 
 ### Things to know about the structure
 
-Since this repo is a monorepo, the frontend is located in
-the [`frontend/`](https://github.com/mawoka-myblock/ClassQuiz/tree/master/frontend)-directory.
-The backend-project (Pipfile) is in the root, but all the code is located in
-the [`classquiz/`](https://github.com/mawoka-myblock/ClassQuiz/tree/master/frontend)-folder.
+Since this repo is a monorepo, the frontend is located in the [`frontend/`](https://github.com/mawoka-myblock/ClassQuiz/tree/master/frontend)-directory. The backend-project (Pipfile) is in the root, but all the code is located in the [`classquiz/`](https://github.com/mawoka-myblock/ClassQuiz/tree/master/frontend)-folder.
 
 #### Tech-Stack
 
 ##### Backend
 
-The backend is made with [FastAPI](https://fastapi.tiangolo.com/) (web-framework)
-, [ormar](https://github.com/collerek/ormar/) (ORM)
-, [python-socketio](https://python-socketio.readthedocs.io/en/latest/) (realtime-communication between server and
-client)
+The backend is made with [FastAPI](https://fastapi.tiangolo.com/) (web-framework), [ormar](https://github.com/collerek/ormar/) (ORM), [python-socketio](https://python-socketio.readthedocs.io/en/latest/) (realtime-communication between server and client)
 
 ##### Frontend
 
-The frontend is made with [SvelteKit](https://kit.svelte.dev/) (web-framework)
-and [TailwindCSS](https://tailwindcss.com/) (Css-Framework).
+The frontend is made with [SvelteKit](https://kit.svelte.dev/) (web-framework) and [TailwindCSS](https://tailwindcss.com/) (Css-Framework).
 
 ##### External Dependencies
 
@@ -115,14 +99,14 @@ Closed-Source 3rd parties:
 - [Mapbox](https://www.mapbox.com/) (maps)
 - [hCaptcha](https://www.hcaptcha.com/) (captcha)
 
----
-
 ## License Note
 
 This repository is licensed under the [Mozilla Public License 2.0](https://www.mozilla.org/en-US/MPL/2.0/), so you
 
 **MUST PUBLISH ANY CHANGES YOU MAKE!!!**[^1]
 
-[^1]: _I added this note, since people are stealing my software and changing it without providing the source-code. Maybe
-they
-aren't aware of this license, maybe they don't care, but I don't care, why they don't do it._ **THEY HAVE TO!**
+[^1]: _I added this note, since people are stealing my software and changing it without providing the source-code. Maybe they aren't aware of this license, maybe they don't care, but I don't care, why they don't do it._ **THEY HAVE TO!**
+
+---
+
+Feel free to adjust any details as needed!
