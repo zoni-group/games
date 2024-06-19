@@ -1,8 +1,3 @@
-<!--
-SPDX-FileCopyrightText: 2023 Marlon W (Mawoka)
-
-SPDX-License-Identifier: MPL-2.0
--->
 <script lang="ts">
 	import { page } from '$app/stores';
 	import type { QuizData } from '$lib/quiz_types';
@@ -40,16 +35,16 @@ SPDX-License-Identifier: MPL-2.0
 			{/key}
 		{/if}
 
-		<div class="grid grid-cols-2 h-fit px-20 mt-6 absolute bottom-0 w-full">
+		<div class="fixed bottom-0 w-full grid grid-cols-2 h-fit px-20 mt-6">
 			<button
-				class="flex justify-start transition-all disabled:opacity-60"
+				class="flex justify-start transition-all disabled:opacity-60 pointer-events-none"
 				disabled={selected_question <= -1}
 				on:click={() => {
 					selected_question -= 1;
 				}}
 			>
 				<svg
-					class="w-16 h-16"
+					class="w-16 h-16 pointer-events-auto"
 					fill="none"
 					stroke="currentColor"
 					viewBox="0 0 24 24"
@@ -64,7 +59,7 @@ SPDX-License-Identifier: MPL-2.0
 				</svg>
 			</button>
 			<button
-				class="flex justify-end transition-all disabled:opacity-60"
+				class="flex justify-end transition-all disabled:opacity-60 pointer-events-none"
 				disabled={selected_question >= quiz.questions.length - 1}
 				on:click={() => {
 					reload_q();
@@ -72,7 +67,7 @@ SPDX-License-Identifier: MPL-2.0
 				}}
 			>
 				<svg
-					class="w-16 h-16"
+					class="w-16 h-16 pointer-events-auto"
 					fill="none"
 					stroke="currentColor"
 					viewBox="0 0 24 24"

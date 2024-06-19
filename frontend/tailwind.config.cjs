@@ -17,7 +17,7 @@ const config = {
 					css: {
 						// color: theme('colors.yellow.50'),
 						textDecoration: 'none',
-						textColor: '#000',
+						textColor: '#00529b',
 						/*a: {
 							color: theme('colors.blue.200')
 						},

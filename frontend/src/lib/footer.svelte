@@ -13,6 +13,7 @@ SPDX-License-Identifier: MPL-2.0
 
 <footer class="text-center text-white border-black w-screen">
 	<div class="grid grid-cols-12 w-full pt-4 bg-gray-700 pb-2">
+		<!--
 		<p class="col-start-3 col-end-11 text-center w-full">
 			{@html $t('footer.self_ads', {
 				mawoka_link:
@@ -38,6 +39,7 @@ SPDX-License-Identifier: MPL-2.0
 				>{$t('footer.more_details_here')}.</a
 			>
 		</p>
+		-->
 		<div
 			class="flex flex-col items-center min-h-full h-full md:block hidden col-start-11 col-end-12"
 		>
@@ -53,7 +55,7 @@ SPDX-License-Identifier: MPL-2.0
 			</div>
 		</div>
 	</div>
-
+	<!--
 	<div class="bg-gray-700">
 		<p>
 			Consider following
@@ -76,6 +78,7 @@ SPDX-License-Identifier: MPL-2.0
 			> for updates!
 		</p>
 	</div>
+	-->
 </footer>
 
 <!--

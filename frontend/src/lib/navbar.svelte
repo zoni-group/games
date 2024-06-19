@@ -58,6 +58,7 @@ SPDX-License-Identifier: MPL-2.0
 			{#if $signedIn}
 				<a class="btn-nav" href="/dashboard">{$t('words.dashboard')}</a>
 			{:else}
+				<!--
 				<a class="btn-nav" href="/docs">{$t('words.docs')}</a>
 				<a
 					target="_blank"
@@ -85,6 +86,7 @@ SPDX-License-Identifier: MPL-2.0
 						/></svg
 					>
 				</a>
+				-->
 			{/if}
 		</div>
 		<div class="lg:flex lg:items-center lg:flex-row gap-1">
@@ -100,9 +102,11 @@ SPDX-License-Identifier: MPL-2.0
 			{/if}
 
 			<div class="fit-content flex items-center justify-center gap-2">
+				<!--
 				<BrownButton href="https://mawoka.eu/donate" target="_blank"
 					>{$t('navbar.donate')} <span class="">❤️</span></BrownButton
 				>
+				-->
 				<div class="lg:flex items-center justify-center">
 					{#if darkMode}
 						<button
@@ -285,6 +289,7 @@ SPDX-License-Identifier: MPL-2.0
 				{#if $signedIn}
 					<a class="btn-nav" href="/dashboard">{$t('words.dashboard')}</a>
 				{:else}
+					<!--
 					<a class="btn-nav" href="/docs">{$t('words.docs')}</a>
 					<a
 						target="_blank"
@@ -312,6 +317,7 @@ SPDX-License-Identifier: MPL-2.0
 							/></svg
 						>
 					</a>
+					-->
 				{/if}
 
 				<hr class="my-1 border" />
@@ -327,11 +333,13 @@ SPDX-License-Identifier: MPL-2.0
 					>
 				{/if}
 
+				<!--
 				<div class="fit-content flex items-center justify-center my-2">
 					<BrownButton href="https://mawoka.eu/donate" target="_blank"
 						>{$t('navbar.donate')} <span class="">❤️</span></BrownButton
 					>
 				</div>
+				-->
 			</div>
 		{/if}
 	</div>

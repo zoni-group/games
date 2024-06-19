@@ -8,6 +8,9 @@ export const load = async ({ params, parent }) => {
 	const { quiz_id } = params;
 	const res = await fetch(`${process.env.API_URL}/api/v1/quiz/get/public/${quiz_id}`);
 	const { email } = await parent();
+	console.log("email", email);
+	console.log("quiz_id", quiz_id);
+	console.log("res", res);
 	if (res.status === 404 || res.status === 400) {
 		throw error(404);
 	} else if (res.status === 200) {
