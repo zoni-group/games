@@ -11,32 +11,107 @@ SPDX-License-Identifier: MPL-2.0
 @tailwind components;
 @tailwind utilities;
 
+:root {
+    --main-color-light: #F8FDFF;
+    --main-color-dark: #004A93;
+    --main-color-primary: #0571d0;
+    --main-color-secondary: #FFD700;
+    --main-color-info: #0074E4;
+    --main-color-success: #0074E4;
+    --main-color-warning: #FF6700;
+    --main-color-danger: #EF3E42;
+    --main-color-green: #198754;
+
+    /* H1 Styles */
+    --main-h1-font-size: 3rem;
+    --main-h1-font-weight: 700;
+    --main-h1-text-shadow: 2px 2px 4px rgba(255, 255, 255, 0.5);
+
+    /* P Styles */
+    --main-p-font-size: 1.2rem;
+    --main-p-font-weight: 400;
+    --main-p-text-shadow: 2px 2px 4px rgba(255, 255, 255, 0.5);
+}
+
 .marck-script {
-	font-family: 'Marck Script';
+    font-family: 'Marck Script';
 }
 
 .link-hover {
-	transition: all 0.3s;
+    transition: all 0.3s;
 }
 
 .link-hover:hover {
-	color: #4e6e58;
+    color: #4e6e58;
 }
 
 @layer utilities {
-	.normal-background {
-		@apply bg-gradient-to-r from-[#009444] via-[#39b54a] to-[#8dc63f] dark:bg-[#0f2702] dark:from-[#0f2702] dark:via-[#0f2702] dark:to[#0f2702];
-	}
+    .normal-background {
+        @apply bg-gradient-to-r from-[#009444] via-[#39b54a] to-[#8dc63f] dark:bg-[#0f2702] dark:from-[#0f2702] dark:via-[#0f2702] dark:to[#0f2702];
+    }
 
-	.admin-button {
-		@apply px-4 py-2 leading-5 text-white transition-colors duration-200 transform bg-gray-700 rounded text-center hover:bg-gray-600 focus:outline-none disabled:cursor-not-allowed disabled:opacity-50;
-	}
+    .admin-button {
+        @apply px-4 py-2 leading-5 text-white transition-colors duration-200 transform bg-gray-700 rounded text-center hover:bg-gray-600 focus:outline-none disabled:cursor-not-allowed disabled:opacity-50;
+    }
 
-	.action-button {
-		@apply px-4 py-2 leading-5 text-black dark:text-white transition-colors duration-200 transform bg-gray-50 dark:bg-gray-700 rounded text-center hover:bg-gray-300 focus:outline-none disabled:cursor-not-allowed disabled:opacity-50 dark:hover:bg-gray-600;
-	}
+    .action-button {
+        @apply px-4 py-2 leading-5 text-black dark:text-white transition-colors duration-200 transform bg-gray-50 dark:bg-gray-700 rounded text-center hover:bg-gray-300 focus:outline-none disabled:cursor-not-allowed disabled:opacity-50 dark:hover:bg-gray-600;
+    }
 }
 
 body {
-	font-family: 'Poppins', sans-serif;
+    font-family: 'Poppins', sans-serif;
+}
+
+h1 {
+    color: var(--main-color-primary);
+    font-size: var(--main-h1-font-size);
+    font-weight: var(--main-h1-font-weight);
+    /*text-shadow: var(--main-h1-text-shadow);*/
+}
+
+p {
+    color: var(--main-color-dark);
+    font-size: var(--main-p-font-size);
+    font-weight: var(--main-p-font-weight);
+    /*text-shadow: var(--main-p-text-shadow);*/
+}
+
+/* Dark mode styles */
+@media (prefers-color-scheme: dark) {
+    :root {
+        --main-color-light: #004A93;
+        --main-color-dark: #F8FDFF;
+        --main-color-primary: #FFD700;
+        --main-color-secondary: #0571d0;
+        --main-color-info: #0074E4;
+        --main-color-success: #0074E4;
+        --main-color-warning: #FF6700;
+        --main-color-danger: #EF3E42;
+        --main-color-green: #198754;
+
+        /* H1 Styles */
+        --main-h1-font-size: 3rem;
+        --main-h1-font-weight: 700;
+        --main-h1-text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+
+        /* P Styles */
+        --main-p-font-size: 1.2rem;
+        --main-p-font-weight: 400;
+        --main-p-text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+    }
+
+    h1 {
+        color: var(--main-color-primary);
+        font-size: var(--main-h1-font-size);
+        font-weight: var(--main-h1-font-weight);
+        /*text-shadow: var(--main-h1-text-shadow);*/
+    }
+
+    p {
+        color: var(--main-color-dark);
+        font-size: var(--main-p-font-size);
+        font-weight: var(--main-p-font-weight);
+        /*text-shadow: var(--main-p-text-shadow);*/
+    }
 }

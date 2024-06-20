@@ -60,7 +60,7 @@ SPDX-License-Identifier: MPL-2.0
 		<MediaComponent
 			src={quiz_data.questions[selected_question].image}
 			muted={false}
-			css_classes="max-h-[20vh] object-cover mx-auto mb-8 w-auto"
+			css_classes="max-h-[50vh] object-cover mx-auto mb-8 w-auto"
 		/>
 	</div>
 {/if}
