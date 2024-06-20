@@ -108,7 +108,6 @@ SPDX-License-Identifier: MPL-2.0
                     >{$t('navbar.donate')} <span class="">❤️</span></BrownButton
                 >
                 -->
-				<!--
                 <div class="lg:flex items-center justify-center">
                     {#if darkMode}
                         <button
@@ -159,7 +158,6 @@ SPDX-License-Identifier: MPL-2.0
                         </button>
                     {/if}
                 </div>
-				-->
             </div>
         </div>
     </div>

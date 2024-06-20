@@ -171,7 +171,7 @@
         "point_plural": "Points",
         "back": "Back",
         "finish": "Finish",
-        "normal": "Normal",
+        "normal": "Two devices mode",
         "selected": "Selected",
         "select": "Select",
         "quiz": "Quiz",
@@ -414,7 +414,7 @@
     "start_game": {
         "captcha_message": "If enabled, Google's ReCaptcha will load in the browser of players. Only enable if you really need it, since you need the consent of EVERY player to load the captcha.",
         "normal_mode_description": "Question and answer will only be shown on admins screen. The players will only have colored buttons with symbols matching these on the screen of the admin.",
-        "old_school_mode": "Old-School",
+        "old_school_mode": "One device mode",
         "old_school_mode_description": "Questions and images will be shown on both admins screen and on the screen of the players",
         "start_game": "Start Game"
     },

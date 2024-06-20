@@ -252,6 +252,7 @@ SPDX-License-Identifier: MPL-2.0
 							question.answers = swapArrayElements(question.answers, i, i - 1);
 						}}
 						class="disabled:opacity-50 transition shadow-lg bg-black bg-opacity-30 w-full flex justify-center rounded-lg p-2 hover:bg-opacity-20 transition"
+						style="color: white;"
 						type="button"
 						disabled={i === 0 || order_corrected}
 					>
@@ -272,13 +273,14 @@ SPDX-License-Identifier: MPL-2.0
 							/>
 						</svg>
 					</button>
-					<p class="w-full text-center p-2 text-2xl">{answer.answer}</p>
+					<p class="w-full text-center p-2 text-2xl" style="color: white;">{answer.answer}</p>
 
 					<button
 						on:click={() => {
 							question.answers = swapArrayElements(question.answers, i, i + 1);
 						}}
 						class="disabled:opacity-50 transition shadow-lg bg-black bg-opacity-30 w-full flex justify-center rounded-lg p-2 hover:bg-opacity-20 transition"
+						style="color: white;"
 						type="button"
 						disabled={i === question.answers.length - 1 || order_corrected}
 					>
