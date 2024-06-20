@@ -386,7 +386,7 @@ SPDX-License-Identifier: MPL-2.0
 					{/each}
 				</div>
 			{:else}
-				<p>
+				<p class="text-black dark:text-white">
 					{$t('overview_page.no_quizzes')}
 				</p>
 			{/if}

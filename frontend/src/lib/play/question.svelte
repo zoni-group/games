@@ -142,6 +142,21 @@ SPDX-License-Identifier: MPL-2.0
 	};
 	$: console.log(slider_value, 'values');
 	const default_colors = ['#C8E6C9', '#FFE0B2', '#FFF9C4', '#B3E5FC'];
+
+	// Function to determine if the color is light or dark
+	function isColorLight(color) {
+		const hex = color.replace('#', '');
+		const r = parseInt(hex.substring(0, 2), 16);
+		const g = parseInt(hex.substring(2, 4), 16);
+		const b = parseInt(hex.substring(4, 6), 16);
+		const brightness = (r * 299 + g * 587 + b * 114) / 1000;
+		return brightness > 155; // higher value means the color is light
+	}
+	
+	// Function to get the appropriate text color
+	function getTextColor(backgroundColor) {
+		return isColorLight(backgroundColor) ? 'black' : 'white';
+	}
 </script>
 
 <div class="h-screen w-screen">
@@ -197,7 +212,9 @@ SPDX-License-Identifier: MPL-2.0
 									src={kahoot_icons[i]}
 								/>
 							{:else}
-								<p class="m-auto">{answer.answer}</p>
+								<p class="m-auto"
+								style="color: {getTextColor(answer.color ?? '#004A93')}"
+								>{answer.answer}</p>
 							{/if}
 						</button>
 					{/each}
@@ -239,17 +256,19 @@ SPDX-License-Identifier: MPL-2.0
 					class="fixed top-0 bg-red-500 h-8 transition-all"
 					style="width: {(100 / parseInt(question.time)) * parseInt(timer_res)}vw"
 				/>
-				<div class="flex justify-center mt-10">
-					<p class="text-black dark:text-white">Enter your answer</p>
-				</div>
 				<div class="flex justify-center m-2">
-					<input
+					<div class="w-full">
+					  <label for="answer-input" class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Type your answer here:</label>
+					  <input
+						id="answer-input"
 						type="text"
 						bind:value={text_input}
 						disabled={selected_answer}
-						class="bg-gray-50 focus:ring text-gray-900 rounded-lg focus:ring-blue-500 block w-full p-2 dark:bg-gray-700 dark:text-white dark:focus:ring-blue-500 outline-none transition text-center disabled:opacity-50 disabled:cursor-not-allowed"
-					/>
-				</div>
+						class="bg-gray-50 focus:ring text-gray-900 rounded-lg focus:ring-blue-500 block w-full p-2 dark:bg-gray-700 dark:text-white dark:focus:ring-blue-500 outline-none transition text-center disabled:opacity-50 disabled:cursor-not-allowed border border-gray-300 dark:border-gray-600"
+						placeholder="Enter your answer"
+					  />
+					</div>
+				  </div>
 
 				<div class="flex justify-center mt-2">
 					<div class="w-1/3">
@@ -292,7 +311,7 @@ SPDX-License-Identifier: MPL-2.0
 					<div
 						class="w-full h-fit flex-row rounded-lg p-2 align-middle"
 						animate:flip={{ duration: 100 }}
-						style="background-color: {answer.color ?? '#004A93'}"
+						style="color: {getTextColor(answer.color ?? '#004A93')}; background-color: {answer.color ?? '#004A93'};"
 					>
 						<button
 							on:click={() => {
@@ -319,7 +338,10 @@ SPDX-License-Identifier: MPL-2.0
 								/>
 							</svg>
 						</button>
-						<p class="w-full text-center p-2 text-2xl">{answer.answer}</p>
+						<p class="w-full text-center p-2 text-2xl"
+						style="color: {getTextColor(answer.color ?? '#004A93')}">
+							{answer.answer}
+						</p>
 
 						<button
 							on:click={() => {

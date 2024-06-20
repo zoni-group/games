@@ -9,6 +9,7 @@ SPDX-License-Identifier: MPL-2.0
 	import { get_foreground_color } from '$lib/helpers';
 	import { kahoot_icons } from '$lib/play/kahoot_mode_assets/kahoot_icons';
 	import CircularTimer from '$lib/play/circular_progress.svelte';
+	import { flip } from 'svelte/animate';
 	// import CircularTimer from '$lib/play/circular_progress.svelte';
 	const default_colors = ['#C8E6C9', '#FFE0B2', '#FFF9C4', '#B3E5FC'];
 	export let question: Question;
@@ -31,6 +32,21 @@ SPDX-License-Identifier: MPL-2.0
 		selected_answer = selected_answer;
 		console.log(_selected_answers, selected_answer);
 	};
+	
+	// Function to determine if the color is light or dark
+	function isColorLight(color) {
+		const hex = color.replace('#', '');
+		const r = parseInt(hex.substring(0, 2), 16);
+		const g = parseInt(hex.substring(2, 4), 16);
+		const b = parseInt(hex.substring(4, 6), 16);
+		const brightness = (r * 299 + g * 587 + b * 114) / 1000;
+		return brightness > 155; // higher value means the color is light
+	}
+	
+	// Function to get the appropriate text color
+	function getTextColor(backgroundColor) {
+		return isColorLight(backgroundColor) ? 'black' : 'white';
+	}
 </script>
 
 <div class="w-full h-[95%]">
@@ -66,7 +82,8 @@ SPDX-License-Identifier: MPL-2.0
 				{#if game_mode === 'kahoot'}
 					<img class="h-2/3 inline-block m-auto" alt="Icon" src={kahoot_icons[i]} />
 				{:else}
-					<p class="m-auto">{answer.answer}</p>
+					<p class="m-auto"
+					style="color: {getTextColor(answer.color ?? '#004A93')}">{answer.answer}</p>
 				{/if}
 			</button>
 		{/each}
