@@ -258,7 +258,7 @@ SPDX-License-Identifier: MPL-2.0
 				/>
 				<div class="flex justify-center m-2">
 					<div class="w-full">
-					  <label for="answer-input" class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Type your answer here:</label>
+					  <label for="answer-input" class="block mb-2 mt-5 text-sm font-medium text-gray-900 dark:text-gray-300">Type your answer here:</label>
 					  <input
 						id="answer-input"
 						type="text"
