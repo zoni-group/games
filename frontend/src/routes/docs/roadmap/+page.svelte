@@ -5,7 +5,7 @@ SPDX-License-Identifier: MPL-2.0
 -->
 
 <svelte:head>
-	<title>Zoni® Games/docs - Roadmap</title>
+	<title>Zoni® AI/docs - Roadmap</title>
 	<meta
 		name="description"
 		content="The roadmap for ClassQuiz, the open-source quiz-application"
