@@ -15,7 +15,7 @@ SPDX-License-Identifier: MPL-2.0
 </script>
 
 <svelte:head>
-	<title>Zoni® Games/docs - Privacy policy</title>
+	<title>Zoni® AI/docs - Privacy policy</title>
 	<meta
 		name="description"
 		content="How to self-host ClassQuiz, the open-source quiz-application"

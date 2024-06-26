@@ -17,7 +17,7 @@ SPDX-License-Identifier: MPL-2.0
 </script>
 
 <svelte:head>
-	<title>Zoni® Games - Explore</title>
+	<title>Zoni® AI - Explore</title>
 </svelte:head>
 
 <div class="grid lg:grid-cols-3 grid-cols-1">

@@ -38,7 +38,7 @@ SPDX-License-Identifier: MPL-2.0
 </script>
 
 <svelte:head>
-	<title>Zoni® Games - Reset your Password</title>
+	<title>Zoni® AI - Reset your Password</title>
 </svelte:head>
 
 <div class="flex items-center justify-center h-full px-4">
@@ -48,7 +48,7 @@ SPDX-License-Identifier: MPL-2.0
 		>
 			<div class="px-6 py-4">
 				<h2 class="text-3xl font-bold text-center text-gray-700 dark:text-white">
-					Zoni® Games
+					Zoni® AI
 				</h2>
 
 				<!--
