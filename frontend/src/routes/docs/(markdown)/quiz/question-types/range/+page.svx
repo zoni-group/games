@@ -7,7 +7,7 @@ SPDX-License-Identifier: MPL-2.0
 # Range Answers
 
 ## Summary
-- The player has a slider where a number can be set
+- The participant has a slider where a number can be set
 - The creator can choose the range and the correct range
 
 ## Use case

@@ -83,13 +83,8 @@ SPDX-License-Identifier: MPL-2.0
 			custom_field = json.custom_field;
 		}
 		if (res.status === 404) {
-			/*			alertModal.set({
-                open: true,
-                title: 'Game not found',
-                body: 'The game pin you entered seems invalid.'
-            });*/
 			if (browser) {
-				alert('Game not found');
+				alert($t('words.game_not_found'));
 			}
 			game_pin = '';
 			return;
@@ -173,7 +168,7 @@ SPDX-License-Identifier: MPL-2.0
 	socket.on('game_not_found', () => {
 		game_pin = '';
 		if (browser) {
-			alert('Game not found');
+			alert($t('words.game_not_found'));
 		}
 	});
 

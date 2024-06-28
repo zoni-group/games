@@ -140,7 +140,7 @@ SPDX-License-Identifier: MPL-2.0
 								{:else}
 									<div
 										use:tippy={{
-											content: 'You need be signed in to start a game.'
+											content: $t('words.you_need_to_be_logged_in_to_start_a_game')
 										}}
 										class="w-full"
 									>
@@ -156,7 +156,7 @@ SPDX-License-Identifier: MPL-2.0
 									</div>
 									<div
 										use:tippy={{
-											content: 'You need be signed in to download a game.'
+											content: $t('words.you_need_to_be_logged_in_to_download_a_game')
 										}}
 										class="w-full"
 									>

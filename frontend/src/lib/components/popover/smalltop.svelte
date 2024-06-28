@@ -31,7 +31,7 @@ SPDX-License-Identifier: MPL-2.0
 			<div class="ml-3 text-sm font-normal">
 				{#if type === PopoverTypes.Copy}
 					{$t('components.popover.copied_to_clipboard')}
-				{:else if type === PopoverTypes.GameInLobby}A game is currently in the lobby. Click <a
+				{:else if type === PopoverTypes.GameInLobby}An activity is currently in the lobby. Click <a
 						class="underline"
 						href="/remote?game_pin={data.game_pin}&game_id={data.game_id}">here</a
 					> to join as a remote.

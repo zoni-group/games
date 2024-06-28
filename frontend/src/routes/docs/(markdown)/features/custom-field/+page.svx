@@ -10,7 +10,7 @@ SPDX-License-Identifier: MPL-2.0
 ## What is the Custom-Field?
 
 The Custom-Field is an input-field which can be enabled in the start-quiz modal. The custom-field has to be named, and
-then it will be displayed if a player wants to join.
+then it will be displayed if a participant wants to join.
 
 ## Use Case
 
