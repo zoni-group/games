@@ -14,6 +14,7 @@ SPDX-License-Identifier: MPL-2.0
 	import Spinner from '$lib/Spinner.svelte';
 	import Controls from '$lib/play/admin/controls.svelte';
 	import Question from '$lib/play/admin/question.svelte';
+	import { onMount } from 'svelte';
 
 	export let game_token: string;
 	export let quiz_data: QuizData;
@@ -34,6 +35,19 @@ SPDX-License-Identifier: MPL-2.0
 	export let control_visible: boolean;
 
 	export let player_scores;
+	let contentType: string | null = null;
+	async function fetchContentType(url: string) {
+		const response = await fetch(url, {
+			method: 'HEAD'
+		});
+		return response.headers.get('Content-Type');
+	}
+
+	onMount(async () => {
+		if (quiz_data.cover_image) {
+			contentType = await fetchContentType(`/api/v1/storage/download/${quiz_data.cover_image}`);
+		}
+	});
 
 	socket.on('get_question_results', () => {
 		console.log('get_question_results');
@@ -168,11 +182,24 @@ SPDX-License-Identifier: MPL-2.0
 			{#if quiz_data.cover_image}
 				<div class="flex justify-center align-middle items-center">
 					<div class="h-[30vh] m-auto w-auto mt-12">
-						<img
-							class="max-h-full max-w-full block"
-							src="/api/v1/storage/download/{quiz_data.cover_image}"
-							alt="Not provided"
-						/>
+						{#if contentType?.startsWith('image')}
+							<img
+								class="max-h-full max-w-full block"
+								src={`/api/v1/storage/download/${quiz_data.cover_image}`}
+								alt="Not provided"
+							/>
+						{:else if contentType?.startsWith('video')}
+							<!-- svelte-ignore a11y-media-has-caption -->
+							<video
+								class="max-h-full max-w-full block"
+								src={`/api/v1/storage/download/${quiz_data.cover_image}`}
+								controls
+							>
+								Your browser does not support the video tag.
+							</video>
+						{:else}
+							<p>Unsupported media type</p>
+						{/if}
 					</div>
 				</div>
 			{/if}

@@ -473,8 +473,8 @@
         "uploaded": "Uploaded: {{date}}",
         "imported": "Imported: {{yes_or_no}}",
         "edit_details": "Edit details",
-        "delete_image": "Delete image",
-        "edit_the_image": "Edit the image",
+        "delete_image": "Delete",
+        "edit_the_image": "Edit",
         "filename_word": "Filename",
         "alt_text": "Alt(ernate) text / Caption",
         "storage_usage": "You've used {{used}} MiB out of {{total}} MiB of storage. That's equivalent to {{percent}}% of your storage."

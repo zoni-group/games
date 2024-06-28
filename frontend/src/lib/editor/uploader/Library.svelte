@@ -10,6 +10,7 @@ SPDX-License-Identifier: MPL-2.0
 	import type { EditorData } from '$lib/quiz_types';
 	import BrownButton from '$lib/components/buttons/brown.svelte';
 	import { getLocalization } from '$lib/i18n';
+	import { onMount } from 'svelte';
 
 	export let data: EditorData;
 	export let selected_question: number;
@@ -33,6 +34,28 @@ SPDX-License-Identifier: MPL-2.0
 		}
 		modalOpen = false;
 	};
+	
+	let contentTypes: { [id: string]: string | null } = {};
+
+	async function fetchContentType(url: string) {
+		const response = await fetch(url, {
+			method: 'HEAD'
+		});
+		return response.headers.get('Content-Type');
+	}
+
+	async function fetchContentTypes(images) {
+		const promises = images.map(async (image) => {
+			const contentType = await fetchContentType(`/api/v1/storage/download/${image.id}`);
+			contentTypes = { ...contentTypes, [image.id]: contentType };
+		});
+		await Promise.all(promises);
+	}
+
+	onMount(async () => {
+		const images = await image_fetch;
+		fetchContentTypes(images);
+	});
 </script>
 
 {#await image_fetch}
@@ -45,12 +68,25 @@ SPDX-License-Identifier: MPL-2.0
 			{#each images as image}
 				<div class="rounded border-2 border-[#004A93] p-2 flex-col flex gap-2">
 					<div>
-						<img
-							src="/api/v1/storage/download/{image.id}"
-							loading="lazy"
-							alt={image.alt_text}
-							class="object-contain w-full h-full max-h-full rounded"
-						/>
+						{#if contentTypes[image.id]?.startsWith('image')}
+							<img
+								src={`/api/v1/storage/download/${image.id}`}
+								loading="lazy"
+								alt={image.alt_text}
+								class="object-contain w-full h-full max-h-full rounded"
+							/>
+						{:else if contentTypes[image.id]?.startsWith('video')}
+							<!-- svelte-ignore a11y-media-has-caption -->
+							<video
+								src={`/api/v1/storage/download/${image.id}`}
+								controls
+								class="object-contain w-full h-full max-h-full rounded"
+							>
+								Your browser does not support the video tag.
+							</video>
+						{:else}
+							<p>Unsupported media type</p>
+						{/if}
 					</div>
 					<p class="text-center">{image.filename ?? 'No name available'}</p>
 					<BrownButton

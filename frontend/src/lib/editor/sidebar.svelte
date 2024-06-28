@@ -14,6 +14,7 @@ SPDX-License-Identifier: MPL-2.0
 	import AddNewQuestionPopup from '$lib/editor/AddNewQuestionPopup.svelte';
 	import BrownButton from '$lib/components/buttons/brown.svelte';
 	import { fade } from 'svelte/transition';
+	import { onMount } from 'svelte';
 
 	const { t } = getLocalization();
 
@@ -62,11 +63,28 @@ SPDX-License-Identifier: MPL-2.0
 			});
 		}
 	};
-	/*	onMount(() => {
-            propertyCard.scrollIntoView({
-                behavior: 'smooth'
-            });
-        });*/
+	
+	let contentTypes: { [id: string]: string | null } = {};
+
+	async function fetchContentType(url: string) {
+		const response = await fetch(url, {
+			method: 'HEAD'
+		});
+		return response.headers.get('Content-Type');
+	}
+
+	async function fetchContentTypes() {
+		for (const question of data.questions) {
+			if (question.image) {
+				const contentType = await fetchContentType(`/api/v1/storage/download/${question.image}`);
+				contentTypes = { ...contentTypes, [question.image]: contentType };
+			}
+		}
+	}
+
+	onMount(async () => {
+		await fetchContentTypes();
+	});
 </script>
 
 <div class="h-screen relative">
@@ -169,6 +187,7 @@ SPDX-License-Identifier: MPL-2.0
 			</div>
 		</div>
 		{#each data.questions as question, index}
+			<!-- svelte-ignore a11y-click-events-have-key-events -->
 			<div
 				class="bg-white shadow rounded-lg h-40 p-2 mb-6 hover:cursor-pointer drop-shadow-2xl border border-gray-500 dark:bg-gray-600 transition relative"
 				class:bg-green-300={index === selected_question}
@@ -293,15 +312,28 @@ SPDX-License-Identifier: MPL-2.0
 				</div>
 				{#if question.image}
 					<div class="flex justify-center align-middle pb-0.5">
-						<img
-							src="/api/v1/storage/download/{question.image}"
-							class="h-10 border rounded-lg"
-							alt="Not available"
-							use:tippy={{
-								content: `<img src="/api/v1/storage/download/${question.image}" alt="Not available" class="rounded">`,
-								allowHTML: true
-							}}
-						/>
+						{#if contentTypes[question.image] === 'video/mp4'}
+							<!-- svelte-ignore a11y-media-has-caption -->
+							<video
+								src="/api/v1/storage/download/{question.image}"
+								class="h-10 border rounded-lg"
+								controls
+								use:tippy={{
+									content: `<video src="/api/v1/storage/download/${question.image}" controls class="rounded">`,
+									allowHTML: true
+								}}
+							></video>
+						{:else}
+							<img
+								src="/api/v1/storage/download/{question.image}"
+								class="h-10 border rounded-lg"
+								alt="Not available"
+								use:tippy={{
+									content: `<img src="/api/v1/storage/download/${question.image}" alt="Not available" class="rounded">`,
+									allowHTML: true
+								}}
+							/>
+						{/if}
 					</div>
 				{/if}
 

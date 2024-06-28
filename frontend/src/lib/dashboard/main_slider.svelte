@@ -14,10 +14,10 @@ SPDX-License-Identifier: MPL-2.0
 	import { QuizQuestionType } from '$lib/quiz_types.js';
 	import { getLocalization } from '$lib/i18n';
 	import StartGamePopup from './start_game.svelte';
-	// import { onMount } from 'svelte';
 	import viewport from './useViewportAction.js';
 	import Spinner from '$lib/Spinner.svelte';
 	import GrayButton from '$lib/components/buttons/gray.svelte';
+	import { onMount } from 'svelte';
 
 	let copy_toast_open = false;
 	let start_game = null;
@@ -53,11 +53,30 @@ SPDX-License-Identifier: MPL-2.0
 			game_in_lobby = await res.json();
 		}
 	};
-	// onMount(() => {
-	// 	document.body.addEventListener('keydown', close_start_game_if_esc_is_pressed);
-	// });
 
-	get_game_in_lobby_fn();
+	let contentTypes: { [id: string]: string | null } = {};
+
+	async function fetchContentType(url: string) {
+		const response = await fetch(url, {
+			method: 'HEAD'
+		});
+		return response.headers.get('Content-Type');
+	}
+
+	async function fetchContentTypes() {
+		const promises = quizzes.map(async (quiz) => {
+			if (quiz.cover_image) {
+				const contentType = await fetchContentType(`/api/v1/storage/download/${quiz.cover_image}`);
+				contentTypes = { ...contentTypes, [quiz.cover_image]: contentType };
+			}
+		});
+		await Promise.all(promises);
+	}
+
+	onMount(() => {
+		get_game_in_lobby_fn();
+		fetchContentTypes();
+	});
 </script>
 
 {#if copy_toast_open || game_in_lobby}
@@ -157,12 +176,25 @@ SPDX-License-Identifier: MPL-2.0
 												class="flex justify-center align-middle items-center"
 											>
 												<div class="h-[20vh] m-auto w-auto">
-													<img
-														class="max-h-full max-w-full block"
-														src="/api/v1/storage/download/{quiz.cover_image}"
-														alt="Not provided"
-														loading="lazy"
-													/>
+													{#if contentTypes[quiz.cover_image]?.startsWith('image')}
+														<img
+															class="max-h-full max-w-full block"
+															src={`/api/v1/storage/download/${quiz.cover_image}`}
+															alt="Not provided"
+															loading="lazy"
+														/>
+													{:else if contentTypes[quiz.cover_image]?.startsWith('video')}
+														<!-- svelte-ignore a11y-media-has-caption -->
+														<video
+															class="max-h-full max-w-full block"
+															src={`/api/v1/storage/download/${quiz.cover_image}`}
+															controls
+														>
+															Your browser does not support the video tag.
+														</video>
+													{:else}
+														<p>Unsupported media type</p>
+													{/if}
 												</div>
 											</div>
 										{/if}

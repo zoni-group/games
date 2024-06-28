@@ -7,7 +7,6 @@ SPDX-License-Identifier: MPL-2.0
 <script lang="ts">
 	import type { PageData } from './$types';
 	import { fade } from 'svelte/transition';
-	// import MediaComponent from '$lib/editor/MediaComponent.svelte';
 	import BrownButton from '$lib/components/buttons/brown.svelte';
 	import { onMount } from 'svelte';
 	import Uploader from './uploader.svelte';
@@ -18,6 +17,7 @@ SPDX-License-Identifier: MPL-2.0
 	export let data: PageData;
 	let edit_popup = null;
 	const images = data.images;
+	let contentTypes: { [id: string]: string | null } = {};
 
 	const close_popup_handler = (e: Event) => {
 		if (e.target !== e.currentTarget) return;
@@ -29,6 +29,7 @@ SPDX-License-Identifier: MPL-2.0
 				edit_popup = null;
 			}
 		};
+		fetchContentTypes();
 	});
 
 	const save_image_metadata = async () => {
@@ -47,6 +48,21 @@ SPDX-License-Identifier: MPL-2.0
 		await fetch(`/api/v1/storage/meta/${id}`, { method: 'DELETE' });
 		window.location.reload();
 	};
+
+	async function fetchContentType(url: string) {
+		const response = await fetch(url, {
+			method: 'HEAD'
+		});
+		return response.headers.get('Content-Type');
+	}
+
+	async function fetchContentTypes() {
+		const promises = images.map(async (image) => {
+			const contentType = await fetchContentType(`/api/v1/storage/download/${image.id}`);
+			contentTypes = { ...contentTypes, [image.id]: contentType };
+		});
+		await Promise.all(promises);
+	}
 </script>
 
 <div>
@@ -64,12 +80,25 @@ SPDX-License-Identifier: MPL-2.0
 				class="border-2 border-[#004A93] rounded p-2 grid grid-cols-2 hover:opacity-100 transition-all"
 				class:opacity-40={image.quiztivities.length === 0 && image.quizzes.length === 0}
 			>
-				<img
-					src="/api/v1/storage/download/{image.id}"
-					class="m-auto h-auto w-auto max-h-[30vh]"
-					loading="lazy"
-					alt={image.alt_text || $t('file_dashboard.not_available')}
-				/>
+				{#if contentTypes[image.id]?.startsWith('image')}
+					<img
+						src={`/api/v1/storage/download/${image.id}`}
+						class="m-auto h-auto w-auto max-h-[30vh]"
+						loading="lazy"
+						alt={image.alt_text || $t('file_dashboard.not_available')}
+					/>
+				{:else if contentTypes[image.id]?.startsWith('video')}
+					<!-- svelte-ignore a11y-media-has-caption -->
+					<video
+						src={`/api/v1/storage/download/${image.id}`}
+						class="m-auto h-auto w-auto max-h-[30vh]"
+						controls
+					>
+						Your browser does not support the video tag.
+					</video>
+				{:else}
+					<p>Unsupported media type</p>
+				{/if}
 				<div class="flex flex-col my-auto ml-4">
 					<p>
 						{$t('file_dashboard.size', {

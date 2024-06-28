@@ -5,9 +5,25 @@ SPDX-License-Identifier: MPL-2.0
 -->
 
 <script lang="ts">
+	import { onMount } from 'svelte';
+
 	export let title: string;
 	export let description: string;
 	export let cover_image: string | undefined;
+	let contentType: string | null = null;
+
+	async function fetchContentType(url: string) {
+		const response = await fetch(url, {
+			method: 'HEAD'
+		});
+		return response.headers.get('Content-Type');
+	}
+
+	onMount(async () => {
+		if (cover_image) {
+			contentType = await fetchContentType(`/api/v1/storage/download/${cover_image}`);
+		}
+	});
 </script>
 
 <div class="flex flex-col justify-center w-screen h-screen">
@@ -16,11 +32,24 @@ SPDX-License-Identifier: MPL-2.0
 	{#if cover_image}
 		<div class="flex justify-center align-middle items-center">
 			<div class="h-[30vh] m-auto w-auto mt-12">
-				<img
-					class="max-h-full max-w-full block"
-					src="/api/v1/storage/download/{cover_image}"
-					alt="Not provided"
-				/>
+				{#if contentType?.startsWith('image')}
+					<img
+						class="max-h-full max-w-full block"
+						src={`/api/v1/storage/download/${cover_image}`}
+						alt="Not provided"
+					/>
+				{:else if contentType?.startsWith('video')}
+					<!-- svelte-ignore a11y-media-has-caption -->
+					<video
+						class="max-h-full max-w-full block"
+						src={`/api/v1/storage/download/${cover_image}`}
+						controls
+					>
+						Your browser does not support the video tag.
+					</video>
+				{:else}
+					<p>Unsupported media type</p>
+				{/if}
 			</div>
 		</div>
 	{/if}
