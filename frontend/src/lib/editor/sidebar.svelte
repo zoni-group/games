@@ -85,6 +85,14 @@ SPDX-License-Identifier: MPL-2.0
 	onMount(async () => {
 		await fetchContentTypes();
 	});
+
+	// Function to ensure the .mp4 extension is present
+	function getVideoUrl(url) {
+    	if (!url.endsWith('.mp4')) {
+      		return `${url}.mp4`;
+    	}
+    	return url;
+  	}
 </script>
 
 <div class="h-screen relative">
@@ -315,7 +323,7 @@ SPDX-License-Identifier: MPL-2.0
 						{#if contentTypes[question.image] === 'video/mp4'}
 							<!-- svelte-ignore a11y-media-has-caption -->
 							<video
-								src="/api/v1/storage/download/{question.image}"
+								src={getVideoUrl(`/api/v1/storage/download/${question.image}`)}
 								class="h-10 border rounded-lg"
 								controls
 								use:tippy={{

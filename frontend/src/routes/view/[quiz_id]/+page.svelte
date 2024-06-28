@@ -89,6 +89,14 @@ SPDX-License-Identifier: MPL-2.0
             contentType = await fetchContentType(`/api/v1/storage/download/${quiz.cover_image}`);
         }
     });
+
+	// Function to ensure the .mp4 extension is present
+	function getVideoUrl(url) {
+    	if (!url.endsWith('.mp4')) {
+      		return `${url}.mp4`;
+    	}
+    	return url;
+  	}
 </script>
 
 <svelte:head>
@@ -119,7 +127,7 @@ SPDX-License-Identifier: MPL-2.0
                     <!-- svelte-ignore a11y-media-has-caption -->
                     <video
                         class="max-h-full max-w-full block"
-                        src={`/api/v1/storage/download/${quiz.cover_image}`}
+                        src={getVideoUrl(`/api/v1/storage/download/${quiz.cover_image}`)}
                         controls
                     >
                         Your browser does not support the video tag.

@@ -60,12 +60,20 @@ SPDX-License-Identifier: MPL-2.0
 		}
 		fullscreen_open = true;
 	};
+	// Function to ensure the .mp4 extension is present
+	function getVideoUrl(url) {
+    	if (!url.endsWith('.mp4')) {
+      		return `${url}.mp4`;
+    	}
+    	return url;
+  	}
 </script>
 
 {#await media}
 	<img src={thumbhash_data} class={`${css_classes} ${added_thumbhash_classes}`} />
 {:then data}
 	{#if type === 'img'}
+		<!-- svelte-ignore a11y-click-events-have-key-events -->
 		<img
 			in:fade={{ duration: 300 }}
 			src={img_data.data}
@@ -77,14 +85,13 @@ SPDX-License-Identifier: MPL-2.0
 		<video
 			class={css_classes}
 			disablepictureinpicture
-			x-webkit-airplay="deny"
 			controls
 			autoplay
 			loop
 			{muted}
 			preload="metadata"
 		>
-			<source src="/api/v1/storage/download/{src}" />
+			<source src={getVideoUrl(`/api/v1/storage/download/${src}`)} />			
 		</video>
 	{:else}
 		<p>Unknown media type</p>
@@ -92,6 +99,7 @@ SPDX-License-Identifier: MPL-2.0
 {/await}
 
 {#if fullscreen_open}
+	<!-- svelte-ignore a11y-click-events-have-key-events -->
 	<div
 		class="fixed top-0 left-0 z-50 w-screen h-screen bg-black bg-opacity-50 fle p-2"
 		transition:fade={{ duration: 80 }}

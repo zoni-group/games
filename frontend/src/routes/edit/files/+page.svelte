@@ -63,6 +63,14 @@ SPDX-License-Identifier: MPL-2.0
 		});
 		await Promise.all(promises);
 	}
+
+	// Function to ensure the .mp4 extension is present
+	function getVideoUrl(url) {
+    	if (!url.endsWith('.mp4')) {
+      		return `${url}.mp4`;
+    	}
+    	return url;
+  	}
 </script>
 
 <div>
@@ -90,7 +98,7 @@ SPDX-License-Identifier: MPL-2.0
 				{:else if contentTypes[image.id]?.startsWith('video')}
 					<!-- svelte-ignore a11y-media-has-caption -->
 					<video
-						src={`/api/v1/storage/download/${image.id}`}
+						src={getVideoUrl(`/api/v1/storage/download/${image.id}`)}
 						class="m-auto h-auto w-auto max-h-[30vh]"
 						controls
 					>
