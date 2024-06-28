@@ -7,8 +7,31 @@ SPDX-License-Identifier: MPL-2.0
 <script lang="ts">
 	import type { PageData } from './$types';
 	import BrownButton from '$lib/components/buttons/brown.svelte';
+	import { onMount } from 'svelte';
 
 	export let data: PageData;
+	let contentTypes: { [id: string]: string | null } = {};
+
+	async function fetchContentType(url: string) {
+		const response = await fetch(url, {
+			method: 'HEAD'
+		});
+		return response.headers.get('Content-Type');
+	}
+
+	async function fetchContentTypes() {
+		const promises = data.quizzes.map(async (quiz) => {
+			if (quiz.cover_image) {
+				const contentType = await fetchContentType(`/api/v1/storage/download/${quiz.cover_image}`);
+				contentTypes = { ...contentTypes, [quiz.cover_image]: contentType };
+			}
+		});
+		await Promise.all(promises);
+	}
+
+	onMount(() => {
+		fetchContentTypes();
+	});
 </script>
 
 <div class="flex flex-col p-2">
@@ -17,12 +40,25 @@ SPDX-License-Identifier: MPL-2.0
 			<div class="grid grid-cols-3 h-full">
 				<div class="hidden lg:flex w-auto h-full items-center relative">
 					{#if quiz.cover_image}
-						<img
-							src="/api/v1/storage/download/{quiz.cover_image}"
-							alt="user provided"
-							loading="lazy"
-							class="shrink-0 max-w-full max-h-full absolute rounded"
-						/>
+						{#if contentTypes[quiz.cover_image]?.startsWith('image')}
+							<img
+								src={`/api/v1/storage/download/${quiz.cover_image}`}
+								alt="user provided"
+								loading="lazy"
+								class="shrink-0 max-w-full max-h-full absolute rounded"
+							/>
+						{:else if contentTypes[quiz.cover_image]?.startsWith('video')}
+							<!-- svelte-ignore a11y-media-has-caption -->
+							<video
+								src={`/api/v1/storage/download/${quiz.cover_image}`}
+								class="shrink-0 max-w-full max-h-full absolute rounded"
+								controls
+							>
+								Your browser does not support the video tag.
+							</video>
+						{:else}
+							<p>Unsupported media type</p>
+						{/if}
 					{/if}
 				</div>
 				<div class="my-auto mx-auto max-h-full overflow-hidden">

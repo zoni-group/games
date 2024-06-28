@@ -29,8 +29,27 @@ SPDX-License-Identifier: MPL-2.0
 	};
 	onMount(() => {
 		document.body.addEventListener('keydown', close_start_game_if_esc_is_pressed);
+		fetchContentTypes();
 	});
 	export let data: PageData;
+	let contentTypes: { [id: string]: string | null } = {};
+
+	async function fetchContentType(url: string) {
+		const response = await fetch(url, {
+			method: 'HEAD'
+		});
+		return response.headers.get('Content-Type');
+	}
+
+	async function fetchContentTypes() {
+		const promises = data.quizzes.map(async (quiz) => {
+			if (quiz.cover_image) {
+				const contentType = await fetchContentType(`/api/v1/storage/download/${quiz.cover_image}`);
+				contentTypes = { ...contentTypes, [quiz.cover_image]: contentType };
+			}
+		});
+		await Promise.all(promises);
+	}
 </script>
 
 <svelte:head>
@@ -81,12 +100,25 @@ SPDX-License-Identifier: MPL-2.0
 								{#if quiz.cover_image}
 									<div class="flex justify-center align-middle items-center">
 										<div class="h-[20vh] m-auto w-auto max-h-[18vh]">
-											<img
-												class="max-h-full max-w-full block"
-												src="/api/v1/storage/download/{quiz.cover_image}"
-												alt="Not provided"
-												loading="lazy"
-											/>
+											{#if contentTypes[quiz.cover_image]?.startsWith('image')}
+												<img
+													class="max-h-full max-w-full block"
+													src={`/api/v1/storage/download/${quiz.cover_image}`}
+													alt="Not provided"
+													loading="lazy"
+												/>
+											{:else if contentTypes[quiz.cover_image]?.startsWith('video')}
+												<!-- svelte-ignore a11y-media-has-caption -->
+												<video
+													class="max-h-full max-w-full block"
+													src={`/api/v1/storage/download/${quiz.cover_image}`}
+													controls
+												>
+													Your browser does not support the video tag.
+												</video>
+											{:else}
+												<p>Unsupported media type</p>
+											{/if}
 										</div>
 									</div>
 								{/if}
@@ -140,7 +172,7 @@ SPDX-License-Identifier: MPL-2.0
 								{:else}
 									<div
 										use:tippy={{
-											content: 'You need be signed in to start a game.'
+											content: $t('words.you_need_to_be_logged_in_to_start_a_game')
 										}}
 										class="w-full"
 									>
@@ -156,7 +188,7 @@ SPDX-License-Identifier: MPL-2.0
 									</div>
 									<div
 										use:tippy={{
-											content: 'You need be signed in to download a game.'
+											content: $t('words.you_need_to_be_logged_in_to_download_a_game')
 										}}
 										class="w-full"
 									>

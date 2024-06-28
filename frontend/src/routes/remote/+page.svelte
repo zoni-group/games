@@ -296,7 +296,8 @@ SPDX-License-Identifier: MPL-2.0
 		{/if}
 	{/if}
 {:else}
-	<button on:click={start_game} class="admin-button">Start Game!</button>
+	<button on:click={start_game} class="admin-button">{ $t('words.start_game') }</button>
+	
 
 	<h2>Players:</h2>
 	{#await get_already_joined_players()}

@@ -94,7 +94,7 @@ SPDX-License-Identifier: MPL-2.0
 	on:keypress={() => {}}
 >
     <div
-        class="w-5/6 h-2/6 bg-black m-auto rounded-lg shadow-lg p-4 flex flex-col"
+        class="w-5/6 bg-black m-auto rounded-lg shadow-lg p-4 flex flex-col"
         style="background-color: #FFF;"
     >
         <div class="grid grid-cols-2 grid-rows-2 gap-8 ">
@@ -186,7 +186,7 @@ SPDX-License-Identifier: MPL-2.0
         </div>
 
         <button
-            class="flex items-center mt-auto mx-auto bg-lime-600 text-white p-4 rounded-lg shadow-lg hover:bg-lime-500 transition-all text-2xl"
+            class="flex items-center mt-5 mx-auto bg-lime-600 text-white p-4 rounded-lg shadow-lg hover:bg-lime-500 transition-all text-2xl"
             on:click={() => start_game(quiz_id)}
         >
 			<svg class="w-12 h-12 mr-2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><!--!Font Awesome Pro 6.5.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2024 Fonticons, Inc.--><path class="fa-secondary" opacity="1" fill="#ffffff" d="M96 48c0-8.8 7.2-16 16-16h32c8.8 0 16 7.2 16 16V64h48c8.8 0 16 7.2 16 16v48H352V80c0-8.8 7.2-16 16-16h48V48c0-8.8 7.2-16 16-16h32c8.8 0 16 7.2 16 16V80c0 8.8-7.2 16-16 16H416v32 32h48c8.8 0 16 7.2 16 16v48h32V144c0-8.8 7.2-16 16-16h32c8.8 0 16 7.2 16 16V272c0 8.8-7.2 16-16 16H512v80c0 8.8-7.2 16-16 16H448v80c0 8.8-7.2 16-16 16H384 336c-8.8 0-16-7.2-16-16V432c0-8.8 7.2-16 16-16h48V384H192v32h48c8.8 0 16 7.2 16 16v32c0 8.8-7.2 16-16 16H192 144c-8.8 0-16-7.2-16-16V384H80c-8.8 0-16-7.2-16-16V288H16c-8.8 0-16-7.2-16-16V144c0-8.8 7.2-16 16-16H48c8.8 0 16 7.2 16 16v80H96V176c0-8.8 7.2-16 16-16h48V128 96H112c-8.8 0-16-7.2-16-16V48zm64 192v64c0 8.8 7.2 16 16 16h32c8.8 0 16-7.2 16-16V240c0-8.8-7.2-16-16-16H176c-8.8 0-16 7.2-16 16zm192 0v64c0 8.8 7.2 16 16 16h32c8.8 0 16-7.2 16-16V240c0-8.8-7.2-16-16-16H368c-8.8 0-16 7.2-16 16z"/><path class="fa-primary" opacity="0.4" fill="#ffffff" d="M176 224c-8.8 0-16 7.2-16 16v64c0 8.8 7.2 16 16 16h32c8.8 0 16-7.2 16-16V240c0-8.8-7.2-16-16-16H176zm192 0c-8.8 0-16 7.2-16 16v64c0 8.8 7.2 16 16 16h32c8.8 0 16-7.2 16-16V240c0-8.8-7.2-16-16-16H368z"/></svg>

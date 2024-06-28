@@ -9,6 +9,7 @@ SPDX-License-Identifier: MPL-2.0
 	import { getLocalization } from '$lib/i18n';
 	import Spinner from '$lib/Spinner.svelte';
 	import { createTippy } from 'svelte-tippy';
+	import { onMount } from 'svelte';
 
 	const { t } = getLocalization();
 
@@ -25,6 +26,30 @@ SPDX-License-Identifier: MPL-2.0
 	});
 
 	$: data.background_color = custom_bg_color ? data.background_color : undefined;
+
+	let contentTypes: { [id: string]: string | null } = {};
+
+	async function fetchContentType(url: string) {
+		const response = await fetch(url, {
+			method: 'HEAD'
+		});
+		return response.headers.get('Content-Type');
+	}
+
+	async function fetchContentTypes() {
+		if (data.cover_image) {
+			const contentType = await fetchContentType(`/api/v1/storage/download/${data.cover_image}`);
+			contentTypes = { ...contentTypes, [data.cover_image]: contentType };
+		}
+		if (data.background_image) {
+			const contentType = await fetchContentType(`/api/v1/storage/download/${data.background_image}`);
+			contentTypes = { ...contentTypes, [data.background_image]: contentType };
+		}
+	}
+
+	onMount(async () => {
+		await fetchContentTypes();
+	});
 </script>
 
 <div class="w-full h-full pb-20 px-20">
@@ -71,14 +96,30 @@ SPDX-License-Identifier: MPL-2.0
 
 			{#if data.cover_image != undefined && data.cover_image !== ''}
 				<div class="flex justify-center pt-10 w-full max-h-72 w-full">
-					<img
-						src="/api/v1/storage/download/{data.cover_image}"
-						alt="not available"
-						class="max-h-72 h-auto w-auto"
-						on:contextmenu|preventDefault={() => {
-							data.cover_image = null;
-						}}
-					/>
+					{#if contentTypes[data.cover_image]?.startsWith('image')}
+						<img
+							src="/api/v1/storage/download/{data.cover_image}"
+							alt="not available"
+							class="max-h-72 h-auto w-auto"
+							on:contextmenu|preventDefault={() => {
+								data.cover_image = null;
+							}}
+						/>
+					{:else if contentTypes[data.cover_image]?.startsWith('video')}
+						<!-- svelte-ignore a11y-media-has-caption -->
+						<video
+							src="/api/v1/storage/download/{data.cover_image}"
+							controls
+							class="max-h-72 h-auto w-auto"
+							on:contextmenu|preventDefault={() => {
+								data.cover_image = null;
+							}}
+						>
+							Your browser does not support the video tag.
+						</video>
+					{:else}
+						<p>Unsupported media type</p>
+					{/if}
 				</div>
 			{:else}
 				{#await import('$lib/editor/uploader.svelte')}

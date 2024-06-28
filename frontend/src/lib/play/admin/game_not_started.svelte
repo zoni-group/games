@@ -51,9 +51,10 @@ SPDX-License-Identifier: MPL-2.0
 				})}
 			</p>
 		</div>
+		<!-- svelte-ignore a11y-click-events-have-key-events -->
 		<img
 			on:click={() => (fullscreen_open = true)}
-			alt="QR code to join the game"
+			alt={$t('qr_code_to_join_the_game')}
 			src="/api/v1/utils/qr/{game_pin}"
 			class="block mx-auto w-1/2 dark:bg-white shadow-2xl rounded hover:cursor-pointer"
 		/>
@@ -99,6 +100,7 @@ SPDX-License-Identifier: MPL-2.0
 		{#if players.length > 0}
 			{#each players as player}
 				<div class="p-2 m-2 border-2 border-[#004A93] rounded hover:cursor-pointer">
+					<!-- svelte-ignore a11y-click-events-have-key-events -->
 					<span
 						class="hover:line-through text-lg"
 						on:click={() => {
@@ -113,13 +115,14 @@ SPDX-License-Identifier: MPL-2.0
 </div>
 
 {#if fullscreen_open}
+	<!-- svelte-ignore a11y-click-events-have-key-events -->
 	<div
 		class="fixed top-0 left-0 z-50 w-screen h-screen bg-black bg-opacity-50 fle p-2"
 		transition:fade={{ duration: 80 }}
 		on:click={() => (fullscreen_open = false)}
 	>
 		<img
-			alt="QR code to join the game"
+			alt={$t('qr_code_to_join_the_game')}
 			src="/api/v1/utils/qr/{game_pin}"
 			class="object-contain rounded m-auto h-full bg-white"
 		/>

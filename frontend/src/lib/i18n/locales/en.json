@@ -1,15 +1,15 @@
 {
     "index_page": {
-        "slogan": "The open-source quiz-platform!",
+        "slogan": "The open-source activity-platform!",
         "meta": {
-            "description": "ClassQuiz is a quiz app to learn interactively for students, which is open source and free to use",
+            "description": "Zoni AI is an activity app to learn interactively for students, which is open source and free to use",
             "title": "Home"
         },
-        "stats": "There are already {{user_count}} users and {{quiz_count}} quizzes on ClassQuiz.",
+        "stats": "There are already {{user_count}} users and {{quiz_count}} activities on Zoni AI.",
         "see_what_true_and_false": "See what was right or wrong",
         "see_how_many_true_and_false": "See how many were right or wrong",
         "create_or_import": "Create or Import",
-        "see_all_quizzes": "See all your quizzes",
+        "see_all_quizzes": "See all your ativities",
         "teachers_site": "Teacher's site",
         "students_site": "Student's site",
         "no_tracking": "No Tracking",
@@ -17,50 +17,50 @@
         "german_server": "German Server",
         "user_friendly": "User-Friendly",
         "completely_free": "Completely Cost Free",
-        "quiz_results_downloadable": "Quiz-results can be downloaded",
+        "quiz_results_downloadable": "activities-results can be downloaded",
         "multilingual": "Multilingual",
         "dark_mode": "Darkmode",
-        "get_a_quiz": "1. Get a quiz",
-        "create_a_quiz_from_scratch": "Create a quiz from scratch with the editor and include pictures and more",
-        "find_or_explore": "Find (or explore) quizzes made or imported by other people",
-        "play_quiz": "2. Play the quiz",
+        "get_a_quiz": "1. Get an activity",
+        "create_a_quiz_from_scratch": "Create an activity from scratch with the editor and include pictures and more",
+        "find_or_explore": "Find (or explore) activities made or imported by other people",
+        "play_quiz": "2. Play the activity",
         "select_answer": "Select the answer",
         "choose_answer_wisely": "Choose your answer wisely",
         "view_results": "View results",
         "check_if_chosen_wisely": "Check, if you have chosen wisely",
         "list_winners": "List winners",
         "get_ranking_and_winners": "Get the ranking and see who won",
-        "why_classquiz": "Why ClassQuiz?",
-        "no_tracking_content": "Others track you and sends that info to third-parties, but ClassQuiz doesn't.",
-        "self_hostable_content": "ClassQuiz can easily be self-hosted, so the data is only in your control!",
-        "user_friendly_content": "ClassQuiz aims to be simple, so it is can be used by everyone.",
-        "completely_free_content": "ClassQuiz is completely cost free (for the user), without any paid plans or annoying redirects to the upgrade-page. Donations are highly appreciated.",
-        "quiz_results_downloadable_content": "Quiz-results can be easily exported into an Excel-spreadsheet. (Didn't know others couldn't do that)",
-        "multilingual_content": "ClassQuiz is available in English, French, German, Italian, Norwegian Bokmål, Turkish, and partly Indonesian and Catalan.",
+        "why_classquiz": "Why Zoni AI?",
+        "no_tracking_content": "Others track you and sends that info to third-parties, but Zoni AI doesn't.",
+        "self_hostable_content": "Zoni AI can easily be self-hosted, so the data is only in your control!",
+        "user_friendly_content": "Zoni AI aims to be simple, so it is can be used by everyone.",
+        "completely_free_content": "Zoni AI is completely cost free (for the user), without any paid plans or annoying redirects to the upgrade-page. Donations are highly appreciated.",
+        "quiz_results_downloadable_content": "Activity-results can be easily exported into an Excel-spreadsheet. (Didn't know others couldn't do that)",
+        "multilingual_content": "Zoni AI is available in English, French, German, Italian, Norwegian Bokmål, Turkish, and partly Indonesian and Catalan.",
         "dark_mode_content": "One of the most important features a website can have!",
-        "german_server_content": "ClassQuiz's servers are located in Germany and hosted by netcup.",
-        "download_quizzes": "Download Quizzes",
-        "download_quizzes_content": "Quizzes can be downloaded as one file and imported at any time. This also lets you move your quizzes to other ClassQuiz instances.",
+        "german_server_content": "Zoni AI's servers are located in Germany and hosted by netcup.",
+        "download_quizzes": "Download Activities",
+        "download_quizzes_content": "Activities can be downloaded as one file and imported at any time. This also lets you move your activities to other Zoni AI instances.",
         "community_driven": "Community-driven",
-        "community_driven_content": "ClassQuiz depends on its community for funding, testing ideas, feature requests, translations and more! You can also be a part of the ClassQuiz-community!",
-        "how_does_classquiz_work": "How does ClassQuiz even work?",
-        "no_player_limit": "No player limit",
-        "no_player_limit_content": "ClassQuiz doesn't have an artificial player limit. In theory, 1000+ players could play the same quiz, but it's tested with up to 300 players per quiz.",
+        "community_driven_content": "Zoni AI depends on its community for funding, testing ideas, feature requests, translations and more! You can also be a part of the Zoni AI community!",
+        "how_does_classquiz_work": "How does Zoni AI even work?",
+        "no_player_limit": "No participant limit",
+        "no_player_limit_content": "Zoni AI doesn't have an artificial participant limit. In theory, 1000+ participant could play the same activity, but it's tested with up to 300 participants per activity.",
         "import_quiz_from_kahoot_and_edit": ""
     },
     "overview_page": {
         "created_at": "Created at",
         "question_count": "Question count",
-        "no_quizzes": "Click the \"Create\"-button, or import a quiz to get going."
+        "no_quizzes": "Click the \"Create\"-button, or import a activity to get going."
     },
     "edit_page": {
-        "success_update_title": "Quiz updated.",
+        "success_update_title": "Activity updated.",
         "success_update_body": "Nobody will expect the inquizition."
     },
     "create_page": {
         "success": {
-            "title": "Quiz created.",
-            "body": "Let the games begin."
+            "title": "Activity created.",
+            "body": "Let the ativities begin."
         }
     },
     "register_page": {
@@ -143,7 +143,7 @@
         "private": "Private",
         "dashboard": "Dashboard",
         "question_plural": "Questions",
-        "game_pin": "Game PIN",
+        "game_pin": "Activity PIN",
         "other": "other",
         "other_plural": "others",
         "donating": "donating",
@@ -159,7 +159,7 @@
         "order": "Order",
         "results": "Results",
         "note": "Note",
-        "player_plural": "Players",
+        "player_plural": "participants",
         "version": "Version",
         "never": "Never",
         "unknown": "Unknown",
@@ -174,7 +174,7 @@
         "normal": "Two devices mode",
         "selected": "Selected",
         "select": "Select",
-        "quiz": "Quiz",
+        "quiz": "Activity",
         "quiztivity": "Quiztivity",
         "next": "Next",
         "check_choice": "Check Choice",
@@ -195,7 +195,13 @@
         "dislike_plural": "Dislikes",
         "play_plural": "Plays",
         "info": "Info",
-        "player": "Player"
+        "player": "Participant",
+        "you_need_to_be_logged_in_to_start_a_game": "You need to be logged in to start an activity",
+        "you_need_to_be_logged_in_to_download_a_game": "You need to be logged in to download an activity",
+        "you_need_to_be_logged_in_to_start_a_practice": "You need to be logged in to start a practice",
+        "start_game": "Start!",
+        "qr_code_to_join_the_game": "QR code to join the activity",
+        "game_not_found": "Activity not found"
     },
     "editor": {
         "time_in_seconds": "Time in seconds",
@@ -220,7 +226,7 @@
         "voting_description": "Answers don't add any points",
         "check_choice_description": "All correct answers have to be chosen to score points",
         "order_description": "Answers can be brought into the correct order",
-        "text_description": "Players can enter text",
+        "text_description": "Participants can enter text",
         "range_description": "A number-range can be selected with a slider",
         "need_more_help": "Need more help?",
         "visit_docs": "Visit the docs.",
@@ -231,18 +237,18 @@
     "import_page": {
         "need_help": "Need help?",
         "visit_docs": "Visit the documentation",
-        "a_kahoot_quiz": "A Kahoot!-Quiz",
+        "a_kahoot_quiz": "A Kahoot!-Activity",
         "url_should_look_like_this": "The URL should look like this: https://create.kahoot.it/details/...",
-        "side_import_kahoot": "On this side you can import quizzes, which live on Kahoot!.",
-        "classquiz_quiz": "A ClassQuiz-Quiz",
+        "side_import_kahoot": "On this side you can import activities, which live on Kahoot!.",
+        "classquiz_quiz": "A Zoni AI-Activity",
         "upload_file_ending": "Upload the file ending in .cqa or .xlsx",
-        "this_side_classquiz": "On this side you can import quizzes, which were exported from ClassQuiz.",
-        "this_side_classquiz_excel": "You can also upload excel files, if you've filled out the following template. If a quiz with the title already exists, it will append the questions to the existing quiz.",
+        "this_side_classquiz": "On this side you can import activities, which were exported from Zoni AI.",
+        "this_side_classquiz_excel": "You can also upload excel files, if you've filled out the following template. If a activity with the title already exists, it will append the questions to the existing activity.",
         "download_template_here": "Download the template"
     },
     "admin_page": {
-        "already_registered_as_admin": "There is already an admin registered for this game.",
-        "start_game": "Start game",
+        "already_registered_as_admin": "There is already an admin registered for this activity.",
+        "start_game": "Start!",
         "time_left": "Time left",
         "get_results": "Get results",
         "get_results_and_stop_time": "Get results and stop time",
@@ -286,7 +292,7 @@
         "nothing_here": "There is nothing here..."
     },
     "play_page": {
-        "end_sentence": "That's it! This was the quiz.",
+        "end_sentence": "That's it! This was the activity.",
         "1st_place": "1st Place",
         "2nd_place": "2nd Place",
         "3rd place": "3rd Place",
@@ -297,17 +303,17 @@
         "join_by_entering_code": "Join by entering the following code",
         "points_added": "Points added",
         "your_place": "You're on place {{place}}!",
-        "players_waiting": "{{count}} player are waiting",
-        "players_waiting_plural": "{{count}} players are waiting"
+        "players_waiting": "{{count}} participants are waiting",
+        "players_waiting_plural": "{{count}} participants are waiting"
     },
     "editor_page": {
         "add_an_answer": "Add an answer",
         "right_click_to_delete": "Right-click on an answer to delete it!"
     },
     "dashboard": {
-        "search_for_own_quizzes": "Search for your own quizzes",
+        "search_for_own_quizzes": "Search for your own activities",
         "views_n_plays": "Views & Plays",
-        "info_analytics": "The \"Plays\" only show how often the quiz was started (you included), whereas the \"Views\" count how often the \"View\"-page was visited, so it also counts bots (sorry for that).",
+        "info_analytics": "The \"Plays\" only show how often the activity was started (you included), whereas the \"Views\" count how often the \"View\"-page was visited, so it also counts bots (sorry for that).",
         "commandpalette_notice": "Press <kbd>Ctr</kbd>+<kbd>k</kbd> or <kbd>Meta</kbd>+<kbd>k</kbd> to open the command palette"
     },
     "footer": {
@@ -350,25 +356,25 @@
     },
     "results_page": {
         "no_results_so_far": "No results saved so far...",
-        "quiz_title": "Quiz Title",
+        "quiz_title": "Activity Title",
         "date_played": "Date Played",
-        "player_count": "Player count",
+        "player_count": "Participant count",
         "general_overview": {
-            "sentence": "The quiz \"{{title}}\", which was played on {{date}} had {{player_count}} players with an average score of {{average_score}}."
+            "sentence": "The activity \"{{title}}\", which was started on {{date}} had {{player_count}} participants with an average score of {{average_score}}."
         }
     },
     "result_page": {
-        "player_name": "Player name",
+        "player_name": "Participant name",
         "custom_field": "Custom field",
         "average_score": "Average score: {{average_score}}",
         "correct_answer": "{{count}} correct answer",
         "correct_answer_plural": "{{count}} correct answers",
         "time_taken": "Time taken",
-        "player_score": "Player Score"
+        "player_score": "Participant Score"
     },
     "controllers": {
         "add_new_controller": "Add new controller",
-        "player_name": "Player name",
+        "player_name": "Participant name",
         "first_seen": "First seen",
         "last_seen": "Last seen",
         "controller_name": "Controller Name",
@@ -412,11 +418,11 @@
         "view_on_kahoot": "View on the original"
     },
     "start_game": {
-        "captcha_message": "If enabled, Google's ReCaptcha will load in the browser of players. Only enable if you really need it, since you need the consent of EVERY player to load the captcha.",
-        "normal_mode_description": "Question and answer will only be shown on admins screen. The players will only have colored buttons with symbols matching these on the screen of the admin.",
+        "captcha_message": "If enabled, Google's ReCaptcha will load in the browser of participants. Only enable if you really need it, since you need the consent of EVERY participant to load the captcha.",
+        "normal_mode_description": "Question and answer will only be shown on admins screen. The participants will only have colored buttons with symbols matching these on the screen of the admin.",
         "old_school_mode": "One device mode",
-        "old_school_mode_description": "Questions and images will be shown on both admins screen and on the screen of the players",
-        "start_game": "Start Game"
+        "old_school_mode_description": "Questions and images will be shown on both admins screen and on the screen of the participants",
+        "start_game": "Start!"
     },
     "quiztivity": {
         "editor": {
@@ -454,7 +460,7 @@
     },
     "public_user_page": {
         "joined_on": "Joined on {{date}}",
-        "no_original_quizzes": "This user doesn't have any original quizzes",
+        "no_original_quizzes": "This user doesn't have any original activities",
         "user_not_found": "User not found"
     },
     "file_dashboard": {
@@ -467,8 +473,8 @@
         "uploaded": "Uploaded: {{date}}",
         "imported": "Imported: {{yes_or_no}}",
         "edit_details": "Edit details",
-        "delete_image": "Delete image",
-        "edit_the_image": "Edit the image",
+        "delete_image": "Delete",
+        "edit_the_image": "Edit",
         "filename_word": "Filename",
         "alt_text": "Alt(ernate) text / Caption",
         "storage_usage": "You've used {{used}} MiB out of {{total}} MiB of storage. That's equivalent to {{percent}}% of your storage."

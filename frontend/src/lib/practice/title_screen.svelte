@@ -6,11 +6,26 @@ SPDX-License-Identifier: MPL-2.0
 
 <script lang="ts">
 	import { getLocalization } from '$lib/i18n';
-
-	export let data;
+	import { onMount } from 'svelte';
 	import { fly } from 'svelte/transition';
 
+	export let data;
+	let contentType: string | null = null;
+
 	const { t } = getLocalization();
+
+	async function fetchContentType(url: string) {
+		const response = await fetch(url, {
+			method: 'HEAD'
+		});
+		return response.headers.get('Content-Type');
+	}
+
+	onMount(async () => {
+		if (data.cover_image) {
+			contentType = await fetchContentType(`/api/v1/storage/download/${data.cover_image}`);
+		}
+	});
 </script>
 
 <div class="w-full px-6 lg:px-20 h-[80vh] absolute" in:fly={{ x: 100 }} out:fly={{ x: -100 }}>
@@ -46,14 +61,30 @@ SPDX-License-Identifier: MPL-2.0
 
 			{#if data.cover_image != undefined && data.cover_image !== ''}
 				<div class="flex justify-center pt-10 w-full max-h-72 w-full">
-					<img
-						src="/api/v1/storage/download/{data.cover_image}"
-						alt="not available"
-						class="max-h-72 h-auto w-auto"
-						on:contextmenu|preventDefault={() => {
-							data.cover_image = '';
-						}}
-					/>
+					{#if contentType?.startsWith('image')}
+						<img
+							src={`/api/v1/storage/download/${data.cover_image}`}
+							alt="not available"
+							class="max-h-72 h-auto w-auto"
+							on:contextmenu|preventDefault={() => {
+								data.cover_image = '';
+							}}
+						/>
+					{:else if contentType?.startsWith('video')}
+						<!-- svelte-ignore a11y-media-has-caption -->
+						<video
+							src={`/api/v1/storage/download/${data.cover_image}`}
+							class="max-h-72 h-auto w-auto"
+							controls
+							on:contextmenu|preventDefault={() => {
+								data.cover_image = '';
+							}}
+						>
+							Your browser does not support the video tag.
+						</video>
+					{:else}
+						<p>Unsupported media type</p>
+					{/if}
 				</div>
 			{/if}
 			<div class="pt-10 w-full flex justify-center">
