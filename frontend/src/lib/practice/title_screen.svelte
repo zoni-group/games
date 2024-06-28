@@ -26,6 +26,14 @@ SPDX-License-Identifier: MPL-2.0
 			contentType = await fetchContentType(`/api/v1/storage/download/${data.cover_image}`);
 		}
 	});
+
+	// Function to ensure the .mp4 extension is present
+	function getVideoUrl(url) {
+    	if (!url.endsWith('.mp4')) {
+      		return `${url}.mp4`;
+    	}
+    	return url;
+  	}
 </script>
 
 <div class="w-full px-6 lg:px-20 h-[80vh] absolute" in:fly={{ x: 100 }} out:fly={{ x: -100 }}>
@@ -73,7 +81,7 @@ SPDX-License-Identifier: MPL-2.0
 					{:else if contentType?.startsWith('video')}
 						<!-- svelte-ignore a11y-media-has-caption -->
 						<video
-							src={`/api/v1/storage/download/${data.cover_image}`}
+							src={getVideoUrl(`/api/v1/storage/download/${data.cover_image}`)}
 							class="max-h-72 h-auto w-auto"
 							controls
 							on:contextmenu|preventDefault={() => {

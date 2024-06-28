@@ -7,6 +7,7 @@ from tempfile import SpooledTemporaryFile
 
 from fastapi import APIRouter, HTTPException, UploadFile, File, Depends, Request, Response
 from fastapi.responses import StreamingResponse, RedirectResponse
+from starlette.background import BackgroundTask
 from pydantic import BaseModel
 
 from classquiz.auth import get_current_user
@@ -36,43 +37,57 @@ def headers_from_storage_item(item: StorageItem) -> dict[str, str]:
 
 @router.get("/download/{file_name}")
 async def download_file(file_name: str):
-    item = None
-    checked_image_string = check_image_string(file_name)
+    # Check and strip the file extension if it exists
+    if "." in file_name:
+        base_file_name, file_extension = file_name.rsplit(".", 1)
+    else:
+        base_file_name, file_extension = file_name, None
+
+    checked_image_string = check_image_string(base_file_name)
     if not checked_image_string[0]:
         raise HTTPException(status_code=400, detail="Invalid file name")
+
+    item = None
     if checked_image_string[1] is not None:
         item = await StorageItem.objects.get_or_none(id=checked_image_string[1])
         if item is None:
             print("Item not found")
             raise HTTPException(status_code=404, detail="File not found")
-        file_name = item.storage_path
-        if file_name is None:
-            file_name = item.id.hex
+        base_file_name = item.storage_path if item.storage_path else item.id.hex
+
     if storage.backend == "s3":
         if item is None:
-            return RedirectResponse(url=await storage.get_url(file_name, 300))
+            return RedirectResponse(url=await storage.get_url(base_file_name, 300))
         else:
-            return RedirectResponse(url=await storage.get_url(file_name, 300), headers=headers_from_storage_item(item))
+            return RedirectResponse(url=await storage.get_url(base_file_name, 300), headers=headers_from_storage_item(item))
+
     try:
-        download = storage.download(file_name)
+        download = storage.download(base_file_name)
     except DownloadingFailedError:
         print("error")
         raise HTTPException(status_code=404, detail="File not found")
+
     if download is None:
         print("dload is none")
         raise HTTPException(status_code=404, detail="File not found")
-    media_type = "image/*"
+
+    media_type = "application/octet-stream"
     if item is not None:
         media_type = item.mime_type
+
+    # Add the file extension back if it was in the original request
+    if file_extension:
+        base_file_name += f".{file_extension}"
+
     headers = {"Cache-Control": "public, immutable, max-age=31536000"}
     if item is not None:
-        headers = {**headers, **headers_from_storage_item(item)}
+        headers.update(headers_from_storage_item(item))
 
-    return StreamingResponse(
-        download,
-        media_type=media_type,
-        headers=headers,
-    )
+    async def file_iterator():
+        async for chunk in download:
+            yield chunk
+
+    return StreamingResponse(file_iterator(), media_type=media_type, headers=headers)
 
 
 @router.get("/info/{file_name}")
