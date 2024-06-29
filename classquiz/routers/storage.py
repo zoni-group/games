@@ -5,17 +5,17 @@ from base64 import b64encode
 from datetime import datetime, timedelta
 from tempfile import SpooledTemporaryFile
 
-from fastapi import APIRouter, HTTPException, UploadFile, File, Depends, Request, Response
+from fastapi import APIRouter, HTTPException, UploadFile, File, Depends, Request, Response, Header
 from fastapi.responses import StreamingResponse, RedirectResponse
 from starlette.background import BackgroundTask
 from pydantic import BaseModel
+from uuid import uuid4, UUID
 
 from classquiz.auth import get_current_user
 from classquiz.config import settings, storage, arq, ALLOWED_MIME_TYPES
 from classquiz.db.models import User, StorageItem, PublicStorageItem, UpdateStorageItem, PrivateStorageItem
 from classquiz.helpers import check_image_string
 from classquiz.storage.errors import DownloadingFailedError
-from uuid import uuid4, UUID
 
 settings = settings()
 
@@ -36,7 +36,7 @@ def headers_from_storage_item(item: StorageItem) -> dict[str, str]:
 
 
 @router.get("/download/{file_name}")
-async def download_file(file_name: str):
+async def download_file(file_name: str, range: str = Header(None)):
     # Check and strip the file extension if it exists
     if "." in file_name:
         base_file_name, file_extension = file_name.rsplit(".", 1)
@@ -62,32 +62,74 @@ async def download_file(file_name: str):
             return RedirectResponse(url=await storage.get_url(base_file_name, 300), headers=headers_from_storage_item(item))
 
     try:
-        download = storage.download(base_file_name)
+        download_generator = storage.download(base_file_name)
     except DownloadingFailedError:
         print("error")
-        raise HTTPException(status_code=404, detail="File not found")
-
-    if download is None:
-        print("dload is none")
         raise HTTPException(status_code=404, detail="File not found")
 
     media_type = "application/octet-stream"
     if item is not None:
         media_type = item.mime_type
 
+    file_size = await storage.get_file_size(base_file_name)
+    if file_size is None:
+        raise HTTPException(status_code=404, detail="File size not found")
+
     # Add the file extension back if it was in the original request
     if file_extension:
         base_file_name += f".{file_extension}"
 
-    headers = {"Cache-Control": "public, immutable, max-age=31536000"}
+    headers = {
+        "Cache-Control": "public, immutable, max-age=31536000",
+        "Accept-Ranges": "bytes"
+    }
     if item is not None:
         headers.update(headers_from_storage_item(item))
 
+    if range:
+        start, end = range.replace("bytes=", "").split("-")
+        start = int(start)
+        end = int(end) if end else file_size - 1
+        length = end - start + 1
+
+        async def file_iterator():
+            position = 0
+            async for chunk in download_generator:
+                chunk_len = len(chunk)
+                if position + chunk_len > start:
+                    if position < start:
+                        chunk = chunk[start - position:]
+                    if position + chunk_len > end:
+                        chunk = chunk[:end - position + 1]
+                    yield chunk
+                    if position + chunk_len > end:
+                        break
+                position += chunk_len
+
+        headers.update({
+            "Content-Range": f"bytes {start}-{end}/{file_size}",
+            "Content-Length": str(length)
+        })
+
+        return StreamingResponse(file_iterator(), status_code=206, media_type=media_type, headers=headers)
+
     async def file_iterator():
-        async for chunk in download:
+        async for chunk in download_generator:
             yield chunk
 
+    headers["Content-Length"] = str(file_size)
+
     return StreamingResponse(file_iterator(), media_type=media_type, headers=headers)
+
+
+    async def file_iterator():
+        async for chunk in download_generator:
+            yield chunk
+
+    headers["Content-Length"] = str(file_size)
+
+    return StreamingResponse(file_iterator(), media_type=media_type, headers=headers)
+
 
 
 @router.get("/info/{file_name}")
