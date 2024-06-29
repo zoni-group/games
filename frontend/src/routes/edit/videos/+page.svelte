@@ -55,6 +55,7 @@ SPDX-License-Identifier: MPL-2.0
 			return;
 		}
 		status = Status.Compressing;
+
 		const ffmpeg = createFFmpeg({
 			// log: true,
 			progress: (p) => {
@@ -67,31 +68,35 @@ SPDX-License-Identifier: MPL-2.0
 				stats.progress = p.ratio ?? 0;
 			}
 		});
+
 		const file = file_input.files[0];
 		original_file_size_in_mi = file.size / 1_048_576;
+
 		ffmpeg.setLogger(({ message }) => {
 			const speed_match = message.match(speed_extraction_regex);
 			stats.speed = speed_match ? parseFloat(speed_match[1]) : 0;
 		});
+
 		await ffmpeg.load();
 		ffmpeg.FS('writeFile', file.name, await fetchFile(file));
+
+		// Use '-c' to copy the input file without compression
 		await ffmpeg.run(
 			'-i',
 			file.name,
-			'-vcodec',
-			'libx264',
-			'-crf',
-			'20',
-			'-vf',
-			'scale=1080:-2',
+			'-c',
+			'copy',
 			'out.mp4'
 		);
+
 		const data = await ffmpeg.FS('readFile', 'out.mp4');
 		file_size_in_mi = data.length / 1_048_576;
 		file_data = new Blob([data]);
+
 		status = Status.CompressDone;
 		stats.progress = 1;
 	};
+
 
 	const upload_video = async () => {
 		status = Status.Uploading;
