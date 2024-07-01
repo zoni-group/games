@@ -25,8 +25,31 @@ SPDX-License-Identifier: MPL-2.0
 	for (const i of quiz_answers) {
 		sorted_data[i] = 0;
 	}
+
+	// Function to clean and normalize text answers
+	const cleanTextAnswer = (answer: string) => {
+		return answer.trim().replace(/\s+/g, ' ');
+	};
+
+	// Count the answers
 	for (const i of data) {
-		sorted_data[i.answer] += 1;
+		let answer_found = false;
+		for (const j of question.answers) {
+			let submitted_answer = cleanTextAnswer(i.answer);
+			let correct_answer = cleanTextAnswer(j.answer);
+			if (!j.case_sensitive) {
+				submitted_answer = submitted_answer.toLowerCase();
+				correct_answer = correct_answer.toLowerCase();
+			}
+			if (submitted_answer === correct_answer) {
+				sorted_data[j.answer] += 1;
+				answer_found = true;
+				break;
+			}
+		}
+		if (!answer_found) {
+			sorted_data[i.answer] += 1;
+		}
 	}
 </script>
 
@@ -65,7 +88,7 @@ SPDX-License-Identifier: MPL-2.0
 					<p
 						class="-rotate-45 text-xl text-str"
 						class:line-through={!answer_correct[i] &&
-							question.type !== QuizQuestionType.VOTING}
+							question.type !== QuizQuestionType.VOTING && question.type !== QuizQuestionType.TEXT}
 					>
 						{@html answer}
 					</p>

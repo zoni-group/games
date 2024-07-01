@@ -68,12 +68,16 @@ SPDX-License-Identifier: MPL-2.0
 		}
 	}
 
+	const cleanAnswer = (answer: string) => {
+		return answer.trim().replace(/\s+/g, ' ');
+	};
+
 	const selectAnswer = (answer: string) => {
 		selected_answer = answer;
 		//timer_res = '0';
 		socket.emit('submit_answer', {
 			question_index: question_index,
-			answer: answer
+			answer: cleanAnswer(answer)
 		});
 	};
 

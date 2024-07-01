@@ -20,6 +20,11 @@ class SubmitAnswerInput(BaseModel):
     answer: int
 
 
+def clean_text_answer(answer: str) -> str:
+    """Trim whitespace at the beginning and end and remove duplicated whitespaces."""
+    return ' '.join(answer.strip().split())
+
+
 async def submit_answer_fn(data_answer: int, game_pin: str, player_id: str, now: datetime):
     redis_res_game = await redis.get(f"game:{game_pin}")
     username = await redis.get(f"game:cqc:player:{player_id}")
@@ -35,6 +40,11 @@ async def submit_answer_fn(data_answer: int, game_pin: str, player_id: str, now:
         selected_answer = question.answers[data_answer].answer
     except (KeyError, IndexError):
         return
+    
+    # Clean the selected answer if it's a text answer
+    if question.type == QuizQuestionType.TEXT:
+        selected_answer = clean_text_answer(selected_answer)
+
     if await redis.get(f"answer_given:{player_id}:{game.current_question}") is not None:
         return
     answer_right = False
@@ -43,6 +53,16 @@ async def submit_answer_fn(data_answer: int, game_pin: str, player_id: str, now:
             if answer.answer == selected_answer and answer.right:
                 answer_right = True
                 break
+    elif question.type == QuizQuestionType.TEXT:
+        for answer in question.answers:
+            if not answer.case_sensitive:
+                if answer.answer.lower() == selected_answer.lower():
+                    answer_right = True
+                    break
+            else:
+                if answer.answer == selected_answer:
+                    answer_right = True
+                    break
     elif question.type == QuizQuestionType.VOTING:
         answer_right = False
     else:
