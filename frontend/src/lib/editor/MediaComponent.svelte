@@ -12,9 +12,9 @@ SPDX-License-Identifier: MPL-2.0
 	export let src: string;
 	export let css_classes = 'max-h-64 h-auto w-auto';
 	export let added_thumbhash_classes = 'h-full';
-	export let muted = true;
+	export let muted = false;
 	export let allow_fullscreen = true;
-	let type: 'img' | 'video' | undefined = undefined;
+	let type: 'img' | 'video' | 'audio' | undefined = undefined;
 
 	let img_data;
 	let thumbhash_data: string;
@@ -32,6 +32,8 @@ SPDX-License-Identifier: MPL-2.0
 		const fileType = res.headers.get('Content-Type');
 		if (fileType.includes('video')) {
 			type = 'video';
+		} else if (fileType.includes('audio')) {
+			type = 'audio';
 		} else {
 			type = 'img';
 			thumbhash_data = thumbHashToDataURL(base64ToBytes(res.headers.get('x-thumbhash')));
@@ -67,6 +69,13 @@ SPDX-License-Identifier: MPL-2.0
     	}
     	return url;
   	}
+	// Function to ensure the .mp3 extension is present
+	function getAudioUrl(url) {
+    	if (!url.endsWith('.mp3')) {
+      		return `${url}.mp3`;
+    	}
+    	return url;
+  	}
 </script>
 
 {#await media}
@@ -86,12 +95,24 @@ SPDX-License-Identifier: MPL-2.0
 			class={css_classes}
 			disablepictureinpicture
 			controls
-			autoplay
-			loop
+			autoplay={false}
+			loop={false}
 			{muted}
 			preload="metadata"
 		>
 			<source src={getVideoUrl(`/api/v1/storage/download/${src}`)} />			
+		</video>
+	{:else if type === 'audio'}
+		<video
+			class={css_classes}
+			disablepictureinpicture
+			controls
+			autoplay={false}
+			loop={false}
+			{muted}
+			preload="metadata"
+		>
+			<source src={getAudioUrl(`/api/v1/storage/download/${src}`)} />			
 		</video>
 	{:else}
 		<p>Unknown media type</p>

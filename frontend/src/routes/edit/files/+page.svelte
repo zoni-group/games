@@ -71,6 +71,14 @@ SPDX-License-Identifier: MPL-2.0
     	}
     	return url;
   	}
+
+	// Function to ensure the .mp3 extension is present
+	function getAudioUrl(url) {
+    	if (!url.endsWith('.mp3')) {
+      		return `${url}.mp3`;
+    	}
+    	return url;
+  	}
 </script>
 
 <div>
@@ -101,6 +109,19 @@ SPDX-License-Identifier: MPL-2.0
 						src={getVideoUrl(`/api/v1/storage/download/${image.id}`)}
 						class="m-auto h-auto w-auto max-h-[30vh]"
 						controls
+						autoplay={false}
+						loop={false}
+					>
+						Your browser does not support the video tag.
+					</video>
+				{:else if contentTypes[image.id]?.startsWith('audio')}
+                    <!-- svelte-ignore a11y-media-has-caption -->
+					<video
+						src={getAudioUrl(`/api/v1/storage/download/${image.id}`)}
+						class="m-auto h-auto w-auto max-h-[30vh]"
+						controls
+						autoplay={false}
+						loop={false}
 					>
 						Your browser does not support the video tag.
 					</video>
@@ -155,6 +176,7 @@ SPDX-License-Identifier: MPL-2.0
 </div>
 
 {#if edit_popup}
+	<!-- svelte-ignore a11y-click-events-have-key-events -->
 	<div
 		transition:fade|local={{ duration: 100 }}
 		class="fixed top-0 left-0 h-screen w-screen z-40 flex bg-black bg-opacity-50"
