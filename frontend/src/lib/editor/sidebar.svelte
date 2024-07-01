@@ -93,6 +93,14 @@ SPDX-License-Identifier: MPL-2.0
     	}
     	return url;
   	}
+
+	// Function to ensure the .mp3 extension is present
+	function getAudioUrl(url) {
+    	if (!url.endsWith('.mp3')) {
+      		return `${url}.mp3`;
+    	}
+    	return url;
+  	}
 </script>
 
 <div class="h-screen relative">
@@ -326,6 +334,21 @@ SPDX-License-Identifier: MPL-2.0
 								src={getVideoUrl(`/api/v1/storage/download/${question.image}`)}
 								class="h-10 border rounded-lg"
 								controls
+								autoplay={false}
+								loop={false}
+								use:tippy={{
+									content: `<video src="/api/v1/storage/download/${question.image}" controls class="rounded">`,
+									allowHTML: true
+								}}
+							></video>
+						{:else if contentTypes[question.image] === 'audio/mp3'}
+							<!-- svelte-ignore a11y-media-has-caption -->
+							<video
+								src={getAudioUrl(`/api/v1/storage/download/${question.image}`)}
+								class="h-10 border rounded-lg"
+								controls
+								autoplay={false}
+								loop={false}
 								use:tippy={{
 									content: `<video src="/api/v1/storage/download/${question.image}" controls class="rounded">`,
 									allowHTML: true

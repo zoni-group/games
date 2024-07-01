@@ -50,7 +50,9 @@ SPDX-License-Identifier: MPL-2.0
 		// eslint-disable-next-line no-unused-vars
 		Library,
 		// eslint-disable-next-line no-unused-vars
-		Pixabay
+		Pixabay,
+		// eslint-disable-next-line no-unused-vars
+		Audio,
 	}
 
 	const uppy = new Uppy()
@@ -68,7 +70,7 @@ SPDX-License-Identifier: MPL-2.0
 		.use(XHRUpload, {
 			endpoint: `/api/v1/storage/`
 		});
-	const props = {
+	const imageProps = {
 		inline: true,
 		restrictions: {
 			maxFileSize: 10_490_000,
@@ -77,17 +79,44 @@ SPDX-License-Identifier: MPL-2.0
 			// allowedFileTypes: ['.gif', '.jpg', '.jpeg', '.png', '.svg', '.webp']
 		}
 	};
+	const audioProps = {
+		inline: true,
+		restrictions: {
+			maxFileSize: 10_490_000,
+			maxNumberOfFiles: 1,
+			allowedFileTypes: ['audio/mp3']
+		}
+	};
+
 	let image_id;
+	let audio_id;
+
 	uppy.on('upload-success', (file, response) => {
-		image_id = response.body.id;
+		if (selected_type === AvailableUploadTypes.Image) {
+			image_id = response.body.id;
+		} else if (selected_type === AvailableUploadTypes.Audio) {
+			audio_id = response.body.id;
+		}
 	});
 	uppy.on('complete', (_) => {
 		if (selected_question === undefined) {
-			data.cover_image = image_id;
+			if (selected_type === AvailableUploadTypes.Image) {
+				data.cover_image = image_id;
+			} else if (selected_type === AvailableUploadTypes.Audio) {
+				data.cover_audio = audio_id;
+			}
 		} else if (selected_question === -1) {
-			data.background_image = image_id;
+			if (selected_type === AvailableUploadTypes.Image) {
+				data.background_image = image_id;
+			} else if (selected_type === AvailableUploadTypes.Audio) {
+				data.background_audio = audio_id;
+			}
 		} else {
-			data.questions[selected_question].image = image_id;
+			if (selected_type === AvailableUploadTypes.Image) {
+				data.questions[selected_question].image = image_id;
+			} else if (selected_type === AvailableUploadTypes.Audio) {
+				data.questions[selected_question].audio = audio_id;
+			}
 		}
 
 		modalOpen = false;
@@ -133,13 +162,14 @@ SPDX-License-Identifier: MPL-2.0
 </script>
 
 {#if modalOpen}
+	<!-- svelte-ignore a11y-click-events-have-key-events -->
 	<div
 		class="w-screen h-screen fixed top-0 left-0 bg-opacity-50 bg-black z-20 flex justify-center"
 		on:click={handle_on_click}
 		transition:fade|local={{ duration: 100 }}
 	>
 		{#if selected_type === null}
-			<div class="m-auto w-1/3 h-auto bg-white dark:bg-gray-700 p-4 rounded">
+			<div class="m-auto h-auto bg-white dark:bg-gray-700 p-4 rounded">
 				<h1 class="text-3xl text-center mb-4">{$t('uploader.select_upload_type')}</h1>
 				<div class="flex flex-row gap-4">
 					<div class="w-full">
@@ -177,12 +207,20 @@ SPDX-License-Identifier: MPL-2.0
 							>Pixabay
 						</BrownButton>
 					</div>
+					<div class="w-full">
+						<BrownButton
+							on:click={() => {
+								selected_type = AvailableUploadTypes.Audio;
+							}}
+							>{$t('words.audio')}
+						</BrownButton>
+					</div>
 				</div>
 			</div>
 		{:else if selected_type === AvailableUploadTypes.Image}
 			<div class="m-auto w-1/3 h-5/6" transition:fade|local={{ duration: 100 }}>
 				<div>
-					<SvelteDashboard {uppy} width="100%" {props} />
+					<SvelteDashboard {uppy} width="100%" {imageProps} />
 				</div>
 			</div>
 		{:else if selected_type === AvailableUploadTypes.Video}
@@ -208,6 +246,12 @@ SPDX-License-Identifier: MPL-2.0
 		{:else if selected_type === AvailableUploadTypes.Pixabay}
 			<div>
 				<Pixabay bind:data {selected_question} bind:modalOpen />
+			</div>
+		{:else if selected_type === AvailableUploadTypes.Audio}
+			<div class="m-auto w-1/3 h-5/6" transition:fade|local={{ duration: 100 }}>
+				<div>
+					<SvelteDashboard {uppy} width="100%" {audioProps} />
+				</div>
 			</div>
 		{/if}
 	</div>

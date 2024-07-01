@@ -201,7 +201,8 @@
         "you_need_to_be_logged_in_to_start_a_practice": "You need to be logged in to start a practice",
         "start_game": "Start!",
         "qr_code_to_join_the_game": "QR code to join the activity",
-        "game_not_found": "Activity not found"
+        "game_not_found": "Activity not found",
+        "audio": "Audio"
     },
     "editor": {
         "time_in_seconds": "Time in seconds",
