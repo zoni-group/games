@@ -34,6 +34,7 @@ from classquiz.routers import (
     quiztivity,
     pixabay,
     moderation,
+    session,
 )
 from classquiz.socket_server import sio
 from classquiz.helpers import meilisearch_init, telemetry_ping
@@ -106,4 +107,5 @@ app.include_router(sitemap.router, tags=["sitemap"], prefix="/api/v1/sitemap", i
 app.include_router(community.router, tags=["community"], prefix="/api/v1/community", include_in_schema=True)
 app.include_router(avatar.router, tags=["avatar"], prefix="/api/v1/avatar", include_in_schema=True)
 app.include_router(admin.router, tags=["admin"], prefix="/api/v1/admin", include_in_schema=True)
+app.include_router(session.router, tags=["session"], prefix="/api/v1/session", include_in_schema=True)
 app.mount("/", ASGIApp(sio))
