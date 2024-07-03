@@ -68,6 +68,10 @@ class Settings(BaseSettings):
     s3_bucket_name: str = "classquiz"
     s3_base_url: str | None
 
+    # Portal API
+    validate_session_url: str | None
+    validate_session_token: str | None
+
     class Config:
         env_file = ".env"
         env_file_encoding = "utf-8"
