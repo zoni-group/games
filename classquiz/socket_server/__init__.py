@@ -232,6 +232,9 @@ async def start_game(sid: str, _data: dict):
     await redis.delete(f"game_in_lobby:{game_data.user_id.hex}")
     await sio.emit("start_game", room=session["game_pin"])
 
+    # Automatically set the first question
+    await set_question_number(sid, '0')
+
 
 class _RegisterAsAdminData(BaseModel):
     game_pin: str
