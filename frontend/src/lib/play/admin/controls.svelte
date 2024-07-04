@@ -42,6 +42,14 @@ SPDX-License-Identifier: MPL-2.0
 	const get_final_results = () => {
 		socket.emit('get_final_results', {});
 	};
+
+	socket.on('set_question_number', ({ question_index }) => {
+        selected_question = question_index;
+    });
+
+    socket.on('start_game', () => {
+        set_question_number(0);
+    });
 </script>
 
 <div
