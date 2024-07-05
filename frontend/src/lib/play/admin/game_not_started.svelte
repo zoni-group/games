@@ -1,15 +1,11 @@
-<!--
-SPDX-FileCopyrightText: 2023 Marlon W (Mawoka)
-
-SPDX-License-Identifier: MPL-2.0
--->
-
 <script lang="ts">
 	import AudioPlayer from '$lib/play/audio_player.svelte';
 	import ControllerCodeDisplay from '$lib/components/controller/code.svelte';
 	import { getLocalization } from '$lib/i18n';
 	import GrayButton from '$lib/components/buttons/gray.svelte';
 	import { fade } from 'svelte/transition';
+	import { toast } from '@zerodevx/svelte-toast';
+	import { onMount } from 'svelte';
 
 	export let game_pin: string;
 	export let players;
@@ -35,56 +31,50 @@ SPDX-License-Identifier: MPL-2.0
 		}
 		players = players;
 	};
+
+	const copyUrl = () => {
+		const url = `https://${window.location.host}/play?pin=${game_pin}`;
+		navigator.clipboard.writeText(url).then(() => {
+			toast.push('URL copied to clipboard! Share it!');
+		});
+	};
+
+		
+	onMount(() => {
+		socket.on('player_joined', (player) => {
+			players.push(player);
+			toast.push(`${player.username} has joined!`);
+		});
+	});
 </script>
 
 <div class="w-full h-full">
 	<AudioPlayer bind:play={play_music} />
-	<div class="grid grid-cols-3 mt-12">
-		<div class="flex justify-center">
-			<p class="m-auto text-2xl">
-				{$t('play_page.join_description', {
-					url:
-						window.location.host === 'classquiz.de'
-							? 'cquiz.de'
-							: `${window.location.host}/play`,
+	<div class="mt-12 text-center">
+		<div class="relative">
+			<!-- svelte-ignore a11y-click-events-have-key-events -->
+			<img
+				on:click={() => (fullscreen_open = true)}
+				alt={$t('qr_code_to_join_the_game')}
+				src={`/api/v1/utils/qr/${game_pin}`}
+				class="block mx-auto w-1/2 dark:bg-white shadow-2xl rounded hover:cursor-pointer max-h-screen h-5/6"
+			/>
+		</div>
+		<button
+				class="mt-2 mr-2 p-2 bg-gray-300 rounded"
+				on:click={copyUrl}
+			>
+				Copy URL
+			</button>
+		<div class="w-5/6 text-center mx-auto">	
+			<p class="mt-4 text-2xl">
+				{@html $t('play_page.join_description', {
+					url: `https://${window.location.host}/play`,
 					pin: game_pin
 				})}
 			</p>
 		</div>
-		<!-- svelte-ignore a11y-click-events-have-key-events -->
-		<img
-			on:click={() => (fullscreen_open = true)}
-			alt={$t('qr_code_to_join_the_game')}
-			src="/api/v1/utils/qr/{game_pin}"
-			class="block mx-auto w-1/2 dark:bg-white shadow-2xl rounded hover:cursor-pointer"
-		/>
-		{#if cqc_code}
-			<div class="m-auto">
-				<div class="flex justify-center my-4">
-					<p class="m-auto text-2xl">
-						{$t('play_page.players_waiting', {
-							count: players.length ?? 0
-						})}
-					</p>
-				</div>
-				<div class="flex-col flex justify-center">
-					<p class="mx-auto">{$t('play_page.join_by_entering_code')}</p>
-					<ControllerCodeDisplay code={cqc_code} />
-				</div>
-			</div>
-		{:else}
-			<div class="flex justify-center">
-				<p class="m-auto text-2xl">
-					{$t('play_page.players_waiting', {
-						count: players.length ?? 0
-					})}
-				</p>
-			</div>
-		{/if}
 	</div>
-	<p class="text-3xl text-center">
-		{$t('words.pin')}: <span class="select-all">{game_pin}</span>
-	</p>
 	<div class="flex justify-center w-full mt-4">
 		<div>
 			<GrayButton
@@ -96,18 +86,20 @@ SPDX-License-Identifier: MPL-2.0
 			</GrayButton>
 		</div>
 	</div>
+	<div class="flex justify-center mt-4">
+		<p class="text-xl mt-4">
+			{$t('play_page.players_waiting', { count: players.length ?? 0 })}
+		</p>
+	</div>
 	<div class="flex flex-row w-full mt-4 px-10 flex-wrap">
 		{#if players.length > 0}
 			{#each players as player}
 				<div class="p-2 m-2 border-2 border-[#004A93] rounded hover:cursor-pointer">
-					<!-- svelte-ignore a11y-click-events-have-key-events -->
 					<span
 						class="hover:line-through text-lg"
 						on:click={() => {
 							kick_player(player.username);
-						}}>{player.username}</span
-					>
-					<!--					<button>{$t('words.kick')}</button>-->
+						}}>{player.username}</span>
 				</div>
 			{/each}
 		{/if}
@@ -115,15 +107,14 @@ SPDX-License-Identifier: MPL-2.0
 </div>
 
 {#if fullscreen_open}
-	<!-- svelte-ignore a11y-click-events-have-key-events -->
 	<div
-		class="fixed top-0 left-0 z-50 w-screen h-screen bg-black bg-opacity-50 fle p-2"
+		class="fixed top-0 left-0 z-50 w-screen h-screen bg-black bg-opacity-50 flex p-2"
 		transition:fade={{ duration: 80 }}
 		on:click={() => (fullscreen_open = false)}
 	>
 		<img
 			alt={$t('qr_code_to_join_the_game')}
-			src="/api/v1/utils/qr/{game_pin}"
+			src={`/api/v1/utils/qr/${game_pin}`}
 			class="object-contain rounded m-auto h-full bg-white"
 		/>
 	</div>

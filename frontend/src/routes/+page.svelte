@@ -120,7 +120,7 @@ SPDX-License-Identifier: MPL-2.0
 	<title>Zoni® AI - Home</title>
 	<meta
 		name="description"
-		content="ClassQuiz is a quiz-application like KAHOOT!, but open-source. You can create quizzes and play them remotely with other people."
+		content="At Zoni, our commitment to providing exceptional learning."
 	/>
 
 	<meta property="og:url" content="https://classquiz.de/" />
@@ -128,7 +128,7 @@ SPDX-License-Identifier: MPL-2.0
 	<meta property="og:title" content="ClassQuiz - {$t('index_page.meta.title')}" />
 	<meta
 		property="og:description"
-		content="ClassQuiz is a quiz-application like KAHOOT!, but open-source. You can create quizzes and play them remotely with other people."
+		content="At Zoni, our commitment to providing exceptional learning."
 	/>
 	<meta property="og:image" content={JpgOpenGraph} />
 
@@ -138,7 +138,7 @@ SPDX-License-Identifier: MPL-2.0
 	<meta name="twitter:title" content="ClassQuiz - {$t('index_page.meta.title')}" />
 	<meta
 		name="twitter:description"
-		content="ClassQuiz is a quiz-application like KAHOOT!, but open-source. You can create quizzes and play them remotely with other people."
+		content="At Zoni, our commitment to providing exceptional learning."
 	/>
 	<meta name="twitter:image" content={WebPOpenGraph} />
 </svelte:head>
