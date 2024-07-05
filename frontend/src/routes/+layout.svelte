@@ -13,6 +13,7 @@ SPDX-License-Identifier: MPL-2.0
 	import { initLocalizationContext } from '$lib/i18n';
 	import { browser } from '$app/environment';
 	import CommandPalette from '$lib/components/commandpalette.svelte';
+	import { SvelteToast } from '@zerodevx/svelte-toast';
 	// import Alert from '$lib/modals/alert.svelte';
 
 	/*	afterNavigate(() => {
@@ -63,6 +64,14 @@ SPDX-License-Identifier: MPL-2.0
 			tracesSampleRate: 0.5
 		});
 	}
+
+	const options = {
+    duration: 4000, // duration of the toast
+    theme: {
+      '--toastBackground': '#333',
+      '--toastColor': '#fff',
+    }
+  };
 </script>
 
 <svelte:head>
@@ -84,6 +93,7 @@ SPDX-License-Identifier: MPL-2.0
 	{/if}
 </svelte:head>
 
+<SvelteToast {options} />
 {#if $navbarVisible}
 	<Navbar />
 	<div class="pt-16 h-screen">

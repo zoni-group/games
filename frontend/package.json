@@ -105,5 +105,8 @@
 		"vite-plugin-iso-import": "^1.0.0",
 		"yup": "^1.1.1"
 	},
-	"type": "module"
+	"type": "module",
+	"dependencies": {
+		"@zerodevx/svelte-toast": "^0.9.5"
+	}
 }
