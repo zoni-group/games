@@ -124,23 +124,7 @@ SPDX-License-Identifier: MPL-2.0
                     Primary
                 </button>-->
 			<div class="w-full grid lg:grid-cols-4 gap-2 grid-cols-2 px-4">
-				{#if create_button_clicked}
-					<div
-						class="flex gap-2"
-						transition:fly={{ y: 10 }}
-						use:tippy={{ content: 'Unsure? Choose "Activity".' }}
-					>
-						<BrownButton href="/create">{$t('words.quiz')}</BrownButton>
-						<BrownButton href="/quiztivity/create">{$t('words.quiztivity')}</BrownButton
-						>
-					</div>
-				{:else}
-					<BrownButton
-						on:click={() => {
-							create_button_clicked = true;
-						}}>{$t('words.create')}</BrownButton
-					>
-				{/if}
+				<BrownButton href="/create">{$t('words.create')}</BrownButton>
 				<BrownButton href="/import">{$t('words.import')}</BrownButton>
 				<BrownButton href="/results">{$t('words.results')}</BrownButton>
 				<div class="flex gap-2">
