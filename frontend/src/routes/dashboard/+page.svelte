@@ -128,7 +128,7 @@ SPDX-License-Identifier: MPL-2.0
 					<div
 						class="flex gap-2"
 						transition:fly={{ y: 10 }}
-						use:tippy={{ content: 'Unsure? Choose "Quiz".' }}
+						use:tippy={{ content: 'Unsure? Choose "Activity".' }}
 					>
 						<BrownButton href="/create">{$t('words.quiz')}</BrownButton>
 						<BrownButton href="/quiztivity/create">{$t('words.quiztivity')}</BrownButton
