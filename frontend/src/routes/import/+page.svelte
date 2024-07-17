@@ -227,7 +227,7 @@ SPDX-License-Identifier: MPL-2.0
 								<a
 									class="text-sm underline font-bold text-blue-500 dark:text-blue-400"
 									download
-									href="https://ncs3.classquiz.de/blog/classquiz/ClassQuizImportTemplate.xlsx"
+									href="/zoni/docs/Zoni-AI-Import-Template.xlsx"
 									>{$t('import_page.download_template_here')}</a
 								>
 							</div>
