@@ -153,6 +153,16 @@ SPDX-License-Identifier: MPL-2.0
 						<p>Unsupported media type</p>
 					{/if}
 				</div>
+				<!-- Add the Remove button for cover image -->
+				<div class="flex justify-center pt-2">
+					<button class="mt-2 bg-red-500 p-2 rounded-lg border-2 border-black transition hover:bg-red-400"
+						on:click={() => {
+							data.cover_image = null;
+						}}
+					>
+						Remove Cover
+					</button>
+				</div>
 			{:else}
 				{#await import('$lib/editor/uploader.svelte')}
 					<Spinner my_20={false} />

@@ -209,6 +209,7 @@ SPDX-License-Identifier: MPL-2.0
 					</div>
 					<div class="w-full">
 						<BrownButton
+							disabled={!video_upload}
 							on:click={() => {
 								selected_type = AvailableUploadTypes.Audio;
 							}}
