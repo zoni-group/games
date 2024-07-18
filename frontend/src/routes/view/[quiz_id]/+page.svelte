@@ -253,7 +253,7 @@ SPDX-License-Identifier: MPL-2.0
 				</div>
 				<div class="w-full">
 					<a
-						href="mailto:operez@zoni.edu?subject=Report quiz {quiz.id}"
+						href="mailto:operez@zoni.edu?subject=Report activity {quiz.id}"
 						class="text-sm underline"
 					>
 						{$t('words.report')}

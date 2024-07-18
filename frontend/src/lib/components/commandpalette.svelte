@@ -36,15 +36,15 @@ SPDX-License-Identifier: MPL-2.0
 		},
 		{
 			id: 1,
-			title: 'Create Quiz',
-			description: 'Opens editor to create a new quiz',
+			title: 'Create Activity',
+			description: 'Opens editor to create a new activity',
 			command: 'newquiz',
 			args: ['title'],
 			action: (args) => window.location.assign(`/create?title=${args.join(' ')}`)
 		},
 		{
 			id: 2,
-			title: 'Import a Quiz',
+			title: 'Import a Activity',
 			description: 'Opens the import page',
 			command: 'import',
 			args: ['url'],
@@ -67,7 +67,7 @@ SPDX-License-Identifier: MPL-2.0
 		},
 		{
 			id: 5,
-			title: 'Explore Quizzes',
+			title: 'Explore Activities',
 			description: 'Opens the Explore-page',
 			command: 'explore',
 			action: () => window.location.assign('/explore')

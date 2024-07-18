@@ -8,7 +8,7 @@ SPDX-License-Identifier: MPL-2.0
 	<title>Zoni® AI/docs - Import from Kahoot</title>
 	<meta
 		name="description"
-		content="How to import quizzes from KAHOOT! into ClassQuiz, the open-source quiz-application,  easily"
+		content="How to import activities from KAHOOT! into Zoni AI, the open-source activity-application,  easily"
 	/>
 </svelte:head>
 <article
@@ -21,7 +21,7 @@ SPDX-License-Identifier: MPL-2.0
 			href="https://create.kahoot.it/discover"
 			rel="nofollow"
 			target="_blank">create.kahoot.it/discover</a
-		>, find the quiz you want to import, click on it and copy the URL into your clipboard. Then
+		>, find the activity you want to import, click on it and copy the URL into your clipboard. Then
 		go to
 		<a href="/import" rel="nofollow" target="_blank">the import page</a>
 		and paste the url into the text field.

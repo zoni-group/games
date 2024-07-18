@@ -12,4 +12,4 @@ SPDX-License-Identifier: MPL-2.0
 - User can only choose one answer
 
 ## Use case
-Nothing specific; Main component of a quiz
+Nothing specific; Main component of an activity

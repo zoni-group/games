@@ -135,7 +135,7 @@ SPDX-License-Identifier: MPL-2.0
 	<meta name="twitter:card" content="summary_large_image" />
 	<meta property="twitter:domain" content="classquiz.de" />
 	<meta property="twitter:url" content="https://classquiz.de/" />
-	<meta name="twitter:title" content="ClassQuiz - {$t('index_page.meta.title')}" />
+	<meta name="twitter:title" content="Zoni AI - {$t('index_page.meta.title')}" />
 	<meta
 		name="twitter:description"
 		content="At Zoni, our commitment to providing exceptional learning."

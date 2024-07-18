@@ -41,14 +41,14 @@ SPDX-License-Identifier: MPL-2.0
 			/*			alertModal.set({
 				open: true,
 				title: 'Import failed',
-				body: "This quiz isn't (yet) supported!"
+				body: "This activity isn't (yet) supported!"
 			});*/
-			alert("This quiz isn't (yet) supported!");
+			alert("This activity isn't (yet) supported!");
 		} else if (res.status === 403) {
 			/*			alertModal.set({
 				open: true,
 				title: 'Import failed',
-				body: 'Unknown error while importing the quiz!'
+				body: 'Unknown error while importing the activity!'
 			});*/
 			alert('Quiz is probably private!');
 		} else {

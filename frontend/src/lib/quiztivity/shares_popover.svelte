@@ -171,8 +171,8 @@ SPDX-License-Identifier: MPL-2.0
 							disabled={share_available()}
 							on:click={() => {
 								navigator.share({
-									title: 'Quiztivity on ClassQuiz',
-									text: 'Play this Quiztivity now on ClassQuiz!',
+									title: 'Quiztivity on Zoni AI',
+									text: 'Play this Quiztivity now on Zoni AI!',
 									url: `${window.location.origin}/quiztivity/share/${share.id}?ref=share`
 								});
 							}}
