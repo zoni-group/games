@@ -18,7 +18,7 @@ SPDX-License-Identifier: MPL-2.0
 	<title>Zoni® AI/docs - Privacy policy</title>
 	<meta
 		name="description"
-		content="How to self-host ClassQuiz, the open-source quiz-application"
+		content="How to self-host ClassQuiz, the open-source activity-application"
 	/>
 </svelte:head>
 
@@ -79,7 +79,7 @@ SPDX-License-Identifier: MPL-2.0
 	</p>
 	<h3>Third-Parties</h3>
 	<p>
-		The quiz-admin can enable the captcha, which then loads Google's ReCaptcha which then sends
+		The activity-admin can enable the captcha, which then loads Google's ReCaptcha which then sends
 		something to Google. Refer to Google's <a
 			href="https://policies.google.com/privacy?hl=en-GB"
 			target="_blank"

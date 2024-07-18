@@ -18,7 +18,7 @@ SPDX-License-Identifier: MPL-2.0
 
 {#if status === 404}
 	<p class="text-center">
-		The quiz you were looking for is gone or never even existed. Who knows?
+		The activity you were looking for is gone or never even existed. Who knows?
 	</p>
 {:else}
 	<p>

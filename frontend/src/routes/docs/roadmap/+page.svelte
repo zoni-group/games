@@ -8,7 +8,7 @@ SPDX-License-Identifier: MPL-2.0
 	<title>Zoni® AI/docs - Roadmap</title>
 	<meta
 		name="description"
-		content="The roadmap for ClassQuiz, the open-source quiz-application"
+		content="The roadmap for ClassQuiz, the open-source activity-application"
 	/>
 </svelte:head>
 <article
@@ -28,6 +28,6 @@ SPDX-License-Identifier: MPL-2.0
 		</li>
 		<li><input type="checkbox" checked disabled /> (Better) Admin-screen styling</li>
 		<li><input type="checkbox" checked disabled /> (Better) Edit/Create-screen styling</li>
-		<li><input type="checkbox" checked disabled /> Public quiz-discovery</li>
+		<li><input type="checkbox" checked disabled /> Public activity-discovery</li>
 	</ul>
 </article>

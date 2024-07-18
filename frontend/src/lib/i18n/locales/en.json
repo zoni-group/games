@@ -51,7 +51,7 @@
     "overview_page": {
         "created_at": "Created at",
         "question_count": "Question count",
-        "no_quizzes": "Click the \"Create\"-button, or import a activity to get going."
+        "no_quizzes": "Click the \"Create\"-button, or import an activity to get going."
     },
     "edit_page": {
         "success_update_title": "Activity updated.",
@@ -240,11 +240,11 @@
         "visit_docs": "Visit the documentation",
         "a_kahoot_quiz": "A Kahoot!-Activity",
         "url_should_look_like_this": "The URL should look like this: https://create.kahoot.it/details/...",
-        "side_import_kahoot": "On this side you can import activities, which live on Kahoot!.",
+        "side_import_kahoot": "On this side, you can import activities that are available on Kahoot!",
         "classquiz_quiz": "A Zoni AI-Activity",
         "upload_file_ending": "Upload the file ending in .cqa or .xlsx",
         "this_side_classquiz": "On this side you can import activities, which were exported from Zoni AI.",
-        "this_side_classquiz_excel": "You can also upload excel files, if you've filled out the following template. If a activity with the title already exists, it will append the questions to the existing activity.",
+        "this_side_classquiz_excel": "You can also upload Excel files if you've filled out the following template. If an activity with the same title already exists, it will append the questions to the existing activity.",
         "download_template_here": "Download the template"
     },
     "admin_page": {
@@ -420,9 +420,9 @@
     },
     "start_game": {
         "captcha_message": "If enabled, Google's ReCaptcha will load in the browser of participants. Only enable if you really need it, since you need the consent of EVERY participant to load the captcha.",
-        "normal_mode_description": "Question and answer will only be shown on admins screen. The participants will only have colored buttons with symbols matching these on the screen of the admin.",
+        "normal_mode_description": "Questions and answers will only be shown on the admin's screen. The participants will only have colored buttons with symbols matching those on the admin's screen.",
         "old_school_mode": "One device mode",
-        "old_school_mode_description": "Questions and images will be shown on both admins screen and on the screen of the participants",
+        "old_school_mode_description": "Questions and images will be shown on both the admin's screen and the screen of the participants.",
         "start_game": "Start!"
     },
     "quiztivity": {

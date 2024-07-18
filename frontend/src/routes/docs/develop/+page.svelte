@@ -18,7 +18,7 @@ SPDX-License-Identifier: MPL-2.0
 	<title>Zoni® AI/docs - Development-setup</title>
 	<meta
 		name="description"
-		content="How to import quizzes from KAHOOT! into ClassQuiz, the open-source quiz-application,  easily"
+		content="How to import activities from KAHOOT! into ClassQuiz, the open-source activity-application,  easily"
 	/>
 </svelte:head>
 <article

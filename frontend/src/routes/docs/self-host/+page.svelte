@@ -17,7 +17,7 @@ SPDX-License-Identifier: MPL-2.0
 	<title>Zoni® AI/docs - Self-Host</title>
 	<meta
 		name="description"
-		content="How to self-host ClassQuiz, the open-source quiz-application"
+		content="How to self-host Zoni AI, the open-source activity-application"
 	/>
 </svelte:head>
 <article
