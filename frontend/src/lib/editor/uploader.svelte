@@ -99,11 +99,9 @@ SPDX-License-Identifier: MPL-2.0
 		}
 	});
 	uppy.on('complete', (_) => {
-		if (selected_question === undefined) {
-			if (selected_type === AvailableUploadTypes.Image) {
-				data.cover_image = image_id;
-			} else if (selected_type === AvailableUploadTypes.Audio) {
-				data.cover_audio = audio_id;
+		if (selected_question === undefined || selected_question === null) {
+			if (selected_type === AvailableUploadTypes.Image || selected_type === AvailableUploadTypes.Audio) {
+				data.cover_image = selected_type === AvailableUploadTypes.Image ? image_id : audio_id;
 			}
 		} else if (selected_question === -1) {
 			if (selected_type === AvailableUploadTypes.Image) {
@@ -113,9 +111,15 @@ SPDX-License-Identifier: MPL-2.0
 			}
 		} else {
 			if (selected_type === AvailableUploadTypes.Image) {
+                if (!data.questions[selected_question]) {
+                    data.questions[selected_question] = {};
+                }
 				data.questions[selected_question].image = image_id;
 			} else if (selected_type === AvailableUploadTypes.Audio) {
-				data.questions[selected_question].audio = audio_id;
+                if (!data.questions[selected_question]) {
+                    data.questions[selected_question] = {};
+                }
+				data.questions[selected_question].image = audio_id;
 			}
 		}
 
@@ -129,7 +133,11 @@ SPDX-License-Identifier: MPL-2.0
 				return;
 			}
 			localStorage.removeItem('video_upload_id');
-			data.questions[selected_question].image = e.newValue;
+			if (selected_question === undefined || selected_question === null) {
+				data.cover_image = e.newValue;
+			} else {
+				data.questions[selected_question].image = e.newValue;
+			}
 			selected_type = null;
 		});
 	});
@@ -209,6 +217,7 @@ SPDX-License-Identifier: MPL-2.0
 					</div>
 					<div class="w-full">
 						<BrownButton
+							disabled={!video_upload}
 							on:click={() => {
 								selected_type = AvailableUploadTypes.Audio;
 							}}
