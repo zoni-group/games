@@ -224,7 +224,7 @@
             "rectangle_description": "Just a rectangle"
         },
         "abcd_description": "Only one answer can be chosen",
-        "voting_description": "Answers don't add any points",
+        "voting_description": "Multiple-choice, but there are no points if an answer is correct",
         "check_choice_description": "All correct answers have to be chosen to score points",
         "order_description": "Answers can be brought into the correct order",
         "text_description": "Participants can enter text",
