@@ -14,12 +14,15 @@ SPDX-License-Identifier: MPL-2.0
 	const default_colors = ['#C8E6C9', '#FFE0B2', '#FFF9C4', '#B3E5FC'];
 	export let question: Question;
 	export let selected_answer = '';
+	export let text_answer = [];
 	export let game_mode;
 
 	export let timer_res;
 
 	export let circular_progress;
 	let _selected_answers = [false, false, false, false];
+	let _text_answers = new Array(question.answers.length).fill(false);
+
 
 	const selectAnswer = (i: number) => {
 		_selected_answers[i] = !_selected_answers[i];
@@ -31,6 +34,11 @@ SPDX-License-Identifier: MPL-2.0
 		}
 		selected_answer = selected_answer;
 		console.log(_selected_answers, selected_answer);
+
+		_text_answers[i] = !_text_answers[i];
+    	const text_answers = question.answers.filter((_, index) => _text_answers[index]).map(a => a.answer);
+    	text_answer = text_answers;
+    	console.log(_text_answers, text_answer);
 	};
 	
 	// Function to determine if the color is light or dark

@@ -1,9 +1,3 @@
-<!--
-SPDX-FileCopyrightText: 2023 Marlon W (Mawoka)
-
-SPDX-License-Identifier: MPL-2.0
--->
-
 <script lang="ts">
 	import type { Question } from '$lib/quiz_types';
 	import { QuizQuestionType } from '$lib/quiz_types';
@@ -16,6 +10,8 @@ SPDX-License-Identifier: MPL-2.0
 	import BrownButton from '$lib/components/buttons/brown.svelte';
 	import { get_foreground_color } from '../helpers';
 	import MediaComponent from '$lib/editor/MediaComponent.svelte';
+	import { toast } from '@zerodevx/svelte-toast';
+	import { text } from 'svelte/internal';
 
 	const { t } = getLocalization();
 
@@ -33,14 +29,10 @@ SPDX-License-Identifier: MPL-2.0
 		question.type = QuizQuestionType[question.type];
 	}
 
-	/*	if (typeof question_index === 'string') {
-            question_index = parseInt(question_index);
-        } else {
-            throw new Error('question_index must be a string or number');
-        }*/
-
 	let timer_res = question.time;
-	let selected_answer: string;
+	let selected_answer: string | [];
+	let text_answer = [];
+	let showPlayerAnswers = false;
 
 	// Stop the timer if the question is answered
 	const timer = (time: string) => {
@@ -74,24 +66,47 @@ SPDX-License-Identifier: MPL-2.0
 
 	const selectAnswer = (answer: string) => {
 		selected_answer = answer;
-		//timer_res = '0';
 		socket.emit('submit_answer', {
 			question_index: question_index,
 			answer: cleanAnswer(answer)
 		});
+		toast.push(`You selected: ${cleanAnswer(answer)}`);
+		showPlayerAnswers = true;
+	};
+
+	const selectRangeAnswer = (answer: string) => {
+		selected_answer = answer;
+		socket.emit('submit_answer', {
+			question_index: question_index,
+			answer: answer
+		});
+		toast.push(`You selected: ${answer}`);
+		showPlayerAnswers = true;
+	};
+
+	const selectCheckAnswer = (answer: string, text_answer: []) => {
+		selected_answer = text_answer;
+		socket.emit('submit_answer', {
+			question_index: question_index,
+			answer: answer,
+		});
+		toast.push(`Your answer has been submitted!`);
+		showPlayerAnswers = true;
 	};
 
 	const select_complex_answer = (data) => {
-		selected_answer = 'a';
 		const new_array = [];
 		for (let i = 0; i < data.length; i++) {
 			new_array.push({ answer: data[i].answer });
 		}
+		selected_answer = data.map(a => a.answer);
 		socket.emit('submit_answer', {
 			question_index: question_index,
 			answer: 'a',
 			complex_answer: new_array
 		});
+		toast.push(`Your answer has been submitted!`);
+		showPlayerAnswers = true;
 	};
 
 	let text_input = '';
@@ -248,7 +263,7 @@ SPDX-License-Identifier: MPL-2.0
 					<div class="w-1/2">
 						<BrownButton
 							disabled={selected_answer !== undefined}
-							on:click={() => selectAnswer(slider_value[0])}
+							on:click={() => selectRangeAnswer(slider_value[0])}
 							>{$t('words.submit')}
 						</BrownButton>
 					</div>
@@ -303,9 +318,6 @@ SPDX-License-Identifier: MPL-2.0
 				</p>
 			{/if}
 		{:else if question.type === QuizQuestionType.ORDER}
-			<!--			{#if solution === undefined}
-                            <Spinner />
-                        {:else}-->
 			<span
 				class="fixed top-0 bg-red-500 h-8 transition-all"
 				style="width: {(100 / parseInt(question.time)) * parseInt(timer_res)}vw"
@@ -381,40 +393,49 @@ SPDX-License-Identifier: MPL-2.0
 						on:click={() => {
 							select_complex_answer(question.answers);
 						}}>{$t('words.submit')}</BrownButton
-					>
+						>
 				</div>
 			</div>
-			<!--{/if}-->
 		{:else if question.type === QuizQuestionType.CHECK}
-			{#await import('./questions/check.svelte')}
-				<Spinner />
-			{:then c}
-				<svelte:component
-					this={c.default}
-					bind:question
-					bind:selected_answer
-					bind:game_mode
-					{timer_res}
-					{circular_progress}
-				/>
-				<div class="flex justify-center h-[5%]">
-					<div class="w-1/2">
-						<BrownButton
-							disabled={!selected_answer}
-							on:click={() => selectAnswer(selected_answer)}
-							>{$t('words.submit')}
-						</BrownButton>
+			{#if !showPlayerAnswers}
+				{#await import('./questions/check.svelte')}
+					<Spinner />
+				{:then c}
+					<svelte:component
+						this={c.default}
+						bind:question
+						bind:selected_answer
+						bind:text_answer
+						bind:game_mode
+						{timer_res}
+						{circular_progress}
+					/>
+					<div class="flex justify-center h-[5%]">
+						<div class="w-1/2">
+							<BrownButton
+								disabled={!selected_answer}
+								on:click={() => selectCheckAnswer(selected_answer, text_answer)}
+								>{$t('words.submit')}
+							</BrownButton>
+						</div>
 					</div>
-				</div>
-			{/await}
+				{/await}
+			{/if}
 		{/if}
-
-		<!--{:else if question.type === QuizQuestionType.VOTING}
-    {#await import('$lib/play/admin/voting_results.svelte')}
-        <Spinner />
-    {:then c}
-        <svelte:component this={c.default} bind:data={question_results}
-                          bind:question={quiz_data.questions[selected_question]} />
-    {/await}-->
+	{/if}
+	<!-- Display the submitted answer -->
+	{#if showPlayerAnswers}
+		<div class="mt-4 text-center">
+			<p class="text-lg font-semibold">Your answer:</p>
+			{#if Array.isArray(selected_answer)}
+			<ul class="list-disc list-inside mx-auto text-left inline-block">
+				{#each selected_answer as ans}
+				<li class="text-lg">{ans}</li>
+				{/each}
+			</ul>
+			{:else}
+			<p class="text-lg">{selected_answer}</p>
+			{/if}
+		</div>
 	{/if}
 </div>
