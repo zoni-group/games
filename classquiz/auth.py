@@ -15,6 +15,7 @@ from fastapi import status
 from fastapi.openapi.models import OAuthFlows as OAuthFlowsModel
 from fastapi.security import OAuth2
 from fastapi.security.utils import get_authorization_scheme_param
+from ormar.exceptions import NoMatch
 from jose import JWTError, jwt
 from passlib.hash import argon2
 
@@ -74,8 +75,20 @@ def get_password_hash(password: str) -> str:
     return pwd_context.hash(password)
 
 
+async def cache_account(criteria: str, content: str, user: User) -> None:
+    """Cache user information in Redis."""
+    await redis.set(f"user_cache:{criteria}:{content}", user.json(), ex=3600)  # Cache for 1 hour
+
 async def get_user_from_mail(email: str) -> Union[User, None]:
-    return await get_cache(criteria="email", content=email)
+    user = await get_cache(criteria="email", content=email)
+    if not user:
+        try:
+            user = await User.objects.get(email=email)
+            # Cache the user for future requests
+            await cache_account(criteria="email", content=email, user=user)
+        except NoMatch:
+            return None
+    return user
 
 
 async def get_user_from_username(username: str) -> Union[User, None]:
