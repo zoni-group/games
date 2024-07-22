@@ -12,6 +12,14 @@ from classquiz.config import settings
 from datetime import timedelta
 import logging
 
+import gzip
+import base64
+
+
+def generate_default_avatar() -> bytes:
+    # Placeholder value for avatar
+    return base64.b64encode(gzip.compress(b""))
+
 settings = settings()
 
 ACCESS_TOKEN_EXPIRE_MINUTES = settings.access_token_expire_minutes
@@ -78,7 +86,8 @@ async def start_activity(request: Request, session_id: str, activity_id: str):
         user = User(
             email=email,
             username=email,
-            password=get_password_hash(uuid.uuid4().hex)
+            password=get_password_hash(uuid.uuid4().hex),
+            avatar=generate_default_avatar()
         )
         try:
             await user.save()
