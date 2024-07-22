@@ -83,6 +83,7 @@ async def start_activity(request: Request, session_id: str, activity_id: str):
     if not user:
         # Create user on the fly
         user = User(
+            id=uuid.uuid4(),
             email=email,
             username=email,
             password=get_password_hash(uuid.uuid4().hex),
