@@ -15,7 +15,6 @@ import logging
 import gzip
 import base64
 
-
 def generate_default_avatar() -> bytes:
     # Placeholder value for avatar
     return base64.b64encode(gzip.compress(b""))
@@ -93,9 +92,17 @@ async def start_activity(request: Request, session_id: str, activity_id: str):
             await user.save()
             logger.info("User created: %s", user.email)
         except Exception as e:
-            logger.error("Error creating user: %s", e)
-            raise HTTPException(
-                status_code=500, detail="Error creating user") from e
+            if "duplicate key value violates unique constraint" in str(e):
+                # Fetch the user again in case it was created in the meantime
+                user = await get_user_from_mail(email)
+                if not user:
+                    logger.error("Failed to create or fetch user: %s", e)
+                    raise HTTPException(
+                        status_code=500, detail="Error creating or fetching user") from e
+            else:
+                logger.error("Error creating user: %s", e)
+                raise HTTPException(
+                    status_code=500, detail="Error creating user") from e
 
     # Create access token
     access_token_expires = timedelta(minutes=ACCESS_TOKEN_EXPIRE_MINUTES)
