@@ -11,7 +11,6 @@
 	import { get_foreground_color } from '../helpers';
 	import MediaComponent from '$lib/editor/MediaComponent.svelte';
 	import { toast } from '@zerodevx/svelte-toast';
-	import { text } from 'svelte/internal';
 
 	const { t } = getLocalization();
 
@@ -178,7 +177,7 @@
 	}
 </script>
 
-<div class="h-screen w-screen">
+<div class="h-screen w-screen flex items-center justify-center">
 	{#if game_mode === 'normal'}
 		<div
 			class="flex flex-col justify-start"
@@ -240,69 +239,65 @@
 				</div>
 			</div>
 		{:else if question.type === QuizQuestionType.RANGE}
-			<span
-				class="fixed top-0 bg-red-500 h-8 transition-all"
-				style="width: {(100 / parseInt(question.time)) * parseInt(timer_res)}vw"
-			/>
+			<div class="fixed top-0 left-0 w-full bg-red-500 h-8 transition-all" style="width: {(100 / parseInt(question.time)) * parseInt(timer_res)}vw"></div>
 			{#await import('svelte-range-slider-pips')}
 				<Spinner />
 			{:then c}
-				<div class:pointer-events-none={selected_answer !== undefined} class="mt-24">
-					<svelte:component
-						this={c.default}
-						bind:values={slider_value}
-						bind:min={question.answers.min}
-						bind:max={question.answers.max}
-						id="pips-slider"
-						pips
-						float
-						all="label"
-					/>
-				</div>
-				<div class="flex justify-center">
-					<div class="w-1/2">
+				<div class="flex flex-col items-center justify-center w-full h-screen">
+					<div class="w-full h-1/5">
+						<svelte:component
+							this={c.default}
+							bind:values={slider_value}
+							bind:min={question.answers.min}
+							bind:max={question.answers.max}
+							id="pips-slider"
+							pips
+							float
+							all="label"
+							class="w-full"
+						/>
+					</div>
+
+					<div class="w-full max-w-xs mt-4">
 						<BrownButton
 							disabled={selected_answer !== undefined}
 							on:click={() => selectRangeAnswer(slider_value[0])}
-							>{$t('words.submit')}
-						</BrownButton>
-					</div>
-				</div>
-			{/await}
-		{:else if question.type === QuizQuestionType.TEXT}
-			<div>
-				<span
-					class="fixed top-0 bg-red-500 h-8 transition-all"
-					style="width: {(100 / parseInt(question.time)) * parseInt(timer_res)}vw"
-				/>
-				<div class="flex justify-center m-2">
-					<div class="w-full">
-					  <label for="answer-input" class="block mb-2 mt-5 text-sm font-medium text-gray-900 dark:text-gray-300">Type your answer here:</label>
-					  <input
-						id="answer-input"
-						type="text"
-						bind:value={text_input}
-						disabled={selected_answer}
-						class="bg-gray-50 focus:ring text-gray-900 rounded-lg focus:ring-blue-500 block w-full p-2 dark:bg-gray-700 dark:text-white dark:focus:ring-blue-500 outline-none transition text-center disabled:opacity-50 disabled:cursor-not-allowed border border-gray-300 dark:border-gray-600"
-						placeholder="Enter your answer"
-					  />
-					</div>
-				  </div>
-
-				<div class="flex justify-center mt-2">
-					<div class="w-1/3">
-						<BrownButton
-							type="button"
-							disabled={selected_answer}
-							on:click={() => {
-								selectAnswer(text_input);
-							}}
+							class="w-full"
 						>
 							{$t('words.submit')}
 						</BrownButton>
 					</div>
 				</div>
+			{/await}
+		{:else if question.type === QuizQuestionType.TEXT}
+		<div class="flex flex-col items-center justify-center h-full w-full">
+			<span
+				class="fixed top-0 bg-red-500 h-8 transition-all"
+				style="width: {(100 / parseInt(question.time)) * parseInt(timer_res)}vw"
+			/>
+			<div class="w-full max-w-md px-4">
+			  <label for="answer-input" class="block mb-2 mt-5 text-sm font-medium text-gray-900 dark:text-gray-300">Type your answer here:</label>
+			  <input
+				id="answer-input"
+				type="text"
+				bind:value={text_input}
+				disabled={selected_answer}
+				class="bg-gray-50 focus:ring text-gray-900 rounded-lg focus:ring-blue-500 block w-full p-2 dark:bg-gray-700 dark:text-white dark:focus:ring-blue-500 outline-none transition text-center disabled:opacity-50 disabled:cursor-not-allowed border border-gray-300 dark:border-gray-600"
+				placeholder="Enter your answer"
+			  />
 			</div>
+			<div class="mt-4 w-4/5 max-w-xs">
+				<BrownButton
+					type="button"
+					disabled={selected_answer}
+					on:click={() => {
+						selectAnswer(text_input);
+					}}
+				>
+					{$t('words.submit')}
+				</BrownButton>
+			</div>
+		</div>
 		{:else if question.type === QuizQuestionType.RANGE}
 			{#if solution === undefined}
 				<Spinner />
@@ -409,33 +404,27 @@
 						bind:game_mode
 						{timer_res}
 						{circular_progress}
+						on:submit={(event) => selectCheckAnswer(event.detail.selected_answer, event.detail.text_answer)}
 					/>
-					<div class="flex justify-center h-[5%]">
-						<div class="w-1/2">
-							<BrownButton
-								disabled={!selected_answer}
-								on:click={() => selectCheckAnswer(selected_answer, text_answer)}
-								>{$t('words.submit')}
-							</BrownButton>
-						</div>
-					</div>
 				{/await}
 			{/if}
 		{/if}
 	{/if}
 	<!-- Display the submitted answer -->
 	{#if showPlayerAnswers}
-		<div class="mt-4 text-center">
-			<p class="text-lg font-semibold">Your answer:</p>
-			{#if Array.isArray(selected_answer)}
-			<ul class="list-disc list-inside mx-auto text-left inline-block">
-				{#each selected_answer as ans}
-				<li class="text-lg">{ans}</li>
-				{/each}
-			</ul>
-			{:else}
-			<p class="text-lg">{selected_answer}</p>
-			{/if}
+		<div class="mt-4 text-center flex justify-center items-center h-screen">
+			<div class="px-4">
+				<p class="text-lg font-semibold dark:text-white">Your answer:</p>
+				{#if Array.isArray(selected_answer)}
+				<ul class="list-disc list-inside mx-auto text-left inline-block dark:text-white">
+					{#each selected_answer as ans}
+					<li class="text-lg">{ans}</li>
+					{/each}
+				</ul>
+				{:else}
+				<p class="text-lg dark:text-white">{selected_answer}</p>
+				{/if}
+			</div>
 		</div>
 	{/if}
 </div>

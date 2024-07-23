@@ -42,12 +42,16 @@ SPDX-License-Identifier: MPL-2.0
   	}
 </script>
 
-<div class="flex flex-col justify-center w-screen h-screen">
-	<h1 class="text-7xl text-center">{@html title}</h1>
-	<p class="text-3xl pt-8 text-center">{@html description}</p>
+<div class="flex flex-col justify-center w-screen h-screen p-4">
+	<h1 class="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl text-center break-words">
+		{@html title}
+	</h1>
+	<p class="text-base sm:text-lg md:text-xl lg:text-2xl xl:text-3xl pt-4 sm:pt-6 md:pt-8 text-center break-words  dark:text-white">
+		{@html description}
+	</p>
 	{#if cover_image}
 		<div class="flex justify-center align-middle items-center">
-			<div class="h-[30vh] m-auto w-auto mt-12">
+			<div class="h-[20vh] sm:h-[25vh] md:h-[30vh] lg:h-[35vh] xl:h-[40vh] m-auto w-auto mt-8 sm:mt-10 md:mt-12">
 				{#if contentType?.startsWith('image')}
 					<img
 						class="max-h-full max-w-full block"

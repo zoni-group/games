@@ -1,16 +1,11 @@
-<!--
-SPDX-FileCopyrightText: 2023 Marlon W (Mawoka)
-
-SPDX-License-Identifier: MPL-2.0
--->
-
 <script lang="ts">
+	import { createEventDispatcher } from 'svelte';
 	import type { Question } from '$lib/quiz_types';
 	import { get_foreground_color } from '$lib/helpers';
 	import { kahoot_icons } from '$lib/play/kahoot_mode_assets/kahoot_icons';
 	import CircularTimer from '$lib/play/circular_progress.svelte';
-	import { flip } from 'svelte/animate';
-	// import CircularTimer from '$lib/play/circular_progress.svelte';
+	import BrownButton from '$lib/components/buttons/brown.svelte';
+
 	const default_colors = ['#C8E6C9', '#FFE0B2', '#FFF9C4', '#B3E5FC'];
 	export let question: Question;
 	export let selected_answer = '';
@@ -18,11 +13,12 @@ SPDX-License-Identifier: MPL-2.0
 	export let game_mode;
 
 	export let timer_res;
-
 	export let circular_progress;
+
 	let _selected_answers = [false, false, false, false];
 	let _text_answers = new Array(question.answers.length).fill(false);
 
+	const dispatch = createEventDispatcher();
 
 	const selectAnswer = (i: number) => {
 		_selected_answers[i] = !_selected_answers[i];
@@ -40,6 +36,11 @@ SPDX-License-Identifier: MPL-2.0
     	text_answer = text_answers;
     	console.log(_text_answers, text_answer);
 	};
+
+	const handleSubmit = () => {
+		selectAnswer(selected_answer);
+    	dispatch('submit', { selected_answer, text_answer });
+	};
 	
 	// Function to determine if the color is light or dark
 	function isColorLight(color) {
@@ -56,44 +57,36 @@ SPDX-License-Identifier: MPL-2.0
 		return isColorLight(backgroundColor) ? 'black' : 'white';
 	}
 </script>
+<div class="w-full h-full flex flex-col justify-between items-center p-4">
+	<div class="relative w-full h-4/5">
+		<div class="absolute top-[50%] left-1/2 transform -translate-x-1/2 -translate-y-1/2 rounded-full h-fit w-fit border-2 border-black shadow-2xl z-40">
+			<CircularTimer bind:text={timer_res} bind:progress={circular_progress} color="#ef4444" />
+		</div>
 
-<div class="w-full h-[95%]">
-	<!--
-        <div
-            class="absolute top-0 bottom-0 left-0 right-0 m-auto rounded-full h-fit w-fit border-2 border-black shadow-2xl z-50"
-        >
-            <CircularTimer
-                bind:text={timer_res}
-                bind:progress={circular_prgoress}
-                color="#ef4444"
-            />
-        </div>
-    -->
-	<div
-		class="absolute top-0 bottom-0 left-0 right-0 m-auto rounded-full h-fit w-fit border-2 border-black shadow-2xl z-40"
-	>
-		<CircularTimer bind:text={timer_res} bind:progress={circular_progress} color="#ef4444" />
+		<div class="grid grid-rows-2 grid-flow-col auto-cols-auto gap-2 w-full h-full">
+			{#each question.answers as answer, i}
+				<button
+					class="rounded-lg h-full flex align-middle justify-center disabled:opacity-60 p-3 border-2 border-black transition-all"
+					style="background-color: {answer.color ?? default_colors[i]}; color: {get_foreground_color(answer.color ?? default_colors[i])}"
+					on:click={() => selectAnswer(i)}
+					class:opacity-100={_selected_answers[i]}
+					class:opacity-50={!_selected_answers[i]}
+				>
+					{#if game_mode === 'kahoot'}
+						<img class="h-2/3 inline-block m-auto" alt="Icon" src={kahoot_icons[i]} />
+					{:else}
+						<p class="m-auto" style="color: {getTextColor(answer.color ?? '#004A93')}">{answer.answer}</p>
+					{/if}
+				</button>
+			{/each}
+		</div>
 	</div>
-
-	<div class="grid grid-rows-2 grid-flow-col auto-cols-auto gap-2 w-full p-4 h-full">
-		{#each question.answers as answer, i}
-			<button
-				class="rounded-lg h-full flex align-middle justify-center disabled:opacity-60 p-3 border-2 border-black transition-all"
-				style="background-color: {answer.color ??
-					default_colors[i]}; color: {get_foreground_color(
-					answer.color ?? default_colors[i]
-				)}"
-				on:click={() => selectAnswer(i)}
-				class:opacity-100={_selected_answers[i]}
-				class:opacity-50={!_selected_answers[i]}
-			>
-				{#if game_mode === 'kahoot'}
-					<img class="h-2/3 inline-block m-auto" alt="Icon" src={kahoot_icons[i]} />
-				{:else}
-					<p class="m-auto"
-					style="color: {getTextColor(answer.color ?? '#004A93')}">{answer.answer}</p>
-				{/if}
-			</button>
-		{/each}
+	<div class="w-full max-w-xs mt-4">
+		<BrownButton
+			disabled={!selected_answer}
+			on:click={handleSubmit}
+		>
+			Submit
+		</BrownButton>
 	</div>
 </div>
