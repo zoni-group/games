@@ -62,15 +62,16 @@
 	.check-container {
 		display: flex;
 		flex-direction: column;
-		justify-content: space-between;
-		height: 100%;
+		justify-content: flex-start;
+		align-items: flex-start;
+		height: 80%;
+		width: 100%;
 	}
 	.check-content {
 		flex-grow: 1;
 	}
 	.check-submit-container {
 		width: 100%;
-		max-width: 300px;
 		margin: 0 auto;
 		padding: 1rem 0;
 	}
@@ -79,7 +80,7 @@
 	}
 </style>
 
-<div class="check-container p-4">
+<div class="check-container p-4 mt-0">
 	<div class="check-content relative w-full h-full">
 		<div class="absolute top-[50%] left-1/2 transform -translate-x-1/2 -translate-y-1/2 rounded-full h-fit w-fit border-2 border-black shadow-2xl z-40">
 			<CircularTimer bind:text={timer_res} bind:progress={circular_progress} color="#ef4444" />

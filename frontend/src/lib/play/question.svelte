@@ -176,7 +176,7 @@
 		return isColorLight(backgroundColor) ? 'black' : 'white';
 	}
 </script>
-	<div class={`h-screen w-screen ${game_mode !== 'normal' ? 'flex items-center justify-center' : ''}`}>
+	<div class={`h-screen w-screen ${game_mode !== 'normal' ? 'flex items-start justify-center' : ''}`}>
 	{#if game_mode === 'normal'}
 		<div
 			class="flex flex-col justify-start"
@@ -189,7 +189,7 @@
 				{@html question.question}
 			</h1>
 			{#if question.image !== null && game_mode !== 'kahoot'}
-				<div class="max-h-full">
+				<div class="relative mb-8" style="max-height: 28vh;">
 					<MediaComponent
 						src={question.image}
 						css_classes="object-cover mx-auto mb-8 max-h-[90%]"
@@ -242,7 +242,7 @@
 			{#await import('svelte-range-slider-pips')}
 				<Spinner />
 			{:then c}
-				<div class="flex flex-col items-center justify-center w-full h-screen">
+				<div class={`${game_mode !== 'normal' ? 'flex flex-col items-center justify-center w-full h-screen' : 'absolute top-[70vh] transform -translate-y-1/2 w-full'}`}>
 					<div class="w-full h-1/5">
 						<svelte:component
 							this={c.default}
@@ -285,7 +285,7 @@
 				placeholder="Enter your answer"
 			  />
 			</div>
-			<div class="mt-4 w-4/5 max-w-xs">
+			<div class="mt-4 w-4/5 max-w-xs mx-auto">
 				<BrownButton
 					type="button"
 					disabled={selected_answer}
@@ -411,9 +411,9 @@
 	{/if}
 	<!-- Display the submitted answer -->
 	{#if showPlayerAnswers}
-		<div class="mt-4 text-center flex justify-center items-center h-screen">
-			<div class="px-4">
-				<p class="text-lg font-semibold dark:text-white">Your answer:</p>
+	    <div class={`${game_mode !== 'normal' ? 'h-screen flex justify-center items-center' : 'mt-20'}`}>
+			<div class="px-4 text-center">
+				<p class="text-lg font-semibold dark:text-white mt-10">Your answer:</p>
 				{#if Array.isArray(selected_answer)}
 				<ul class="list-disc list-inside mx-auto text-left inline-block dark:text-white">
 					{#each selected_answer as ans}
