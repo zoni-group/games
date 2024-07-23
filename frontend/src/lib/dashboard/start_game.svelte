@@ -7,7 +7,7 @@ SPDX-License-Identifier: MPL-2.0
 <script lang="ts">
     // import { alertModal } from '$lib/stores';
     import { captcha_enabled } from '$lib/config';
-    import StartGameBackground from './start_game_background.svg';
+    import { browser } from '$app/environment';
     import { fade } from 'svelte/transition';
     import Spinner from '$lib/Spinner.svelte';
     import { onMount } from 'svelte';
@@ -83,6 +83,17 @@ SPDX-License-Identifier: MPL-2.0
     onMount(() => {
         document.body.addEventListener('keydown', close_start_game_if_esc_is_pressed);
     });
+
+    let darkMode = false;
+	if (browser) {
+		darkMode =
+			localStorage.theme === 'dark' ||
+			(!('theme' in localStorage) &&
+				window.matchMedia('(prefers-color-scheme: dark)').matches);
+	}
+
+	let bg_color;
+	$: bg_color = (darkMode ? '#383838' : '#FFFFFF');
 </script>
 
 <div
@@ -95,7 +106,7 @@ SPDX-License-Identifier: MPL-2.0
 >
     <div
         class="w-5/6 bg-black m-auto rounded-lg shadow-lg p-4 flex flex-col"
-        style="background-color: #FFF;"
+        style="background-color: {bg_color}"
     >
         <div class="grid grid-cols-2 grid-rows-2 gap-8 ">
             <div
@@ -160,10 +171,10 @@ SPDX-License-Identifier: MPL-2.0
 					{$t('start_game.old_school_mode')}
 				</h2>
             </div>
-            <small>
+            <small class="text-gray-900 dark:text-gray-200">
                 {$t('start_game.normal_mode_description')}
             </small>
-            <small>
+            <small class="text-gray-900 dark:text-gray-200">
                 {$t('start_game.old_school_mode_description')}
             </small>
         </div>
@@ -181,7 +192,7 @@ SPDX-License-Identifier: MPL-2.0
                 <span
                     class="w-14 h-7 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 dark:peer-focus:ring-blue-800 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-0.5 after:left-[4px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-6 after:w-6 after:transition-all dark:border-gray-600 peer-checked:bg-blue-600"
                 />
-                <span class="ml-3 text-sm font-medium text-gray-900"> Randomize answers</span>
+                <span class="ml-3 text-sm font-medium text-gray-900 dark:text-gray-200"> Randomize answers</span>
             </label>
         </div>
 
