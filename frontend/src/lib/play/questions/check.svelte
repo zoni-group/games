@@ -57,8 +57,30 @@
 		return isColorLight(backgroundColor) ? 'black' : 'white';
 	}
 </script>
-<div class="w-full h-full flex flex-col justify-between items-center p-4">
-	<div class="relative w-full h-4/5">
+
+<style>
+	.check-container {
+		display: flex;
+		flex-direction: column;
+		justify-content: space-between;
+		height: 100%;
+	}
+	.check-content {
+		flex-grow: 1;
+	}
+	.check-submit-container {
+		width: 100%;
+		max-width: 300px;
+		margin: 0 auto;
+		padding: 1rem 0;
+	}
+	.check-answer-button {
+		margin: 0.5rem 0;
+	}
+</style>
+
+<div class="check-container p-4">
+	<div class="check-content relative w-full h-full">
 		<div class="absolute top-[50%] left-1/2 transform -translate-x-1/2 -translate-y-1/2 rounded-full h-fit w-fit border-2 border-black shadow-2xl z-40">
 			<CircularTimer bind:text={timer_res} bind:progress={circular_progress} color="#ef4444" />
 		</div>
@@ -66,7 +88,7 @@
 		<div class="grid grid-rows-2 grid-flow-col auto-cols-auto gap-2 w-full h-full">
 			{#each question.answers as answer, i}
 				<button
-					class="rounded-lg h-full flex align-middle justify-center disabled:opacity-60 p-3 border-2 border-black transition-all"
+					class="rounded-lg h-full flex align-middle justify-center disabled:opacity-60 p-3 border-2 border-black transition-all check-answer-button"
 					style="background-color: {answer.color ?? default_colors[i]}; color: {get_foreground_color(answer.color ?? default_colors[i])}"
 					on:click={() => selectAnswer(i)}
 					class:opacity-100={_selected_answers[i]}
@@ -81,7 +103,7 @@
 			{/each}
 		</div>
 	</div>
-	<div class="w-full max-w-xs mt-4">
+	<div class="check-submit-container">
 		<BrownButton
 			disabled={!selected_answer}
 			on:click={handleSubmit}
