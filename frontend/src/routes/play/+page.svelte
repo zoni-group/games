@@ -7,6 +7,7 @@ SPDX-License-Identifier: MPL-2.0
 <!--suppress ALL -->
 <script lang="ts">
 	import { socket } from '$lib/socket';
+	import { browser } from '$app/environment';
 	import JoinGame from '$lib/play/join.svelte';
 	import type { Answer, Question as QuestionType } from '$lib/quiz_types';
 	import ShowTitle from '$lib/play/title.svelte';
@@ -163,7 +164,7 @@ SPDX-License-Identifier: MPL-2.0
 	}
 
 	let bg_color;
-	$: bg_color = gameData ? gameData.background_color : (darkMode ? '#000000' : '#FFFFFF');
+	$: bg_color = gameData ? gameData.background_color : (darkMode ? '#383838' : '#FFFFFF');
 	// The rest
 </script>
 

@@ -132,7 +132,7 @@ SPDX-License-Identifier: MPL-2.0
 	let bg_color;
 	let bg_image;
 	let results_saved = false;
-	$: bg_color = quiz_data ? quiz_data.background_color : (darkMode ? '#000000' : '#FFFFFF');
+	$: bg_color = quiz_data ? quiz_data.background_color : (darkMode ? '#383838' : '#FFFFFF');
 	$: bg_image = quiz_data ? quiz_data.background_image : undefined;
 	let show_final_results = false;
 	$: show_final_results = JSON.stringify(final_results) !== JSON.stringify([null]);
