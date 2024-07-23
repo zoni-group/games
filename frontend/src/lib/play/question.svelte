@@ -176,8 +176,7 @@
 		return isColorLight(backgroundColor) ? 'black' : 'white';
 	}
 </script>
-
-<div class="h-screen w-screen flex items-center justify-center">
+	<div class={`h-screen w-screen ${game_mode !== 'normal' ? 'flex items-center justify-center' : ''}`}>
 	{#if game_mode === 'normal'}
 		<div
 			class="flex flex-col justify-start"

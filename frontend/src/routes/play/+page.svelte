@@ -7,6 +7,7 @@ SPDX-License-Identifier: MPL-2.0
 <!--suppress ALL -->
 <script lang="ts">
 	import { socket } from '$lib/socket';
+	import { browser } from '$app/environment';
 	import JoinGame from '$lib/play/join.svelte';
 	import type { Answer, Question as QuestionType } from '$lib/quiz_types';
 	import ShowTitle from '$lib/play/title.svelte';
@@ -154,8 +155,16 @@ SPDX-License-Identifier: MPL-2.0
 		solution = data;
 	});
 
+	let darkMode = false;
+	if (browser) {
+		darkMode =
+			localStorage.theme === 'dark' ||
+			(!('theme' in localStorage) &&
+				window.matchMedia('(prefers-color-scheme: dark)').matches);
+	}
+
 	let bg_color;
-	$: bg_color = gameData ? gameData.background_color : undefined;
+	$: bg_color = gameData ? gameData.background_color : (darkMode ? '#383838' : '#FFFFFF');
 	// The rest
 </script>
 
@@ -172,7 +181,7 @@ SPDX-License-Identifier: MPL-2.0
 </svelte:head>
 <div
 	class="min-h-screen min-w-full"
-	style="background: {bg_color ? bg_color : 'transparent'}"
+	style="background: {bg_color}"
 	class:text-black={bg_color}
 >
 	<div>
