@@ -243,8 +243,8 @@
 			{#await import('svelte-range-slider-pips')}
 				<Spinner />
 			{:then c}
-				<div class="flex flex-col items-center w-full h-full">
-					<div class="flex-grow flex items-center justify-center">
+				<div class="flex flex-col items-center justify-center w-full h-screen">
+					<div class="w-full h-1/5">
 						<svelte:component
 							this={c.default}
 							bind:values={slider_value}
@@ -254,9 +254,10 @@
 							pips
 							float
 							all="label"
-							class="w-full max-w-lg"
+							class="w-full"
 						/>
 					</div>
+
 					<div class="w-full max-w-xs mt-4">
 						<BrownButton
 							disabled={selected_answer !== undefined}
