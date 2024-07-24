@@ -58,38 +58,25 @@
 	}
 </script>
 
-<style>
-	.check-container {
-		display: flex;
-		flex-direction: column;
-		justify-content: flex-start;
-		align-items: flex-start;
-		height: 80%;
-		width: 100%;
-	}
-	.check-content {
-		flex-grow: 1;
-	}
-	.check-submit-container {
-		width: 100%;
-		margin: 0 auto;
-		padding: 1rem 0;
-	}
-	.check-answer-button {
-		margin: 0.5rem 0;
-	}
-</style>
+<div class="flex flex-col justify-start items-start w-full p-4 mt-0 ${game_mode !== 'normal' ? ' h-4/5' : ''}">
+	<div class="flex-grow relative w-full ${game_mode !== 'normal' ? 'h-full' : ''}`}">
+		{#if game_mode !== 'normal'}
+			<div class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 rounded-full h-fit w-fit border-2 border-black shadow-2xl z-40">
+				<CircularTimer bind:text={timer_res} bind:progress={circular_progress} color="#ef4444" />
+			</div>
+		{:else}
+			<span
+				class="fixed top-0 bg-red-500 h-8 transition-all"
+				style="width: {(100 / parseInt(question.time)) * parseInt(timer_res)}vw"
+			/>
+		{/if}
 
-<div class="check-container p-4 mt-0">
-	<div class="check-content relative w-full h-full">
-		<div class="absolute top-[50%] left-1/2 transform -translate-x-1/2 -translate-y-1/2 rounded-full h-fit w-fit border-2 border-black shadow-2xl z-40">
-			<CircularTimer bind:text={timer_res} bind:progress={circular_progress} color="#ef4444" />
-		</div>
-
-		<div class="grid grid-rows-2 grid-flow-col auto-cols-auto gap-2 w-full h-full">
+		<div 
+			class={`grid grid-rows-2 gap-2 w-full ${game_mode !== 'normal' ? 'h-full grid-flow-col auto-cols-auto' : 'grid-cols-2'}`}
+			>
 			{#each question.answers as answer, i}
 				<button
-					class="rounded-lg h-full flex align-middle justify-center disabled:opacity-60 p-3 border-2 border-black transition-all check-answer-button"
+					class="rounded-lg h-full w-9/10 flex items-center justify-center disabled:opacity-60 border-2 border-black transition-all my-2"
 					style="background-color: {answer.color ?? default_colors[i]}; color: {get_foreground_color(answer.color ?? default_colors[i])}"
 					on:click={() => selectAnswer(i)}
 					class:opacity-100={_selected_answers[i]}
@@ -98,13 +85,13 @@
 					{#if game_mode === 'kahoot'}
 						<img class="h-2/3 inline-block m-auto" alt="Icon" src={kahoot_icons[i]} />
 					{:else}
-						<p class="m-auto" style="color: {getTextColor(answer.color ?? '#004A93')}">{answer.answer}</p>
+						<p class="m-auto button-text text-sm sm:text-base md:text-lg lg:text-xl" style="color: {getTextColor(answer.color ?? '#004A93')}">{answer.answer}</p>
 					{/if}
 				</button>
 			{/each}
 		</div>
 	</div>
-	<div class="check-submit-container">
+	<div class="w-full mx-auto py-4">
 		<BrownButton
 			disabled={!selected_answer}
 			on:click={handleSubmit}

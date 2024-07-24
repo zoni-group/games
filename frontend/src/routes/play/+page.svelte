@@ -180,7 +180,7 @@ SPDX-License-Identifier: MPL-2.0
 	{/if}-->
 </svelte:head>
 <div
-	class="min-h-screen min-w-full"
+	class="min-w-full"
 	style="background: {bg_color}"
 	class:text-black={bg_color}
 >

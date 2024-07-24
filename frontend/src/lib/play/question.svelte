@@ -176,15 +176,14 @@
 		return isColorLight(backgroundColor) ? 'black' : 'white';
 	}
 </script>
-	<div class={`h-screen w-screen ${game_mode !== 'normal' ? 'flex items-start justify-center' : ''}`}>
+	<div class={`w-screen ${game_mode !== 'normal' ? 'h-4/5 flex items-start justify-center' : 'h-screen'}`}>
 	{#if game_mode === 'normal'}
 		<div
 			class="flex flex-col justify-start"
 			class:mt-10={[QuizQuestionType.RANGE, QuizQuestionType.ORDER, QuizQuestionType.TEXT]}
-			style="height: {question.image ? '33.333333' : '16.666667'}%"
 		>
 			<h1
-				class="lg:text-2xl text-lg text-center text-black dark:text-white mt-2 break-normal mb-2"
+				class="lg:text-2xl text-lg text-center text-black dark:text-white mt-2 break-normal mb-2 mt-20"
 			>
 				{@html question.question}
 			</h1>
@@ -200,49 +199,45 @@
 	{/if}
 	{#if timer_res !== '0'}
 		{#if question.type === QuizQuestionType.ABCD || question.type === QuizQuestionType.VOTING}
-			<div class="w-full relative h-full" style="height: {get_div_height()}%">
-				<div
-					class="absolute top-0 bottom-0 left-0 right-0 m-auto rounded-full h-fit w-fit border-2 border-black shadow-2xl z-40"
-				>
-					<CircularTimer
-						bind:text={timer_res}
-						bind:progress={circular_progress}
-						color="#ef4444"
+		<div class="flex flex-col justify-start items-start w-full p-4 mt-0 ${game_mode !== 'normal' ? ' h-4/5' : ''}">
+			<div class="flex-grow relative w-full ${game_mode !== 'normal' ? 'h-full' : ''}`}">
+				{#if game_mode !== 'normal'}
+					<div class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 rounded-full h-fit w-fit border-2 border-black shadow-2xl z-40">
+						<CircularTimer bind:text={timer_res} bind:progress={circular_progress} color="#ef4444" />
+					</div>
+				{:else}
+					<span
+						class="fixed top-0 bg-red-500 h-8 transition-all"
+						style="width: {(100 / parseInt(question.time)) * parseInt(timer_res)}vw"
 					/>
-				</div>
+				{/if}
 
-				<div class="grid grid-rows-2 grid-flow-col auto-cols-auto gap-2 w-full p-4 h-full">
+				<div 
+					class={`grid grid-rows-2 gap-2 w-full ${game_mode !== 'normal' ? 'h-full grid-flow-col auto-cols-auto' : 'grid-cols-2'}`}
+					>
 					{#each question.answers as answer, i}
 						<button
-							class="rounded-lg h-full flex align-middle justify-center disabled:opacity-60 p-3 border-2 border-black"
-							style="background-color: {answer.color ??
-								default_colors[i]}; color: {get_foreground_color(
-								answer.color ?? default_colors[i]
-							)}"
+							class="rounded-lg h-full w-9/10 flex items-center justify-center disabled:opacity-60 border-2 border-black transition-all my-2"
+							style="background-color: {answer.color ?? default_colors[i]}; color: {get_foreground_color(answer.color ?? default_colors[i])}"
 							disabled={selected_answer !== undefined}
 							on:click={() => selectAnswer(answer.answer)}
 						>
 							{#if game_mode === 'kahoot'}
-								<img
-									class="h-2/3 inline-block m-auto"
-									alt="Icon"
-									src={kahoot_icons[i]}
-								/>
+								<img class="h-2/3 inline-block m-auto" alt="Icon" src={kahoot_icons[i]} />
 							{:else}
-								<p class="m-auto"
-								style="color: {getTextColor(answer.color ?? '#004A93')}"
-								>{answer.answer}</p>
+								<p class="m-auto button-text text-sm sm:text-base md:text-lg lg:text-xl" style="color: {getTextColor(answer.color ?? '#004A93')}">{answer.answer}</p>
 							{/if}
 						</button>
 					{/each}
 				</div>
 			</div>
+		</div>
 		{:else if question.type === QuizQuestionType.RANGE}
 			<div class="fixed top-0 left-0 w-full bg-red-500 h-8 transition-all" style="width: {(100 / parseInt(question.time)) * parseInt(timer_res)}vw"></div>
 			{#await import('svelte-range-slider-pips')}
 				<Spinner />
 			{:then c}
-				<div class={`${game_mode !== 'normal' ? 'flex flex-col items-center justify-center w-full h-screen' : 'absolute top-[70vh] transform -translate-y-1/2 w-full'}`}>
+				<div class={`${game_mode !== 'normal' ? 'flex flex-col items-center justify-center w-full h-screen' : 'flex flex-col items-center justify-center w-full h-1/2'}`}>
 					<div class="w-full h-1/5">
 						<svelte:component
 							this={c.default}
@@ -257,7 +252,7 @@
 						/>
 					</div>
 
-					<div class="w-full max-w-xs mt-4">
+					<div class="w-full max-w-xs mt-10">
 						<BrownButton
 							disabled={selected_answer !== undefined}
 							on:click={() => selectRangeAnswer(slider_value[0])}
@@ -269,12 +264,12 @@
 				</div>
 			{/await}
 		{:else if question.type === QuizQuestionType.TEXT}
-		<div class="flex flex-col items-center justify-center h-full w-full">
+		<div class="flex flex-col items-center w-full {`${game_mode !== 'normal' ? 'justify-center h-full' : ''}`}">
 			<span
 				class="fixed top-0 bg-red-500 h-8 transition-all"
 				style="width: {(100 / parseInt(question.time)) * parseInt(timer_res)}vw"
 			/>
-			<div class="w-full max-w-md px-4">
+			<div class="w-full max-w-md px-4 mt-10">
 			  <label for="answer-input" class="block mb-2 mt-5 text-sm font-medium text-gray-900 dark:text-gray-300">Type your answer here:</label>
 			  <input
 				id="answer-input"
@@ -316,7 +311,7 @@
 				class="fixed top-0 bg-red-500 h-8 transition-all"
 				style="width: {(100 / parseInt(question.time)) * parseInt(timer_res)}vw"
 			/>
-			<div class="flex flex-col w-full h-full gap-4 px-4 py-6 mt-10">
+			<div class="flex flex-col w-full h-full gap-4 px-4 mt-2">
 				{#each question.answers as answer, i (answer.id)}
 					<div
 						class="w-full h-fit flex-row rounded-lg p-2 align-middle"
@@ -411,7 +406,7 @@
 	{/if}
 	<!-- Display the submitted answer -->
 	{#if showPlayerAnswers}
-	    <div class={`${game_mode !== 'normal' ? 'h-screen flex justify-center items-center' : 'mt-20'}`}>
+	    <div class={`${game_mode !== 'normal' ? 'h-screen flex justify-center items-center' : ''}`}>
 			<div class="px-4 text-center">
 				<p class="text-lg font-semibold dark:text-white mt-10">Your answer:</p>
 				{#if Array.isArray(selected_answer)}
