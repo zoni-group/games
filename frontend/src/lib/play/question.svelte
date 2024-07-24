@@ -176,15 +176,14 @@
 		return isColorLight(backgroundColor) ? 'black' : 'white';
 	}
 </script>
-	<div class={`h-screen w-screen ${game_mode !== 'normal' ? 'flex items-start justify-center' : ''}`}>
+	<div class={`w-screen ${game_mode !== 'normal' ? 'h-4/5 flex items-start justify-center' : 'h-screen'}`}>
 	{#if game_mode === 'normal'}
 		<div
 			class="flex flex-col justify-start"
 			class:mt-10={[QuizQuestionType.RANGE, QuizQuestionType.ORDER, QuizQuestionType.TEXT]}
-			style="height: {question.image ? '33.333333' : '16.666667'}%"
 		>
 			<h1
-				class="lg:text-2xl text-lg text-center text-black dark:text-white mt-2 break-normal mb-2"
+				class="lg:text-2xl text-lg text-center text-black dark:text-white mt-2 break-normal mb-2 mt-20"
 			>
 				{@html question.question}
 			</h1>
@@ -238,7 +237,7 @@
 			{#await import('svelte-range-slider-pips')}
 				<Spinner />
 			{:then c}
-				<div class={`${game_mode !== 'normal' ? 'flex flex-col items-center justify-center w-full h-screen' : 'absolute top-[70vh] transform -translate-y-1/2 w-full'}`}>
+				<div class={`${game_mode !== 'normal' ? 'flex flex-col items-center justify-center w-full h-screen' : 'flex flex-col items-center justify-center w-full h-1/2'}`}>
 					<div class="w-full h-1/5">
 						<svelte:component
 							this={c.default}
@@ -253,7 +252,7 @@
 						/>
 					</div>
 
-					<div class="w-full max-w-xs mt-4">
+					<div class="w-full max-w-xs mt-10">
 						<BrownButton
 							disabled={selected_answer !== undefined}
 							on:click={() => selectRangeAnswer(slider_value[0])}
@@ -270,7 +269,7 @@
 				class="fixed top-0 bg-red-500 h-8 transition-all"
 				style="width: {(100 / parseInt(question.time)) * parseInt(timer_res)}vw"
 			/>
-			<div class="w-full max-w-md px-4">
+			<div class="w-full max-w-md px-4 mt-10">
 			  <label for="answer-input" class="block mb-2 mt-5 text-sm font-medium text-gray-900 dark:text-gray-300">Type your answer here:</label>
 			  <input
 				id="answer-input"
@@ -312,7 +311,7 @@
 				class="fixed top-0 bg-red-500 h-8 transition-all"
 				style="width: {(100 / parseInt(question.time)) * parseInt(timer_res)}vw"
 			/>
-			<div class="flex flex-col w-full h-full gap-4 px-4 py-6 mt-10">
+			<div class="flex flex-col w-full h-full gap-4 px-4 mt-2">
 				{#each question.answers as answer, i (answer.id)}
 					<div
 						class="w-full h-fit flex-row rounded-lg p-2 align-middle"
@@ -407,7 +406,7 @@
 	{/if}
 	<!-- Display the submitted answer -->
 	{#if showPlayerAnswers}
-	    <div class={`${game_mode !== 'normal' ? 'h-screen flex justify-center items-center' : 'mt-20'}`}>
+	    <div class={`${game_mode !== 'normal' ? 'h-screen flex justify-center items-center' : ''}`}>
 			<div class="px-4 text-center">
 				<p class="text-lg font-semibold dark:text-white mt-10">Your answer:</p>
 				{#if Array.isArray(selected_answer)}
