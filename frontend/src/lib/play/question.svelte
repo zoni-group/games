@@ -264,7 +264,7 @@
 				</div>
 			{/await}
 		{:else if question.type === QuizQuestionType.TEXT}
-		<div class="flex flex-col items-center justify-center h-full w-full">
+		<div class="flex flex-col items-center w-full {`${game_mode !== 'normal' ? 'justify-center h-full' : ''}`}">
 			<span
 				class="fixed top-0 bg-red-500 h-8 transition-all"
 				style="width: {(100 / parseInt(question.time)) * parseInt(timer_res)}vw"
