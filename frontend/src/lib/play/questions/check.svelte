@@ -58,14 +58,21 @@
 	}
 </script>
 
-<div class="flex flex-col justify-start items-start h-4/5 w-full p-4 mt-0">
-	<div class="flex-grow relative w-full h-full">
+<div class="flex flex-col justify-start items-start w-full p-4 mt-0 ${game_mode !== 'normal' ? ' h-4/5' : ''}">
+	<div class="flex-grow relative w-full ${game_mode !== 'normal' ? 'h-full' : ''}`}">
+		{#if game_mode !== 'normal'}
 		<div class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 rounded-full h-fit w-fit border-2 border-black shadow-2xl z-40">
 			<CircularTimer bind:text={timer_res} bind:progress={circular_progress} color="#ef4444" />
 		</div>
+		{:else}
+		<span
+			class="fixed top-0 bg-red-500 h-8 transition-all"
+			style="width: {(100 / parseInt(question.time)) * parseInt(timer_res)}vw"
+		/>
+		{/if}
 
 		<div 
-			class={`grid grid-rows-2 gap-2 w-full h-full ${game_mode !== 'normal' ? 'grid-flow-col auto-cols-auto' : 'grid-cols-2'}`}
+			class={`grid grid-rows-2 gap-2 w-full ${game_mode !== 'normal' ? 'h-full grid-flow-col auto-cols-auto' : 'grid-cols-2'}`}
 			>
 			{#each question.answers as answer, i}
 				<button
