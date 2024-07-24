@@ -135,7 +135,7 @@ SPDX-License-Identifier: MPL-2.0
 			<VotingResults data={new_data} {question} />
 		</div>
 	{/if}
-	{#if [QuizQuestionType.ORDER]}
+	{#if [QuizQuestionType.ORDER].includes(question.type)}
 		<div class="mt-12">
 			<OrderResults data={new_data} {question} />
 		</div>
