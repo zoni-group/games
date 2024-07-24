@@ -61,14 +61,15 @@
 <div class="flex flex-col justify-start items-start h-4/5 w-full p-4 mt-0">
 	<div class="flex-grow relative w-full h-full">
 		<div class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 rounded-full h-fit w-fit border-2 border-black shadow-2xl z-40">
-
 			<CircularTimer bind:text={timer_res} bind:progress={circular_progress} color="#ef4444" />
 		</div>
 
-		<div class="grid grid-rows-2 grid-flow-col auto-cols-auto gap-2 w-full h-full">
+		<div 
+			class={`grid grid-rows-2 gap-2 w-full h-full ${game_mode !== 'normal' ? 'grid-flow-col auto-cols-auto' : 'grid-cols-2'}`}
+			>
 			{#each question.answers as answer, i}
 				<button
-					class="rounded-lg h-full flex items-center justify-center disabled:opacity-60 p-3 border-2 border-black transition-all my-2"
+					class="rounded-lg h-full w-9/10 flex items-center justify-center disabled:opacity-60 border-2 border-black transition-all my-2"
 					style="background-color: {answer.color ?? default_colors[i]}; color: {get_foreground_color(answer.color ?? default_colors[i])}"
 					on:click={() => selectAnswer(i)}
 					class:opacity-100={_selected_answers[i]}
@@ -77,7 +78,7 @@
 					{#if game_mode === 'kahoot'}
 						<img class="h-2/3 inline-block m-auto" alt="Icon" src={kahoot_icons[i]} />
 					{:else}
-						<p class="m-auto" style="color: {getTextColor(answer.color ?? '#004A93')}">{answer.answer}</p>
+						<p class="m-auto button-text text-sm sm:text-base md:text-lg lg:text-xl" style="color: {getTextColor(answer.color ?? '#004A93')}">{answer.answer}</p>
 					{/if}
 				</button>
 			{/each}
