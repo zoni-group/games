@@ -105,24 +105,20 @@ SPDX-License-Identifier: MPL-2.0
 </svelte:head>
 <Analytics bind:quiz={analytics_quiz_selected} />
 <CommandpaletteNotice />
-<div class="min-h-screen flex flex-col">
+<div class="min-h-screen flex flex-col bg-white dark:bg-gray-800 text-black dark:text-white">
 	{#await getData()}
 		<svg class="h-8 w-8 animate-spin mx-auto my-20" viewBox="3 3 18 18">
 			<path
-				class="fill-black"
+				class="fill-black dark:fill-white"
 				d="M12 5C8.13401 5 5 8.13401 5 12C5 15.866 8.13401 19 12 19C15.866 19 19 15.866 19 12C19 8.13401 15.866 5 12 5ZM3 12C3 7.02944 7.02944 3 12 3C16.9706 3 21 7.02944 21 12C21 16.9706 16.9706 21 12 21C7.02944 21 3 16.9706 3 12Z"
 			/>
 			<path
-				class="fill-blue-100"
+				class="fill-blue-100 dark:fill-blue-500"
 				d="M16.9497 7.05015C14.2161 4.31648 9.78392 4.31648 7.05025 7.05015C6.65973 7.44067 6.02656 7.44067 5.63604 7.05015C5.24551 6.65962 5.24551 6.02646 5.63604 5.63593C9.15076 2.12121 14.8492 2.12121 18.364 5.63593C18.7545 6.02646 18.7545 6.65962 18.364 7.05015C17.9734 7.44067 17.3403 7.44067 16.9497 7.05015Z"
 			/>
 		</svg>
 	{:then quizzes}
 		<div class="flex flex-col w-full mx-auto">
-			<!--		<button
-                    class='px-4 py-2 font-medium tracking-wide text-gray-500 whitespace-nowrap dark:text-gray-400 capitalize transition-colors dark:bg-gray-700 duration-200 transform bg-[#004A93] rounded-md hover:bg-green-600 focus:outline-none focus:ring focus:ring-blue-300 focus:ring-opacity-80'>
-                    Primary
-                </button>-->
 			<div class="w-full grid lg:grid-cols-4 gap-2 grid-cols-2 px-4">
 				<BrownButton href="/create">{$t('words.create')}</BrownButton>
 				<BrownButton href="/import">{$t('words.import')}</BrownButton>
@@ -140,7 +136,7 @@ SPDX-License-Identifier: MPL-2.0
 						<div>
 							<input
 								bind:value={search_term}
-								class="p-2 rounded-lg outline-none text-center w-96 dark:bg-gray-700"
+								class="p-2 rounded-lg outline-none text-center w-96 dark:bg-gray-700 dark:text-white"
 								placeholder={$t('dashboard.search_for_own_quizzes')}
 							/>
 							<button
@@ -170,16 +166,10 @@ SPDX-License-Identifier: MPL-2.0
 				<div class="flex flex-col gap-4 mt-4 px-2">
 					{#each items_to_show as quiz}
 						<div
-							class="grid grid-cols-2 lg:grid-cols-3 w-full rounded border-[#004A93] border-2 p-2 h-[20vh] overflow-hidden max-h-[20vh]"
+							class="grid grid-cols-2 lg:grid-cols-3 w-full rounded border-[#004A93] dark:border-[#90CDF4] border-2 p-2 h-[20vh] overflow-hidden max-h-[20vh]"
 						>
 							<div class="hidden lg:flex w-auto h-full items-center relative">
 								{#if quiz.cover_image}
-									<!--									<img
-										src="/api/v1/storage/download/{quiz.cover_image}"
-										alt="user provided"
-										loading="lazy"
-										class="shrink-0 max-w-full max-h-full absolute rounded"
-									/>-->
 									<MediaComponent
 										src={quiz.cover_image}
 										css_classes="shrink-0 max-w-full max-h-full absolute rounded"
@@ -187,8 +177,8 @@ SPDX-License-Identifier: MPL-2.0
 								{/if}
 							</div>
 							<div class="my-auto mx-auto max-h-full overflow-hidden">
-								<p class="text-xl text-center">{@html quiz.title}</p>
-								<p class="text-sm text-center text-clip overflow-hidden">
+								<p class="text-xl text-center text-black dark:text-white">{@html quiz.title}</p>
+								<p class="text-sm text-center text-clip overflow-hidden text-black dark:text-gray-300">
 									{@html quiz.description ?? ''}
 								</p>
 							</div>
@@ -202,7 +192,6 @@ SPDX-License-Identifier: MPL-2.0
 									disabled={!quiz.public}
 									href="/view/{quiz.id}"
 								>
-									<!-- heroicons/legacy-outline/Eye -->
 									<svg
 										class="w-5 h-5"
 										aria-hidden="true"
@@ -228,7 +217,6 @@ SPDX-License-Identifier: MPL-2.0
 									flex={true}
 									on:click={() => (analytics_quiz_selected = quiz)}
 								>
-									<!-- heroicons/legacy-outline/ChartBar -->
 									<svg
 										class="w-5 h-5"
 										aria-hidden="true"
@@ -251,7 +239,6 @@ SPDX-License-Identifier: MPL-2.0
 										: `/quiztivity/edit?id=${quiz.id}`}
 									flex={true}
 								>
-									<!-- heroicons/legacy-outline/Pencil -->
 									<svg
 										class="w-5 h-5"
 										aria-hidden="true"
@@ -275,7 +262,6 @@ SPDX-License-Identifier: MPL-2.0
 										}}
 										flex={true}
 									>
-										<!-- heroicons/legacy-outline/Play -->
 										<svg
 											class="w-5 h-5"
 											aria-hidden="true"
@@ -299,7 +285,6 @@ SPDX-License-Identifier: MPL-2.0
 									</BrownButton>
 								{:else}
 									<BrownButton href="/quiztivity/play?id={quiz.id}" flex={true}>
-										<!-- heroicons/legacy-outline/Play -->
 										<svg
 											class="w-5 h-5"
 											aria-hidden="true"
@@ -329,7 +314,6 @@ SPDX-License-Identifier: MPL-2.0
 									}}
 									flex={true}
 								>
-									<!-- heroicons/trash -->
 									<svg
 										class="w-5 h-5"
 										fill="none"
@@ -349,7 +333,7 @@ SPDX-License-Identifier: MPL-2.0
 									on:click={() => (download_id = quiz.id)}
 									flex={true}
 									disabled={quiz.type !== 'quiz'}
-									><!-- heroicons/download -->
+								>
 									<svg
 										class="w-5 h-5"
 										fill="none"

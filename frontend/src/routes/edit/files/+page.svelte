@@ -82,7 +82,7 @@ SPDX-License-Identifier: MPL-2.0
 </script>
 
 <div>
-	<h2 class="text-center text-4xl">
+	<h2 class="text-center text-4xl text-black dark:text-white">
 		{$t('file_dashboard.storage_usage', {
 			used: (data.storage_usage.used / (1024 * 1024)).toFixed(2),
 			total: (data.storage_usage.limit / (1024 * 1024)).toFixed(0),
@@ -93,7 +93,7 @@ SPDX-License-Identifier: MPL-2.0
 	<div class="grid grid-cols-1 lg:grid-cols-2 p-4 gap-4">
 		{#each images as image}
 			<div
-				class="border-2 border-[#004A93] rounded p-2 grid grid-cols-2 hover:opacity-100 transition-all"
+				class="border-2 border-[#004A93] dark:border-gray-600 rounded p-2 grid grid-cols-2 hover:opacity-100 transition-all bg-white dark:bg-gray-800 text-black dark:text-white"
 				class:opacity-40={image.quiztivities.length === 0 && image.quizzes.length === 0}
 			>
 				{#if contentTypes[image.id]?.startsWith('image')}
@@ -126,30 +126,30 @@ SPDX-License-Identifier: MPL-2.0
 						Your browser does not support the video tag.
 					</video>
 				{:else}
-					<p>Unsupported media type</p>
+					<p class="text-black dark:text-white">Unsupported media type</p>
 				{/if}
 				<div class="flex flex-col my-auto ml-4">
-					<p>
+					<p class="text-black dark:text-white">
 						{$t('file_dashboard.size', {
 							size: (image.size / (1024 * 1024)).toFixed(2)
 						})}
 					</p>
-					<p>
+					<p class="text-black dark:text-white">
 						{$t('file_dashboard.caption', {
 							caption: image.alt_text ?? $t('file_dashboard.missing')
 						})}
 					</p>
-					<p>
+					<p class="text-black dark:text-white">
 						{$t('file_dashboard.filename', {
 							filename: image.filename ?? $t('file_dashboard.missing')
 						})}
 					</p>
-					<p>
+					<p class="text-black dark:text-white">
 						{$t('file_dashboard.uploaded', {
 							date: new Date(image.uploaded_at).toLocaleString()
 						})}
 					</p>
-					<p>
+					<p class="text-black dark:text-white">
 						{$t('file_dashboard.imported', {
 							yes_or_no: image.imported ? $t('words.yes') : $t('words.no')
 						})}
@@ -159,13 +159,16 @@ SPDX-License-Identifier: MPL-2.0
 							on:click={() => {
 								edit_popup = image;
 							}}
+							class="text-black dark:text-white"
 							>{$t('file_dashboard.edit_details')}
 						</BrownButton>
 						{#if image.quiztivities.length === 0 && image.quizzes.length === 0}
 							<BrownButton
 								on:click={() => {
 									delete_image(image.id);
-								}}>{$t('file_dashboard.delete_image')}</BrownButton
+								}}
+								class="text-black dark:text-white"
+								>{$t('file_dashboard.delete_image')}</BrownButton
 							>
 						{/if}
 					</div>
@@ -182,35 +185,35 @@ SPDX-License-Identifier: MPL-2.0
 		class="fixed top-0 left-0 h-screen w-screen z-40 flex bg-black bg-opacity-50"
 		on:click={close_popup_handler}
 	>
-		<div class="w-auto h-auto m-auto rounded bg-white dark:bg-gray-700 p-4">
-			<h1 class="text-2xl text-center">{$t('file_dashboard.edit_the_image')}</h1>
-			<form class="flex flex-col" on:submit|preventDefault={save_image_metadata}>
-				<div class="flex flex-row">
+		<div class="w-auto h-auto m-auto rounded bg-white dark:bg-gray-700 p-6 text-black dark:text-white shadow-lg">
+			<h1 class="text-2xl text-center mb-4">{$t('file_dashboard.edit_the_image')}</h1>
+			<form class="flex flex-col gap-4" on:submit|preventDefault={save_image_metadata}>
+				<div class="flex flex-row gap-4 items-center">
 					<div class="flex flex-col mr-4">
-						<label for="name" class="m-auto">{$t('file_dashboard.filename_word')}</label
-						>
-						<label for="alt_text" class="m-auto">{$t('file_dashboard.alt_text')}</label>
+						<label for="name" class="mb-2">{$t('file_dashboard.filename_word')}</label>
+						<label for="alt_text" class="mb-2">{$t('file_dashboard.alt_text')}</label>
 					</div>
-					<div class="flex flex-col gap-3">
+					<div class="flex flex-col gap-3 w-full">
 						<input
-							class="rounded outline-none dark:bg-gray-500 p-0.5 border-4 border-transparent"
+							class="rounded outline-none dark:bg-gray-500 dark:text-white p-2 border border-gray-300 dark:border-gray-600"
 							id="name"
 							type="text"
 							bind:value={edit_popup.filename}
 						/>
 						<input
+							class="rounded outline-none dark:bg-gray-500 dark:text-white p-2 border border-gray-300 dark:border-gray-600"
 							class:border-red-700={!edit_popup.alt_text}
-							class="transition rounded outline-none dark:bg-gray-500 p-0.5 border-4 border-transparent"
 							id="alt_text"
 							type="text"
 							bind:value={edit_popup.alt_text}
 						/>
 					</div>
 				</div>
-				<div class="mt-4">
-					<BrownButton type="submit">{$t('words.save')}</BrownButton>
+				<div class="flex justify-center mt-4">
+					<BrownButton type="submit" class="px-4 py-2">{$t('words.save')}</BrownButton>
 				</div>
 			</form>
 		</div>
 	</div>
 {/if}
+

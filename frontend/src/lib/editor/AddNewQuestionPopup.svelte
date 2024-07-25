@@ -110,13 +110,13 @@ SPDX-License-Identifier: MPL-2.0
 							add_question(i);
 						}}>{qt.name}</button
 					>
-					<p class="text-sm">{qt.description}</p>
+					<p class="text-sm text-black dark:text-white">{qt.description}</p>
 				</div>
 			{/each}
 		</div>
 
 		<div class="mt-auto flex justify-center">
-			<p>
+			<p class="text-black dark:text-white">
 				{$t('editor.need_more_help')}
 				<a
 					href="/docs/quiz/question-types"
