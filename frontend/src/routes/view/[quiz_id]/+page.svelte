@@ -1,9 +1,3 @@
-<!--
-SPDX-FileCopyrightText: 2023 Marlon W (Mawoka)
-
-SPDX-License-Identifier: MPL-2.0
--->
-
 <script lang="ts">
 	import DownloadQuiz from '$lib/components/DownloadQuiz.svelte';
 	import { getLocalization } from '$lib/i18n';
@@ -78,33 +72,33 @@ SPDX-License-Identifier: MPL-2.0
 	}
 
 	async function fetchContentType(url: string) {
-        const response = await fetch(url, {
-            method: 'HEAD'
-        });
-        return response.headers.get('Content-Type');
-    }
+		const response = await fetch(url, {
+			method: 'HEAD'
+		});
+		return response.headers.get('Content-Type');
+	}
 
-    onMount(async () => {
-        if (quiz.cover_image) {
-            contentType = await fetchContentType(`/api/v1/storage/download/${quiz.cover_image}`);
-        }
-    });
+	onMount(async () => {
+		if (quiz.cover_image) {
+			contentType = await fetchContentType(`/api/v1/storage/download/${quiz.cover_image}`);
+		}
+	});
 
 	// Function to ensure the .mp4 extension is present
 	function getVideoUrl(url) {
-    	if (!url.endsWith('.mp4')) {
-      		return `${url}.mp4`;
-    	}
-    	return url;
-  	}
+		if (!url.endsWith('.mp4')) {
+			return `${url}.mp4`;
+		}
+		return url;
+	}
 
 	// Function to ensure the .mp3 extension is present
 	function getAudioUrl(url) {
-    	if (!url.endsWith('.mp3')) {
-      		return `${url}.mp3`;
-    	}
-    	return url;
-  	}
+		if (!url.endsWith('.mp3')) {
+			return `${url}.mp3`;
+		}
+		return url;
+	}
 </script>
 
 <svelte:head>
@@ -112,50 +106,50 @@ SPDX-License-Identifier: MPL-2.0
 </svelte:head>
 
 <div>
-	<h1 class="text-4xl text-center">{@html quiz.title}</h1>
+	<h1 class="text-4xl text-center text-black dark:text-white">{@html quiz.title}</h1>
 	<div class="text-center">
-		<p>{@html quiz.description}</p>
+		<p class="text-gray-800 dark:text-gray-200">{@html quiz.description}</p>
 	</div>
 	<p class="text-center">
-		<small>
+		<small class="text-gray-600 dark:text-gray-400">
 			{$t('view_quiz_page.made_by')}
-			<a href="/user/{quiz.user_id.id}" class="underline">@{quiz.user_id.username}</a>
+			<a href="/user/{quiz.user_id.id}" class="underline text-blue-600 dark:text-blue-300">@{quiz.user_id.username}</a>
 		</small>
 	</p>
 	{#if quiz.cover_image}
 		<div class="flex justify-center align-middle items-center">
 			<div class="h-[40vh] m-auto w-auto my-3">
 				{#if contentType?.startsWith('image')}
-                    <img
-                        class="max-h-full max-w-full block"
-                        src={`/api/v1/storage/download/${quiz.cover_image}`}
-                        alt="Not provided"
-                    />
-                {:else if contentType?.startsWith('video')}
-                    <!-- svelte-ignore a11y-media-has-caption -->
-                    <video
-                        class="max-h-full max-w-full block"
-                        src={getVideoUrl(`/api/v1/storage/download/${quiz.cover_image}`)}
-                        controls
+					<img
+						class="max-h-full max-w-full block"
+						src={`/api/v1/storage/download/${quiz.cover_image}`}
+						alt="Not provided"
+					/>
+				{:else if contentType?.startsWith('video')}
+					<!-- svelte-ignore a11y-media-has-caption -->
+					<video
+						class="max-h-full max-w-full block"
+						src={getVideoUrl(`/api/v1/storage/download/${quiz.cover_image}`)}
+						controls
 						autoplay={false}
 						loop={false}
-                    >
-                        Your browser does not support the video tag.
-                    </video>
-				{:else if contentType?.startsWith('audio')}
-                    <!-- svelte-ignore a11y-media-has-caption -->
-                    <video
-                        class="max-h-full max-w-full block"
-                        src={getAudioUrl(`/api/v1/storage/download/${quiz.cover_image}`)}
-                        controls
-						autoplay={false}
-						loop={false}
-                    >
-                        Your browser does not support the audio tag.
+					>
+						Your browser does not support the video tag.
 					</video>
-                {:else}
-                    <p>Unsupported media type</p>
-                {/if}
+				{:else if contentType?.startsWith('audio')}
+					<!-- svelte-ignore a11y-media-has-caption -->
+					<video
+						class="max-h-full max-w-full block"
+						src={getAudioUrl(`/api/v1/storage/download/${quiz.cover_image}`)}
+						controls
+						autoplay={false}
+						loop={false}
+					>
+						Your browser does not support the audio tag.
+					</video>
+				{:else}
+					<p>Unsupported media type</p>
+				{/if}
 			</div>
 		</div>
 	{/if}
@@ -254,7 +248,7 @@ SPDX-License-Identifier: MPL-2.0
 				<div class="w-full">
 					<a
 						href="mailto:operez@zoni.edu?subject=Report activity {quiz.id}"
-						class="text-sm underline"
+						class="text-sm underline text-black dark:text-white"
 					>
 						{$t('words.report')}
 					</a>
@@ -268,7 +262,7 @@ SPDX-License-Identifier: MPL-2.0
 			<div class="px-4 py-1">
 				<CollapsSection headerText={question.question} expanded={auto_expand}>
 					<div class="grid grid-cols-1 gap-2 rounded-b-lg bg-white dark:bg-gray-700 -mt-1">
-						<h3 class="text-3xl m-1 text-center">
+						<h3 class="text-3xl m-1 text-center text-black dark:text-white">
 							{index_question + 1}: {@html question.question}
 						</h3>
 
@@ -285,7 +279,7 @@ SPDX-License-Identifier: MPL-2.0
 							</span>
 						{/if}
 						<p
-							class="m-1 flex flex-row gap-2 flex-nowrap whitespace-nowrap w-full justify-center"
+							class="m-1 flex flex-row gap-2 flex-nowrap whitespace-nowrap w-full justify-center text-gray-800 dark:text-gray-200"
 						>
 							<svg
 								class="w-8 h-8 inline-block"
@@ -325,7 +319,7 @@ SPDX-License-Identifier: MPL-2.0
 								{/each}
 							</div>
 						{:else if question.type === QuizQuestionType.RANGE}
-							<p class="m-1 text-center">
+							<p class="m-1 text-center text-gray-800 dark:text-gray-200">
 								All numbers between {question.answers.min_correct}
 								and {question.answers.max_correct} are correct, where numbers between {question
 									.answers.min} and {question.answers.max} can be selected.
@@ -334,7 +328,7 @@ SPDX-License-Identifier: MPL-2.0
 							<ul class="flex flex-col gap-4 m-4 p-6">
 								{#each question.answers as answer}
 									<li class="p-1 rounded-lg py-3 dark:bg-gray-500 bg-gray-300">
-										<h4 class="text-center">
+										<h4 class="text-center text-black dark:text-white">
 											{answer.answer}
 										</h4>
 									</li>
@@ -344,7 +338,7 @@ SPDX-License-Identifier: MPL-2.0
 							<div class="grid grid-cols-2 gap-4 m-4 p-6">
 								{#each question.answers as answer, index_answer}
 									<div class="p-1 rounded-lg py-4 dark:bg-gray-500 bg-gray-300">
-										<h4 class="text-center">
+										<h4 class="text-center text-black dark:text-white">
 											{quiz.questions[index_question].answers[index_answer]
 												.answer}
 										</h4>
