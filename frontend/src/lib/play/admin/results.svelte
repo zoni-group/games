@@ -7,6 +7,7 @@ SPDX-License-Identifier: MPL-2.0
 <script lang="ts">
 	import VotingResults from './voting_results.svelte';
 	import OrderResults from './order_results.svelte';
+	import CheckResults from './check_results.svelte';
 	import { flip } from 'svelte/animate';
 	import { fly } from 'svelte/transition';
 	import { onMount } from 'svelte';
@@ -138,6 +139,11 @@ SPDX-License-Identifier: MPL-2.0
 	{#if [QuizQuestionType.ORDER].includes(question.type)}
 		<div class="mt-12">
 			<OrderResults data={new_data} {question} />
+		</div>
+	{/if}
+	{#if [QuizQuestionType.CHECK].includes(question.type)}
+		<div class="mt-12">
+			<CheckResults data={new_data} {question} />
 		</div>
 	{/if}
 </div>
