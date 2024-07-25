@@ -1,46 +1,33 @@
-<!--
-SPDX-FileCopyrightText: 2023 Marlon W (Mawoka)
-
-SPDX-License-Identifier: MPL-2.0
--->
-
 <!doctype html>
 <html lang="en">
 	<head>
 		<meta charset="utf-8" />
 		<meta name="description" content="" />
-		<!--		<link rel="icon" href="%sveltekit.assets%/favicon.png" />-->
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
 		<script>
-			window.plausible =
-				window.plausible ||
-				function () {
-					(window.plausible.q = window.plausible.q || []).push(arguments);
-				};
-		</script>
-
-		<link
-			rel="apple-touch-icon"
-			sizes="180x180"
-			href="%sveltekit.assets%/apple-touch-icon.png"
-		/>
-		<link
-			rel="icon"
-			type="image/png"
-			sizes="32x32"
-			href="%sveltekit.assets%/favicon-32x32.png"
-		/>
-		<link
-			rel="icon"
-			type="image/png"
-			sizes="16x16"
-			href="%sveltekit.assets%/favicon-16x16.png"
-		/>
+            window.plausible =
+                window.plausible ||
+                function () {
+                    (window.plausible.q = window.plausible.q || []).push(arguments);
+                };
+				(function() {
+					const theme = localStorage.getItem('theme') || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+					document.documentElement.setAttribute('data-theme', theme);
+					document.documentElement.classList.add(theme);
+					
+					// Set the background color of the body element
+					const bgColor = theme === 'dark' ? '#383838' : '#FFFFFF';
+					document.body.style.backgroundColor = bgColor;
+				})();
+        </script>
+		<link rel="apple-touch-icon" sizes="180x180" href="%sveltekit.assets%/apple-touch-icon.png" />
+		<link rel="icon" type="image/png" sizes="32x32" href="%sveltekit.assets%/favicon-32x32.png" />
+		<link rel="icon" type="image/png" sizes="16x16" href="%sveltekit.assets%/favicon-16x16.png" />
 		<link rel="manifest" href="%sveltekit.assets%/site.webmanifest" />
 		<meta name="apple-mobile-web-app-title" content="Zoni® AI" />
 		<meta name="application-name" content="Zoni® AI" />
 		<meta name="msapplication-TileColor" content="#00a300" />
-		<meta name="theme-color" content="#ffffff" />
+		<!-- <meta name="theme-color" content="#ffffff" /> -->
 		<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap" rel="stylesheet">
 		%sveltekit.head%
 	</head>

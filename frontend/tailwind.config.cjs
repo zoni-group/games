@@ -1,7 +1,3 @@
-// SPDX-FileCopyrightText: 2023 Marlon W (Mawoka)
-//
-// SPDX-License-Identifier: MPL-2.0
-
 const config = {
 	content: ['./src/**/*.{html,js,svelte,ts}'],
 	darkMode: 'class',
@@ -15,33 +11,8 @@ const config = {
 			typography: (theme) => ({
 				DEFAULT: {
 					css: {
-						// color: theme('colors.yellow.50'),
 						textDecoration: 'none',
 						textColor: '#00529b',
-						/*a: {
-							color: theme('colors.blue.200')
-						},
-						blockquote: {
-							color: theme('colors.yellow.50')
-						},
-						h1: {
-							color: theme('colors.yellow.50')
-						},
-						h2: {
-							color: theme('colors.yellow.50')
-						},
-						h3: {
-							color: theme('colors.yellow.50')
-						},
-						h4: {
-							color: theme('colors.yellow.50')
-						},
-						th: {
-							color: theme('colors.yellow.50')
-						},
-						strong: {
-							color: theme('colors.yellow.50')
-						},*/
 						'code::before': {
 							content: '""',
 							'padding-left': '0.25rem'
@@ -63,7 +34,6 @@ const config = {
 			})
 		}
 	},
-
 	plugins: [require('@tailwindcss/typography')]
 };
 

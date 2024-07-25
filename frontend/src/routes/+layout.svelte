@@ -1,9 +1,3 @@
-<!--
-SPDX-FileCopyrightText: 2023 Marlon W (Mawoka)
-
-SPDX-License-Identifier: MPL-2.0
--->
-
 <script>
 	import '../app.css';
 	import Navbar from '$lib/navbar.svelte';
@@ -11,44 +5,20 @@ SPDX-License-Identifier: MPL-2.0
 	import * as Sentry from '@sentry/browser';
 	import { BrowserTracing } from '@sentry/tracing';
 	import { initLocalizationContext } from '$lib/i18n';
-	import { browser } from '$app/environment';
 	import CommandPalette from '$lib/components/commandpalette.svelte';
 	import { SvelteToast } from '@zerodevx/svelte-toast';
-	// import Alert from '$lib/modals/alert.svelte';
+	import { browser } from "$app/environment";
 
-	/*	afterNavigate(() => {
-		if (browser) {
-			if (latestPageVisitURl === window.location.href) {
-				return;
-			} else {
-				latestPageVisitURl = window.location.href;
-				plausible.trackPageview();
-			}
-			console.log('After nav');
-		}
-	});*/
 	const plausible_data_url = import.meta.env.VITE_PLAUSIBLE_DATA_URL;
 
 	if (browser) {
 		pathname.set(window.location.pathname);
-		if (
-			localStorage.theme === 'dark' ||
-			(!('theme' in localStorage) &&
-				window.matchMedia('(prefers-color-scheme: dark)').matches)
-		) {
+		const theme = localStorage.getItem('theme') || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+		if (theme === 'dark') {
 			document.documentElement.classList.add('dark');
 		} else {
 			document.documentElement.classList.remove('dark');
 		}
-
-		// Whenever the user explicitly chooses light mode
-		// 		localStorage.theme = 'light';
-		//
-		// // Whenever the user explicitly chooses dark mode
-		// 		localStorage.theme = 'dark';
-		//
-		// // Whenever the user explicitly chooses to respect the OS preference
-		// 		localStorage.removeItem('theme');
 	}
 
 	initLocalizationContext();
@@ -57,21 +27,17 @@ SPDX-License-Identifier: MPL-2.0
 		Sentry.init({
 			dsn: String(import.meta.env.VITE_SENTRY),
 			integrations: [new BrowserTracing()],
-
-			// Set tracesSampleRate to 1.0 to capture 100%
-			// of transactions for performance monitoring.
-			// We recommend adjusting this value in production
 			tracesSampleRate: 0.5
 		});
 	}
 
 	const options = {
-    duration: 4000, // duration of the toast
-    theme: {
-      '--toastBackground': '#333',
-      '--toastColor': '#fff',
-    }
-  };
+		duration: 4000,
+		theme: {
+			'--toastBackground': '#333',
+			'--toastColor': '#fff',
+		}
+	};
 </script>
 
 <svelte:head>
@@ -105,43 +71,14 @@ SPDX-License-Identifier: MPL-2.0
 {/if}
 <CommandPalette />
 
-<!--{#if $alertModal.open ?? false}
-	<div
-		class="fixed inset-0 h-screen w-screen bg-black z-30 bg-opacity-60 items-center justify-center content-center"
-		class:hidden={!$alertModal.open}
-		class:flex={$alertModal.open}
-		class:visible={$alertModal.open}
-	>
-		<Alert
-			bind:title={$alertModal.title}
-			bind:body={$alertModal.body}
-			bind:open={$alertModal.open}
-		/>
-	</div>
-{/if}-->
-
 <style lang="scss">
 	:global(html:not(.dark)) {
-		// height: 100%;
-		// width: 100%;
-
-		// bg-gradient-to-r from-[#009444] via-[#39b54a] to-[#8dc63f]
-		//background: linear-gradient(to right, #009444, #39b54a, #8dc63f) repeat-y;
 		background-color: #f3f7f9;
-		background-size: cover;
-		/*background: linear-gradient(-225deg, #231557 0%, #44107A 29%, #FF1361 67%, #FFF800 100%); */
-		/*background: linear-gradient(-225deg, #22E1FF 0%, #1D8FE1 48%, #625EB1 100%); */
 		color: black;
-
-		// background-size: 400% 400%;
-
-		//animation: background_animation 5s ease infinite;
 	}
 
 	:global(html.dark) {
-		//background-color: #0f2702;
 		background-color: #383838;
-		background-size: cover;
 		color: white;
 
 		:global(#pips-slider) {
