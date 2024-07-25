@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { onMount, onDestroy } from 'svelte';
-	import Audio1 from '$lib/assets/music/gather.mp3';
+	import Audio1 from '$lib/assets/music/Far Away – Declan DP (No Copyright Music).mp3';
 
 	export let play = false;
 	let volume = 100;
