@@ -51,6 +51,14 @@ SPDX-License-Identifier: MPL-2.0
 			sorted_data[i.answer] += 1;
 		}
 	}
+
+	const isCorrect = (answer) => {
+      return question.answers.some(a => cleanTextAnswer(a.answer) === cleanTextAnswer(answer) && a.right);
+    };
+  
+    const isIncorrect = (answer) => {
+      return question.answers.some(a => cleanTextAnswer(a.answer) === cleanTextAnswer(answer) && !a.right);
+    };
 </script>
 
 <div class="flex justify-center w-full">
@@ -92,6 +100,31 @@ SPDX-License-Identifier: MPL-2.0
 					>
 						{@html answer}
 					</p>
+				</div>
+			{/each}
+		</div>
+	</div>
+</div>
+
+<div class="flex justify-center w-full px-4">
+	<div class="m-auto gap-4 flex flex-col items-center">
+		<h2 class="text-2xl font-bold text-center mb-4 dark:text-white mt-10">Answers</h2>
+		<p class="text-lg md:text-xl lg:text-2xl text-center mb-6 dark:text-gray-300 text-gray-700">{question.question}</p>
+		<div class="flex flex-wrap justify-center gap-4 w-full max-w-5xl">
+			{#each quiz_answers as answer, i}
+				<div class="w-full md:w-1/2 lg:w-1/3 p-4">
+					<div class="flex items-center justify-between p-4 border rounded shadow-lg bg-gray-100 dark:bg-gray-800">
+						<span class="text-lg dark:text-white">{answer}</span>
+						{#if question.type === QuizQuestionType.VOTING || question.type === QuizQuestionType.TEXT}
+							<span class="text-xl font-bold text-green-500">
+								{sorted_data[answer]}
+							</span>
+						{:else}
+							<span class="text-xl font-bold" class:text-green-500={isCorrect(answer)} class:text-red-500={isIncorrect(answer)}>
+								{isCorrect(answer) ? '✓' : isIncorrect(answer) ? '✗' : ''}
+							</span>
+						{/if}
+					</div>
 				</div>
 			{/each}
 		</div>
