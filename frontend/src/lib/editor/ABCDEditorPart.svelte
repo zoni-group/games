@@ -15,7 +15,7 @@ SPDX-License-Identifier: MPL-2.0
 
 	const { t } = getLocalization();
 
-	const default_colors = ['#C8E6C9', '#FFE0B2', '#FFF9C4', '#B3E5FC'];
+	const default_colors = ['#FFA800', '#00A3FF', '#FF1D38', '#00D749'];
 
 	export let selected_question: number;
 	export let check_choice = false;
@@ -35,6 +35,12 @@ SPDX-License-Identifier: MPL-2.0
 	};
 
 	const get_empty_answer = (i: number): Answer => {
+		console.log("Colors ",{
+			answer: '',
+			color: default_colors[i],
+			right: false
+		});
+		
 		return {
 			answer: '',
 			color: default_colors[i],

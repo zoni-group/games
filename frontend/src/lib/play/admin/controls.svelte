@@ -16,7 +16,7 @@ SPDX-License-Identifier: MPL-2.0
 	export let timer_res: string;
 	export let final_results;
 	export let socket: Socket;
-
+	export let answer_count: number;
 	export let game_token: string;
 
 	export let question_results;
@@ -53,60 +53,66 @@ SPDX-License-Identifier: MPL-2.0
 </script>
 
 <div
-	class="  w-full h-10 z-20 grid grid-cols-2"
+	class="  w-full h-10 mt-4 px-4 z-20 grid grid-cols-2"
 	style="background: {bg_color ? bg_color : 'transparent'}"
 	class:text-black={bg_color}
 >
-	<p class="mr-auto ml-0 col-start-1 col-end-1">
+	<p class="mr-auto ml-0 col-start-1 col-end-1 flex items-center italic justify-center font-semibold bg-white rounded-full w-20 border-8 border-[#0AEDFE] h-20 ">
 		{selected_question === -1 ? '0' : selected_question + 1}
-		/{quiz_data.questions.length}
+		/ {quiz_data.questions.length}
 	</p>
 	<div class="justify-self-end ml-auto mr-0 col-start-3 col-end-3">
-		{#if selected_question + 1 === quiz_data.questions.length && ((timer_res === '0' && question_results !== null) || quiz_data?.questions?.[selected_question]?.type === QuizQuestionType.SLIDE)}
-			{#if JSON.stringify(final_results) === JSON.stringify([null])}
-				<button on:click={get_final_results} class="admin-button"
-					>{$t('admin_page.get_final_results')}
-				</button>
-			{/if}
-		{:else if timer_res === '0' || selected_question === -1}
-			{#if (selected_question + 1 !== quiz_data.questions.length && question_results !== null) || selected_question === -1}
-				<button
-					on:click={() => {
-						set_question_number(selected_question + 1);
-					}}
-					class="admin-button"
-					>{$t('admin_page.next_question', { question: selected_question + 2 })}
-				</button>
-			{/if}
-			{#if question_results === null && selected_question !== -1}
+		<div class="flex flex-col justify-center items-center" >
+			
+			{#if selected_question + 1 === quiz_data.questions.length && ((timer_res === '0' && question_results !== null) || quiz_data?.questions?.[selected_question]?.type === QuizQuestionType.SLIDE)}
+				{#if JSON.stringify(final_results) === JSON.stringify([null])}
+					<button on:click={get_final_results} class="text-white  underline"
+						>{$t('admin_page.get_final_results')}
+					</button>
+				{/if}
+			{:else if timer_res === '0' || selected_question === -1}
+				{#if (selected_question + 1 !== quiz_data.questions.length && question_results !== null) || selected_question === -1}
+					<button
+						on:click={() => {
+							set_question_number(selected_question + 1);
+						}}
+						class="text-white  underline "
+						>{$t('admin_page.next_question', { question: selected_question + 2 })}
+					</button>
+				{/if}
+				{#if question_results === null && selected_question !== -1}
+					{#if quiz_data.questions[selected_question].type === QuizQuestionType.SLIDE}
+						<button
+							on:click={() => {
+								set_question_number(selected_question + 1);
+							}}
+							class="text-white  underline"
+							>{$t('admin_page.next_question', { question: selected_question + 2 })}
+						</button>
+					{:else}
+						<button on:click={get_question_results} class="text-white  underline"
+							>{$t('admin_page.show_results')}
+						</button>
+					{/if}
+				{/if}
+			{:else if selected_question !== -1}
 				{#if quiz_data.questions[selected_question].type === QuizQuestionType.SLIDE}
 					<button
 						on:click={() => {
 							set_question_number(selected_question + 1);
 						}}
-						class="admin-button"
+						class="text-white  underline"
 						>{$t('admin_page.next_question', { question: selected_question + 2 })}
 					</button>
 				{:else}
-					<button on:click={get_question_results} class="admin-button"
-						>{$t('admin_page.show_results')}
+					<button on:click={show_solutions} class="text-white  underline"
+						>{$t('admin_page.stop_time_and_solutions')}
 					</button>
 				{/if}
 			{/if}
-		{:else if selected_question !== -1}
-			{#if quiz_data.questions[selected_question].type === QuizQuestionType.SLIDE}
-				<button
-					on:click={() => {
-						set_question_number(selected_question + 1);
-					}}
-					class="admin-button"
-					>{$t('admin_page.next_question', { question: selected_question + 2 })}
-				</button>
-			{:else}
-				<button on:click={show_solutions} class="admin-button"
-					>{$t('admin_page.stop_time_and_solutions')}
-				</button>
-			{/if}
-		{/if}
+			<p class=" text-lg border-2 px-4 py-2 mx-3 mt-4 underline rounded-xl border-[#0AEDFE] text-white">
+				{$t('admin_page.answers_submitted', { answer_count: answer_count })}
+			</p>
+		</div>
 	</div>
 </div>

@@ -22,7 +22,7 @@ SPDX-License-Identifier: MPL-2.0
 	export let bg_color: string;
 
 	const { t } = getLocalization();
-	const default_colors = ['#C8E6C9', '#FFE0B2', '#FFF9C4', '#B3E5FC'];
+	const default_colors = ['#FFA800', '#FF1D38', '#00A3FF', '#00D749'];
 
 	let question_results = null;
 	export let final_results: Array<null> | Array<Array<PlayerAnswer>> = [null];
@@ -126,6 +126,7 @@ SPDX-License-Identifier: MPL-2.0
 		{bg_color}
 		{selected_question}
 		{quiz_data}
+		{answer_count} 
 		bind:timer_res
 		{final_results}
 		{socket}

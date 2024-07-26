@@ -181,7 +181,7 @@ SPDX-License-Identifier: MPL-2.0
 </svelte:head>
 <Navbar />
 <div
-	class="min-h-screen min-w-full"
+	class="h-screen min-w-full"
 	
 	class:text-black={bg_color}
 >

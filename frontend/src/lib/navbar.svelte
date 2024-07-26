@@ -46,7 +46,7 @@ SPDX-License-Identifier: MPL-2.0
     };
 </script>
 
-<nav class="w-screen px-4 lg:px-10 py-2 sticky  bg-white shadow-md z-30 top-0">
+<nav class="w-screen px-4 lg:px-10 py-2 sticky  bg-white dark:bg-gray-300 shadow-md z-30 top-0">
     <!-- Desktop navbar -->
     <div class="hidden lg:flex lg:items-center lg:flex-row lg:justify-between">
         <div class="lg:flex lg:items-center lg:flex-row gap-1">

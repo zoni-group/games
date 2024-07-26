@@ -119,17 +119,17 @@
 	</p>
 	{#if quiz.cover_image}
 		<div class="flex justify-center align-middle items-center">
-			<div class=" m-auto w-auto my-3">
+			<div class=" m-auto w-auto my-3 p-4">
 				{#if contentType?.startsWith('image')}
 					<img
-						class="max-h-full max-w-full block"
+						class="max-h-full max-w-full block rounded-2xl"
 						src={`/api/v1/storage/download/${quiz.cover_image}`}
 						alt="Not provided"
 					/>
 				{:else if contentType?.startsWith('video')}
 					<!-- svelte-ignore a11y-media-has-caption -->
 					<video
-						class="max-h-full max-w-full block"
+						class="max-h-full max-w-full block rounded-2xl"
 						src={getVideoUrl(`/api/v1/storage/download/${quiz.cover_image}`)}
 						controls
 						autoplay={false}
@@ -140,7 +140,7 @@
 				{:else if contentType?.startsWith('audio')}
 					<!-- svelte-ignore a11y-media-has-caption -->
 					<video
-						class="max-h-full max-w-full block"
+						class="max-h-full max-w-full block rounded-2xl"
 						src={getAudioUrl(`/api/v1/storage/download/${quiz.cover_image}`)}
 						controls
 						autoplay={false}

@@ -200,9 +200,9 @@
 	{#if timer_res !== '0'}
 		{#if question.type === QuizQuestionType.ABCD || question.type === QuizQuestionType.VOTING}
 		<div class="flex flex-col justify-start items-start w-full p-4 mt-0 ${game_mode !== 'normal' ? ' h-4/5' : ''}">
-			<div class="flex-grow relative w-full ${game_mode !== 'normal' ? 'h-full' : ''}`}">
+			<div class={`flex-grow relative w-full ${game_mode !== 'normal' ? 'h-full' : ''}`}>
 				{#if game_mode !== 'normal'}
-					<div class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 rounded-full h-fit w-fit border-2 border-black shadow-2xl z-40">
+					<div class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 rounded-full h-fit w-fit border-2 border-white shadow-2xl z-40">
 						<CircularTimer bind:text={timer_res} bind:progress={circular_progress} color="#ef4444" />
 					</div>
 				{:else}
@@ -217,13 +217,13 @@
 					>
 					{#each question.answers as answer, i}
 						<button
-							class="rounded-lg h-full w-9/10 flex items-center justify-center disabled:opacity-60 border-2 border-black transition-all my-2"
+							class="rounded-lg h-full  flex items-center justify-center disabled:opacity-60 border-4 border-white transition-all my-2"
 							style="background-color: {answer.color ?? default_colors[i]}; color: {get_foreground_color(answer.color ?? default_colors[i])}"
 							disabled={selected_answer !== undefined}
 							on:click={() => selectAnswer(answer.answer)}
 						>
 							{#if game_mode === 'kahoot'}
-								<img class="h-2/3 inline-block m-auto" alt="Icon" src={kahoot_icons[i]} />
+								<img class="md:w-1/3 lg:w-1/4 sm:w-1/2 w-full inline-block m-auto" alt="Icon" src={kahoot_icons[i]} />
 							{:else}
 								<p class="m-auto button-text text-sm sm:text-base md:text-lg lg:text-xl" style="color: {getTextColor(answer.color ?? '#004A93')}">{answer.answer}</p>
 							{/if}
@@ -270,7 +270,7 @@
 				style="width: {(100 / parseInt(question.time)) * parseInt(timer_res)}vw"
 			/>
 			<div class="w-full max-w-md px-4 mt-10">
-			  <label for="answer-input" class="block mb-2 mt-5 text-sm font-medium text-gray-900 dark:text-gray-300">Type your answer here:</label>
+			  <label for="answer-input" class="block mb-2 mt-5 text-sm font-medium text-gray-200 dark:text-gray-200">Type your answer here:</label>
 			  <input
 				id="answer-input"
 				type="text"

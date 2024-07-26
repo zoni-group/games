@@ -59,7 +59,7 @@
 </script>
 
 <div class="flex flex-col justify-start items-start w-full p-4 mt-0 ${game_mode !== 'normal' ? ' h-4/5' : ''}">
-	<div class="flex-grow relative w-full ${game_mode !== 'normal' ? 'h-full' : ''}`}">
+	<div class={`flex-grow relative w-full ${game_mode !== 'normal' ? 'h-full' : ''}`}>
 		{#if game_mode !== 'normal'}
 			<div class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 rounded-full h-fit w-fit border-2 border-black shadow-2xl z-40">
 				<CircularTimer bind:text={timer_res} bind:progress={circular_progress} color="#ef4444" />
@@ -83,7 +83,7 @@
 					class:opacity-50={!_selected_answers[i]}
 				>
 					{#if game_mode === 'kahoot'}
-						<img class="h-2/3 inline-block m-auto" alt="Icon" src={kahoot_icons[i]} />
+						<img class="md:w-1/3 lg:w-1/4 sm:w-1/2 w-full inline-block m-auto" alt="Icon" src={kahoot_icons[i]} />
 					{:else}
 						<p class="m-auto button-text text-sm sm:text-base md:text-lg lg:text-xl" style="color: {getTextColor(answer.color ?? '#004A93')}">{answer.answer}</p>
 					{/if}
