@@ -223,7 +223,7 @@
 							on:click={() => selectAnswer(answer.answer)}
 						>
 							{#if game_mode === 'kahoot'}
-								<img class="md:w-1/3 lg:w-1/4 sm:w-1/2 w-full inline-block m-auto" alt="Icon" src={kahoot_icons[i]} />
+								<img class="inline-block m-auto max-h-[30vh]" alt="Icon" src={kahoot_icons[i]} />
 							{:else}
 								<p class="m-auto button-text text-sm sm:text-base md:text-lg lg:text-xl" style="color: {getTextColor(answer.color ?? '#004A93')}">{answer.answer}</p>
 							{/if}
