@@ -267,7 +267,7 @@ SPDX-License-Identifier: MPL-2.0
 {/if}
 <div class="flex justify-center w-full pt-10" transition:fade|local>
 	<button
-		class="rounded-lg p-4 flex justify-center bg-transparent border-gray-500 border-2 w-1/2 hover:bg-gray-300 dark:hover:bg-gray-600 transition"
+		class="rounded-lg p-4 flex justify-center bg-transparent border-gray-500 border-2 w-1/2 text-white hover:text-black hover:bg-gray-300 dark:hover:bg-gray-600 transition"
 		type="button"
 		on:click={() => {
 			modalOpen = true;

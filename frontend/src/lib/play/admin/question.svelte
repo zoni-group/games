@@ -37,7 +37,7 @@ SPDX-License-Identifier: MPL-2.0
 </script>
 
 <div class="flex flex-col justify-center w-screen h-1/6">
-	<h1 class="text-6xl text-center">
+	<h1 class="text-6xl text-center text-white">
 		{@html quiz_data.questions[selected_question].question}
 	</h1>
 	<!--			<span class='text-center py-2 text-lg'>{$t('admin_page.time_left')}: {timer_res}</span>-->
@@ -50,7 +50,7 @@ SPDX-License-Identifier: MPL-2.0
 				color="#ef4444"
 			/>
 		</div>
-		<p class="m-auto text-3xl">
+		<p class="m-auto text-3xl text-white">
 			{$t('admin_page.answers_submitted', { answer_count: answer_count })}
 		</p>
 	</div>

@@ -10,6 +10,7 @@ SPDX-License-Identifier: MPL-2.0
 	import Footer from '$lib/footer.svelte';
 	import WebPOpenGraph from '$lib/assets/landing/opengraph-home.webp';
 	import JpgOpenGraph from '$lib/assets/landing/opengraph-home.jpg';
+	import login_icon from "$lib/assets/all/login_icon.webp";
 	import { fly, fade } from 'svelte/transition';
 
 	/*	import LandingPromo from '$lib/landing/landing-promo.svelte';*/
@@ -142,10 +143,33 @@ SPDX-License-Identifier: MPL-2.0
 	/>
 	<meta name="twitter:image" content={WebPOpenGraph} />
 </svelte:head>
+<!-- <section class="w-screen h-4/5 flex items-center justify-center" >
+	 <div class="bg-[#7EF4EF] rounded-xl bg-opacity-50 w-1/4" >
+		<div class="w-full justify-center flex" >
+			<img src="{login_icon}" alt="" class="-mt-16">
+		</div>
+		<div class="flex flex-col items-center" >
+			<p class="style-text font-bold mb-0" >Welcome to</p>
+			<p class="text-white text-[3.4rem] -mt-7" >Zoni AI</p>
+		</div>
 
+		<div class="text-center" >
+			<p class="text-white text-[14px]" >Log in or Create an account</p>
+			<input type="text" class="rounded text-center bg-[#9FC7EB] text-[#75808A] p-2 shadow-inner" name="email" placeholder="Email or username" id="email">
+		</div>
+	 </div>
+</section> -->
 <Footer />
 
 <style>
+	.style-text{
+		-webkit-text-stroke: 1px white;
+		color: transparent;
+	
+		text-shadow: 0px 0px 23px #0AECFE;
+		font-size: 4rem;
+		
+	}
 	.why-classquiz::-webkit-scrollbar {
 		height: 0.8rem;
 		margin-bottom: 5rem;

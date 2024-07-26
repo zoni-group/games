@@ -408,15 +408,15 @@
 	{#if showPlayerAnswers}
 	    <div class={`${game_mode !== 'normal' ? 'h-screen flex justify-center items-center' : ''}`}>
 			<div class="px-4 text-center">
-				<p class="text-lg font-semibold dark:text-white mt-10">Your answer:</p>
+				<p class="text-lg font-semibold text-white dark:text-white mt-10">Your answer:</p>
 				{#if Array.isArray(selected_answer)}
-				<ul class="list-disc list-inside mx-auto text-left inline-block dark:text-white">
+				<ul class="list-disc list-inside mx-auto text-left text-white inline-block dark:text-white">
 					{#each selected_answer as ans}
 					<li class="text-lg">{ans}</li>
 					{/each}
 				</ul>
 				{:else}
-				<p class="text-lg dark:text-white">{selected_answer}</p>
+				<p class="text-lg text-white dark:text-white">{selected_answer}</p>
 				{/if}
 			</div>
 		</div>

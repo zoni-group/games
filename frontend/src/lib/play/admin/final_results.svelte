@@ -55,7 +55,7 @@ SPDX-License-Identifier: MPL-2.0
 				<p
 					in:fly={{ y: -300, delay: player_count_or_five * 1200 - (i + 1) * 1000 }}
 					style="font-size: {player_count_or_five - i / 2}rem"
-					class="text-center"
+					class="text-center text-white"
 				>
 					{$t('play_page.final_result_rank', {
 						place: i + 1,
@@ -72,7 +72,7 @@ SPDX-License-Identifier: MPL-2.0
 				<p class="text-center">{$t('play_page.your_score', { score: data[username] })}</p>
 				{#each player_names as player, i}
 					{#if player === username}
-						<p class="text-center">{$t('play_page.your_place', { place: i + 1 })}</p>
+						<p class="text-center text-white">{$t('play_page.your_place', { place: i + 1 })}</p>
 					{/if}
 				{/each}
 			</div>

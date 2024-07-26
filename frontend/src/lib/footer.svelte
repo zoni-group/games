@@ -11,8 +11,8 @@ SPDX-License-Identifier: MPL-2.0
 	const { t } = getLocalization();
 </script>
 
-<footer class="text-center text-white border-black w-screen">
-	<div class="grid grid-cols-12 w-full pt-4 bg-gray-700 pb-2">
+<footer class="text-center text-white border-black w-screen hidden">
+	<div class="grid grid-cols-12 w-full pt-4 bg-gray-700  pb-2">
 		<!--
 		<p class="col-start-3 col-end-11 text-center w-full">
 			{@html $t('footer.self_ads', {

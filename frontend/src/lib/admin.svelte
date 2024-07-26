@@ -164,7 +164,7 @@ SPDX-License-Identifier: MPL-2.0
 		{#if question_results === undefined}
 			{#if !final_results_clicked}
 				<div class="w-full flex justify-center">
-					<h1 class="text-3xl">{$t('admin_page.no_answers')}</h1>
+					<h1 class="text-3xl text-white">{$t('admin_page.no_answers')}</h1>
 				</div>
 			{/if}
 		{:else if quiz_data.questions[selected_question].type === QuizQuestionType.VOTING}
@@ -193,8 +193,8 @@ SPDX-License-Identifier: MPL-2.0
 	<br />
 	{#if get_question_title(selected_question + 1, quiz_data) === '' && selected_question + 1 === 0}
 		<div class="flex flex-col justify-center w-screen h-full">
-			<h1 class="text-7xl text-center">{@html quiz_data.title}</h1>
-			<p class="text-3xl pt-8 text-center">{@html quiz_data.description}</p>
+			<h1 class="text-7xl text-center text-title">{@html quiz_data.title}</h1>
+			<p class="text-3xl pt-8 text-center text-title">{@html quiz_data.description}</p>
 			{#if quiz_data.cover_image}
 				<div class="flex justify-center align-middle items-center">
 					<div class="h-[30vh] m-auto w-auto mt-12">

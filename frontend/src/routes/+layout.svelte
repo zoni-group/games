@@ -62,7 +62,7 @@
 <SvelteToast {options} />
 {#if $navbarVisible}
 	<Navbar />
-	<div class="pt-16 h-screen">
+	<div class="pt-16 min-h-screen">
 		<div class="z-40" />
 		<slot />
 	</div>
@@ -72,6 +72,12 @@
 <CommandPalette />
 
 <style lang="scss">
+	:global(body){
+		background-image: url('$lib/assets/all/bg.webp');
+		background-position: center;
+		background-repeat: no-repeat;
+		background-size: cover;
+	}
 	:global(html:not(.dark)) {
 		background-color: #f3f7f9;
 		color: black;

@@ -18,6 +18,7 @@ SPDX-License-Identifier: MPL-2.0
 	import KahootResults from '$lib/play/results_kahoot.svelte';
 	import { getLocalization } from '$lib/i18n';
 	import Cookies from 'js-cookie';
+	import Navbar from '$lib/navbar.svelte';
 	const { t } = getLocalization();
 
 	// Exports
@@ -178,9 +179,10 @@ SPDX-License-Identifier: MPL-2.0
 		{/each}
 	{/if}-->
 </svelte:head>
+<Navbar />
 <div
-	class="min-w-full"
-	style="background: {bg_color}"
+	class="min-h-screen min-w-full"
+	
 	class:text-black={bg_color}
 >
 	<div>
@@ -196,7 +198,7 @@ SPDX-License-Identifier: MPL-2.0
 			/>
 		{:else if gameMeta.started && gameData !== undefined && question_index !== '' && answer_results === undefined}
 			{#key unique}
-				<div class="text-black dark:text-black">
+				<div class="text-white dark:text-white">
 					<Question bind:game_mode bind:question bind:question_index bind:solution />
 				</div>
 			{/key}
@@ -207,7 +209,7 @@ SPDX-License-Identifier: MPL-2.0
 				</div>
 			{:else}
 				<div>
-					<h2 class="text-center text-3xl mb-8">{$t('words.result', { count: 2 })}</h2>
+					<h2 class="text-center text-white text-3xl mb-8">{$t('words.result', { count: 2 })}</h2>
 				</div>
 				{#key unique}
 					<KahootResults

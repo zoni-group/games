@@ -68,7 +68,7 @@ SPDX-License-Identifier: MPL-2.0
 	>
 		<div class="flex gap-12">
 			{#each quiz_answers as answer}
-				<span class="text-center self-end mx-auto text-lg"
+				<span class="text-center self-end mx-auto text-lg text-white"
 					>{#if sorted_data[answer] > 0}{sorted_data[answer]}{/if}</span
 				>
 			{/each}
@@ -76,7 +76,7 @@ SPDX-License-Identifier: MPL-2.0
 		<div class="flex gap-12">
 			{#each quiz_answers as answer, i}
 				<div
-					class="w-20 self-end flex justify-center border border-black shadow-xl rounded"
+					class="w-20 self-end flex justify-center border text-white border-white shadow-xl rounded"
 					class:shadow-blue-500={answer_correct[i] &&
 						question.type !== QuizQuestionType.VOTING}
 					class:shadow-yellow-500={!answer_correct[i] &&
@@ -86,7 +86,7 @@ SPDX-License-Identifier: MPL-2.0
 					style="height: {(sorted_data[answer] * 20) /
 						data.length}rem; background-color: {quiz_colors[i]
 						? quiz_colors[i]
-						: 'black'}"
+						: 'white'}"
 				/>
 			{/each}
 		</div>
@@ -94,7 +94,7 @@ SPDX-License-Identifier: MPL-2.0
 			{#each quiz_answers as answer, i}
 				<div class="w-20">
 					<p
-						class="-rotate-45 text-xl text-str"
+						class="-rotate-45 text-xl text-str text-white"
 						class:line-through={!answer_correct[i] &&
 							question.type !== QuizQuestionType.VOTING && question.type !== QuizQuestionType.TEXT}
 					>

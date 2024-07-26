@@ -82,7 +82,7 @@ SPDX-License-Identifier: MPL-2.0
 </script>
 
 <div>
-	<h2 class="text-center text-4xl text-black dark:text-white">
+	<h2 class="text-center text-4xl text-white">
 		{$t('file_dashboard.storage_usage', {
 			used: (data.storage_usage.used / (1024 * 1024)).toFixed(2),
 			total: (data.storage_usage.limit / (1024 * 1024)).toFixed(0),
@@ -125,28 +125,28 @@ SPDX-License-Identifier: MPL-2.0
 				{:else}
 					<p class="text-black dark:text-white">Unsupported media type</p>
 				{/if}
-				<div class="flex flex-col my-auto ml-4">
-					<p class="text-black dark:text-white">
+				<div class="flex flex-col my-auto ml-4 ">
+					<p class="text-slate-300">
 						{$t('file_dashboard.size', {
 							size: (image.size / (1024 * 1024)).toFixed(2)
 						})}
 					</p>
-					<p class="text-black dark:text-white">
+					<p class="text-slate-300">
 						{$t('file_dashboard.caption', {
 							caption: image.alt_text ?? $t('file_dashboard.missing')
 						})}
 					</p>
-					<p class="text-black dark:text-white">
+					<p class="text-slate-300">
 						{$t('file_dashboard.filename', {
 							filename: image.filename ?? $t('file_dashboard.missing')
 						})}
 					</p>
-					<p class="text-black dark:text-white">
+					<p class="text-slate-300">
 						{$t('file_dashboard.uploaded', {
 							date: new Date(image.uploaded_at).toLocaleString()
 						})}
 					</p>
-					<p class="text-black dark:text-white">
+					<p class="text-slate-300">
 						{$t('file_dashboard.imported', {
 							yes_or_no: image.imported ? $t('words.yes') : $t('words.no')
 						})}

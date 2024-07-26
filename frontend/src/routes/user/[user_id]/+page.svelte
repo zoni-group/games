@@ -81,10 +81,10 @@ SPDX-License-Identifier: MPL-2.0
 				<div class="flex justify-center">
 					<img src={`/api/v1/users/avatar/${data.user.id}`} alt="profile" />
 				</div>
-				<h2 class="text-3xl text-center">
+				<h2 class="text-3xl text-center text-white">
 					@{data.user.username}
 				</h2>
-				<p class="italic text-center">
+				<p class="italic text-center text-white">
 					{$t('public_user_page.joined_on', {
 						date: new Date(data.user.created_at).toLocaleDateString()
 					})}
@@ -92,14 +92,14 @@ SPDX-License-Identifier: MPL-2.0
 			{/if}
 		</div>
 		<div
-			class="col-start-2 col-end-7 border-l border-black h-full p-4 overflow-y-scroll flex flex-col gap-4"
+			class="col-start-2 col-end-7 border-l border-white h-full p-4 overflow-y-scroll flex flex-col gap-4"
 		>
 			{#if data.quizzes.length === 0}
 				<p class="text-center text-4xl">{$t('public_user_page.no_original_quizzes')}</p>
 			{:else}
 				{#each data.quizzes as quiz}
 					<div
-						class="rounded-lg border-2 border-black hover:outline transition-all outline-[#004A93] -outline-offset-2 outline-8"
+						class="rounded-lg border-2 border-white hover:outline transition-all outline-[#fff] -outline-offset-2 outline-8"
 					>
 						<div class="grid grid-cols-6 h-[25vh]">
 							<!--						<p
@@ -109,8 +109,8 @@ SPDX-License-Identifier: MPL-2.0
 														{@html quiz.title}
 													</p>-->
 							<div class="col-start-2 col-end-6">
-								<h3 class="text-center text-2xl">{@html quiz.title}</h3>
-								<p class="text-center">
+								<h3 class="text-center text-2xl text-white">{@html quiz.title}</h3>
+								<p class="text-center text-white">
 									{@html quiz.description}
 								</p>
 								{#if quiz.cover_image}

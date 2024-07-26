@@ -96,10 +96,10 @@ SPDX-License-Identifier: MPL-2.0
 		</div>
 	{:else}
 		<div class="flex justify-center">
-			<h1 class="text-4xl">{$t('search_page.nothing_here')}</h1>
+			<h1 class="text-4xl text-white">{$t('search_page.nothing_here')}</h1>
 		</div>
 		<div class="flex justify-center">
-			<p>
+			<p class="text-white" >
 				Not finding what you are looking for? Search on <a
 					class="underline"
 					href="https://create.kahoot.it/search?query={search_term}&tags=test&filter=filter%3D1"

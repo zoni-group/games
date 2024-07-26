@@ -53,7 +53,7 @@ SPDX-License-Identifier: MPL-2.0
 </script>
 
 <div
-	class="fixed top-0 w-full h-10 z-20 grid grid-cols-2"
+	class="  w-full h-10 z-20 grid grid-cols-2"
 	style="background: {bg_color ? bg_color : 'transparent'}"
 	class:text-black={bg_color}
 >
