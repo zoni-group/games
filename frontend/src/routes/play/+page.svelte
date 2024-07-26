@@ -18,7 +18,6 @@ SPDX-License-Identifier: MPL-2.0
 	import KahootResults from '$lib/play/results_kahoot.svelte';
 	import { getLocalization } from '$lib/i18n';
 	import Cookies from 'js-cookie';
-	import Navbar from '$lib/navbar.svelte';
 	const { t } = getLocalization();
 
 	// Exports
@@ -179,7 +178,6 @@ SPDX-License-Identifier: MPL-2.0
 		{/each}
 	{/if}-->
 </svelte:head>
-<Navbar />
 <div
 	class="h-screen min-w-full"
 	
