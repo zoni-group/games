@@ -18,7 +18,6 @@ SPDX-License-Identifier: MPL-2.0
 	import FinalResults from '$lib/play/admin/final_results.svelte';
 	import GrayButton from '$lib/components/buttons/gray.svelte';
 	import { page } from '$app/stores';
-	import Navbar from '$lib/navbar.svelte';
 
 	navbarVisible.set(false);
 
@@ -144,9 +143,8 @@ SPDX-License-Identifier: MPL-2.0
 	<title>Zoni® AI - Host</title>
 </svelte:head>
 <section>
-	<Navbar />
 	<div
-		class=" min-w-full flex min-h-screen flex-col"
+		class="min-h-screen min-w-full"
 		
 		class:text-black={bg_color}
 	>
