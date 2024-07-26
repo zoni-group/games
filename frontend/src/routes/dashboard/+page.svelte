@@ -105,7 +105,7 @@ SPDX-License-Identifier: MPL-2.0
 </svelte:head>
 <Analytics bind:quiz={analytics_quiz_selected} />
 <CommandpaletteNotice />
-<div class="min-h-screen flex flex-col bg-white dark:bg-gray-800 text-black dark:text-white">
+<div class="min-h-screen flex flex-col text-black dark:text-white">
 	{#await getData()}
 		<svg class="h-8 w-8 animate-spin mx-auto my-20" viewBox="3 3 18 18">
 			<path
@@ -176,9 +176,9 @@ SPDX-License-Identifier: MPL-2.0
 									/>
 								{/if}
 							</div>
-							<div class="my-auto mx-auto max-h-full overflow-hidden">
-								<p class="text-xl text-center text-black dark:text-white">{@html quiz.title}</p>
-								<p class="text-sm text-center text-clip overflow-hidden text-black dark:text-gray-300">
+							<div class="my-auto mx-auto max-h-full overflow-hidden ">
+								<p class="text-xl text-center text-white">{@html quiz.title}</p>
+								<p class="text-sm text-center text-white text-clip overflow-hidden">
 									{@html quiz.description ?? ''}
 								</p>
 							</div>
@@ -354,7 +354,7 @@ SPDX-License-Identifier: MPL-2.0
 					{/each}
 				</div>
 			{:else}
-				<p class="text-black dark:text-white">
+				<p class="text-white dark:text-white">
 					{$t('overview_page.no_quizzes')}
 				</p>
 			{/if}

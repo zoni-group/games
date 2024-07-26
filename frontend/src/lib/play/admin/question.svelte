@@ -19,7 +19,7 @@ SPDX-License-Identifier: MPL-2.0
 
 	export let answer_count: number;
 	export let default_colors: string[];
-
+	let optionsLabel = ["A","B","C","D"];
 	const { t } = getLocalization();
 
 	let circular_progress = 0;
@@ -36,27 +36,31 @@ SPDX-License-Identifier: MPL-2.0
 	}
 </script>
 
-<div class="flex flex-col justify-center w-screen h-1/6">
-	<h1 class="text-6xl text-center">
-		{@html quiz_data.questions[selected_question].question}
-	</h1>
-	<!--			<span class='text-center py-2 text-lg'>{$t('admin_page.time_left')}: {timer_res}</span>-->
-	<div class="grid grid-cols-3 my-2">
-		<span />
-		<div class="m-auto">
+<div class="flex flex-col justify-center items-center w-screen h-1/6 p-4">
+	<div class="bg-white flex flex-col items-center justify-center rounded-3xl md:w-2/3 w-full" >
+		<div class="m-auto bg-white -mt-16 rounded-full p-3">
 			<CircularTimer
 				bind:text={timer_res}
 				bind:progress={circular_progress}
 				color="#ef4444"
 			/>
 		</div>
-		<p class="m-auto text-3xl">
+		<h1 class="text-6xl mb-4 text-center text-[#00529B]">
+			{@html quiz_data.questions[selected_question].question}
+		</h1>
+	</div>
+	<!--			<span class='text-center py-2 text-lg'>{$t('admin_page.time_left')}: {timer_res}</span>-->
+	<div class="grid grid-cols-3 my-2">
+		<span />
+		<span />
+		
+		<!-- <p class="m-auto text-lg border-2 px-4 py-2 rounded-xl border-[#0AEDFE] text-white">
 			{$t('admin_page.answers_submitted', { answer_count: answer_count })}
-		</p>
+		</p> -->
 	</div>
 </div>
 {#if quiz_data.questions[selected_question].image !== null}
-	<div class="flex w-full">
+	<div class="flex w-full p-4">
 		<MediaComponent
 			src={quiz_data.questions[selected_question].image}
 			muted={false}
@@ -68,21 +72,24 @@ SPDX-License-Identifier: MPL-2.0
 	<div class="grid grid-rows-2 grid-flow-col auto-cols-auto gap-2 w-full p-4">
 		{#each quiz_data.questions[selected_question].answers as answer, i}
 			<div
-				class="rounded-lg h-fit flex border-2 border-black"
+				class="rounded-lg h-fit flex border-4 border-white"
 				style="background-color: {answer.color ?? default_colors[i]};"
 				class:opacity-50={!answer.right &&
 					timer_res === '0' &&
 					quiz_data.questions[selected_question].type === QuizQuestionType.ABCD}
 			>
-				<img
+				<!-- <img
 					class="w-14 inline-block pl-4"
 					alt="icon"
 					style="color: {get_foreground_color(answer.color ?? default_colors[i])}"
 					src={kahoot_icons[i]}
-				/>
+				/> -->
+				<span class="sm:text-7xl text-3xl font-bold text-white" >
+					{optionsLabel[i]}
+				</span>
 				<span
 					class="text-center text-2xl px-2 py-4 w-full"
-					style="color: {get_foreground_color(answer.color ?? default_colors[i])}"
+					style="color: white"
 					>{answer.answer}</span
 				>
 				<span class="pl-4 w-10" />

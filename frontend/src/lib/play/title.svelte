@@ -43,10 +43,10 @@ SPDX-License-Identifier: MPL-2.0
 </script>
 
 <div class="flex flex-col justify-center w-screen h-screen p-4">
-	<h1 class="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl text-center break-words">
+	<h1 class="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl text-center break-words text-white">
 		{@html title}
 	</h1>
-	<p class="text-base sm:text-lg md:text-xl lg:text-2xl xl:text-3xl pt-4 sm:pt-6 md:pt-8 text-center break-words  dark:text-white">
+	<p class="text-base sm:text-lg md:text-xl lg:text-2xl xl:text-3xl pt-4 sm:pt-6 md:pt-8 text-center break-words text-white dark:text-white">
 		{@html description}
 	</p>
 	{#if cover_image}

@@ -5,6 +5,7 @@ SPDX-License-Identifier: MPL-2.0
 -->
 
 <script lang="ts">
+	import btn_img from "$lib/assets/all/start_btn.webp";
 	export let disabled = false;
 	export let flex = false;
 
@@ -15,17 +16,26 @@ SPDX-License-Identifier: MPL-2.0
 
 <style>
 	.btn {
-		width: 100%;
-		padding: 0.5rem 1rem;
+		width: 275px;
+		height: 60px;
+		/* padding: 0.5rem 1rem; */
 		font-weight: 400;
 		text-align: center;
 		border: 1px solid transparent;
+		background-image: url('$lib/assets/all/start_btn.webp');
+	
 		border-radius: 0.25rem;
 		transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out, border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
 		display: flex;
 		align-items: center;
 		justify-content: center;
 		gap: 0.5rem;
+	}
+	.btn-text{
+		-webkit-text-stroke: 1px #70158F;
+		color: white;
+	    font-weight: bold;
+		font-size: 30px;
 	}
 
 	.light {
@@ -68,23 +78,28 @@ SPDX-License-Identifier: MPL-2.0
 	}
 </style>
 
+<div class=""  >
 {#if href}
 	<a
 		{href}
 		{target}
-		class="btn {theme}"
+		class="  btn-text flex items-center gap-2"
 		class:disabled={disabled}
 		on:click
 	>
 		<slot />
 	</a>
 {:else}
-	<button
+	<button 
+	
 		{disabled}
-		class="btn {theme}"
+		class="  text-white btn-text flex items-center gap-2"
+		
 		class:disabled={disabled}
 		on:click
 	>
 		<slot />
 	</button>
-{/if}
+
+	{/if}
+</div>

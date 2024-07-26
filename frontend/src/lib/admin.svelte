@@ -22,7 +22,7 @@ SPDX-License-Identifier: MPL-2.0
 	export let bg_color: string;
 
 	const { t } = getLocalization();
-	const default_colors = ['#C8E6C9', '#FFE0B2', '#FFF9C4', '#B3E5FC'];
+	const default_colors = ['#FFA800', '#FF1D38', '#00A3FF', '#00D749'];
 
 	let question_results = null;
 	export let final_results: Array<null> | Array<Array<PlayerAnswer>> = [null];
@@ -126,6 +126,7 @@ SPDX-License-Identifier: MPL-2.0
 		{bg_color}
 		{selected_question}
 		{quiz_data}
+		{answer_count} 
 		bind:timer_res
 		{final_results}
 		{socket}
@@ -164,7 +165,7 @@ SPDX-License-Identifier: MPL-2.0
 		{#if question_results === undefined}
 			{#if !final_results_clicked}
 				<div class="w-full flex justify-center">
-					<h1 class="text-3xl">{$t('admin_page.no_answers')}</h1>
+					<h1 class="text-3xl text-white">{$t('admin_page.no_answers')}</h1>
 				</div>
 			{/if}
 		{:else if quiz_data.questions[selected_question].type === QuizQuestionType.VOTING}
@@ -193,8 +194,8 @@ SPDX-License-Identifier: MPL-2.0
 	<br />
 	{#if get_question_title(selected_question + 1, quiz_data) === '' && selected_question + 1 === 0}
 		<div class="flex flex-col justify-center w-screen h-full">
-			<h1 class="text-7xl text-center">{@html quiz_data.title}</h1>
-			<p class="text-3xl pt-8 text-center">{@html quiz_data.description}</p>
+			<h1 class="text-7xl text-center text-title">{@html quiz_data.title}</h1>
+			<p class="text-3xl pt-8 text-center text-title">{@html quiz_data.description}</p>
 			{#if quiz_data.cover_image}
 				<div class="flex justify-center align-middle items-center">
 					<div class="h-[30vh] m-auto w-auto mt-12">

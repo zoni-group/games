@@ -58,7 +58,7 @@
 	$: control_audio(play);
 </script>
 
-<div class="fixed top-0 left-0">
+<div class="fixed  w-full">
 	{#if play}
 		<button on:click={() => { play = false; }}>
 			<!-- heroicons/volume-up -->

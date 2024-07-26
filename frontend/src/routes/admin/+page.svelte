@@ -142,83 +142,86 @@ SPDX-License-Identifier: MPL-2.0
 <svelte:head>
 	<title>Zoni® AI - Host</title>
 </svelte:head>
-<div
-	class="min-h-screen min-w-full"
-	style="background-repeat: no-repeat;background-size: 100% 100%;background-image: {bg_image ? `url('${bg_image}')` : `unset`}; background-color: {bg_color}"
-	class:text-black={bg_color}
->
-	{#if JSON.stringify(final_results) !== JSON.stringify([null])}
-		{#if control_visible}
-			<div class="w-screen flex justify-center mt-16">
-				<div class="w-fit">
-					{#if export_token === undefined}
-						<GrayButton on:click={request_answer_export}
-							>{$t('admin_page.request_export_results')}</GrayButton
-						>
-					{:else}
-						<GrayButton
-							target="_blank"
-							href="/api/v1/quiz/export_data/{export_token}?ts={new Date().getTime()}&game_pin={game_pin}"
-							>{$t('admin_page.download_export_results')}</GrayButton
-						>
-					{/if}
-				</div>
-			</div>
-			<div class="w-screen flex justify-center mt-2">
-				<div class="w-fit">
-					<GrayButton on:click={save_quiz} flex={true} disabled={results_saved}>
-						{#if results_saved}
-							<svg
-								class="w-4 h-4"
-								aria-hidden="true"
-								fill="none"
-								stroke="currentColor"
-								stroke-width="2"
-								viewBox="0 0 24 24"
-								xmlns="http://www.w3.org/2000/svg"
+<section>
+	<div
+		class="min-h-screen min-w-full"
+		
+		class:text-black={bg_color}
+	>
+		{#if JSON.stringify(final_results) !== JSON.stringify([null])}
+			{#if control_visible}
+				<div class="w-screen flex justify-center mt-16">
+					<div class="w-fit">
+						{#if export_token === undefined}
+							<GrayButton on:click={request_answer_export}
+								>{$t('admin_page.request_export_results')}</GrayButton
 							>
-								<path
-									d="M5 13l4 4L19 7"
-									stroke-linecap="round"
-									stroke-linejoin="round"
-								/>
-							</svg>
-						{:else}{$t('admin_page.save_results')}{/if}
-					</GrayButton>
+						{:else}
+							<GrayButton
+								target="_blank"
+								href="/api/v1/quiz/export_data/{export_token}?ts={new Date().getTime()}&game_pin={game_pin}"
+								>{$t('admin_page.download_export_results')}</GrayButton
+							>
+						{/if}
+					</div>
 				</div>
-			</div>
+				<div class="w-screen flex justify-center mt-2">
+					<div class="w-fit">
+						<GrayButton on:click={save_quiz} flex={true} disabled={results_saved}>
+							{#if results_saved}
+								<svg
+									class="w-4 h-4"
+									aria-hidden="true"
+									fill="none"
+									stroke="currentColor"
+									stroke-width="2"
+									viewBox="0 0 24 24"
+									xmlns="http://www.w3.org/2000/svg"
+								>
+									<path
+										d="M5 13l4 4L19 7"
+										stroke-linecap="round"
+										stroke-linejoin="round"
+									/>
+								</svg>
+							{:else}{$t('admin_page.save_results')}{/if}
+						</GrayButton>
+					</div>
+				</div>
+			{/if}
+			<FinalResults bind:data={player_scores} bind:show_final_results />
 		{/if}
-		<FinalResults bind:data={player_scores} bind:show_final_results />
-	{/if}
-	{#if !success}
-		{#if errorMessage !== ''}
-			<p class="text-red-700">{errorMessage}</p>
+		{#if !success}
+			{#if errorMessage !== ''}
+				<p class="text-red-700">{errorMessage}</p>
+			{/if}
+		{:else if !game_started}
+			<GameNotStarted
+				{game_pin}
+				bind:players
+				{socket}
+				cqc_code={$page.url.searchParams.get('cqc_code')}
+			/>
+		{:else}
+			<SomeAdminScreen
+				bind:final_results
+				{game_pin}
+				bind:game_token
+				bind:quiz_data
+				bind:game_mode
+				bind:bg_color
+				bind:player_scores
+				bind:control_visible
+			/>
 		{/if}
-	{:else if !game_started}
-		<GameNotStarted
-			{game_pin}
-			bind:players
-			{socket}
-			cqc_code={$page.url.searchParams.get('cqc_code')}
-		/>
-	{:else}
-		<SomeAdminScreen
-			bind:final_results
-			{game_pin}
-			bind:game_token
-			bind:quiz_data
-			bind:game_mode
-			bind:bg_color
-			bind:player_scores
-			bind:control_visible
-		/>
-	{/if}
-</div>
-<a
-	on:click|preventDefault={request_answer_export}
-	href="#"
-	target="_blank"
-	bind:this={dataexport_download_a}
-	download=""
-	class="absolute -top-3/4 -left-3/4 opacity-0">Download</a
->
+	</div>
+	<a
+		on:click|preventDefault={request_answer_export}
+		href="#"
+		target="_blank"
+		bind:this={dataexport_download_a}
+		download=""
+		class="absolute -top-3/4 -left-3/4 opacity-0">Download</a
+	>
+
+</section>

@@ -79,6 +79,7 @@ SPDX-License-Identifier: MPL-2.0
 </script>
 
 {#await media}
+	<!-- svelte-ignore a11y-missing-attribute -->
 	<img src={thumbhash_data} class={`${css_classes} ${added_thumbhash_classes}`} />
 {:then data}
 	{#if type === 'img'}
