@@ -101,19 +101,13 @@ SPDX-License-Identifier: MPL-2.0
 							Your browser does not support the video tag.
 						</video>
 					{:else if contentType?.startsWith('audio')}
-						<!-- svelte-ignore a11y-media-has-caption -->
-						<video
-							src={getAudioUrl(`/api/v1/storage/download/${data.cover_image}`)}
-							class="max-h-72 h-auto w-auto"
-							controls
-							autoplay={false}
-							loop={false}
-							on:contextmenu|preventDefault={() => {
-								data.cover_image = '';
-							}}
-						>
-							Your browser does not support the video tag.
-						</video>
+						<div class="flex items-center justify-center h-full w-full">
+							<!-- svelte-ignore a11y-media-has-caption -->
+							<audio controls autoplay={false} loop={false} preload="auto" class="w-full">
+								<source src={getAudioUrl(`/api/v1/storage/download/${data.cover_image}`)} type="audio/mpeg" />
+								Your browser does not support the audio element.
+							</audio>
+						</div>
 					{:else}
 						<p>Unsupported media type</p>
 					{/if}

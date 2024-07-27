@@ -126,6 +126,7 @@ SPDX-License-Identifier: MPL-2.0
 				</div>
 				{#if data.questions[selected_question].image}
 					<div class="flex justify-center pt-10 w-full h-72">
+						<MediaComponent bind:src={image_url} />
 						<div class="h-72 relative">
 							<button
 								class="rounded-full absolute -top-2 -right-2 opacity-70 hover:opacity-100 transition"
@@ -149,8 +150,8 @@ SPDX-License-Identifier: MPL-2.0
 									/>
 								</svg>
 							</button>
-							<MediaComponent bind:src={image_url} />
 						</div>
+						
 					</div>
 				{:else}
 					{#await import('$lib/editor/uploader.svelte')}

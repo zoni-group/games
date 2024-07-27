@@ -141,9 +141,12 @@
 						</video>
 					{:else if contentTypes[data.cover_image]?.startsWith('audio')}
 						<!-- svelte-ignore a11y-media-has-caption -->
-						<video src={getAudioUrl(`/api/v1/storage/download/${data.cover_image}`)} controls autoplay={false} loop={false} class="max-h-72 h-auto w-auto" on:contextmenu|preventDefault={() => { data.cover_image = null; }}>
-							Your browser does not support the video tag.
-						</video>
+						<div class="w-full h-20 items-center flex justify-center">
+							<audio controls autoplay={false} loop={false} preload="auto" class="max-h-72 h-2/3 w-2/3">
+								<source src={getAudioUrl(`/api/v1/storage/download/${data.cover_image}`)} type="audio/mpeg" />
+								Your browser does not support the audio element.
+							</audio>
+						</div>
 					{:else}
 						<p>Unsupported media type</p>
 					{/if}

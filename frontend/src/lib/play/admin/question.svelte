@@ -60,7 +60,7 @@ SPDX-License-Identifier: MPL-2.0
 	</div>
 </div>
 {#if quiz_data.questions[selected_question].image !== null}
-	<div class="flex w-full p-4">
+	<div class="flex justify-center w-full p-4">
 		<MediaComponent
 			src={quiz_data.questions[selected_question].image}
 			muted={false}
