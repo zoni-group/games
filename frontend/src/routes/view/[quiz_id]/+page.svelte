@@ -119,7 +119,7 @@
 	</p>
 	{#if quiz.cover_image}
 		<div class="flex justify-center align-middle items-center">
-			<div class=" m-auto w-auto my-3 p-4">
+			<div class=" m-auto w-4/5 my-3 p-4">
 				{#if contentType?.startsWith('image')}
 					<img
 						class="max-h-full max-w-full block rounded-2xl"
@@ -138,16 +138,13 @@
 						Your browser does not support the video tag.
 					</video>
 				{:else if contentType?.startsWith('audio')}
-					<!-- svelte-ignore a11y-media-has-caption -->
-					<video
-						class="max-h-full max-w-full block rounded-2xl"
-						src={getAudioUrl(`/api/v1/storage/download/${quiz.cover_image}`)}
-						controls
-						autoplay={false}
-						loop={false}
-					>
-						Your browser does not support the audio tag.
-					</video>
+					<div class="flex items-center justify-center h-full w-full">
+						<!-- svelte-ignore a11y-media-has-caption -->
+						<audio controls autoplay={false} loop={false} preload="auto" class="w-full">
+							<source src={getAudioUrl(`/api/v1/storage/download/${quiz.cover_image}`)} type="audio/mpeg" />
+							Your browser does not support the audio element.
+						</audio>
+					</div>
 				{:else}
 					<p>Unsupported media type</p>
 				{/if}
@@ -272,7 +269,7 @@
 
 						<!--					</label>-->
 						{#if question.image}
-							<span>
+							<span class="flex justify-center">
 								<MediaComponent
 									css_classes="mx-auto"
 									src={question.image}

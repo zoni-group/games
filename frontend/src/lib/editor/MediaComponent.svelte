@@ -1,9 +1,3 @@
-<!--
-SPDX-FileCopyrightText: 2023 Marlon W (Mawoka)
-
-SPDX-License-Identifier: MPL-2.0
--->
-
 <script lang="ts">
 	import { browser } from '$app/environment';
 	import { fade } from 'svelte/transition';
@@ -104,17 +98,13 @@ SPDX-License-Identifier: MPL-2.0
 			<source src={getVideoUrl(`/api/v1/storage/download/${src}`)} />			
 		</video>
 	{:else if type === 'audio'}
-		<video
-			class={css_classes}
-			disablepictureinpicture
-			controls
-			autoplay={false}
-			loop={false}
-			{muted}
-			preload="metadata"
-		>
-			<source src={getAudioUrl(`/api/v1/storage/download/${src}`)} />			
-		</video>
+		<div class="object-cover w-1/2 h-20 items-center flex justify-center">
+			<!-- svelte-ignore a11y-media-has-caption -->
+			<audio controls autoplay={false} loop={false} preload="auto" class="w-full">
+				<source src={getAudioUrl(`/api/v1/storage/download/${src}`)} type="audio/mpeg" />
+				Your browser does not support the audio element.
+			</audio>
+		</div>
 	{:else}
 		<p>Unknown media type</p>
 	{/if}

@@ -328,7 +328,7 @@ SPDX-License-Identifier: MPL-2.0
 				</div>
 				{#if question.image}
 					<div class="flex justify-center align-middle pb-0.5">
-						{#if contentTypes[question.image] === 'video/mp4'}
+						{#if contentTypes[data.cover_image]?.startsWith('video')}
 							<!-- svelte-ignore a11y-media-has-caption -->
 							<video
 								src={getVideoUrl(`/api/v1/storage/download/${question.image}`)}
@@ -341,29 +341,26 @@ SPDX-License-Identifier: MPL-2.0
 									allowHTML: true
 								}}
 							></video>
-						{:else if contentTypes[question.image] === 'audio/mp3'}
-							<!-- svelte-ignore a11y-media-has-caption -->
-							<video
-								src={getAudioUrl(`/api/v1/storage/download/${question.image}`)}
-								class="h-10 border rounded-lg"
-								controls
-								autoplay={false}
-								loop={false}
-								use:tippy={{
-									content: `<video src="/api/v1/storage/download/${question.image}" controls class="rounded">`,
-									allowHTML: true
-								}}
-							></video>
-						{:else}
+						{:else if contentTypes[data.cover_image]?.startsWith('audio')}
+							<div class="flex items-center justify-center h-full w-full">
+								<!-- svelte-ignore a11y-media-has-caption -->
+								<audio controls autoplay={false} loop={false} preload="auto" class="w-full">
+									<source src={getAudioUrl(`/api/v1/storage/download/${question.image}`)} type="audio/mpeg" />
+									Your browser does not support the audio element.
+								</audio>
+							</div>
+						{:else if contentTypes[data.cover_image]?.startsWith('image')}
 							<img
 								src="/api/v1/storage/download/{question.image}"
 								class="h-10 border rounded-lg"
-								alt="Not available"
+								alt="2Not available"
 								use:tippy={{
 									content: `<img src="/api/v1/storage/download/${question.image}" alt="Not available" class="rounded">`,
 									allowHTML: true
 								}}
 							/>
+						{:else}
+							<p>Unsupported media type</p>
 						{/if}
 					</div>
 				{/if}

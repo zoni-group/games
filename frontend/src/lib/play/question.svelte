@@ -188,7 +188,7 @@
 				{@html question.question}
 			</h1>
 			{#if question.image !== null && game_mode !== 'kahoot'}
-				<div class="relative mb-8" style="max-height: 28vh;">
+				<div class="relative mb-8 flex justify-center items-center" style="max-height: 28vh;">
 					<MediaComponent
 						src={question.image}
 						css_classes="object-cover mx-auto mb-8 max-h-[90%]"
