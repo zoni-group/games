@@ -50,11 +50,11 @@ SPDX-License-Identifier: MPL-2.0
 </script>
 
 <div class="flex items-center justify-center min-h-screen p-4">
-	<div class="flex flex-col items-center bg-black bg-opacity-40 rounded-lg p-8">
-		<p class="text-2xl sm:text-3xl md:text-4xl lg:text-5xl text-white dark:text-white mb-4">
+	<div class="flex flex-col items-center bg-white bg-opacity-70 rounded-lg p-8">
+		<p class="text-2xl sm:text-3xl md:text-4xl lg:text-5xl text-[#00529B] dark:text-[#00529B] mb-4">
 			+{score_by_username[username] ?? '0'}
 		</p>
-		<p class="text-lg sm:text-xl md:text-2xl lg:text-3xl text-white dark:text-white">
+		<p class="text-lg sm:text-xl md:text-2xl lg:text-3xl text-[#00529B] dark:text-[#00529B]">
 			Total score: {scores[username] ?? '0'}
 		</p>
 	</div>

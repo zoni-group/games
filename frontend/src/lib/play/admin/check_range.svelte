@@ -23,8 +23,8 @@
       <p class="text-lg md:text-xl lg:text-2xl text-center mb-6 text-white dark:text-gray-300 text-gray-700">{question.question}</p>
       <div class="flex flex-wrap justify-center gap-4 w-full max-w-5xl">
         {#each data as item, i}
-          <div class="w-full md:w-1/2 lg:w-1/3 p-4">
-            <div class="flex items-center justify-between p-4 border rounded shadow-lg bg-gray-100 dark:bg-gray-800">
+          <div class="w-full md:w-1/2 lg:w-1/2 p-4">
+            <div class="flex items-center justify-between p-4 border rounded shadow-lg gap-1 bg-gray-100 dark:bg-gray-800">
               <span class="text-lg dark:text-white">{item.answer}</span>
               <span class="text-xl font-bold" class:text-green-500={isCorrectRange(item.answer)} class:text-red-500={!isCorrectRange(item.answer)}>
                 {isCorrectRange(item.answer) ? '✓' : '✗'}

@@ -11,6 +11,7 @@
 	import { get_foreground_color } from '../helpers';
 	import MediaComponent from '$lib/editor/MediaComponent.svelte';
 	import { toast } from '@zerodevx/svelte-toast';
+	import RightArrow from '$lib/icons/rightArrow.svelte';
 
 	const { t } = getLocalization();
 
@@ -264,24 +265,37 @@
 				</div>
 			{/await}
 		{:else if question.type === QuizQuestionType.TEXT}
-		<div class="flex flex-col items-center w-full {`${game_mode !== 'normal' ? 'justify-center h-full' : ''}`}">
+		<div class="flex flex-col items-center w-full {`${game_mode !== 'normal' ? 'justify-center h-screen' : ''}`}">
 			<span
 				class="fixed top-0 bg-red-500 h-8 transition-all"
 				style="width: {(100 / parseInt(question.time)) * parseInt(timer_res)}vw"
 			/>
 			<div class="w-full max-w-md px-4 mt-10">
-			  <label for="answer-input" class="block mb-2 mt-5 text-sm font-medium text-gray-200 dark:text-gray-200">Type your answer here:</label>
+			  <label for="answer-input" class="block mb-2 mt-5 text-lg font-medium text-white dark:text-gray-200">Type your answer here:</label>
 			  <input
 				id="answer-input"
 				type="text"
 				bind:value={text_input}
 				disabled={selected_answer}
-				class="bg-gray-50 focus:ring text-gray-900 rounded-lg focus:ring-blue-500 block w-full p-2 dark:bg-gray-700 dark:text-white dark:focus:ring-blue-500 outline-none transition text-center disabled:opacity-50 disabled:cursor-not-allowed border border-gray-300 dark:border-gray-600"
+				class="bg-white focus:ring placeholder-[#DCE1E7] text-[#DCE1E7] shadow-inner bg-opacity-50 font-bold rounded-xl focus:ring-blue-500 block w-full p-2 dark:bg-gray-700 dark:text-white dark:focus:ring-blue-500 outline-none transition text-center disabled:opacity-50 disabled:cursor-not-allowed "
 				placeholder="Enter your answer"
 			  />
 			</div>
-			<div class="mt-4 w-4/5 max-w-xs mx-auto">
-				<BrownButton
+			<div class="mt-4 w-4/5 max-w-xs mx-auto text-center">
+				<button 
+				type="button"
+				class="bg-gradient-to-r from-[#FE700A] via-[#FFFFFF] to-[#FF4D00] shadow-x rounded-full p-1 "
+				disabled={selected_answer}
+				on:click={() => {
+					selectAnswer(text_input);
+				}}
+				>
+				<span class="bg-[#FFE500] p-2 px-6 flex w-full rounded-full uppercase text-[#00529B] font-semibold items-center justify-center gap-3" >
+					<RightArrow />
+					{$t('words.submit')}
+				</span>
+				</button>
+				<!-- <BrownButton
 					type="button"
 					disabled={selected_answer}
 					on:click={() => {
@@ -289,7 +303,7 @@
 					}}
 				>
 					{$t('words.submit')}
-				</BrownButton>
+				</BrownButton> -->
 			</div>
 		</div>
 		{:else if question.type === QuizQuestionType.RANGE}
