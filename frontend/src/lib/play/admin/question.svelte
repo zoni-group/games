@@ -100,8 +100,8 @@ SPDX-License-Identifier: MPL-2.0
 			{/each}
 		</div>
 	{:else}
-		<div class="flex justify-center">
-			<p class="text-2xl">{$t('admin_page.enter_answer_into_field')}</p>
+		<div class="flex justify-center text-white">
+			<p class="text-2xl text-white">{$t('admin_page.enter_answer_into_field')}</p>
 		</div>
 	{/if}
 {/if}

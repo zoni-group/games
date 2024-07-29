@@ -53,8 +53,8 @@
   
   <div class="flex justify-center w-full px-4">
     <div class="m-auto gap-4 flex flex-col items-center">
-      <h2 class="text-2xl font-bold text-center mb-4 dark:text-white">Answers</h2>
-      <p class="text-lg md:text-xl lg:text-2xl text-center mb-6 dark:text-gray-300 text-gray-700">{question.question}</p>
+      <h2 class="text-2xl font-bold text-center text-white mb-4 dark:text-white">Answers</h2>
+      <p class="text-lg md:text-xl lg:text-2xl text-center mb-6 text-white dark:text-gray-300 text-gray-700">{question.question}</p>
       <div class="flex flex-wrap justify-center gap-4 w-full max-w-5xl">
         {#each quiz_answers as answer, i}
           <div class="w-full md:w-1/2 lg:w-1/3 p-4">
