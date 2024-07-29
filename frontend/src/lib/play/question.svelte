@@ -253,14 +253,25 @@
 						/>
 					</div>
 
-					<div class="w-full max-w-xs mt-10">
-						<BrownButton
+					<div class="w-full max-w-xs text-center mt-10">
+						<button 
+						type="button"
+						class="bg-gradient-to-r from-[#FE700A] via-[#FFFFFF] to-[#FF4D00] shadow-x rounded-full p-1 "
+						disabled={selected_answer !== undefined}
+						on:click={() => selectRangeAnswer(slider_value[0])}
+						>
+						<span class="bg-[#FFE500] p-2 px-6 flex w-full rounded-full uppercase text-[#00529B] font-semibold items-center justify-center gap-3" >
+							<RightArrow />
+							{$t('words.submit')}
+						</span>
+						</button>
+						<!-- <BrownButton
 							disabled={selected_answer !== undefined}
 							on:click={() => selectRangeAnswer(slider_value[0])}
 							class="w-full"
 						>
 							{$t('words.submit')}
-						</BrownButton>
+						</BrownButton> -->
 					</div>
 				</div>
 			{/await}
@@ -389,14 +400,27 @@
 						</button>
 					</div>
 				{/each}
-				<div class="w-full mt-2">
-					<BrownButton
+				<div class="w-full text-center mt-2">
+					<button 
+						type="button"
+						class="bg-gradient-to-r from-[#FE700A] via-[#FFFFFF] to-[#FF4D00] shadow-x rounded-full p-1 "
+						disabled={selected_answer}
+						on:click={() => {
+							select_complex_answer(question.answers);
+						}}
+						>
+						<span class="bg-[#FFE500] p-2 px-6 flex w-full rounded-full uppercase text-[#00529B] font-semibold items-center justify-center gap-3" >
+							<RightArrow />
+							{$t('words.submit')}
+						</span>
+					</button>
+					<!-- <BrownButton
 						type="button"
 						disabled={selected_answer}
 						on:click={() => {
 							select_complex_answer(question.answers);
 						}}>{$t('words.submit')}</BrownButton
-						>
+						> -->
 				</div>
 			</div>
 		{:else if question.type === QuizQuestionType.CHECK}

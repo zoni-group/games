@@ -5,6 +5,7 @@
 	import { kahoot_icons } from '$lib/play/kahoot_mode_assets/kahoot_icons';
 	import CircularTimer from '$lib/play/circular_progress.svelte';
 	import BrownButton from '$lib/components/buttons/brown.svelte';
+	import RightArrow from '$lib/icons/rightArrow.svelte';
 
 	const default_colors = ['#C8E6C9', '#FFE0B2', '#FFF9C4', '#B3E5FC'];
 	export let question: Question;
@@ -91,12 +92,23 @@
 			{/each}
 		</div>
 	</div>
-	<div class="w-full mx-auto py-4">
-		<BrownButton
+	<div class="w-full mx-auto text-center py-4">
+				<button 
+					type="button"
+					class="bg-gradient-to-r from-[#FE700A] via-[#FFFFFF] to-[#FF4D00] shadow-x rounded-full p-1 "
+					disabled={!selected_answer}
+					on:click={handleSubmit}
+					>
+					<span class="bg-[#FFE500] p-2 px-6 flex w-full rounded-full uppercase text-[#00529B] font-semibold items-center justify-center gap-3" >
+						<RightArrow />
+						Submit
+					</span>
+				</button>
+		<!-- <BrownButton
 			disabled={!selected_answer}
 			on:click={handleSubmit}
 		>
 			Submit
-		</BrownButton>
+		</BrownButton> -->
 	</div>
 </div>
