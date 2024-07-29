@@ -98,15 +98,16 @@ SPDX-License-Identifier: MPL-2.0
 </script>
 
 <div
-    class="absolute top-0 left-0 flex justify-center w-screen py-20 min-h-screen bg-black bg-opacity-60 z-50 text-black"
+    class="fixed inset-0 flex justify-center items-center w-screen h-screen overflow-auto bg-black bg-opacity-60 z-50 py-5 "
     transition:fade={{ duration: 100 }}
+    style="scrollbar-width: none;"
     on:click={on_parent_click}
 	on:keydown={() => {}}
 	on:keyup={() => {}}
 	on:keypress={() => {}}
 >
     <div
-        class="w-5/6 dark:!bg-gray-600 m-auto rounded-lg shadow-lg p-4 flex flex-col"
+        class="w-5/6 dark:!bg-gray-600 m-auto rounded-lg shadow-lg p-4 flex flex-col "
         style="background-color: {bg_color}"
     >
         <div class="grid md:grid-cols-2 grid-cols-1 md:gap-16 gap-10 my-10">

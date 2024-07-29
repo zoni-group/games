@@ -121,6 +121,15 @@ SPDX-License-Identifier: MPL-2.0
   	}
 </script>
 
+{#if timer_res !== '0' && selected_question >= 0}
+	<span
+		class="fixed top-0 bg-red-500 h-8 transition-all"
+		
+		style="width: {(100 / parseInt(quiz_data.questions[selected_question].time)) *
+			parseInt(timer_res)}vw"
+	/>
+{/if}
+
 {#if control_visible}
 	<Controls
 		{bg_color}
@@ -135,14 +144,7 @@ SPDX-License-Identifier: MPL-2.0
 		{shown_question_now}
 	/>
 {/if}
-{#if timer_res !== '0' && selected_question >= 0}
-	<span
-		class="fixed top-0 bg-red-500 h-8 transition-all"
-		class:mt-10={control_visible}
-		style="width: {(100 / parseInt(quiz_data.questions[selected_question].time)) *
-			parseInt(timer_res)}vw"
-	/>
-{/if}
+
 
 <div class="w-full h-full" class:pt-28={control_visible} class:pt-12={!control_visible}>
 	{#if timer_res !== undefined && !final_results_clicked && !question_results}

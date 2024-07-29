@@ -133,7 +133,7 @@
 		<img
 			alt={$t('qr_code_to_join_the_game')}
 			src={`/api/v1/utils/qr/${game_pin}`}
-			class="object-contain rounded m-auto h-full bg-white"
+			class="object-contain rounded m-auto md:w-1/2 w-full  bg-white"
 		/>
 	</div>
 {/if}
