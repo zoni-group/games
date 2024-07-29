@@ -65,7 +65,7 @@ SPDX-License-Identifier: MPL-2.0
 		{selected_question === -1 ? '0' : selected_question + 1}
 		/ {quiz_data.questions.length}
 	</p>
-	<div class="fixed top-10 right-20 z-50 flex flex-col items-center space-y-4">
+	<div class="fixed top-10 right-0 px-4 z-50 flex flex-col items-center space-y-4">
 		{#if selected_question + 1 === quiz_data.questions.length && ((timer_res === '0' && question_results !== null) || quiz_data?.questions?.[selected_question]?.type === QuizQuestionType.SLIDE)}
 		  {#if JSON.stringify(final_results) === JSON.stringify([null])}
 			<button on:click={get_final_results} class="slide-control-btn">
@@ -100,7 +100,7 @@ SPDX-License-Identifier: MPL-2.0
 			</button>
 		  {/if}
 		{/if}
-		<div class="text-sm px-4 py-2 mx-3 mt-4 rounded-xl text-white bg-black bg-opacity-20 shadow-lg">
+		<div class="fixed right-0 top-20 text-sm px-4 py-2 mr-3 mt-4 rounded-xl text-white bg-black bg-opacity-20 shadow-lg">
 			{$t('admin_page.answers_submitted', { answer_count: answer_count })}
 		</div>		
 	  </div>
