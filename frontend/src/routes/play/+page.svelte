@@ -178,12 +178,8 @@ SPDX-License-Identifier: MPL-2.0
 		{/each}
 	{/if}-->
 </svelte:head>
-<div
-	class="h-screen min-w-full"
-	
-	class:text-black={bg_color}
->
-	<div>
+<div class="flex flex-col h-screen overflow-hidden">
+	<div class="flex-1 overflow-y-auto" class:text-black={bg_color}>
 		{#if !gameMeta.started && gameData === undefined}
 			<JoinGame bind:game_pin bind:game_mode bind:username />
 		{:else if JSON.stringify(final_results) !== JSON.stringify([null])}
