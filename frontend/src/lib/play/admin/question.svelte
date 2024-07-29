@@ -37,7 +37,7 @@ SPDX-License-Identifier: MPL-2.0
 </script>
 
 <div class="flex flex-col justify-center items-center w-screen h-1/6 p-0 mb-2 -mt-12">
-	<div class="bg-white flex flex-col items-center justify-center rounded-3xl md:w-2/3 w-full" >
+	<div class="bg-white flex flex-col items-center justify-center rounded-3xl md:w-2/3 w-full pb-5" >
 		<div class="m-auto bg-white -mt-16 rounded-full p-3">
 			<CircularTimer
 				bind:text={timer_res}
@@ -45,7 +45,7 @@ SPDX-License-Identifier: MPL-2.0
 				color="#ef4444"
 			/>
 		</div>
-		<h1 class="text-6xl mb-0 text-center text-[#00529B]">
+		<h1 class="text-6xl text-center text-[#00529B]">
 			{@html quiz_data.questions[selected_question].question}
 		</h1>
 	</div>
