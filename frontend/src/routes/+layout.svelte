@@ -62,12 +62,17 @@
 <SvelteToast {options} />
 {#if $navbarVisible}
 	<Navbar />
-	<div class="pt-16 min-h-screen">
-		<div class="z-40" />
-		<slot />
+	<div class="pt-16 flex flex-col h-screen">
+		<div class="z-40 flex-1 overflow-y-auto">
+			<slot />
+		</div>
 	</div>
 {:else}
-	<slot />
+	<div class="flex flex-col h-screen">
+		<div class="flex-1 overflow-y-auto">
+			<slot />
+		</div>
+	</div>
 {/if}
 <CommandPalette />
 
