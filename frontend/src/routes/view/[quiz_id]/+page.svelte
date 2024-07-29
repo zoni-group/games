@@ -119,7 +119,7 @@
 	</p>
 	{#if quiz.cover_image}
 		<div class="flex justify-center align-middle items-center">
-			<div class=" m-auto w-4/5 my-3 p-4">
+			<div class=" m-auto w-4/5 my-3 p-4 flex justify-center">
 				{#if contentType?.startsWith('image')}
 					<img
 						class="max-h-full max-w-full block rounded-2xl"
