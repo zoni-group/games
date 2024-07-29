@@ -72,18 +72,18 @@
 <CommandPalette />
 
 <style lang="scss">
-	:global(html.light){
-		background-image: url('$lib/assets/all/bg.webp');
+
+	:global(html.dark){
+		background-image: url('$lib/assets/all/bg_dark.webp') !important;
 		background-position: center;
 		background-repeat: no-repeat;
 		background-size: cover;
 	}
-	:global(html.dark){
-		background-image: url('$lib/assets/all/bg_dark.webp') !important;
-	}
 	:global(html:not(.dark)) {
-		background-color: #f3f7f9;
-		color: black;
+		background-image: url('$lib/assets/all/bg.webp');
+		background-position: center;
+		background-repeat: no-repeat;
+		background-size: cover;
 	}
 
 	:global(html.dark) {

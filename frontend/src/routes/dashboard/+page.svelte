@@ -119,11 +119,13 @@ SPDX-License-Identifier: MPL-2.0
 		</svg>
 	{:then quizzes}
 		<div class="flex flex-col w-full mx-auto">
-			<div class="w-full grid lg:grid-cols-4 gap-2 grid-cols-2 px-4">
-				<BrownButton href="/create">{$t('words.create')}</BrownButton>
-				<BrownButton href="/import">{$t('words.import')}</BrownButton>
-				<BrownButton href="/results">{$t('words.results')}</BrownButton>
-				<div class="flex gap-2">
+			<div class="w-full grid lg:grid-cols-2 gap-2 grid-cols-1 px-4">
+				<div class="flex gap-2 justify-content-around  w-full">
+					<BrownButton href="/create">{$t('words.create')}</BrownButton>
+					<BrownButton href="/import">{$t('words.import')}</BrownButton>
+				</div>
+				<div class="flex gap-2 justify-content-around  w-full">
+					<BrownButton href="/results">{$t('words.results')}</BrownButton>
 					<BrownButton href="/edit/files">{$t('words.files_library')}</BrownButton>
 					<BrownButton href="/account/settings">
 						{$t('words.settings')}
@@ -366,5 +368,6 @@ SPDX-License-Identifier: MPL-2.0
 <Footer />
 {#if start_game !== null}
 	<StartGamePopup bind:quiz_id={start_game} />
+
 {/if}
 <DownloadQuiz bind:quiz_id={download_id} />

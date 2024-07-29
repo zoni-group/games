@@ -255,109 +255,117 @@
 			</div>
 		</div>
 	</div>
+	<div class="mb-5" >
+		{#if logged_in}
+			{#each quiz.questions as question, index_question}
+				<div class="px-4 py-1">
+					<CollapsSection headerText={question.question} expanded={auto_expand}>
+						<div class="grid grid-cols-1 gap-2 rounded-b-lg bg-white dark:bg-gray-700 -mt-1">
+							<h3 class="text-3xl m-1 text-center text-black dark:text-white">
+								{index_question + 1}: {@html question.question}
+							</h3>
 	
-	{#if logged_in}
-		{#each quiz.questions as question, index_question}
-			<div class="px-4 py-1">
-				<CollapsSection headerText={question.question} expanded={auto_expand}>
-					<div class="grid grid-cols-1 gap-2 rounded-b-lg bg-white dark:bg-gray-700 -mt-1">
-						<h3 class="text-3xl m-1 text-center text-black dark:text-white">
-							{index_question + 1}: {@html question.question}
-						</h3>
-
-						<!--					<label class='m-1 flex flex-row gap-2 w-3/5'>-->
-
-						<!--					</label>-->
-						{#if question.image}
-							<span class="flex justify-center">
-								<MediaComponent
-									css_classes="mx-auto"
-									src={question.image}
-									muted={false}
-								/>
-							</span>
-						{/if}
-						<p
-							class="m-1 flex flex-row gap-2 flex-nowrap whitespace-nowrap w-full justify-center text-gray-800 dark:text-gray-200"
-						>
-							<svg
-								class="w-8 h-8 inline-block"
-								fill="none"
-								stroke="currentColor"
-								viewBox="0 0 24 24"
-								xmlns="http://www.w3.org/2000/svg"
+							<!--					<label class='m-1 flex flex-row gap-2 w-3/5'>-->
+	
+							<!--					</label>-->
+							{#if question.image}
+								<span>
+									<MediaComponent
+										css_classes="mx-auto"
+										src={question.image}
+										muted={false}
+									/>
+								</span>
+							{/if}
+							<p
+								class="m-1 flex flex-row gap-2 flex-nowrap whitespace-nowrap w-full justify-center text-gray-800 dark:text-gray-200"
 							>
-								<path
-									stroke-linecap="round"
-									stroke-linejoin="round"
-									stroke-width="2"
-									d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"
-								/>
-							</svg>
-							<span class="text-lg">{question.time}s</span>
-						</p>
-						{#if question.type === QuizQuestionType.ABCD || question.type === undefined || question.type === QuizQuestionType.CHECK}
-							<div class="grid grid-cols-2 gap-4 m-4 p-6">
-								{#each question.answers as answer, index_answer}
-									<div
-										class="p-1 rounded-lg py-4 shadow-xl"
-										style="background-color: {answer.color ??
-											default_colors[index_answer]}; color: {get_foreground_color(
-											answer.color ?? default_colors[index_answer]
-										)}"
-										class:shadow-blue-500={answer.right &&
-											question.type !== QuizQuestionType.VOTING}
-										class:shadow-yellow-500={!answer.right &&
-											question.type !== QuizQuestionType.VOTING}
-									>
-										<h4 class="text-center">
-											{quiz.questions[index_question].answers[index_answer]
-												.answer}
-										</h4>
-									</div>
-								{/each}
-							</div>
-						{:else if question.type === QuizQuestionType.RANGE}
-							<p class="m-1 text-center text-gray-800 dark:text-gray-200">
-								All numbers between {question.answers.min_correct}
-								and {question.answers.max_correct} are correct, where numbers between {question
-									.answers.min} and {question.answers.max} can be selected.
+								<svg
+									class="w-8 h-8 inline-block"
+									fill="none"
+									stroke="currentColor"
+									viewBox="0 0 24 24"
+									xmlns="http://www.w3.org/2000/svg"
+								>
+									<path
+										stroke-linecap="round"
+										stroke-linejoin="round"
+										stroke-width="2"
+										d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"
+									/>
+								</svg>
+								<span class="text-lg">{question.time}s</span>
 							</p>
-						{:else if question.type === QuizQuestionType.ORDER}
-							<ul class="flex flex-col gap-4 m-4 p-6">
-								{#each question.answers as answer}
-									<li class="p-1 rounded-lg py-3 dark:bg-gray-500 bg-gray-300">
-										<h4 class="text-center text-black dark:text-white">
-											{answer.answer}
-										</h4>
-									</li>
-								{/each}
-							</ul>
-						{:else if question.type === QuizQuestionType.VOTING || question.type === QuizQuestionType.TEXT}
-							<div class="grid grid-cols-2 gap-4 m-4 p-6">
-								{#each question.answers as answer, index_answer}
-									<div class="p-1 rounded-lg py-4 dark:bg-gray-500 bg-gray-300">
-										<h4 class="text-center text-black dark:text-white">
-											{quiz.questions[index_question].answers[index_answer]
-												.answer}
-										</h4>
-									</div>
-								{/each}
-							</div>
-						{:else if question.type === QuizQuestionType.SLIDE}
-							{#await import('$lib/play/admin/slide.svelte')}
-								<Spinner my={false} />
-							{:then c}
-								<div class="max-h-[90%] max-w-[90%]">
-									<svelte:component this={c.default} bind:question />
+							{#if question.type === QuizQuestionType.ABCD || question.type === undefined || question.type === QuizQuestionType.CHECK}
+								<div class="grid grid-cols-2 gap-4 m-4 p-6">
+									{#each question.answers as answer, index_answer}
+										<div
+											class="p-1 rounded-lg py-4 shadow-xl"
+											style="background-color: {answer.color ??
+												default_colors[index_answer]}; color: {get_foreground_color(
+												answer.color ?? default_colors[index_answer]
+											)}"
+											class:shadow-blue-500={answer.right &&
+												question.type !== QuizQuestionType.VOTING}
+											class:shadow-yellow-500={!answer.right &&
+												question.type !== QuizQuestionType.VOTING}
+										>
+											<h4 class="text-center text-white">
+												{quiz.questions[index_question].answers[index_answer]
+													.answer}
+											</h4>
+										</div>
+									{/each}
 								</div>
-							{/await}
-						{/if}
-					</div>
-				</CollapsSection>
-			</div>
-		{/each}
-	{/if}
+							{:else if question.type === QuizQuestionType.RANGE}
+								<p class="m-1 text-center text-gray-800 dark:text-gray-200">
+									All numbers between {question.answers.min_correct}
+									and {question.answers.max_correct} are correct, where numbers between {question
+										.answers.min} and {question.answers.max} can be selected.
+								</p>
+							{:else if question.type === QuizQuestionType.ORDER}
+								<ul class="flex flex-col gap-4 m-4 p-6">
+									{#each question.answers as answer}
+										<li class="p-1 rounded-lg py-3 dark:bg-gray-500 bg-gray-300" style="background-color: {answer.color ??
+										default_colors[index_answer]}; color: {get_foreground_color(
+										answer.color ?? default_colors[index_answer]
+									)}">
+											<h4 class="text-center text-black dark:text-white">
+												{answer.answer}
+											</h4>
+										</li>
+									{/each}
+								</ul>
+							{:else if question.type === QuizQuestionType.VOTING || question.type === QuizQuestionType.TEXT}
+								<div class="grid grid-cols-2 gap-4 m-4 p-6">
+									{#each question.answers as answer, index_answer}
+										<div class="p-1 rounded-lg py-4 dark:bg-gray-500 bg-gray-300" 
+										style="background-color: {answer.color ??
+										default_colors[index_answer]}; color: {get_foreground_color(
+										answer.color ?? default_colors[index_answer]
+									)}">
+											<h4 class="text-center text-black dark:text-white">
+												{quiz.questions[index_question].answers[index_answer]
+													.answer}
+											</h4>
+										</div>
+									{/each}
+								</div>
+							{:else if question.type === QuizQuestionType.SLIDE}
+								{#await import('$lib/play/admin/slide.svelte')}
+									<Spinner my={false} />
+								{:then c}
+									<div class="max-h-[90%] max-w-[90%]">
+										<svelte:component this={c.default} bind:question />
+									</div>
+								{/await}
+							{/if}
+						</div>
+					</CollapsSection>
+				</div>
+			{/each}
+		{/if}
+	</div>
 </div>
 
 {#if start_game !== null}

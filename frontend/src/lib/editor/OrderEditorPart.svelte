@@ -52,7 +52,7 @@ SPDX-License-Identifier: MPL-2.0
 			id: [i]
 		};
 	}
-	const default_colors = ['#C8E6C9', '#FFE0B2', '#FFF9C4', '#B3E5FC'];
+	const default_colors = ['#FFA800', '#00A3FF', '#FF1D38', '#00D749'];
 	const set_colors_if_unset = () => {
 		for (let i = 0; i < data.questions[selected_question].answers.length; i++) {
 			if (!data.questions[selected_question].answers[i].color) {
