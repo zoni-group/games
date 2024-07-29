@@ -36,7 +36,7 @@ SPDX-License-Identifier: MPL-2.0
 	}
 </script>
 
-<div class="flex flex-col justify-center items-center w-screen h-1/6 p-4">
+<div class="flex flex-col justify-center items-center w-screen h-1/6 p-4 -mt-10">
 	<div class="bg-white flex flex-col items-center justify-center rounded-3xl md:w-2/3 w-full" >
 		<div class="m-auto bg-white -mt-16 rounded-full p-3">
 			<CircularTimer

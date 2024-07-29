@@ -123,7 +123,7 @@ SPDX-License-Identifier: MPL-2.0
 
 {#if timer_res !== '0' && selected_question >= 0}
 	<span
-		class=" block bg-red-500 h-8 transition-all"
+		class="fixed top-0 bg-red-500 h-8 transition-all"
 		
 		style="width: {(100 / parseInt(quiz_data.questions[selected_question].time)) *
 			parseInt(timer_res)}vw"
