@@ -110,7 +110,7 @@ SPDX-License-Identifier: MPL-2.0
 		<div class="flex flex-wrap justify-center gap-4 w-full max-w-5xl">
 			{#each quiz_answers as answer, i}
 				<div class="w-full flex justify-center p-4">
-					<div class="flex items-center justify-between p-4 border w-1/2 rounded gap-3 border-[#0AEDFE] bg-opacity-80 shadow-lg bg-[#92CAF4] dark:bg-gray-800">
+					<div class="flex items-center justify-between p-4 border  rounded gap-3 border-[#0AEDFE] bg-opacity-80 shadow-lg bg-[#92CAF4] dark:bg-gray-800">
 						<span class="text-lg text-white dark:text-white">{answer}</span>
 						{#if question.type === QuizQuestionType.VOTING || question.type === QuizQuestionType.TEXT}
 							<span class="text-xl font-bold text-green-500">
