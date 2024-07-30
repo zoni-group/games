@@ -70,9 +70,12 @@
 			question_index: question_index,
 			answer: cleanAnswer(answer)
 		});
-		toast.push(`You selected: ${cleanAnswer(answer)}`);
-		showPlayerAnswers = true;
+		toast.push(`You selected: ${cleanAnswer(selected_answer)}`);
 	};
+
+	socket.on('answer_acknowledged', () => {
+		showPlayerAnswers = true;
+	});
 
 	const selectRangeAnswer = (answer: string) => {
 		selected_answer = answer;
@@ -198,7 +201,7 @@
 			{/if}
 		</div>
 	{/if}
-	{#if timer_res !== '0'}
+	{#if timer_res !== '0' && !showPlayerAnswers}
 		{#if question.type === QuizQuestionType.ABCD || question.type === QuizQuestionType.VOTING}
 		<div class="flex flex-col justify-start items-start w-full p-4 mt-0 ${game_mode !== 'normal' ? ' h-4/5' : ''}">
 			<div class={`flex-grow relative w-full ${game_mode !== 'normal' ? 'h-full' : ''}`}>
