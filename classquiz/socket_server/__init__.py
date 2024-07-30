@@ -462,6 +462,7 @@ async def submit_answer(sid: str, data: dict):
         await redis.set(f"game:{session['game_pin']}", game_data.json())
         await sio.emit("everyone_answered", {})
 
+    await sio.emit("answer_acknowledged", room=sid)
 
 # await redis.set(f"game_data:{session['game_pin']}", json.dumps(data))
 
