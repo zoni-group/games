@@ -62,33 +62,40 @@
 <SvelteToast {options} />
 {#if $navbarVisible}
 	<Navbar />
-	<div class="pt-16 flex flex-col h-screen">
-		<div class="z-40 flex-1 overflow-y-auto">
-			<slot />
-		</div>
+	<div class="pt-0 h-screen">
+		<div class="z-40" />
+		<slot />
 	</div>
 {:else}
-	<div class="flex flex-col h-screen">
-		<div class="flex-1 overflow-y-auto">
-			<slot />
-		</div>
-	</div>
+	<slot />
 {/if}
 <CommandPalette />
 
 <style lang="scss">
+
+	html {
+		height: 100%;
+		overflow: hidden;
+	}
+	body {
+		min-height: 100%;
+		margin: 0;
+		padding: 0;
+	}
 
 	:global(html.dark){
 		background-image: url('$lib/assets/all/bg_dark.webp') !important;
 		background-position: center;
 		background-repeat: no-repeat;
 		background-size: cover;
+		background-attachment: fixed;
 	}
 	:global(html:not(.dark)) {
 		background-image: url('$lib/assets/all/bg.webp');
 		background-position: center;
 		background-repeat: no-repeat;
 		background-size: cover;
+		background-attachment: fixed;
 	}
 
 	:global(html.dark) {
