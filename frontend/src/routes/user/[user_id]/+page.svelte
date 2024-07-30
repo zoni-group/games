@@ -76,7 +76,7 @@ SPDX-License-Identifier: MPL-2.0
 	<div class="grid grid-cols-6 h-full">
 		<div class="pl-2">
 			{#if data.user.username === undefined}
-				<h2 class="text-4xl text-center p-4">{$t('public_user_page.user_not_found')}</h2>
+				<h2 class="text-4xl text-center text-white p-4">{$t('public_user_page.user_not_found')}</h2>
 			{:else}
 				<div class="flex justify-center">
 					<img src={`/api/v1/users/avatar/${data.user.id}`} alt="profile" />
