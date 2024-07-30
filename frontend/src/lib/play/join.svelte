@@ -208,7 +208,7 @@ SPDX-License-Identifier: MPL-2.0
 		</form>
 	</div> -->
 	<section class="w-screen flex items-center justify-center" >
-		<div class="bg-[#7EF4EF] rounded-xl bg-opacity-40 xl:w-1/4 sm:w-1/2  p-5 " >
+		<div class="bg-[#7EF4EF] rounded-xl bg-opacity-40 xl:w-1/4 sm:w-1/2  p-5 mt-20" >
 			<div class="w-full justify-center flex" >
 				<img src="{login_icon}" alt="" class="-mt-20">
 			</div>
