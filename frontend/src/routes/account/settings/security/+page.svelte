@@ -154,7 +154,7 @@ SPDX-License-Identifier: MPL-2.0
 	<div class="grid grid-rows-2 h-screen">
 		<div class="grid grid-cols-2 h-full border-b-2 border-black">
 			<div class="h-full w-full border-r-2 border-black">
-				<h2 class="text-center text-2xl">{$t('security_settings.backup_code')}</h2>
+				<h2 class="text-center text-white text-2xl">{$t('security_settings.backup_code')}</h2>
 				<div class="flex h-full w-full justify-center">
 					<div class="m-auto">
 						<BrownButton on:click={get_backup_code}
@@ -164,7 +164,7 @@ SPDX-License-Identifier: MPL-2.0
 				</div>
 			</div>
 			<div class="h-full w-full">
-				<h2 class="text-center text-2xl">{$t('security_settings.activate_2fa')}</h2>
+				<h2 class="text-center text-2xl text-white">{$t('security_settings.activate_2fa')}</h2>
 				<div
 					class="flex h-full w-full justify-center flex-col"
 					class:pointer-events-none={!totp_activated}
@@ -190,7 +190,7 @@ SPDX-License-Identifier: MPL-2.0
 										class="pointer-events-none inline-block h-4 w-4 translate-x-3 rounded-full bg-white transition will-change-transform"
 									/>
 								</button>
-								<span class="text-sm font-medium text-gray-700 dark:text-white"
+								<span class="text-sm font-medium text-white dark:text-white"
 									>{$t('security_settings.2fa_activated')}</span
 								>
 							</div>
@@ -212,7 +212,7 @@ SPDX-License-Identifier: MPL-2.0
 										class="pointer-events-none inline-block h-4 w-4 translate-x-0 rounded-full bg-white transition will-change-transform"
 									/>
 								</button>
-								<span class="text-sm font-medium text-gray-700 dark:text-white"
+								<span class="text-sm font-medium text-white dark:text-white"
 									>{$t('security_settings.2fa_deactivated')}</span
 								>
 							</div>
@@ -223,12 +223,12 @@ SPDX-License-Identifier: MPL-2.0
 		</div>
 		<div class="grid grid-cols-2 h-full">
 			<div class="h-full w-full flex flex-col border-r-2 border-black">
-				<h2 class="text-center text-2xl">{$t('security_settings.webauthn')}</h2>
-				<div class="flex justify-center">
+				<h2 class="text-center text-2xl text-white">{$t('security_settings.webauthn')}</h2>
+				<div class="flex justify-center ">
 					{#if security_keys.length > 0}
-						<p>{$t('security_settings.webauthn_available')}</p>
+						<p class="text-white">{$t('security_settings.webauthn_available')}</p>
 					{:else}
-						<p>{$t('security_settings.webauthn_unavailable')}</p>
+						<p class="text-white">{$t('security_settings.webauthn_unavailable')}</p>
 					{/if}
 				</div>
 				<div class="flex justify-center">
@@ -254,12 +254,12 @@ SPDX-License-Identifier: MPL-2.0
 				</div>
 			</div>
 			<div class="h-full w-full flex flex-col">
-				<h2 class="text-center text-2xl">{$t('security_settings.totp')}</h2>
+				<h2 class="text-center text-2xl text-white">{$t('security_settings.totp')}</h2>
 				<div class="flex justify-center">
 					{#if totp_activated}
-						<p>{$t('security_settings.totp_available')}</p>
+						<p class="text-white">{$t('security_settings.totp_available')}</p>
 					{:else}
-						<p>{$t('security_settings.totp_unavailable')}</p>
+						<p class="text-white">{$t('security_settings.totp_unavailable')}</p>
 					{/if}
 				</div>
 
