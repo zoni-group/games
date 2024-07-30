@@ -19,6 +19,7 @@ SPDX-License-Identifier: MPL-2.0
 	import { getLocalization } from '$lib/i18n';
 	import Cookies from 'js-cookie';
 	const { t } = getLocalization();
+	import ZoniLogo from '$lib/components/zoniLogoPlay.svelte';
 
 	// Exports
 	export let data;
@@ -178,6 +179,7 @@ SPDX-License-Identifier: MPL-2.0
 		{/each}
 	{/if}-->
 </svelte:head>
+<ZoniLogo />
 <div class="flex flex-col h-screen overflow-hidden">
 	<div class="flex-1 overflow-y-auto" class:text-black={bg_color}>
 		{#if !gameMeta.started && gameData === undefined}
