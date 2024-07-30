@@ -61,7 +61,7 @@ SPDX-License-Identifier: MPL-2.0
 	style="background: {bg_color ? bg_color : 'transparent'}"
 	class:text-black={bg_color}
 >
-	<p class="fixed top-10 left-10 z-50 mr-auto ml-0 col-start-1 col-end-1 flex items-center italic justify-center font-semibold bg-white text-black dark:text-black rounded-full w-20 border-8 border-[#0AEDFE] h-20">
+	<p class="fixed top-20 left-10 z-50 mr-auto ml-0 col-start-1 col-end-1 flex items-center italic justify-center font-semibold bg-white text-black dark:text-black rounded-full w-20 border-8 border-[#0AEDFE] h-20">
 		{selected_question === -1 ? '0' : selected_question + 1}
 		/ {quiz_data.questions.length}
 	</p>
