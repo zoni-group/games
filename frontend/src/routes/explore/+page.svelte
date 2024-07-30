@@ -38,7 +38,7 @@
 </script>
 
 <svelte:head>
-    <title>Zoni® AI - Search</title>
+    <title>Zoni® AI - Explore</title>
 </svelte:head>
 
 {#if resp_data !== null}
@@ -47,21 +47,6 @@
             {#each resp_data as quiz}
                 <SearchCard quiz={quiz._formatted} />
             {/each}
-        </div>
-    {:else}
-        <div class="flex justify-center">
-            <h1 class="text-4xl text-white">{$t('search_page.nothing_here')}</h1>
-        </div>
-        <div class="flex justify-center">
-            <p class="text-white">
-                Not finding what you are looking for? Search on 
-                <a
-                    class="underline"
-                    href="https://create.kahoot.it/search?query={search_term}&tags=test&filter=filter%3D1"
-                    target="_blank">Kahoot!</a>
-                and 
-                <a href="/import" class="underline">import</a> it!
-            </p>
         </div>
     {/if}
 {/if}
