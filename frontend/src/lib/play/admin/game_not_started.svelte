@@ -51,7 +51,7 @@
 <div class="w-full flex flex-col justify-center items-center ">
 	<!-- <AudioPlayer bind:play={play_music} /> -->
 	<div class=" text-center" style="padding:20px;">
-		<p class="text-white text-sm md:text-xl" >Please use your phone camera to scan the QR code or visit https://ai.zoni.edu/
+		<p class="text-white text-sm md:text-xl" >Please use your phone camera to scan the QR code or visit https://ai.zoni.edu/play
 		</p>
 		<!-- svelte-ignore a11y-click-events-have-key-events -->
 		<p on:click={copyUrl} class="underline cursor-pointer text-white sm:mb-10 text-sm md:text-xl mb-3"  >Copy URL</p>
