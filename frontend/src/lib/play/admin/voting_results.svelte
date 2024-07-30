@@ -63,7 +63,7 @@ SPDX-License-Identifier: MPL-2.0
 
 <div class="flex justify-center w-full">
 	<div
-		class="m-auto w-fit gap-4 flex flex-col"
+		class="m-auto w-fit gap-4 flex flex-col bg-[#E2EFF7] bg-opacity-50 py-10 px-16 rounded-xl"
 		style="grid-template-columns: repeat({quiz_answers.length}, minmax(0, 1fr));"
 	>
 		<div class="flex gap-12">
@@ -76,17 +76,14 @@ SPDX-License-Identifier: MPL-2.0
 		<div class="flex gap-12">
 			{#each quiz_answers as answer, i}
 				<div
-					class="w-20 self-end flex justify-center border text-white border-white shadow-xl rounded"
-					class:shadow-blue-500={answer_correct[i] &&
-						question.type !== QuizQuestionType.VOTING}
-					class:shadow-yellow-500={!answer_correct[i] &&
-						question.type !== QuizQuestionType.VOTING}
+					class="w-20 self-end flex justify-center border text-white border-white  rounded"
+					
 					class:opacity-70={!answer_correct[i] &&
 						question.type !== QuizQuestionType.VOTING}
 					style="height: {(sorted_data[answer] * 20) /
 						data.length}rem; background-color: {quiz_colors[i]
 						? quiz_colors[i]
-						: 'white'}"
+						: '#001293'}"
 				/>
 			{/each}
 		</div>
@@ -109,12 +106,12 @@ SPDX-License-Identifier: MPL-2.0
 <div class="flex justify-center w-full px-4">
 	<div class="m-auto gap-4 flex flex-col items-center">
 		<h2 class="text-2xl font-bold text-center text-white mb-4 dark:text-white mt-10">Answers</h2>
-		<p class="text-lg md:text-xl lg:text-2xl text-center mb-6 text-gray-50 dark:text-gray-300 text-gray-700">{question.question}</p>
+		<p class="text-lg md:text-xl lg:text-2xl text-center mb-6 dark:text-gray-300 text-white">{question.question}</p>
 		<div class="flex flex-wrap justify-center gap-4 w-full max-w-5xl">
 			{#each quiz_answers as answer, i}
-				<div class="w-full  p-4">
-					<div class="flex items-center justify-between p-4 border rounded gap-3 shadow-lg bg-gray-100 dark:bg-gray-800">
-						<span class="text-lg dark:text-white">{answer}</span>
+				<div class="w-full flex justify-center p-4">
+					<div class="flex items-center justify-between p-4 border  rounded gap-3 border-[#0AEDFE] bg-opacity-80 shadow-lg bg-[#92CAF4] dark:bg-gray-800">
+						<span class="text-lg text-white dark:text-white">{answer}</span>
 						{#if question.type === QuizQuestionType.VOTING || question.type === QuizQuestionType.TEXT}
 							<span class="text-xl font-bold text-green-500">
 								{sorted_data[answer]}
