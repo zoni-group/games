@@ -91,7 +91,7 @@ SPDX-License-Identifier: MPL-2.0
 			{#each quiz_answers as answer, i}
 				<div class="w-20">
 					<p
-						class="-rotate-45 text-xl text-str text-white"
+						class=" text-base  text-str text-white"
 						class:line-through={!answer_correct[i] &&
 							question.type !== QuizQuestionType.VOTING && question.type !== QuizQuestionType.TEXT}
 					>

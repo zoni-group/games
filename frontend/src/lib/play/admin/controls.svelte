@@ -61,7 +61,7 @@ SPDX-License-Identifier: MPL-2.0
 	style="background: {bg_color ? bg_color : 'transparent'}"
 	class:text-black={bg_color}
 >
-	<p class="fixed top-20 left-10 z-50 mr-auto ml-0 col-start-1 col-end-1 flex items-center italic justify-center font-semibold bg-white text-black dark:text-black rounded-full w-20 border-8 border-[#0AEDFE] h-20">
+	<p class="fixed top-20 left-10 z-50 text-xs sm:text-base mr-auto ml-0 col-start-1 col-end-1 flex items-center italic justify-center font-semibold bg-white text-black dark:text-black rounded-full sm:w-[10vw] w-12 h-12 md:w-20 md:h-20 border-8 border-[#0AEDFE] sm:h-[10vw]">
 		{selected_question === -1 ? '0' : selected_question + 1}
 		/ {quiz_data.questions.length}
 	</p>
@@ -100,7 +100,7 @@ SPDX-License-Identifier: MPL-2.0
 			</button>
 		  {/if}
 		{/if}
-		<div class="fixed right-0 top-20 text-sm px-4 py-2 mr-3 mt-4 rounded-xl text-white bg-black bg-opacity-20 shadow-lg">
+		<div class="fixed right-0 top-20 lg:text-sm text-xs px-4 py-2 mr-3 mt-4 rounded-xl text-white bg-black bg-opacity-20 shadow-lg">
 			{$t('admin_page.answers_submitted', { answer_count: answer_count })}
 		</div>		
 	  </div>
