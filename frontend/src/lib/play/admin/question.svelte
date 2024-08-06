@@ -35,73 +35,78 @@ SPDX-License-Identifier: MPL-2.0
 		}
 	}
 </script>
+<style>
+	 .fluid-text {
+    font-size: clamp(0.5rem, 0.5vw + 0.5rem, 0.5rem);
+  }
+  @media (min-width: 1080px){
+	.fluid-text {
+    font-size: 1.25rem;
+  }
+  }
+</style>
 
 <div class="flex flex-col justify-center items-center w-screen h-1/6 p-0 mb-2 -mt-12">
-	<div class="bg-white flex flex-col items-center justify-center rounded-3xl md:w-2/3 w-full pb-5" >
-		<div class="m-auto bg-white -mt-16 rounded-full p-3">
+	<div class="bg-white flex flex-col items-center justify-center rounded-3xl w-[90vw] w-full pb-5" >
+		<div class="m-auto bg-white lg:-mt-16 -mt-9 rounded-full p-3">
 			<CircularTimer
 				bind:text={timer_res}
 				bind:progress={circular_progress}
 				color="#ef4444"
 			/>
 		</div>
-		<h1 class="text-6xl text-center text-[#00529B]">
+		<h1 class="lg:text-3xl text-base  text-center text-[#00529B]">
 			{@html quiz_data.questions[selected_question].question}
 		</h1>
 	</div>
 </div>
-{#if quiz_data.questions[selected_question].image !== null}
-	<div class="flex justify-center w-full p-0">
-		<MediaComponent
-			src={quiz_data.questions[selected_question].image}
-			muted={false}
-			css_classes="max-h-[50vh] object-cover mx-auto mb-8 w-auto"
-		/>
-	</div>
-{/if}
-{#if quiz_data.questions[selected_question].type === QuizQuestionType.ABCD || quiz_data.questions[selected_question].type === QuizQuestionType.VOTING || quiz_data.questions[selected_question].type === QuizQuestionType.CHECK}
-	<div class="grid grid-rows-2 grid-flow-col auto-cols-auto gap-2 w-full p-4 -mt-10">
-		{#each quiz_data.questions[selected_question].answers as answer, i}
-			<div
-				class="rounded-lg h-fit flex border-4 border-white"
-				style="background-color: {answer.color ?? default_colors[i]};"
-				class:opacity-50={!answer.right &&
-					timer_res === '0' &&
-					quiz_data.questions[selected_question].type === QuizQuestionType.ABCD}
-			>
-				<!-- <img
-					class="w-14 inline-block pl-4"
-					alt="icon"
-					style="color: {get_foreground_color(answer.color ?? default_colors[i])}"
-					src={kahoot_icons[i]}
-				/> -->
-				<span class="sm:text-7xl text-3xl font-bold text-white" >
-					{optionsLabel[i]}
-				</span>
-				<span
-					class="text-center text-2xl px-2 py-4 w-full"
-					style="color: white"
-					>{answer.answer}</span
-				>
-				<span class="pl-4 w-10" />
-			</div>
-		{/each}
-	</div>
-{:else if quiz_data.questions[selected_question].type === QuizQuestionType.TEXT}
-	{#if timer_res === '0'}
-		<div class="grid grid-cols-2 gap-2 w-full p-4">
+<div class="lg:flex-col flex mt-8 p-5 items-center">
+	{#if quiz_data.questions[selected_question].image !== null}
+		<div class="flex justify-center w-1/3 lg:w-full p-0">
+			<MediaComponent
+				src={quiz_data.questions[selected_question].image}
+				muted={false}
+				css_classes="max-h-[50vh] object-cover mx-auto mb-8 w-auto"
+			/>
+		</div>
+	{/if}
+	{#if quiz_data.questions[selected_question].type === QuizQuestionType.ABCD || quiz_data.questions[selected_question].type === QuizQuestionType.VOTING || quiz_data.questions[selected_question].type === QuizQuestionType.CHECK}
+		<div class="grid grid-rows-2 grid-flow-col auto-cols-auto gap-2 w-4/5 lg:w-full ps-1 justify-items-stretch">
 			{#each quiz_data.questions[selected_question].answers as answer, i}
-				<div class="rounded-lg h-fit flex bg-[#004A93]">
-					<span class="text-center text-2xl px-2 py-4 w-full text-white"
+				<div
+					class="rounded-lg h-full flex border-4 border-white items-center overflow-auto max-h-[30vh] max-w-[50vw]"
+					style="background-color: {answer.color ?? default_colors[i]};"
+					class:opacity-50={!answer.right &&
+						timer_res === '0' &&
+						quiz_data.questions[selected_question].type === QuizQuestionType.ABCD}
+				>
+					<span class="md:text-7xl text-4xl font-bold text-white ps-1">
+						{optionsLabel[i]}
+					</span>
+					<span
+						class="text-center fluid-text-md px-2 py-2 w-full"
+						style="color: white"
 						>{answer.answer}</span
 					>
-					<span class="pl-4 w-10" />
 				</div>
 			{/each}
 		</div>
-	{:else}
-		<div class="flex justify-center text-white">
-			<p class="text-2xl text-white">{$t('admin_page.enter_answer_into_field')}</p>
-		</div>
+	{:else if quiz_data.questions[selected_question].type === QuizQuestionType.TEXT}
+		{#if timer_res === '0'}
+			<div class="grid grid-cols-2 gap-2 w-full p-4">
+				{#each quiz_data.questions[selected_question].answers as answer, i}
+					<div class="rounded-lg h-fit flex bg-[#004A93]">
+						<span class="text-center fluid-text-md px-2 py-4 w-full text-white"
+							>{answer.answer}</span
+						>
+						<span class="pl-4 w-10" />
+					</div>
+				{/each}
+			</div>
+		{:else}
+			<div class="flex justify-center text-white">
+				<p class="fluid-text-md text-white">{$t('admin_page.enter_answer_into_field')}</p>
+			</div>
+		{/if}
 	{/if}
-{/if}
+</div>

@@ -49,7 +49,9 @@
 </script>
 
 <div class="w-full flex flex-col justify-center items-center ">
-	<!-- <AudioPlayer bind:play={play_music} /> -->
+	<div class="fixed top-0 left-0">
+		<AudioPlayer bind:play={play_music} />
+	</div>
 	<div class=" text-center" style="padding:20px;">
 		<p class="text-white text-sm md:text-xl mt-20" >Please use your phone camera to scan the QR code or visit https://ai.zoni.edu/play
 		</p>
