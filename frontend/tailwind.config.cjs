@@ -8,6 +8,11 @@ const config = {
 					600: '#009444'
 				}
 			},
+			fontSize: {
+				'fluid-text-sm': 'clamp(0.875rem, 2vw, 2.5rem)', // Small fluid text
+				'fluid-text-md': 'clamp(1rem, 3.5vw, 3.5rem)', // Medium fluid text
+				'fluid-text-lg': 'clamp(1.5rem, 4vw, 4.5rem)', // Large fluid text
+			},
 			typography: (theme) => ({
 				DEFAULT: {
 					css: {
