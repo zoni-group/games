@@ -43,10 +43,12 @@
 
 {#if resp_data !== null}
     {#if resp_data.length !== 0}
-        <div class="grid lg:grid-cols-3 grid-cols-1">
-            {#each resp_data as quiz}
-                <SearchCard quiz={quiz._formatted} />
-            {/each}
+        <div class="flex justify-center w-full mt-10" >
+            <div class="grid lg:grid-cols-3 sm:grid-cols-2 grid-cols-1 ">
+                {#each resp_data as quiz}
+                    <SearchCard quiz={quiz._formatted} />
+                {/each}
+            </div>
         </div>
     {/if}
 {/if}

@@ -85,14 +85,14 @@
 
 	:global(html.dark){
 		background-image: url('$lib/assets/all/bg_dark.webp') !important;
-		background-position: center;
+		background-position: start;
 		background-repeat: no-repeat;
 		background-size: cover;
 		background-attachment: fixed;
 	}
 	:global(html:not(.dark)) {
 		background-image: url('$lib/assets/all/bg.webp');
-		background-position: center;
+		background-position: start;
 		background-repeat: no-repeat;
 		background-size: cover;
 		background-attachment: fixed;

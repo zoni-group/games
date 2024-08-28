@@ -55,7 +55,7 @@
 							{#if i === 0}
 								<FaCrown class="text-yellow-300 text-3xl" />
 							{/if}
-							<p class="font-bold">
+							<p class="font-bold text-white">
 								{$t('play_page.final_result_rank', {
 									place: i + 1,
 									username: player,
@@ -69,11 +69,11 @@
 		</div>
 		{#if data[username]}
 			<div class="fixed bottom-0 left-0 flex justify-center w-full mb-6 z-10">
-				<div class="bg-white p-4 border-4 border-indigo-700 rounded-lg shadow-lg">
-					<p class="text-center text-lg font-semibold text-indigo-700">{$t('play_page.your_score', { score: data[username] })}</p>
+				<div class="bg-white p-4 border-4 border-[#003FA7] rounded-lg shadow-lg">
+					<p class="text-center text-lg font-semibold text-[#00529B]">{$t('play_page.your_score', { score: data[username] })}</p>
 					{#each player_names as player, i}
 						{#if player === username}
-							<p class="text-center text-indigo-700 mt-2">{$t('play_page.your_place', { place: i + 1 })}</p>
+							<p class="text-center text-[#00529B] mt-2">{$t('play_page.your_place', { place: i + 1 })}</p>
 						{/if}
 					{/each}
 				</div>

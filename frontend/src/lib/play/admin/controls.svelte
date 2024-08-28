@@ -53,7 +53,7 @@ SPDX-License-Identifier: MPL-2.0
 </script>
 <style>
 	.slide-control-btn {
-	  @apply bg-blue-500 text-white font-semibold py-2 px-4 rounded-lg shadow-lg hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-opacity-75;
+	  @apply bg-[#003FA7] text-white font-semibold py-2 px-4 rounded-lg shadow-lg hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-opacity-75;
 	}
   </style>
 <div
@@ -61,7 +61,7 @@ SPDX-License-Identifier: MPL-2.0
 	style="background: {bg_color ? bg_color : 'transparent'}"
 	class:text-black={bg_color}
 >
-	<p class="fixed top-20 left-10 z-50 text-xs sm:text-base mr-auto ml-0 col-start-1 col-end-1 flex items-center italic justify-center font-semibold bg-white text-black dark:text-black rounded-full sm:w-[10vw] w-12 h-12 md:w-20 md:h-20 border-8 border-[#0AEDFE] sm:h-[10vw]">
+	<p class="fixed top-20 left-10 z-50 text-xs sm:text-base mr-auto ml-0 col-start-1 col-end-1 flex items-center italic justify-center font-semibold bg-[#003FA7] text-white dark:text-white rounded-full sm:w-[10vw] w-12 h-12 md:w-20 md:h-20 border-8 border-[#fff] sm:h-[10vw]">
 		{selected_question === -1 ? '0' : selected_question + 1}
 		/ {quiz_data.questions.length}
 	</p>

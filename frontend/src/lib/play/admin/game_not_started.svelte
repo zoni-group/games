@@ -52,22 +52,22 @@
 	<div class="fixed top-0 left-0">
 		<AudioPlayer bind:play={play_music} />
 	</div>
-	<div class=" text-center" style="padding:20px;">
-		<p class="text-white text-sm md:text-xl mt-20" >Please use your phone camera to scan the QR code or visit https://ai.zoni.edu/play
+	<div class=" text-center flex flex-col justify-center items-center" style="padding:20px;">
+		<p class="text-[#003FA7] font-semibold text-sm md:text-xl mt-20" >Please use your phone camera to scan the QR code or visit https://ai.zoni.edu/play
 		</p>
 		<!-- svelte-ignore a11y-click-events-have-key-events -->
-		<p on:click={copyUrl} class="underline cursor-pointer text-white sm:mb-10 text-sm md:text-xl mb-3"  >Copy URL</p>
+		<p on:click={copyUrl} class="underline cursor-pointer text-[#003FA7] font-semibold sm:mb-10 text-sm w-fit px-4 py-2 md:text-xl mb-3 border-2 border-[#003FA7]  rounded-xl"  >Copy URL</p>
 		<div class=" flex flex-col justify-center items-center">
 			<!-- svelte-ignore a11y-click-events-have-key-events -->
-			 <div class="bg-[#7EF4EF] rounded-xl bg-opacity-50 p-5   flex flex-col justify-center">
+			 <div class="bg-[#E3ECF4] rounded-xl  p-5   flex flex-col justify-center">
 				 <img
 					 on:click={() => (fullscreen_open = true)}
 					 alt={$t('qr_code_to_join_the_game')}
 					 src={`/api/v1/utils/qr/${game_pin}`}
-					 class="sm:m-10 bg-white p-3 "
+					 class="sm:m-10 bg-[#E3ECF4] p-3 "
 				 />
 				 <div class="flex justify-center w-full sm:-mb-12 mt-3 -mb-12">
-					<div class="btn" >
+					<div class="flex bg-gradient-to-r from-[#0056B3] -mt-10 mt-4 mx-auto items-center justify-center gap-3 font-bold style-text md:text-2xl transition-all   via-[#0C81FF] to-[#0056B3] px-7 py-2 rounded-full border-4 border-[#0C81FF]" >
 						<GrayButton
 							disabled={players.length < 1}
 							on:click={() => {
@@ -98,21 +98,21 @@
 	</div>
 	
 	<div class="flex flex-col items-center
-	 justify-center md:mt-10">
-		<p class=" mt-4 text-white  text-sm md:text-xl">
+	 justify-center md:mt-10 border-4 border-[#003FA7]/50 shadow-[#003FA7]/50 shadow-lg rounded-xl  bg-opacity-50 p-5">
+		<p class=" mt-4 text-[#003FA7]  text-sm md:text-xl">
 			Play and enter the activity 
 		</p>
-		<p class=" text-white font-bold text-sm md:text-xl">
+		<p class=" text-[#003FA7] font-bold text-sm md:text-xl">
 			CODE: {game_pin}
 		</p>
-		<p class="mt-4 text-white  text-sm md:text-xl">
-			{$t('play_page.players_waiting', { count: players.length ?? 0 })}
-		</p>
 	</div>
+	<p class="mt-4 text-black text-sm md:text-xl">
+		{$t('play_page.players_waiting', { count: players.length ?? 0 })}
+	</p>
 	<div class="flex flex-row justify-center w-full mt-4 px-10 flex-wrap">
 		{#if players.length > 0}
 			{#each players as player}
-				<div class="p-2 m-2  text-white bg-[#7EF4EF] bg-opacity-50 rounded hover:cursor-pointer">
+				<div class="p-2 m-2  text-white bg-[#0056BD] bg-opacity-50 rounded hover:cursor-pointer">
 					<!-- svelte-ignore a11y-click-events-have-key-events -->
 					<span
 						class="hover:line-through text-lg"

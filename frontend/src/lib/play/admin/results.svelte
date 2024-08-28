@@ -102,25 +102,25 @@ SPDX-License-Identifier: MPL-2.0
 		<div>
 			<table class="table-auto text-xl">
 				<tr>
-					<th class="p-2 border-r border-r-white border-b-2 border-b-white text-white"
+					<th class="p-2 border-r border-r-white border-b-2 border-b-white text-[#00529B]"
 						>{$t('words.name')}</th
 					>
-					<th class="p-2 border-b-2 border-b-white text-white">{$t('words.point', { count: 2 })}</th>
+					<th class="p-2 border-b-2 border-b-white text-[#00529B]">{$t('words.point', { count: 2 })}</th>
 					{#if show_new_score_clicked}
-						<th in:fly={{ x: 300 }} class="p-2 border-b-2 border-b-white text-white"
+						<th in:fly={{ x: 300 }} class="p-2 border-b-2 border-b-white text-[#00529B]"
 							>{$t('play_page.points_added')}
 						</th>
 					{/if}
 				</tr>
 				{#each player_names as player, i (player)}
 					<tr animate:flip>
-						<td class:hidden={i > 3} class="p-2 border-r border-r-white  text-white">{player}</td>
-						<td class:hidden={i > 3} class="p-2 text-white">{data[player]}</td>
+						<td class:hidden={i > 3} class="p-2 border-r border-r-white  text-[#00529B]">{player}</td>
+						<td class:hidden={i > 3} class="p-2 text-[#00529B]">{data[player]}</td>
 						{#if show_new_score_clicked}
 							<td
 								in:fly={{ x: 300 }}
 								class:hidden={i > 3}
-								class="p-2 text-white"
+								class="p-2 text-[#00529B]"
 								class:text-red-600={score_by_username[player] === 0 ||
 									score_by_username[player] === undefined}
 							>

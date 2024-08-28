@@ -207,13 +207,13 @@ SPDX-License-Identifier: MPL-2.0
 			</div>
 		</form>
 	</div> -->
-	<section class="w-screen flex items-center justify-center" >
-		<div class="bg-[#7EF4EF] rounded-xl bg-opacity-40 xl:w-1/4 sm:w-1/2  p-5 mt-20" >
+	<section class="w-screen flex h-screen items-center justify-center" >
+		<div class="bg-gradient-to-t from-[#D3E1EE] to-[#FCFDFE] shadow-[#003FA7]/50 shadow-md border border-[#003FA7]/50 rounded-xl bg-opacity-40 xl:w-1/4 sm:w-1/2  p-5 mt-20" >
 			<div class="w-full justify-center flex" >
 				<img src="{login_icon}" alt="" class="-mt-20">
 			</div>
 			<div class="flex flex-col items-center my-5" >
-				<p class="style-text font-bold mb-0" >{$t('words.game_pin')}</p>
+				<p class="text-[#003FA7] font-bold mb-0" >{$t('words.game_pin')}</p>
 			</div>
 	
 			<form on:submit|preventDefault class="flex-col flex justify-center align-center mx-auto mb-12">
@@ -227,7 +227,7 @@ SPDX-License-Identifier: MPL-2.0
 	
 				<br />
 				<div class="mt-2 flex justify-center items-center">
-					<button class="bg-[#FFE500] border-[#0AEDFE] flex items-center border-4 gap-2 text-[#5436AB] font-semibold px-9 py-2 rounded-full disabled:cursor-not-allowed disabled:opacity-90" disabled={game_pin.length < 6} >
+					<button class="bg-[#0056BD] border-[#fff] flex items-center border-2 gap-2 text-[#fff] font-semibold px-9 py-2 rounded-full disabled:cursor-not-allowed disabled:opacity-90" disabled={game_pin.length < 6} >
 						<img src="{hand_click_icon}" alt="icon" class="" >
 						{$t('words.submit')}
 					</button>
@@ -264,13 +264,13 @@ SPDX-License-Identifier: MPL-2.0
 			</div>
 		</form>
 	</div> -->
-	<section class="w-screen flex items-center justify-center" >
-		<div class="bg-[#7EF4EF] rounded-xl bg-opacity-40 xl:w-1/4 sm:w-1/2  p-5 mt-20" >
+	<section class="w-screen flex h-screen items-center justify-center" >
+		<div class="bg-gradient-to-t from-[#D3E1EE] to-[#FCFDFE] shadow-[#003FA7]/50 shadow-md border border-[#003FA7]/50 rounded-xl bg-opacity-40 xl:w-1/4 sm:w-1/2  p-5 mt-20" >
 			<div class="w-full justify-center flex" >
 				<img src="{login_icon}" alt="" class="-mt-20">
 			</div>
 			<div class="flex flex-col items-center my-5" >
-				<p class="style-text font-bold mb-0" >{$t('words.username')}</p>
+				<p class="text-[#003FA7] font-bold mb-0" >{$t('words.username')}</p>
 				
 			</div>
 	
@@ -290,7 +290,7 @@ SPDX-License-Identifier: MPL-2.0
 					/>
 				{/if}
 				<div class="mt-2 flex justify-center items-center">
-					<button class="bg-[#FFE500] border-[#0AEDFE] flex items-center border-4 gap-2 text-[#5436AB] font-semibold px-9 py-2 rounded-full disabled:cursor-not-allowed disabled:opacity-90"
+					<button class="bg-[#0056BD] border-[#fff] flex items-center border-2 gap-2 text-[#fff] font-semibold px-9 py-2 rounded-full disabled:cursor-not-allowed disabled:opacity-90"
 					disabled={username.length <= 3} on:click={setUsername}
 					>
 						<img src="{hand_click_icon}" alt="icon" class="" >

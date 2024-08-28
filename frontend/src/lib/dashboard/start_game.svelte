@@ -153,7 +153,7 @@ SPDX-License-Identifier: MPL-2.0
             </div>
             <div class=" flex flex-col items-center">
                 <div
-                    class="rounded-lg bg-[#00AAFF] xl:w-2/3 md:w-full text-white shadow-lg cursor-pointer transition-all p-5"
+                    class="rounded-lg bg-[#007CDB] xl:w-2/3 md:w-full text-white shadow-lg cursor-pointer transition-all p-5"
                     class:opacity-50={selected_game_mode !== 'normal'}
                     on:click={() => {
                         selected_game_mode = 'normal';
@@ -212,7 +212,7 @@ SPDX-License-Identifier: MPL-2.0
         </div>
         <button 
         on:click={() => start_game(quiz_id)}
-        class="flex bg-gradient-to-r from-[#62C500] -mb-10 mt-4 mx-auto items-center justify-center gap-3 font-bold style-text md:text-2xl transition-all   via-[#05FB00] to-[#61C101] px-7 py-2 rounded-full border-4 border-[#0AEDFE]"
+        class="flex bg-gradient-to-r from-[#0056B3] -mb-10 mt-4 mx-auto items-center justify-center gap-3 font-bold style-text md:text-2xl transition-all   via-[#0C81FF] to-[#0056B3] px-7 py-2 rounded-full border-4 border-[#0C81FF]"
     >
         <img src="{playIcon}" alt="">
         {$t('start_game.start_game')}

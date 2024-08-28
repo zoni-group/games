@@ -53,13 +53,13 @@
   
   <div class="flex justify-center w-full px-4">
     <div class="m-auto gap-4 flex flex-col items-center">
-      <h2 class="text-2xl font-bold text-center text-white mb-4 dark:text-white">Answers</h2>
-      <p class="text-lg md:text-xl lg:text-2xl text-center mb-6 text-white dark:text-gray-300 text-gray-700">{question.question}</p>
+      <h2 class="text-2xl font-bold text-center text-[#003FA7] mb-4 dark:text-[#003FA7]">Answers</h2>
+      <p class="text-lg md:text-xl lg:text-2xl text-center mb-6 text-[#003FA7] dark:text-[#003FA7] ">{question.question}</p>
       <div class="flex flex-wrap justify-center gap-4 w-full max-w-5xl">
         {#each quiz_answers as answer, i}
           <div class="w-full md:w-1/2 lg:w-1/3 p-4">
             <div class="flex items-center justify-between p-4 border rounded shadow-lg bg-gray-100 dark:bg-gray-800">
-              <span class="text-lg dark:text-white">{answer}</span>
+              <span class="text-lg dark:text-[#003FA7]">{answer}</span>
               <span class="text-xl font-bold" class:text-green-500={isCorrect(answer)} class:text-red-500={isIncorrect(answer)}>
                 {isCorrect(answer) ? '✓' : isIncorrect(answer) ? '✗' : ''}
               </span>

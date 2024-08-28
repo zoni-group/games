@@ -194,7 +194,7 @@ SPDX-License-Identifier: MPL-2.0
 			/>
 		{:else if gameMeta.started && gameData !== undefined && question_index !== '' && answer_results === undefined}
 			{#key unique}
-				<div class="text-white dark:text-white">
+				<div class="text-[#00529B] dark:text-[#00529B]">
 					<Question bind:game_mode bind:question bind:question_index bind:solution />
 				</div>
 			{/key}
@@ -205,7 +205,7 @@ SPDX-License-Identifier: MPL-2.0
 				</div>
 			{:else}
 				<div>
-					<h2 class="text-center text-white text-3xl my-8">{$t('words.result', { count: 2 })}</h2>
+					<h2 class="text-center text-[#00529B] text-3xl my-8">{$t('words.result', { count: 2 })}</h2>
 				</div>
 				{#key unique}
 					<KahootResults
