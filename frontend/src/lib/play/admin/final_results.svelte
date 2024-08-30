@@ -70,10 +70,10 @@
 		{#if data[username]}
 			<div class="fixed bottom-0 left-0 flex justify-center w-full mb-6 z-10">
 				<div class="bg-white p-4 border-4 border-[#003FA7] rounded-lg shadow-lg">
-					<p class="text-center text-lg font-semibold text-[#00529B]">{$t('play_page.your_score', { score: data[username] })}</p>
+					<p class="text-center text-lg font-semibold text-[#00529B] dark:text-[#fff]">{$t('play_page.your_score', { score: data[username] })}</p>
 					{#each player_names as player, i}
 						{#if player === username}
-							<p class="text-center text-[#00529B] mt-2">{$t('play_page.your_place', { place: i + 1 })}</p>
+							<p class="text-center text-[#00529B] dark:text-[#fff] mt-2">{$t('play_page.your_place', { place: i + 1 })}</p>
 						{/if}
 					{/each}
 				</div>

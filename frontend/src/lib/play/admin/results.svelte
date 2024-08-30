@@ -102,20 +102,20 @@ SPDX-License-Identifier: MPL-2.0
 		<div>
 			<table class="table-auto text-xl">
 				<tr>
-					<th class="p-2 border-r border-r-white border-b-2 border-b-white text-[#00529B]"
+					<th class="p-2 border-r border-r-white border-b-2 border-b-white text-[#00529B] dark:text-white"
 						>{$t('words.name')}</th
 					>
-					<th class="p-2 border-b-2 border-b-white text-[#00529B]">{$t('words.point', { count: 2 })}</th>
+					<th class="p-2 border-b-2 border-b-white text-[#00529B] dark:text-white">{$t('words.point', { count: 2 })}</th>
 					{#if show_new_score_clicked}
-						<th in:fly={{ x: 300 }} class="p-2 border-b-2 border-b-white text-[#00529B]"
+						<th in:fly={{ x: 300 }} class="p-2 border-b-2 border-b-white text-[#00529B] dark:text-white"
 							>{$t('play_page.points_added')}
 						</th>
 					{/if}
 				</tr>
 				{#each player_names as player, i (player)}
 					<tr animate:flip>
-						<td class:hidden={i > 3} class="p-2 border-r border-r-white  text-[#00529B]">{player}</td>
-						<td class:hidden={i > 3} class="p-2 text-[#00529B]">{data[player]}</td>
+						<td class:hidden={i > 3} class="p-2 border-r border-r-white  text-[#00529B] dark:text-white">{player}</td>
+						<td class:hidden={i > 3} class="p-2 text-[#00529B] dark:text-white">{data[player]}</td>
 						{#if show_new_score_clicked}
 							<td
 								in:fly={{ x: 300 }}

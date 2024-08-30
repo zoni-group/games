@@ -53,10 +53,10 @@
 		<AudioPlayer bind:play={play_music} />
 	</div>
 	<div class=" text-center flex flex-col justify-center items-center" style="padding:20px;">
-		<p class="text-[#003FA7] font-semibold text-sm md:text-xl mt-20" >Please use your phone camera to scan the QR code or visit https://ai.zoni.edu/play
+		<p class="text-[#003FA7] dark:text-white font-semibold text-sm md:text-xl mt-20" >Please use your phone camera to scan the QR code or visit https://ai.zoni.edu/play
 		</p>
 		<!-- svelte-ignore a11y-click-events-have-key-events -->
-		<p on:click={copyUrl} class="underline cursor-pointer text-[#003FA7] font-semibold sm:mb-10 text-sm w-fit px-4 py-2 md:text-xl mb-3 border-2 border-[#003FA7]  rounded-xl"  >Copy URL</p>
+		<p on:click={copyUrl} class="underline cursor-pointer text-[#003FA7] dark:text-white font-semibold sm:mb-10 text-sm w-fit px-4 py-2 md:text-xl mb-3 border-2 border-[#003FA7] dark:border-white  rounded-xl"  >Copy URL</p>
 		<div class=" flex flex-col justify-center items-center">
 			<!-- svelte-ignore a11y-click-events-have-key-events -->
 			 <div class="bg-[#E3ECF4] rounded-xl  p-5   flex flex-col justify-center">
@@ -67,7 +67,10 @@
 					 class="sm:m-10 bg-[#E3ECF4] p-3 "
 				 />
 				 <div class="flex justify-center w-full sm:-mb-12 mt-3 -mb-12">
-					<div class="flex bg-gradient-to-r from-[#0056B3] -mt-10 mt-4 mx-auto items-center justify-center gap-3 font-bold style-text md:text-2xl transition-all   via-[#0C81FF] to-[#0056B3] px-7 py-2 rounded-full border-4 border-[#0C81FF]" >
+					<div 
+					class="px-5 py-2 border-[#00EDFF] my-3 border-4 bg-gradient-to-r from-[#0056BD] from-0%  to-[#5436AB] to-100% leading-5 text-white transition-colors duration-200 transform rounded-full hover:bg-gray-600 focus:outline-none disabled:cursor-not-allowed disabled:opacity-50"
+					
+					 >
 						<GrayButton
 							disabled={players.length < 1}
 							on:click={() => {
@@ -98,21 +101,21 @@
 	</div>
 	
 	<div class="flex flex-col items-center
-	 justify-center md:mt-10 border-4 border-[#003FA7]/50 shadow-[#003FA7]/50 shadow-lg rounded-xl  bg-opacity-50 p-5">
-		<p class=" mt-4 text-[#003FA7]  text-sm md:text-xl">
+	 justify-center md:mt-10 border-4 border-[#003FA7]/50 shadow-[#003FA7]/50 shadow-lg dark:border-white dark:shadow-none rounded-xl  bg-opacity-50 p-5">
+		<p class=" mt-4 text-[#003FA7] dark:text-white text-sm md:text-xl">
 			Play and enter the activity 
 		</p>
-		<p class=" text-[#003FA7] font-bold text-sm md:text-xl">
+		<p class=" text-[#003FA7] dark:text-white font-bold text-sm md:text-xl">
 			CODE: {game_pin}
 		</p>
 	</div>
-	<p class="mt-4 text-black text-sm md:text-xl">
+	<p class="mt-4 text-black text-sm dark:text-white font-bold  md:text-xl">
 		{$t('play_page.players_waiting', { count: players.length ?? 0 })}
 	</p>
 	<div class="flex flex-row justify-center w-full mt-4 px-10 flex-wrap">
 		{#if players.length > 0}
 			{#each players as player}
-				<div class="p-2 m-2  text-white bg-[#0056BD] bg-opacity-50 rounded hover:cursor-pointer">
+				<div class="p-2 m-2  text-white bg-[#0056BD] dark:bg-[#0C81FF] bg-opacity-50 rounded hover:cursor-pointer">
 					<!-- svelte-ignore a11y-click-events-have-key-events -->
 					<span
 						class="hover:line-through text-lg"

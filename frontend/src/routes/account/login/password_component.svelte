@@ -6,6 +6,7 @@ SPDX-License-Identifier: MPL-2.0
 
 <script lang="ts">
 	import { getLocalization } from '$lib/i18n';
+	import roundLogo from '$lib/assets/all/round_logo.webp';
 
 	export let session_data;
 	export let selected_method;
@@ -53,7 +54,10 @@ SPDX-License-Identifier: MPL-2.0
 </script>
 
 <div class="px-6 py-4">
-	<h2 class="text-3xl font-bold text-center text-gray-700 dark:text-white">ClassQuiz</h2>
+	<div>
+		<img src="{roundLogo}" alt="Zoni Logo" class="mx-auto z-1 -mt-20">
+	</div>
+	<h2 class="text-style my-5">ClassQuiz</h2>
 
 	<form on:submit|preventDefault={continue_in_login}>
 		<div class="w-full mt-4">
@@ -64,28 +68,22 @@ SPDX-License-Identifier: MPL-2.0
 						bind:value={password}
 						name="password"
 						type="password"
-						class="w-full peer bg-transparent h-10 rounded-lg text-gray-700 dark:text-white placeholder-transparent ring-2 px-2 ring-gray-500 focus:ring-sky-600 focus:outline-none focus:border-rose-600"
+						class="py-3 px-3 input-style"
 						placeholder={$t('words.password')}
 						autocomplete="current-password"
 					/>
-					<label
+					<!-- <label
 						for="password"
 						class="absolute cursor-text left-0 -top-3 text-sm text-gray-700 dark:text-white bg-inherit mx-1 px-1 peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-500 peer-placeholder-shown:top-2 peer-focus:-top-3 peer-focus:text-sky-600 peer-focus:text-sm transition-all"
 					>
 						{$t('words.password')}
-					</label>
+					</label> -->
 				</div>
 			</div>
-			<div class="flex items-center justify-between mt-4">
+			<div class="flex items-center justify-center mt-4">
+				
 				<button
-					on:click={() => {
-						selected_method = 'BACKUP';
-					}}
-					class="text-sm text-gray-600 dark:text-gray-200 hover:text-gray-500"
-					>{$t('login_page.use_backup_code')}</button
-				>
-				<button
-					class="px-4 py-2 leading-5 text-white transition-colors duration-200 transform bg-gray-700 rounded hover:bg-gray-600 focus:outline-none disabled:cursor-not-allowed disabled:opacity-50"
+				class="px-5 py-2 border-[#00EDFF] my-3 border-4 bg-gradient-to-r from-[#0056BD] from-0%  to-[#5436AB] to-100% leading-5 text-white transition-colors duration-200 transform rounded-full hover:bg-gray-600 focus:outline-none disabled:cursor-not-allowed disabled:opacity-50"
 					disabled={!password}
 					type="submit"
 				>
@@ -104,6 +102,15 @@ SPDX-License-Identifier: MPL-2.0
 						{$t('words.continue')}
 					{/if}
 				</button>
+			</div>
+			<div class="flex items-end w-full  flex-col justify-between mt-4" >
+				<button
+						on:click={() => {
+							selected_method = 'BACKUP';
+						}}
+						class="text-sm text-[#00529B] dark:text-white underline"
+						>{$t('login_page.use_backup_code')}</button
+					>
 			</div>
 		</div>
 	</form>

@@ -443,7 +443,7 @@
 	{#if showPlayerAnswers}
 	    <div class={`${game_mode !== 'normal' ? 'h-screen flex justify-center items-center' : ''}`}>
 			<div class="px-4 text-center">
-				<p class="text-lg font-semibold text-[#00529B] mt-10">Your answer:</p>
+				<p class="text-lg font-semibold text-[#00529B] dark:text-[#fff] mt-10">Your answer:</p>
 				{#if Array.isArray(selected_answer)}
 				<ul class="list-disc list-inside mx-auto text-left text-[#00529B] inline-block dark:text-[#00529B]">
 					{#each selected_answer as ans}

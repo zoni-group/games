@@ -205,7 +205,7 @@ SPDX-License-Identifier: MPL-2.0
 				</div>
 			{:else}
 				<div>
-					<h2 class="text-center text-[#00529B] text-3xl my-8">{$t('words.result', { count: 2 })}</h2>
+					<h2 class="text-center text-[#00529B] dark:text-[#fff] text-3xl my-8">{$t('words.result', { count: 2 })}</h2>
 				</div>
 				{#key unique}
 					<KahootResults

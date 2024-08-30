@@ -47,7 +47,7 @@ SPDX-License-Identifier: MPL-2.0
 </style>
 
 <div class="flex flex-col justify-center items-center w-screen h-1/6 p-0 mb-2 px-3">
-	<div class="bg-white shadow-[#003FA7]/50 shadow-md border-[#003FA7] flex flex-col items-center border-[#003FA7] border-2 justify-center rounded-3xl w-[90vw] w-full pb-5" >
+	<div class="bg-white shadow-[#003FA7]/50 shadow-md border-[#003FA7] dark:shadow-none flex flex-col items-center border-[#003FA7] border-2 justify-center rounded-3xl w-[90vw] w-full pb-5" >
 		<div class="m-auto bg-white lg:-mt-16 -mt-9 rounded-full p-3">
 			<CircularTimer
 				bind:text={timer_res}

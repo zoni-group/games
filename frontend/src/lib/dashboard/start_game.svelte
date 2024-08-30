@@ -210,13 +210,16 @@ SPDX-License-Identifier: MPL-2.0
                 <span class="ml-3 text-sm font-medium text-gray-900 font-semibold dark:text-white"> Randomize answers</span>
             </label>
         </div>
-        <button 
-        on:click={() => start_game(quiz_id)}
-        class="flex bg-gradient-to-r from-[#0056B3] -mb-10 mt-4 mx-auto items-center justify-center gap-3 font-bold style-text md:text-2xl transition-all   via-[#0C81FF] to-[#0056B3] px-7 py-2 rounded-full border-4 border-[#0C81FF]"
-    >
-        <img src="{playIcon}" alt="">
-        {$t('start_game.start_game')}
-        </button>
+        <div class="flex justify-center" >
+            <button 
+            on:click={() => start_game(quiz_id)}
+            class="px-8 py-2 flex items-center font-bold justify-center gap-3 border-[#00EDFF] my-3 border-4 bg-gradient-to-r from-[#0056BD] from-0%  to-[#5436AB] to-100% leading-5 text-white transition-colors duration-200 transform rounded-full hover:bg-gray-600 focus:outline-none disabled:cursor-not-allowed disabled:opacity-50"
+            
+        >
+            <img src="{playIcon}" alt="">
+            {$t('start_game.start_game')}
+            </button>
+        </div>
         <!-- <button
             class="flex items-center hidden -mb-12 mt-4 mx-auto bg-lime-600 text-white p-4 rounded-lg shadow-lg hover:bg-lime-500 transition-all text-2xl"
             on:click={() => start_game(quiz_id)}

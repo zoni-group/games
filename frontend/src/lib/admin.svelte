@@ -167,7 +167,7 @@ SPDX-License-Identifier: MPL-2.0
 		{#if question_results === undefined}
 			{#if !final_results_clicked}
 				<div class="w-full flex justify-center">
-					<h1 class="text-3xl text-[#00529B]">{$t('admin_page.no_answers')}</h1>
+					<h1 class="text-3xl text-[#00529B] dark:text-[#fff]">{$t('admin_page.no_answers')}</h1>
 				</div>
 			{/if}
 		{:else if quiz_data.questions[selected_question].type === QuizQuestionType.VOTING}

@@ -7,6 +7,7 @@ SPDX-License-Identifier: MPL-2.0
 <script lang="ts">
 	import { getLocalization } from '$lib/i18n';
 	import OAuthBlock from './oauth_block.svelte';
+	import roundLogo from '$lib/assets/all/round_logo.webp';
 
 	export let session_data = {};
 	export let step;
@@ -33,20 +34,47 @@ SPDX-License-Identifier: MPL-2.0
 		step = 1;
 	};
 </script>
-
+<style>
+	:global(.input-style){
+		width: 100%; 
+		height: 100%; 
+		opacity: 0.50; 
+		background: #E9F3FF; 
+		color: black;
+		box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25); 
+		border-radius: 16px
+	}
+	:global(.text-style){
+		width: 100%; 
+		height: 100%; 
+		text-align: center; 
+		font-weight: 600; 
+		line-height: 63.84px; 
+		letter-spacing: 1.92px;
+		color: white;
+        font-size: 50px;
+        -webkit-text-stroke-width: 2px;
+        -webkit-text-stroke-color: #004BA7;
+	}
+	
+</style>
 <div class="px-6 py-4">
-	<h2 class="text-3xl font-bold text-center text-gray-700 dark:text-white">Zoni® AI</h2>
+	<div>
+		<img src="{roundLogo}" alt="Zoni Logo" class="mx-auto z-1 -mt-20">
+	</div>
+	<p class="text-style my-2" >Welcome to</p>
+	<h2 class="text-3xl font-bold text-center text-[#0056BD] dark:text-white">Zoni® AI</h2>
 
-	<h3 class="mt-1 text-xl font-medium text-center text-gray-600 dark:text-gray-200">
+	<!-- <h3 class="mt-1 text-xl font-medium text-center text-gray-600 dark:text-gray-200">
 		{$t('login_page.welcome_back')}
-	</h3>
+	</h3> -->
 
-	<p class="mt-1 text-center text-gray-500 dark:text-gray-400">
+	<p class="mt-1 text-center text-sm text-[#0056BD] mt-4 dark:text-white">
 		{$t('login_page.login_or_create_account')}
 	</p>
 
 	<form on:submit|preventDefault={start_login}>
-		<div class="w-full mt-4">
+		<div class="w-full mt-1">
 			<div class="dark:bg-gray-800 bg-white p-4 rounded-lg">
 				<div class="relative bg-inherit w-full">
 					<input
@@ -54,27 +82,27 @@ SPDX-License-Identifier: MPL-2.0
 						bind:value={email}
 						name="email"
 						type="text"
-						class="w-full peer bg-transparent h-10 rounded-lg text-gray-700 dark:text-white placeholder-transparent ring-2 px-2 ring-gray-500 focus:ring-sky-600 focus:outline-none focus:border-rose-600"
 						placeholder={$t('login_page.email_or_username')}
+						class="py-3 px-3 input-style focus:outline-none "
 						autocomplete="email"
 					/>
-					<label
+					<!-- <label
 						for="email"
 						class="absolute cursor-text left-0 -top-3 text-sm text-gray-700 dark:text-white bg-inherit mx-1 px-1 peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-500 peer-placeholder-shown:top-2 peer-focus:-top-3 peer-focus:text-sky-600 peer-focus:text-sm transition-all"
 					>
 						{$t('login_page.email_or_username')}
-					</label>
+					</label> -->
 				</div>
 			</div>
-			<div class="flex items-center justify-between mt-4">
+			<div class="flex items-center w-full flex-col justify-between mt-4">
 				<a
 					href="/account/reset-password"
-					class="text-sm text-gray-600 dark:text-gray-200 hover:text-gray-500"
+					class="text-sm text-[#0056BD] dark:text-white hover:text-[#0056BD]"
 					>{$t('register_page.forgot_password?')}</a
 				>
 
 				<button
-					class="px-4 py-2 leading-5 text-white transition-colors duration-200 transform bg-gray-700 rounded hover:bg-gray-600 focus:outline-none disabled:cursor-not-allowed disabled:opacity-50"
+					class="px-5 py-2 border-[#00EDFF] my-3 border-4 bg-gradient-to-r from-[#0056BD] from-0%  to-[#5436AB] to-100% leading-5 text-white transition-colors duration-200 transform rounded-full hover:bg-gray-600 focus:outline-none disabled:cursor-not-allowed disabled:opacity-50"
 					disabled={emailEmpty}
 					type="submit"
 				>
@@ -93,13 +121,15 @@ SPDX-License-Identifier: MPL-2.0
 						{$t('words.continue')}
 					{/if}
 				</button>
+				
+			
 			</div>
 			<OAuthBlock />
 		</div>
 	</form>
 </div>
 
-<div class="flex items-center justify-center py-4 text-center bg-gray-50 dark:bg-gray-700">
+<div class="flex items-center justify-center py-4 text-end ">
 	<span class="text-sm text-gray-600 dark:text-gray-200"
 		>{$t('login_page.already_have_account')}
 	</span>

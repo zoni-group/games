@@ -68,7 +68,7 @@ SPDX-License-Identifier: MPL-2.0
 	>
 		<div class="flex gap-12">
 			{#each quiz_answers as answer}
-				<span class="text-center self-end mx-auto text-lg text-black"
+				<span class="text-center self-end mx-auto text-lg text-black dark:text-white"
 					>{#if sorted_data[answer] > 0}{sorted_data[answer]}{/if}</span
 				>
 			{/each}
@@ -76,7 +76,7 @@ SPDX-License-Identifier: MPL-2.0
 		<div class="flex gap-12">
 			{#each quiz_answers as answer, i}
 				<div
-					class="w-20 self-end flex justify-center border text-black border-white  rounded"
+					class="w-20 self-end flex justify-center border text-black dark:text-white border-white  rounded"
 					
 					class:opacity-70={!answer_correct[i] &&
 						question.type !== QuizQuestionType.VOTING}
@@ -91,7 +91,7 @@ SPDX-License-Identifier: MPL-2.0
 			{#each quiz_answers as answer, i}
 				<div class="w-20">
 					<p
-						class=" text-base  text-str text-black"
+						class=" text-base  text-str text-black dark:text-white"
 						class:line-through={!answer_correct[i] &&
 							question.type !== QuizQuestionType.VOTING && question.type !== QuizQuestionType.TEXT}
 					>
@@ -105,8 +105,8 @@ SPDX-License-Identifier: MPL-2.0
 
 <div class="flex justify-center w-full px-4">
 	<div class="m-auto gap-4 flex flex-col items-center">
-		<h2 class="text-2xl font-bold text-center text-[#00529B] mb-4 dark:text-[#00529B] mt-10">Answers</h2>
-		<p class="text-lg md:text-xl lg:text-2xl text-center mb-6 dark:text-[#00529B] text-[#00529B]">{question.question}</p>
+		<h2 class="text-2xl font-bold text-center text-[#00529B] mb-4 dark:text-[#fff] mt-10">Answers</h2>
+		<p class="text-lg md:text-xl lg:text-2xl text-center mb-6 dark:text-[#fff] text-[#00529B]">{question.question}</p>
 		<div class="flex flex-wrap justify-center gap-4 w-full max-w-5xl">
 			{#each quiz_answers as answer, i}
 				<div class="w-full flex justify-center p-4">

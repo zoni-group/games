@@ -83,7 +83,7 @@ SPDX-License-Identifier: MPL-2.0
 	<a
 		{href}
 		{target}
-		class=" test-[#003FA7] font-bold text-4xl flex items-center gap-2"
+		class=" text-[#003FA7] dark:text-white font-bold text-4xl flex items-center gap-2"
 		class:disabled={disabled}
 		on:click
 	>
@@ -93,7 +93,7 @@ SPDX-License-Identifier: MPL-2.0
 	<button 
 	
 		{disabled}
-		class="  text-[#003FA7]  font-bold text-4xl flex items-center gap-2"
+		class="  text-[#003FA7] dark:text-white  font-bold text-4xl flex items-center gap-2"
 		
 		class:disabled={disabled}
 		on:click
