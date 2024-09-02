@@ -289,7 +289,7 @@
 				type="text"
 				bind:value={text_input}
 				disabled={selected_answer}
-				class="bg-white focus:ring placeholder-[#DCE1E7] text-black border-[#003FA7] border-2 shadow-inner bg-opacity-50 font-bold rounded-xl focus:ring-blue-500 block w-full py-4 px-3 dark:bg-gray-700 dark:text-white dark:focus:ring-blue-500 outline-none transition text-center disabled:opacity-50 disabled:cursor-not-allowed "
+				class="bg-white focus:ring placeholder-[#DCE1E7] text-black border-[#003FA7] border-2 shadow-inner bg-opacity-50 font-bold rounded-xl focus:ring-blue-500 block w-full py-4 px-3 dark:bg-[#0AEDFE]/20 dark:text-white dark:focus:ring-blue-500 outline-none transition text-center disabled:opacity-50 disabled:cursor-not-allowed "
 				placeholder="Enter your answer"
 			  />
 			</div>
@@ -445,7 +445,7 @@
 			<div class="px-4 text-center">
 				<p class="text-lg font-semibold text-[#00529B] dark:text-[#fff] mt-10">Your answer:</p>
 				{#if Array.isArray(selected_answer)}
-				<ul class="list-disc list-inside mx-auto text-left text-[#00529B] inline-block dark:text-[#00529B]">
+				<ul class="list-disc list-inside mx-auto text-left text-[#00529B] inline-block dark:text-[#fff]">
 					{#each selected_answer as ans}
 					<li class="text-lg">{ans}</li>
 					{/each}

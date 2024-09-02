@@ -199,21 +199,21 @@ SPDX-License-Identifier: MPL-2.0
 					<label
 						>{$t('settings_page.old_password')}:<input
 							type="password"
-							class="m-2 text-black rounded p-1 dark:bg-gray-700 dark:text-white"
+							class="m-2 text-black rounded p-1 dark:bg-[#00529B] dark:text-white"
 							bind:value={changePasswordData.oldPassword}
 						/></label
 					>
 					<label
 						>{$t('settings_page.new_password')}:<input
 							type="password"
-							class="m-2 text-black rounded p-1 dark:bg-gray-700 dark:text-white"
+							class="m-2 text-black rounded p-1 dark:bg-[#00529B] dark:text-white"
 							bind:value={changePasswordData.newPassword}
 						/></label
 					>
 					<label
 						>{$t('settings_page.repeat_password')}:<input
 							type="password"
-							class="m-2 text-black rounded p-1 dark:bg-gray-700 dark:text-white"
+							class="m-2 text-black rounded p-1 dark:bg-[#00529B] dark:text-white"
 							bind:value={changePasswordData.newPasswordConfirm}
 						/></label
 					>
@@ -255,7 +255,7 @@ SPDX-License-Identifier: MPL-2.0
 	<Spinner />
 {:then sessions}
 	<table class="min-w-full">
-		<thead class="bg-gray-50 dark:bg-gray-700">
+		<thead class="bg-gray-50 dark:bg-[#0AEDFE]/20">
 			<tr>
 				<th
 					scope="col"
@@ -297,7 +297,7 @@ SPDX-License-Identifier: MPL-2.0
 		</thead>
 		<tbody>
 			{#each sessions as session}
-				<tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
+				<tr class="bg-white border-b dark:bg-[#0AEDFE]/30 dark:border-gray-700">
 					<td
 						class="py-4 px-6 text-sm text-gray-500 whitespace-nowrap dark:text-gray-400"
 					>

@@ -10,6 +10,8 @@ SPDX-License-Identifier: MPL-2.0
 	import { validateSchema } from '@felte/validator-yup';
 	import { navbarVisible } from '$lib/stores';
 	import Footer from '$lib/footer.svelte';
+	import roundLogo from '$lib/assets/all/round_logo.webp';
+	import roundLogoDark from '$lib/assets/all/dark_logo.webp';
 
 	const { t } = getLocalization();
 	import reporter from '@felte/reporter-tippy';
@@ -78,71 +80,104 @@ SPDX-License-Identifier: MPL-2.0
 		data: ''
 	};
 </script>
-
+<style lang="scss" >
+	:global(.input-style){
+		width: 100%; 
+		height: 100%; 
+		opacity: 0.50; 
+		background: #E9F3FF; 
+		color: black;
+		box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25); 
+		border-radius: 16px
+	}
+	:global(.text-style){
+		width: 100%; 
+		height: 100%; 
+		text-align: center; 
+		font-weight: 600; 
+		line-height: 63.84px; 
+		letter-spacing: 1.92px;
+		color: white;
+        font-size: 45px;
+        -webkit-text-stroke-width: 2px;
+        -webkit-text-stroke-color: #004BA7;
+	}
+	:global(html.dark){
+		.text-style{
+			-webkit-text-stroke-color: white;
+		}
+	}
+</style>
 <svelte:head>
 	<title>Zoni® AI - Register</title>
 </svelte:head>
-<div class="flex items-center justify-center h-full px-4">
-	<div>
+<div class="flex items-center justify-center min-h-screen px-4">
+	<div class="lg:w-1/3 lg:mt-0 md:mt-16 mt-28" >
 		<div
-			class="w-full max-w-sm mx-auto overflow-hidden bg-white rounded-lg shadow-md dark:bg-gray-800"
+			class="w-full max-w-sm mx-auto h-full bg-white rounded-lg shadow-md dark:bg-[#0AEDFE] dark:bg-opacity-20"
 		>
-			<div class="px-6 py-4">
-				<h2 class="text-3xl font-bold text-center text-gray-700 dark:text-white">
+		<div class="px-6 py-4 ">
+			<div class="dark:hidden" >
+				<img src="{roundLogo}" alt="Zoni Logo" class="mx-auto z-1 -mt-20">
+			</div>
+			<div class="hidden dark:block" >
+				<img src="{roundLogoDark}" alt="Zoni Logo" class="mx-auto z-1 -mt-20">
+			</div>
+				<h2 class="text-style my-2 dark:text-transparent">
 					Zoni® AI
 				</h2>
 
-				<h3 class="mt-1 text-xl font-medium text-center text-gray-600 dark:text-gray-200">
+				<h3 class="text-3xl font-bold text-center text-[#0056BD] dark:text-white">
 					{$t('register_page.greeting')}
 				</h3>
 
-				<p class="mt-1 text-center text-gray-500 dark:text-gray-400">
+				<p class="mt-1 text-center text-sm text-[#0056BD] mt-2 dark:text-white">
 					{$t('register_page.create_account')}
 				</p>
 
 				<form use:form>
 					<div class="w-full mt-4">
-						<div class="dark:bg-gray-800 bg-white p-4 rounded-lg">
+						<div class="dark:bg-transparent bg-white p-4 rounded-lg">
 							<div class="relative bg-inherit w-full">
 								<input
 									id="email"
 									name="email"
 									type="email"
-									class="w-full peer bg-transparent h-10 rounded-lg text-gray-700 dark:text-white placeholder-transparent ring-2 px-2 ring-gray-500 focus:ring-sky-600 focus:outline-none focus:border-rose-600"
+									class="py-3 px-3 input-style focus:outline-none "
 									placeholder={$t('words.email')}
 									class:ring-red-700={$errors.email !== null}
 									class:ring-green-600={$touched.email === true &&
 										$errors.email === null}
 								/>
-								<label
+								<!-- <label
 									for="email"
 									class="absolute cursor-text left-0 -top-3 text-sm text-gray-700 dark:text-white bg-inherit mx-1 px-1 peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-500 peer-placeholder-shown:top-2 peer-focus:-top-3 peer-focus:text-sky-600 peer-focus:text-sm transition-all"
 								>
 									{$t('words.email')}
-								</label>
+								</label> -->
 							</div>
 						</div>
-						<div class="dark:bg-gray-800 bg-white p-4 rounded-lg">
+						<div class="dark:bg-transparent bg-white p-4 rounded-lg">
 							<div class="relative bg-inherit w-full">
 								<input
 									id="username"
 									name="username"
 									type="text"
-									class="w-full peer bg-transparent h-10 rounded-lg text-gray-700 dark:text-white placeholder-transparent ring-2 px-2 ring-gray-500 focus:ring-sky-600 focus:outline-none focus:border-rose-600"
+									class="py-3 px-3 input-style focus:outline-none "
 									placeholder={$t('words.username')}
 									class:ring-red-700={$errors.username !== null}
 									class:ring-green-600={$touched.username === true &&
 										$errors.username === null}
 								/>
-								<label
+								<!-- <label
 									for="username"
 									class="absolute cursor-text left-0 -top-3 text-sm text-gray-700 dark:text-white bg-inherit mx-1 px-1 peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-500 peer-placeholder-shown:top-2 peer-focus:-top-3 peer-focus:text-sky-600 peer-focus:text-sm transition-all"
 								>
 									{$t('words.username')}
-								</label>
+								</label> -->
 							</div>
 						</div>
-						<div class="dark:bg-gray-800 bg-white p-4 rounded-lg">
+						<div class="dark:bg-transparent bg-white p-4 rounded-lg">
 							<div class="relative bg-inherit w-full">
 								<input
 									id="password1"
@@ -151,35 +186,35 @@ SPDX-License-Identifier: MPL-2.0
 									class:ring-red-700={$errors.password1 !== null}
 									class:ring-green-600={$touched.password1 === true &&
 										$errors.password1 === null}
-									class="w-full peer bg-transparent h-10 rounded-lg text-gray-700 dark:text-white placeholder-transparent ring-2 px-2 ring-gray-500 focus:ring-sky-600 focus:outline-none focus:border-rose-600"
+									class="py-3 px-3 input-style focus:outline-none "
 									placeholder={$t('words.password')}
 								/>
-								<label
+								<!-- <label
 									for="password1"
 									class="absolute cursor-text left-0 -top-3 text-sm text-gray-500 bg-inherit mx-1 px-1 peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-500 peer-placeholder-shown:top-2 peer-focus:-top-3 peer-focus:text-sky-600 peer-focus:text-sm transition-all"
 								>
 									{$t('words.password')}
-								</label>
+								</label> -->
 							</div>
 						</div>
-						<div class="dark:bg-gray-800 bg-white p-4 rounded-lg">
+						<div class="dark:bg-transparent bg-white p-4 rounded-lg">
 							<div class="relative bg-inherit w-full">
 								<input
 									id="password2"
 									name="password2"
 									type="password"
-									class="w-full peer bg-transparent h-10 rounded-lg text-gray-700 dark:text-white placeholder-transparent ring-2 px-2 ring-gray-500 focus:ring-sky-600 focus:outline-none focus:border-rose-600"
+									class="py-3 px-3 input-style focus:outline-none "
 									placeholder={$t('words.password')}
 									class:ring-red-700={$errors.password2 !== null}
 									class:ring-green-600={$touched.password2 === true &&
 										$errors.password2 === null}
 								/>
-								<label
+								<!-- <label
 									for="password2"
 									class="absolute cursor-text left-0 -top-3 text-sm text-gray-500 bg-inherit mx-1 px-1 peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-500 peer-placeholder-shown:top-2 peer-focus:-top-3 peer-focus:text-sky-600 peer-focus:text-sm transition-all"
 								>
 									{$t('words.password')}
-								</label>
+								</label> -->
 							</div>
 						</div>
 						<!--
@@ -211,15 +246,15 @@ SPDX-License-Identifier: MPL-2.0
 						</div>
 						-->
 
-						<div class="flex items-center justify-between mt-4">
-							<a
+						<div class="flex items-center justify-center mt-4">
+							<!-- <a
 								href="/account/reset-password"
 								class="text-sm text-gray-600 dark:text-gray-200 hover:text-gray-500"
 								>{$t('register_page.forgot_password?')}</a
-							>
+							> -->
 
 							<button
-								class="px-4 py-2 leading-5 text-white transition-colors duration-200 transform bg-gray-700 rounded hover:bg-gray-600 focus:outline-none"
+								class="px-5 py-2 border-[#00EDFF] my-3 border-4 bg-gradient-to-r from-[#0056BD] dark:from-[#FFE500] from-0%  to-[#5436AB] dark:to-[#FFB800] to-100% leading-5 text-white dark:text-[#00529B] font-semibold transition-colors duration-200 transform rounded-full hover:bg-gray-600 focus:outline-none disabled:cursor-not-allowed disabled:opacity-50"
 								disabled={!$isValid || $isSubmitting}
 								class:cursor-not-allowed={!$isValid || $isSubmitting}
 								class:opacity-50={!$isValid || $isSubmitting}
@@ -246,7 +281,7 @@ SPDX-License-Identifier: MPL-2.0
 			</div>
 
 			<div
-				class="flex items-center justify-center py-4 text-center bg-gray-50 dark:bg-gray-700"
+				class="flex items-center justify-center py-4 text-end "
 			>
 				<span class="text-sm text-gray-600 dark:text-gray-200"
 					>{$t('register_page.already_have_account?')}

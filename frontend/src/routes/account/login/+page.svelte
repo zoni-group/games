@@ -87,7 +87,7 @@ SPDX-License-Identifier: MPL-2.0
 	{/if}
 
 	<div
-		class="lg:w-1/3 mt-10 max-w-sm mx-auto bg-white rounded-2xl shadow-2xl dark:bg-gray-800"
+		class="lg:w-1/3 mt-10 max-w-sm mx-auto bg-white rounded-2xl shadow-2xl dark:bg-[#0AEDFE] dark:bg-opacity-20"
 	>
 		{#if step === 0}
 			<!--			<p>StartWindow</p>-->

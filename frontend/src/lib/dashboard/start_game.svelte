@@ -107,7 +107,7 @@ SPDX-License-Identifier: MPL-2.0
 	on:keypress={() => {}}
 >
     <div
-        class="w-5/6 dark:!bg-gray-600 m-auto rounded-lg shadow-lg p-4 flex flex-col "
+        class="w-5/6 dark:!bg-[#071E55] m-auto rounded-lg shadow-lg p-4 flex flex-col "
         style="background-color: {bg_color}"
     >
         <div class="grid md:grid-cols-2 grid-cols-1 md:gap-16 gap-10 my-10">
@@ -213,7 +213,7 @@ SPDX-License-Identifier: MPL-2.0
         <div class="flex justify-center" >
             <button 
             on:click={() => start_game(quiz_id)}
-            class="px-8 py-2 flex items-center font-bold justify-center gap-3 border-[#00EDFF] my-3 border-4 bg-gradient-to-r from-[#0056BD] from-0%  to-[#5436AB] to-100% leading-5 text-white transition-colors duration-200 transform rounded-full hover:bg-gray-600 focus:outline-none disabled:cursor-not-allowed disabled:opacity-50"
+            class="px-8 py-2 flex items-center font-bold justify-center gap-3 border-[#00EDFF] my-3 -mb-10 border-4 bg-gradient-to-r from-[#0056BD] dark:from-[#FFE500] from-0%  to-[#5436AB] dark:to-[#FFB800] to-100% leading-5 text-white transition-colors duration-200 transform rounded-full hover:bg-gray-600 focus:outline-none disabled:cursor-not-allowed disabled:opacity-50"
             
         >
             <img src="{playIcon}" alt="">
@@ -233,6 +233,7 @@ SPDX-License-Identifier: MPL-2.0
                 {$t('start_game.start_game')}
             {/if}
         </button> -->
+        
 
     </div>
 </div>

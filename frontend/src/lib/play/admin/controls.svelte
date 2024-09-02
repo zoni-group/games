@@ -61,11 +61,11 @@ SPDX-License-Identifier: MPL-2.0
 	style="background: {bg_color ? bg_color : 'transparent'}"
 	class:text-black={bg_color}
 >
-	<p class="fixed top-20 left-10 z-50 text-xs sm:text-base mr-auto ml-0 col-start-1 col-end-1 flex items-center italic justify-center font-semibold bg-[#003FA7] text-white dark:text-white rounded-full sm:w-[10vw] w-12 h-12 md:w-20 md:h-20 border-8 border-[#fff] sm:h-[10vw]">
+	<p class="fixed top-20 left-10 z-40 text-xs sm:text-base mr-auto ml-0 col-start-1 col-end-1 flex items-center italic justify-center font-semibold bg-[#003FA7] text-white dark:text-white rounded-full sm:w-[10vw] w-12 h-12 md:w-20 md:h-20 border-8 border-[#fff] sm:h-[10vw]">
 		{selected_question === -1 ? '0' : selected_question + 1}
 		/ {quiz_data.questions.length}
 	</p>
-	<div class="fixed top-10 right-0 px-4 z-50 flex flex-col items-center space-y-4">
+	<div class="fixed top-10 right-0 px-4 z-40 flex flex-col items-center space-y-4">
 		{#if selected_question + 1 === quiz_data.questions.length && ((timer_res === '0' && question_results !== null) || quiz_data?.questions?.[selected_question]?.type === QuizQuestionType.SLIDE)}
 		  {#if JSON.stringify(final_results) === JSON.stringify([null])}
 			<button on:click={get_final_results} class="slide-control-btn">

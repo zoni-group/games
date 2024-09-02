@@ -107,14 +107,14 @@
 </svelte:head>
 
 <div class="mt-10" >
-	<h1 class="text-4xl text-center text-[#003FA7] dark:text-[#fff] my-2">{@html quiz.title}</h1>
+	<h1 class="text-4xl text-center text-[#0056BD] dark:text-[#fff] my-2 font-bold">{@html quiz.title}</h1>
 	<div class="text-center my-2">
-		<p class="text-[#003FA7] dark:text-[#fff]" >{@html quiz.description}</p>
+		<p class="text-[#0056BD] dark:text-[#fff] font-medium" >{@html quiz.description}</p>
 	</div>
-	<p class="text-center text-[#003FA7] dark:text-[#fff] my-2">
+	<p class="text-center text-[#0056BD] dark:text-[#fff] my-2">
 		<small>
 			{$t('view_quiz_page.made_by')}
-			<a href="/user/{quiz.user_id.id}" class="underline text-[#003FA7] dark:text-[#fff] ">@{quiz.user_id.username}</a>
+			<a href="/user/{quiz.user_id.id}" class="underline text-[#0056BD] dark:text-[#fff] ">@{quiz.user_id.username}</a>
 		</small>
 	</p>
 	{#if quiz.cover_image}
@@ -181,7 +181,7 @@
 							on:click={() => {
 								start_game = quiz.id;
 							}}
-					class="px-5 py-2 border-[#00EDFF] flex items-center justify-center gap-3 font-bold w-full my-3 border-4 bg-gradient-to-r from-[#0056BD] from-0%  to-[#5436AB] to-100% leading-5 text-white transition-colors duration-200 transform rounded-full hover:bg-gray-600 focus:outline-none disabled:cursor-not-allowed disabled:opacity-50"
+					class="px-5 py-2 border-[#00EDFF] flex items-center justify-center gap-3 font-bold w-full my-3 border-4 bg-gradient-to-r from-[#0056BD] dark:from-[#FFE500] from-0%  to-[#5436AB] dark:to-[#FFB800] to-100% leading-5 text-white transition-colors duration-200 transform rounded-full hover:bg-gray-600 focus:outline-none disabled:cursor-not-allowed disabled:opacity-50"
 							
 						>
 							<img src="{playIcon}" alt="">
@@ -191,11 +191,14 @@
 				{:else}
 					<div use:tippy={{ content: $t('words.you_need_to_be_logged_in_to_start_a_game')}}>
 						<div class="w-full flex justify-center">
-							<GrayButton disabled={true} flex={true}>
-								<!-- heroicons/legacy-outline/Play -->
-								<svg xmlns="http://www.w3.org/2000/svg" height="20" width="20" viewBox="0 0 512 512"><!--!Font Awesome Pro 6.5.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2024 Fonticons, Inc.--><path class="fa-secondary" opacity=".4" fill="#808080" d="M0 256a256 256 0 1 1 512 0A256 256 0 1 1 0 256zM188.3 147.1c-7.6 4.2-12.3 12.3-12.3 20.9V344c0 8.7 4.7 16.7 12.3 20.9s16.8 4.1 24.3-.5l144-88c7.1-4.4 11.5-12.1 11.5-20.5s-4.4-16.1-11.5-20.5l-144-88c-7.4-4.5-16.7-4.7-24.3-.5z"/><path class="fa-primary" fill="#ffffff" d="M212.5 147.5c-7.4-4.5-16.7-4.7-24.3-.5s-12.3 12.3-12.3 20.9V344c0 8.7 4.7 16.7 12.3 20.9s16.8 4.1 24.3-.5l144-88c7.1-4.4 11.5-12.1 11.5-20.5s-4.4-16.1-11.5-20.5l-144-88z"/></svg>
+							<button 
+								
+						class="px-5 py-2 border-[#00EDFF] flex items-center justify-center gap-3 font-bold w-full my-3 border-4 bg-gradient-to-r from-[#0056BD] dark:from-[#FFE500] from-0%  to-[#5436AB] dark:to-[#FFB800] to-100% leading-5 text-white transition-colors duration-200 transform rounded-full hover:bg-gray-600 focus:outline-none disabled:cursor-not-allowed disabled:opacity-50"
+								
+							>
+								<img src="{playIcon}" alt="">
 								{$t('words.start')}
-							</GrayButton>
+							</button>
 						</div>
 					</div>
 				{/if}
@@ -208,11 +211,12 @@
 					</div>
 				{:else}
 					<div use:tippy={{ content: $t('words.you_need_to_be_logged_in_to_start_a_practice')}}>
-						<div class="w-full flex justify-center">
-							<button disabled={true}  class="flex text-[#003FA7] dark:text-[#fff] underline text-2xl" >
+						<div class="w-full flex justify-center my-3">
+							<!-- svelte-ignore a11y-invalid-attribute -->
+							<a href="#" class="flex text-[#003FA7] dark:text-[#fff] underline text-2xl">
 								<!-- <svg xmlns="http://www.w3.org/2000/svg" height="20" width="20" viewBox="0 0 512 512">!Font Awesome Pro 6.5.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2024 Fonticons, Inc.<path class="fa-secondary" opacity="1" fill="#ffffff" d="M305.4 21.8c-1.3-10.4-9.1-18.8-19.5-20C276.1 .6 266.1 0 256 0c-11.1 0-22.1 .7-32.8 2.1c-10.3 1.3-18 9.7-19.3 20l-2.9 23.1c-.8 6.4-5.4 11.6-11.5 13.7c-9.6 3.2-19 7.2-27.9 11.7c-5.8 3-12.8 2.5-18-1.5l-18-14c-8.2-6.4-19.7-6.8-27.9-.4c-16.6 13-31.5 28-44.4 44.7c-6.3 8.2-5.9 19.6 .5 27.8l14.2 18.3c4 5.1 4.4 12 1.5 17.8c-4.4 8.8-8.2 17.9-11.3 27.4c-2 6.2-7.3 10.8-13.7 11.6l-22.8 2.9c-10.3 1.3-18.7 9.1-20 19.4C.7 234.8 0 245.3 0 256c0 10.6 .6 21.1 1.9 31.4c1.3 10.3 9.7 18.1 20 19.4l22.8 2.9c6.4 .8 11.7 5.4 13.7 11.6c3.1 9.5 6.9 18.7 11.3 27.5c2.9 5.8 2.4 12.7-1.5 17.8L54 384.8c-6.4 8.2-6.8 19.6-.5 27.8c12.9 16.7 27.8 31.7 44.4 44.7c8.2 6.4 19.7 6 27.9-.4l18-14c5.1-4 12.2-4.4 18-1.5c9 4.6 18.3 8.5 27.9 11.7c6.1 2.1 10.7 7.3 11.5 13.7l2.9 23.1c1.3 10.3 9 18.7 19.3 20c10.7 1.4 21.7 2.1 32.8 2.1c10.1 0 20.1-.6 29.9-1.7c10.4-1.2 18.2-9.7 19.5-20l2.8-22.5c.8-6.5 5.5-11.8 11.7-13.8c10-3.2 19.7-7.2 29-11.8c5.8-2.9 12.7-2.4 17.8 1.5L385 457.9c8.2 6.4 19.6 6.8 27.8 .5c2.8-2.2 5.5-4.4 8.2-6.7L451.7 421c1.8-2.2 3.6-4.4 5.4-6.6c6.5-8.2 6-19.7-.4-27.9l-14-17.9c-4-5.1-4.4-12.2-1.5-18c4.8-9.4 9-19.3 12.3-29.5c2-6.2 7.3-10.8 13.7-11.6l22.8-2.8c10.3-1.3 18.8-9.1 20-19.4c.2-1.7 .4-3.5 .6-5.2V230.1c-.2-1.7-.4-3.5-.6-5.2c-1.3-10.3-9.7-18.1-20-19.4l-22.8-2.8c-6.4-.8-11.7-5.4-13.7-11.6c-3.4-10.2-7.5-20.1-12.3-29.5c-3-5.8-2.5-12.8 1.5-18l14-17.9c6.4-8.2 6.8-19.7 .4-27.9c-1.8-2.2-3.6-4.4-5.4-6.6L421 60.3c-2.7-2.3-5.4-4.5-8.2-6.7c-8.2-6.4-19.6-5.9-27.8 .5L366.7 68.3c-5.1 4-12.1 4.4-17.8 1.5c-9.3-4.6-19-8.6-29-11.8c-6.2-2-10.9-7.3-11.7-13.7l-2.8-22.5zM287.8 162.6l-32 192c-1.5 8.7-9.7 14.6-18.4 13.2s-14.6-9.7-13.2-18.4l32-192c1.5-8.7 9.7-14.6 18.4-13.2s14.6 9.7 13.2 18.4zM187.3 227.3L158.6 256l28.7 28.7c6.2 6.2 6.2 16.4 0 22.6s-16.4 6.2-22.6 0l-40-40c-6.2-6.2-6.2-16.4 0-22.6l40-40c6.2-6.2 16.4-6.2 22.6 0s6.2 16.4 0 22.6zm160-22.6l40 40c6.2 6.2 6.2 16.4 0 22.6l-40 40c-6.2 6.2-16.4 6.2-22.6 0s-6.2-16.4 0-22.6L353.4 256l-28.7-28.7c-6.2-6.2-6.2-16.4 0-22.6s16.4-6.2 22.6 0z"/><path class="fa-primary" fill="#004a93" d="M274.6 144.2c8.7 1.5 14.6 9.7 13.2 18.4l-32 192c-1.5 8.7-9.7 14.6-18.4 13.2s-14.6-9.7-13.2-18.4l32-192c1.5-8.7 9.7-14.6 18.4-13.2zm-87.3 60.5c6.2 6.2 6.2 16.4 0 22.6L158.6 256l28.7 28.7c6.2 6.2 6.2 16.4 0 22.6s-16.4 6.2-22.6 0l-40-40c-6.2-6.2-6.2-16.4 0-22.6l40-40c6.2-6.2 16.4-6.2 22.6 0zm137.4 0c6.2-6.2 16.4-6.2 22.6 0l40 40c6.2 6.2 6.2 16.4 0 22.6l-40 40c-6.2 6.2-16.4 6.2-22.6 0s-6.2-16.4 0-22.6L353.4 256l-28.7-28.7c-6.2-6.2-6.2-16.4 0-22.6z"/></svg> -->
 								{$t('words.practice')}
-							</button>
+							</a>
 						</div>
 					</div>
 				{/if}
@@ -238,10 +242,24 @@
 						</p>
 					{:else}
 						<div use:tippy={{ content: $t('words.you_need_to_be_logged_in_to_download_a_game') }}>
-							<GrayButton disabled={true} flex={true}>
-								<svg xmlns="http://www.w3.org/2000/svg" height="20" width="15" viewBox="0 0 384 512"><!--!Font Awesome Pro 6.5.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2024 Fonticons, Inc.--><path class="fa-secondary" opacity="1" fill="#ffffff" d="M0 64C0 28.7 28.7 0 64 0H224V128c0 17.7 14.3 32 32 32H384V448c0 35.3-28.7 64-64 64H64c-35.3 0-64-28.7-64-64V64zM216 232c0-13.3-10.7-24-24-24s-24 10.7-24 24V334.1l-31-31c-9.4-9.4-24.6-9.4-33.9 0s-9.4 24.6 0 33.9l72 72c9.4 9.4 24.6 9.4 33.9 0l72-72c9.4-9.4 9.4-24.6 0-33.9s-24.6-9.4-33.9 0l-31 31V232z"/><path class="fa-primary" opacity="1" fill="#004a93" d="M384 160L224 0V128c0 17.7 14.3 32 32 32H384zM216 232c0-13.3-10.7-24-24-24s-24 10.7-24 24V334.1l-31-31c-9.4-9.4-24.6-9.4-33.9 0s-9.4 24.6 0 33.9l72 72c9.4 9.4 24.6 9.4 33.9 0l72-72c9.4-9.4 9.4-24.6 0-33.9s-24.6-9.4-33.9 0l-31 31V232z"/></svg>
+							<!-- svelte-ignore a11y-click-events-have-key-events -->
+							<p   class="flex text-[#003FA7] dark:text-[#fff] underline text-2xl">
+								<!-- <svg
+									class="w-5 h-5 inline-block"
+									fill="none"
+									stroke="currentColor"
+									viewBox="0 0 24 24"
+									xmlns="http://www.w3.org/2000/svg"
+								>
+									<path
+										stroke-linecap="round"
+										stroke-linejoin="round"
+										stroke-width="2"
+										d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"
+									/>
+								</svg> -->
 								{$t('words.download')}
-							</GrayButton>
+							</p>
 						</div>
 					{/if}
 				</div>
@@ -261,7 +279,7 @@
 			{#each quiz.questions as question, index_question}
 				<div class="px-4 py-1">
 					<CollapsSection headerText={question.question} expanded={auto_expand}>
-						<div class="grid grid-cols-1 gap-2 rounded-b-lg bg-white dark:bg-gray-700 -mt-1">
+						<div class="grid grid-cols-1 gap-2 rounded-b-lg bg-white dark:bg-[#0AEDFE]/20 -mt-1">
 							<h3 class="text-3xl m-1 text-center text-[#00529B] dark:text-white">
 								{index_question + 1}: {@html question.question}
 							</h3>

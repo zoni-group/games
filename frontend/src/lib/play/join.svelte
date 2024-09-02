@@ -208,12 +208,12 @@ SPDX-License-Identifier: MPL-2.0
 		</form>
 	</div> -->
 	<section class="w-screen flex h-screen items-center justify-center" >
-		<div class="bg-gradient-to-t from-[#D3E1EE] to-[#FCFDFE] shadow-[#003FA7]/50 shadow-md border border-[#003FA7]/50 rounded-xl dark:bg-gray-300 dark:shadow-none  bg-opacity-40 xl:w-1/4 sm:w-1/2  p-5 mt-20" >
+		<div class="bg-gradient-to-t from-[#D3E1EE] dark:from-[#00529B] to-[#FCFDFE] dark:to-[#00529B] shadow-[#003FA7]/50 shadow-md border border-[#003FA7]/50 rounded-xl dark:bg-gray-300 dark:shadow-none  bg-opacity-40 xl:w-1/4 sm:w-1/2  p-5 mt-20" >
 			<div class="w-full justify-center flex" >
 				<img src="{login_icon}" alt="" class="-mt-20">
 			</div>
 			<div class="flex flex-col items-center my-5" >
-				<p class="text-[#003FA7] font-bold mb-0" >{$t('words.game_pin')}</p>
+				<p class="text-[#003FA7] dark:text-white font-bold mb-0" >{$t('words.game_pin')}</p>
 			</div>
 	
 			<form on:submit|preventDefault class="flex-col flex justify-center align-center mx-auto mb-12">
@@ -228,7 +228,7 @@ SPDX-License-Identifier: MPL-2.0
 				<br />
 				<div class="mt-2 flex justify-center items-center">
 					<button 
-					class="px-5 py-2 flex items-center border-[#00EDFF] my-3 border-4 bg-gradient-to-r from-[#0056BD] from-0%  to-[#5436AB] to-100% leading-5 text-white transition-colors duration-200 transform rounded-full hover:bg-gray-600 focus:outline-none disabled:cursor-not-allowed disabled:opacity-50"
+					class="px-5 py-2 flex items-center border-[#00EDFF] my-3 border-4 bg-gradient-to-r from-[#0056BD] dark:from-[#FFE500] from-0%  to-[#5436AB] dark:to-[#FFB800] to-100% leading-5 text-white transition-colors duration-200 transform rounded-full hover:bg-gray-600 focus:outline-none disabled:cursor-not-allowed disabled:opacity-50"
 					 disabled={game_pin.length < 6} >
 						<img src="{hand_click_icon}" alt="icon" class="" >
 						{$t('words.submit')}
@@ -267,7 +267,7 @@ SPDX-License-Identifier: MPL-2.0
 		</form>
 	</div> -->
 	<section class="w-screen flex h-screen items-center justify-center" >
-		<div class="bg-gradient-to-t from-[#D3E1EE] dark:from-[#C0C1C2] to-[#FCFDFE] dark:to-[#454545] shadow-[#003FA7]/50 shadow-md border border-[#003FA7]/50 rounded-xl dark:bg-gray-300 dark:border-gray-600 dark:shadow-none  bg-opacity-40 xl:w-1/4 sm:w-1/2  p-5 mt-20" >
+		<div class="bg-gradient-to-t from-[#D3E1EE] dark:from-[#00529B] to-[#FCFDFE] dark:to-[#00529B] shadow-[#003FA7]/50 shadow-md border border-[#003FA7]/50 rounded-xl dark:bg-gray-300 dark:border-gray-600 dark:shadow-none  bg-opacity-40 xl:w-1/4 sm:w-1/2  p-5 mt-20" >
 			<div class="w-full justify-center flex" >
 				<img src="{login_icon}" alt="" class="-mt-20">
 			</div>
@@ -293,7 +293,7 @@ SPDX-License-Identifier: MPL-2.0
 				{/if}
 				<div class="mt-2 flex justify-center items-center">
 					<button 
-					class="px-5 py-2 flex items-center gap-2 border-[#00EDFF] my-3 border-4 bg-gradient-to-r from-[#0056BD] from-0%  to-[#5436AB] to-100% leading-5 text-white transition-colors duration-200 transform rounded-full hover:bg-gray-600 focus:outline-none disabled:cursor-not-allowed disabled:opacity-50"
+					class="px-5 py-2 flex items-center gap-2 border-[#00EDFF] my-3 border-4 bg-gradient-to-r from-[#0056BD] dark:from-[#FFE500] from-0%  to-[#5436AB] dark:to-[#FFB800] to-100% leading-5 text-white transition-colors duration-200 transform rounded-full hover:bg-gray-600 focus:outline-none disabled:cursor-not-allowed disabled:opacity-50"
 					
 					disabled={username.length <= 3} on:click={setUsername}
 					>

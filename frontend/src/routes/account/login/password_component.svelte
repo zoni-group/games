@@ -7,6 +7,7 @@ SPDX-License-Identifier: MPL-2.0
 <script lang="ts">
 	import { getLocalization } from '$lib/i18n';
 	import roundLogo from '$lib/assets/all/round_logo.webp';
+	import roundLogoDark from '$lib/assets/all/dark_logo.webp';
 
 	export let session_data;
 	export let selected_method;
@@ -52,16 +53,25 @@ SPDX-License-Identifier: MPL-2.0
 		}
 	};
 </script>
-
+<style lang="scss">
+	:global(html.dark){
+		.text-style{
+			-webkit-text-stroke-color: white;
+		}
+	}
+</style>
 <div class="px-6 py-4">
-	<div>
+	<div class="dark:hidden" >
 		<img src="{roundLogo}" alt="Zoni Logo" class="mx-auto z-1 -mt-20">
 	</div>
-	<h2 class="text-style my-5">ClassQuiz</h2>
+	<div class="hidden dark:block">
+		<img src="{roundLogoDark}" alt="Zoni Logo" class="mx-auto z-1 -mt-20">
+	</div>
+	<h2 class="text-style my-5 dark:text-transparent">Zoni AI</h2>
 
 	<form on:submit|preventDefault={continue_in_login}>
 		<div class="w-full mt-4">
-			<div class="dark:bg-gray-800 bg-white p-4 rounded-lg">
+			<div class="dark:bg-transparent bg-white p-4 rounded-lg">
 				<div class="relative bg-inherit w-full">
 					<input
 						id="password"
@@ -83,7 +93,7 @@ SPDX-License-Identifier: MPL-2.0
 			<div class="flex items-center justify-center mt-4">
 				
 				<button
-				class="px-5 py-2 border-[#00EDFF] my-3 border-4 bg-gradient-to-r from-[#0056BD] from-0%  to-[#5436AB] to-100% leading-5 text-white transition-colors duration-200 transform rounded-full hover:bg-gray-600 focus:outline-none disabled:cursor-not-allowed disabled:opacity-50"
+				class="px-5 py-2 border-[#00EDFF] my-3 border-4 bg-gradient-to-r from-[#0056BD] dark:from-[#FFE500] from-0%  to-[#5436AB] dark:to-[#FFB800] to-100% leading-5 text-white dark:text-[#00529B] font-semibold transition-colors duration-200 transform rounded-full hover:bg-gray-600 focus:outline-none disabled:cursor-not-allowed disabled:opacity-50"
 					disabled={!password}
 					type="submit"
 				>

@@ -98,9 +98,32 @@ SPDX-License-Identifier: MPL-2.0
 </script>
 
 <div class="h-full flex flex-col">
-	<div class="flex justify-center">
+	<h2 class="text-2xl font-bold text-center text-[#00529B] mb-4 dark:text-[#fff] ">Answers</h2>
+
+	
+	{#if [QuizQuestionType.ABCD, QuizQuestionType.VOTING, QuizQuestionType.TEXT].includes(question.type)}
+		<div class="mt-12">
+			<VotingResults data={new_data} {question} />
+		</div>
+	{/if}
+	{#if [QuizQuestionType.ORDER].includes(question.type)}
+		<div class="mt-12">
+			<OrderResults data={new_data} {question} />
+		</div>
+	{/if}
+	{#if [QuizQuestionType.CHECK].includes(question.type)}
+		<div class="mt-12">
+			<CheckResults data={new_data} {question} />
+		</div>
+	{/if}
+	{#if [QuizQuestionType.RANGE].includes(question.type)}
+		<div class="mt-12">
+			<CheckRange data={new_data} {question} />
+		</div>
+	{/if}
+	<div class="flex justify-center mt-5">
 		<div>
-			<table class="table-auto text-xl">
+			<table class="table-auto bg-white dark:bg-[#0AEDFE]/20 p-3 rounded-xl text-xl">
 				<tr>
 					<th class="p-2 border-r border-r-white border-b-2 border-b-white text-[#00529B] dark:text-white"
 						>{$t('words.name')}</th
@@ -132,24 +155,4 @@ SPDX-License-Identifier: MPL-2.0
 			</table>
 		</div>
 	</div>
-	{#if [QuizQuestionType.ABCD, QuizQuestionType.VOTING, QuizQuestionType.TEXT].includes(question.type)}
-		<div class="mt-12">
-			<VotingResults data={new_data} {question} />
-		</div>
-	{/if}
-	{#if [QuizQuestionType.ORDER].includes(question.type)}
-		<div class="mt-12">
-			<OrderResults data={new_data} {question} />
-		</div>
-	{/if}
-	{#if [QuizQuestionType.CHECK].includes(question.type)}
-		<div class="mt-12">
-			<CheckResults data={new_data} {question} />
-		</div>
-	{/if}
-	{#if [QuizQuestionType.RANGE].includes(question.type)}
-		<div class="mt-12">
-			<CheckRange data={new_data} {question} />
-		</div>
-	{/if}
 </div>

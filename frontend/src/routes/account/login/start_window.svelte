@@ -8,10 +8,11 @@ SPDX-License-Identifier: MPL-2.0
 	import { getLocalization } from '$lib/i18n';
 	import OAuthBlock from './oauth_block.svelte';
 	import roundLogo from '$lib/assets/all/round_logo.webp';
+	import roundLogoDark from '$lib/assets/all/dark_logo.webp';
 
 	export let session_data = {};
 	export let step;
-
+	
 	const { t } = getLocalization();
 	let email = '';
 	let emailEmpty = true;
@@ -34,7 +35,7 @@ SPDX-License-Identifier: MPL-2.0
 		step = 1;
 	};
 </script>
-<style>
+<style lang="scss" >
 	:global(.input-style){
 		width: 100%; 
 		height: 100%; 
@@ -56,13 +57,22 @@ SPDX-License-Identifier: MPL-2.0
         -webkit-text-stroke-width: 2px;
         -webkit-text-stroke-color: #004BA7;
 	}
+	:global(html.dark){
+		.text-style{
+			-webkit-text-stroke-color: white;
+		}
+	}
+
 	
 </style>
 <div class="px-6 py-4">
-	<div>
+	<div class="dark:hidden" >
 		<img src="{roundLogo}" alt="Zoni Logo" class="mx-auto z-1 -mt-20">
 	</div>
-	<p class="text-style my-2" >Welcome to</p>
+	<div class="hidden dark:block" >
+		<img src="{roundLogoDark}" alt="Zoni Logo" class="mx-auto z-1 -mt-20">
+	</div>
+	<p class="text-style my-2 dark:text-transparent" >Welcome to</p>
 	<h2 class="text-3xl font-bold text-center text-[#0056BD] dark:text-white">Zoni® AI</h2>
 
 	<!-- <h3 class="mt-1 text-xl font-medium text-center text-gray-600 dark:text-gray-200">
@@ -75,7 +85,7 @@ SPDX-License-Identifier: MPL-2.0
 
 	<form on:submit|preventDefault={start_login}>
 		<div class="w-full mt-1">
-			<div class="dark:bg-gray-800 bg-white p-4 rounded-lg">
+			<div class="dark:bg-transparent bg-white p-4 rounded-lg">
 				<div class="relative bg-inherit w-full">
 					<input
 						id="email"
@@ -102,7 +112,7 @@ SPDX-License-Identifier: MPL-2.0
 				>
 
 				<button
-					class="px-5 py-2 border-[#00EDFF] my-3 border-4 bg-gradient-to-r from-[#0056BD] from-0%  to-[#5436AB] to-100% leading-5 text-white transition-colors duration-200 transform rounded-full hover:bg-gray-600 focus:outline-none disabled:cursor-not-allowed disabled:opacity-50"
+					class="px-5 py-2 border-[#00EDFF] my-3 border-4 bg-gradient-to-r from-[#0056BD] dark:from-[#FFE500] from-0%  to-[#5436AB] dark:to-[#FFB800] to-100% leading-5 text-white dark:text-[#00529B] transition-colors duration-200 transform rounded-full hover:bg-gray-600 focus:outline-none disabled:cursor-not-allowed disabled:opacity-50"
 					disabled={emailEmpty}
 					type="submit"
 				>

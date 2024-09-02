@@ -69,7 +69,7 @@
 		</div>
 		{#if data[username]}
 			<div class="fixed bottom-0 left-0 flex justify-center w-full mb-6 z-10">
-				<div class="bg-white p-4 border-4 border-[#003FA7] rounded-lg shadow-lg">
+				<div class="bg-white p-4 border-4 border-[#003FA7] rounded-lg shadow-lg dark:bg-[#0AEDFE]/20">
 					<p class="text-center text-lg font-semibold text-[#00529B] dark:text-[#fff]">{$t('play_page.your_score', { score: data[username] })}</p>
 					{#each player_names as player, i}
 						{#if player === username}

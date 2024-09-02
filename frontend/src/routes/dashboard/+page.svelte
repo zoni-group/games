@@ -138,7 +138,7 @@ SPDX-License-Identifier: MPL-2.0
 						<div class="border-[#003FA7] flex dark:border-[#fff] border-2 rounded-lg" >
 							<input
 								bind:value={search_term}
-								class="p-2 rounded-lg rounded-e-none outline-none text-center sm:w-96 w-full dark:bg-gray-800 dark:text-white"
+								class="p-2 rounded-lg rounded-e-none outline-none text-center sm:w-96 w-full bg-transparent dark:bg-white dark:text-white"
 								placeholder={$t('dashboard.search_for_own_quizzes')}
 							/>
 							<button
@@ -356,7 +356,7 @@ SPDX-License-Identifier: MPL-2.0
 					{/each}
 				</div>
 			{:else}
-				<p class="text-[#003FA7] font-semibold text-center mt-10">
+				<p class="text-[#003FA7] dark:text-[#fff] font-semibold text-center mt-10">
 					{$t('overview_page.no_quizzes')}
 				</p>
 			{/if}

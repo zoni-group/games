@@ -76,15 +76,15 @@ SPDX-License-Identifier: MPL-2.0
 	<div class="grid grid-cols-6 h-full">
 		<div class="pl-2">
 			{#if data.user.username === undefined}
-				<h2 class="text-4xl text-center text-white p-4">{$t('public_user_page.user_not_found')}</h2>
+				<h2 class="text-4xl text-center text-[#0056BD] dark:text-white p-4">{$t('public_user_page.user_not_found')}</h2>
 			{:else}
 				<div class="flex justify-center">
 					<img src={`/api/v1/users/avatar/${data.user.id}`} alt="profile" />
 				</div>
-				<h2 class="text-3xl text-center text-white">
+				<h2 class="text-3xl text-center text-[#0056BD] dark:text-white">
 					@{data.user.username}
 				</h2>
-				<p class="italic text-center text-white">
+				<p class="italic text-center text-[#0056BD] dark:text-white">
 					{$t('public_user_page.joined_on', {
 						date: new Date(data.user.created_at).toLocaleDateString()
 					})}
@@ -95,7 +95,7 @@ SPDX-License-Identifier: MPL-2.0
 			class="col-start-2 col-end-7 border-l border-white h-full p-4 overflow-y-scroll flex flex-col gap-4"
 		>
 			{#if data.quizzes.length === 0}
-				<p class="text-center text-4xl">{$t('public_user_page.no_original_quizzes')}</p>
+				<p class="text-center text-[#0056BD] dark:text-white text-4xl">{$t('public_user_page.no_original_quizzes')}</p>
 			{:else}
 				{#each data.quizzes as quiz}
 					<div
@@ -109,8 +109,8 @@ SPDX-License-Identifier: MPL-2.0
 														{@html quiz.title}
 													</p>-->
 							<div class="col-start-2 col-end-6">
-								<h3 class="text-center text-2xl text-white">{@html quiz.title}</h3>
-								<p class="text-center text-white">
+								<h3 class="text-center text-2xl text-[#0056BD] dark:text-white font-bold">{@html quiz.title}</h3>
+								<p class="text-center text-[#0056BD] dark:text-white">
 									{@html quiz.description}
 								</p>
 								{#if quiz.cover_image}
@@ -160,7 +160,7 @@ SPDX-License-Identifier: MPL-2.0
 													</div>-->
 						</div>
 						<div class="flex justify-center">
-							<a href="/view/{quiz.id}" class="action-button w-1/6"
+							<a href="/view/{quiz.id}" class="action-button w-1/6 text-[#0056BD] dark:text-white"
 								>{$t('words.view')}</a
 							>
 						</div>
@@ -178,7 +178,7 @@ SPDX-License-Identifier: MPL-2.0
 									<a
 										href="/api/v1/eximport/{quiz.id}"
 										aria-label="Download the activity"
-										class="flex justify-center px-4 py-2 leading-5 text-black dark:text-white transition-colors duration-200 transform bg-gray-50 dark:bg-gray-700 rounded text-center hover:bg-gray-300 focus:outline-none disabled:cursor-not-allowed disabled:opacity-50 dark:hover:bg-gray-600"
+										class="flex justify-center px-4 py-2 leading-5 text-[#0056BD] dark:text-white transition-colors duration-200 transform bg-gray-50 dark:bg-gray-700 rounded text-center hover:bg-gray-300 focus:outline-none disabled:cursor-not-allowed disabled:opacity-50 dark:hover:bg-gray-600"
 										><!-- heroicons/download -->
 										<svg
 											class="w-5 h-5"

@@ -14,7 +14,7 @@ SPDX-License-Identifier: MPL-2.0
 
 <div class="flex justify-center  w-full mx-3 ">
 	<a href="/view/{quiz.id}" class="sm:h-2/3 sm:w-2/3 w-full flex flex-col justify-center mx-3">
-		<div class="  py-4 px-8 bg-white border-[#C0D8FF] border-2 shadow-lg shadow-[#C8DDFF] dark:shadow-none rounded-lg sm:my-15 my-10 dark:bg-slate-800">
+		<div class="  py-4 px-8 bg-white border-[#C0D8FF] border-2 shadow-lg shadow-[#C8DDFF] dark:shadow-none rounded-lg sm:my-15 my-10 dark:bg-[#0AEDFE] dark:bg-opacity-20">
 			<!--			<div class='flex justify-center md:justify-end -mt-16'>
 							<img class='w-20 h-20 object-cover rounded-full border-2 border-indigo-500'
 								 src='https://images.unsplash.com/photo-1499714608240-22fc6ad53fb2?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=334&q=80'>
