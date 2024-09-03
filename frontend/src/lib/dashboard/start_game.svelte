@@ -107,7 +107,7 @@ SPDX-License-Identifier: MPL-2.0
 	on:keypress={() => {}}
 >
     <div
-        class="w-5/6 dark:!bg-gray-600 m-auto rounded-lg shadow-lg p-4 flex flex-col "
+        class="w-5/6 dark:!bg-[#071E55] m-auto rounded-lg shadow-lg p-4 flex flex-col "
         style="background-color: {bg_color}"
     >
         <div class="grid md:grid-cols-2 grid-cols-1 md:gap-16 gap-10 my-10">
@@ -153,7 +153,7 @@ SPDX-License-Identifier: MPL-2.0
             </div>
             <div class=" flex flex-col items-center">
                 <div
-                    class="rounded-lg bg-[#00AAFF] xl:w-2/3 md:w-full text-white shadow-lg cursor-pointer transition-all p-5"
+                    class="rounded-lg bg-[#007CDB] xl:w-2/3 md:w-full text-white shadow-lg cursor-pointer transition-all p-5"
                     class:opacity-50={selected_game_mode !== 'normal'}
                     on:click={() => {
                         selected_game_mode = 'normal';
@@ -210,13 +210,16 @@ SPDX-License-Identifier: MPL-2.0
                 <span class="ml-3 text-sm font-medium text-gray-900 font-semibold dark:text-white"> Randomize answers</span>
             </label>
         </div>
-        <button 
-        on:click={() => start_game(quiz_id)}
-        class="flex bg-gradient-to-r from-[#62C500] -mb-10 mt-4 mx-auto items-center justify-center gap-3 font-bold style-text md:text-2xl transition-all   via-[#05FB00] to-[#61C101] px-7 py-2 rounded-full border-4 border-[#0AEDFE]"
-    >
-        <img src="{playIcon}" alt="">
-        {$t('start_game.start_game')}
-        </button>
+        <div class="flex justify-center" >
+            <button 
+            on:click={() => start_game(quiz_id)}
+            class="px-8 py-2 flex items-center font-bold justify-center gap-3 border-[#00EDFF] my-3 -mb-10 border-4 bg-gradient-to-r from-[#0056BD] dark:from-[#FFE500] from-0%  to-[#5436AB] dark:to-[#FFB800] to-100% leading-5 text-white transition-colors duration-200 transform rounded-full hover:bg-gray-600 focus:outline-none disabled:cursor-not-allowed disabled:opacity-50"
+            
+        >
+            <img src="{playIcon}" alt="">
+            {$t('start_game.start_game')}
+            </button>
+        </div>
         <!-- <button
             class="flex items-center hidden -mb-12 mt-4 mx-auto bg-lime-600 text-white p-4 rounded-lg shadow-lg hover:bg-lime-500 transition-all text-2xl"
             on:click={() => start_game(quiz_id)}
@@ -230,6 +233,7 @@ SPDX-License-Identifier: MPL-2.0
                 {$t('start_game.start_game')}
             {/if}
         </button> -->
+        
 
     </div>
 </div>

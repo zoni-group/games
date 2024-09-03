@@ -128,7 +128,7 @@ SPDX-License-Identifier: MPL-2.0
 		<span class="p-4" />
 
 		<div
-			class="lg:w-[64rem] lg:max-w-[64rem] w-screen max-w-screen mx-auto overflow-hidden bg-white rounded-lg shadow-md dark:bg-gray-800"
+			class="lg:w-[64rem] lg:max-w-[64rem] w-screen max-w-screen mx-auto overflow-hidden bg-white rounded-lg shadow-md dark:bg-[#0AEDFE]/20"
 		>
 			<div class="px-6 py-4">
 				<h2 class="text-3xl font-bold text-center text-gray-700 dark:text-white">
@@ -146,7 +146,7 @@ SPDX-License-Identifier: MPL-2.0
 					<form on:submit|preventDefault={submit}>
 						<div class="w-full mt-4 h-full flex flex-col">
 							<h2 class="text-center text-2xl">{$t('import_page.a_kahoot_quiz')}</h2>
-							<div class="dark:bg-gray-800 bg-white p-4 rounded-lg">
+							<div class="dark:bg-[#0AEDFE]/10 bg-white p-4 rounded-lg">
 								<div class="relative bg-inherit w-full">
 									<input
 										id="url"
@@ -205,7 +205,7 @@ SPDX-License-Identifier: MPL-2.0
 					<form on:submit|preventDefault={file_submit}>
 						<div class="w-full mt-4 border-l-2 border-gray-600 h-full flex flex-col">
 							<h2 class="text-center text-2xl">{$t('import_page.classquiz_quiz')}</h2>
-							<div class="dark:bg-gray-800 bg-white p-4 rounded-lg">
+							<div class="dark:bg-[#0AEDFE]/20 bg-white p-4 rounded-lg">
 								<div class="relative bg-inherit w-full">
 									<input
 										id="file"
@@ -264,7 +264,7 @@ SPDX-License-Identifier: MPL-2.0
 				</div>
 			</div>
 			<div
-				class="flex items-center justify-center py-4 text-center bg-gray-50 dark:bg-gray-700 mt-4"
+				class="flex items-center justify-center py-4 text-center bg-gray-50 dark:bg-[#0AEDFE]/20 mt-4"
 			>
 				<span class="text-sm text-gray-600 dark:text-gray-200"
 					>{$t('import_page.need_help')}</span

@@ -135,10 +135,10 @@ SPDX-License-Identifier: MPL-2.0
 			{#if quizzes.length !== 0}
 				<div class="flex justify-center pt-4 w-full">
 					<div>
-						<div>
+						<div class="border-[#003FA7] flex dark:border-[#fff] border-2 rounded-lg" >
 							<input
 								bind:value={search_term}
-								class="p-2 rounded-lg outline-none text-center w-96 dark:bg-gray-700 dark:text-white"
+								class="p-2 rounded-lg rounded-e-none outline-none text-center sm:w-96 w-full bg-transparent dark:bg-white dark:text-white"
 								placeholder={$t('dashboard.search_for_own_quizzes')}
 							/>
 							<button
@@ -168,7 +168,7 @@ SPDX-License-Identifier: MPL-2.0
 				<div class="flex flex-col gap-4 mt-4 px-2">
 					{#each items_to_show as quiz}
 						<div
-							class="grid grid-cols-2 lg:grid-cols-3 w-full rounded border-[#004A93] dark:border-[#90CDF4] border-2 p-2 h-[20vh] overflow-hidden max-h-[20vh]"
+							class="grid grid-cols-2 lg:grid-cols-3 w-full rounded-xl shadow-lg shadow-[#003FA7]/10 border-[#003FA7] dark:border-[#fff] border-2 p-2 h-[20vh] overflow-hidden max-h-[20vh]"
 						>
 							<div class="hidden lg:flex w-auto h-full items-center relative">
 								{#if quiz.cover_image}
@@ -179,13 +179,13 @@ SPDX-License-Identifier: MPL-2.0
 								{/if}
 							</div>
 							<div class="my-auto mx-auto max-h-full overflow-hidden ">
-								<p class="text-xl text-center text-white">{@html quiz.title}</p>
-								<p class="text-sm text-center text-white text-clip overflow-hidden">
+								<p class="text-xl text-center text-[#003FA7] dark:text-[#fff] font-semibold">{@html quiz.title}</p>
+								<p class="text-sm text-center text-[#003FA7] dark:text-[#fff] font-medium text-clip overflow-hidden">
 									{@html quiz.description ?? ''}
 								</p>
 							</div>
 							<div
-								class="grid grid-rows-2 ml-auto gap-2 w-fit self-end my-auto"
+								class="grid grid-rows-2 ml-auto gap-2 w-fit self-end my-auto "
 								class:grid-cols-3={quiz.type === 'quiz'}
 								class:grid-cols-2={quiz.type !== 'quiztivity'}
 							>
@@ -356,7 +356,7 @@ SPDX-License-Identifier: MPL-2.0
 					{/each}
 				</div>
 			{:else}
-				<p class="text-white dark:text-white">
+				<p class="text-[#003FA7] dark:text-[#fff] font-semibold text-center mt-10">
 					{$t('overview_page.no_quizzes')}
 				</p>
 			{/if}

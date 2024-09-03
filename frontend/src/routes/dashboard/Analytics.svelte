@@ -31,13 +31,14 @@ SPDX-License-Identifier: MPL-2.0
 </script>
 
 {#if quiz}
+	<!-- svelte-ignore a11y-click-events-have-key-events -->
 	<div
 		class="fixed w-full h-full top-0 flex bg-black bg-opacity-50 z-50 overflow-scroll"
 		on:click={on_parent_click}
 		transition:fade|local={{ duration: 100 }}
 	>
 		<div
-			class="m-auto bg-white dark:bg-gray-600 rounded shadow-2xl flex p-4 flex-col lg:w-2/3 w-11/12 h-5/6"
+			class="m-auto bg-white dark:bg-[#00529B] rounded shadow-2xl flex p-4 flex-col lg:w-2/3 w-11/12 h-5/6"
 		>
 			<h1 class="text-center text-5xl">{$t('words.analytics')}</h1>
 			<section class="flex flex-col gap-2 mt-8">

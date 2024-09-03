@@ -98,40 +98,9 @@ SPDX-License-Identifier: MPL-2.0
 </script>
 
 <div class="h-full flex flex-col">
-	<div class="flex justify-center">
-		<div>
-			<table class="table-auto text-xl">
-				<tr>
-					<th class="p-2 border-r border-r-white border-b-2 border-b-white text-white"
-						>{$t('words.name')}</th
-					>
-					<th class="p-2 border-b-2 border-b-white text-white">{$t('words.point', { count: 2 })}</th>
-					{#if show_new_score_clicked}
-						<th in:fly={{ x: 300 }} class="p-2 border-b-2 border-b-white text-white"
-							>{$t('play_page.points_added')}
-						</th>
-					{/if}
-				</tr>
-				{#each player_names as player, i (player)}
-					<tr animate:flip>
-						<td class:hidden={i > 3} class="p-2 border-r border-r-white  text-white">{player}</td>
-						<td class:hidden={i > 3} class="p-2 text-white">{data[player]}</td>
-						{#if show_new_score_clicked}
-							<td
-								in:fly={{ x: 300 }}
-								class:hidden={i > 3}
-								class="p-2 text-white"
-								class:text-red-600={score_by_username[player] === 0 ||
-									score_by_username[player] === undefined}
-							>
-								+{score_by_username[player] ?? '0'}
-							</td>
-						{/if}
-					</tr>
-				{/each}
-			</table>
-		</div>
-	</div>
+	<h2 class="text-2xl font-bold text-center text-[#00529B] mb-4 dark:text-[#fff] ">Answers</h2>
+
+	
 	{#if [QuizQuestionType.ABCD, QuizQuestionType.VOTING, QuizQuestionType.TEXT].includes(question.type)}
 		<div class="mt-12">
 			<VotingResults data={new_data} {question} />
@@ -152,4 +121,38 @@ SPDX-License-Identifier: MPL-2.0
 			<CheckRange data={new_data} {question} />
 		</div>
 	{/if}
+	<div class="flex justify-center mt-5">
+		<div>
+			<table class="table-auto bg-white dark:bg-[#0AEDFE]/20 p-3 rounded-xl text-xl">
+				<tr>
+					<th class="p-2 border-r border-r-white border-b-2 border-b-white text-[#00529B] dark:text-white"
+						>{$t('words.name')}</th
+					>
+					<th class="p-2 border-b-2 border-b-white text-[#00529B] dark:text-white">{$t('words.point', { count: 2 })}</th>
+					{#if show_new_score_clicked}
+						<th in:fly={{ x: 300 }} class="p-2 border-b-2 border-b-white text-[#00529B] dark:text-white"
+							>{$t('play_page.points_added')}
+						</th>
+					{/if}
+				</tr>
+				{#each player_names as player, i (player)}
+					<tr animate:flip>
+						<td class:hidden={i > 3} class="p-2 border-r border-r-white  text-[#00529B] dark:text-white">{player}</td>
+						<td class:hidden={i > 3} class="p-2 text-[#00529B] dark:text-white">{data[player]}</td>
+						{#if show_new_score_clicked}
+							<td
+								in:fly={{ x: 300 }}
+								class:hidden={i > 3}
+								class="p-2 text-[#00529B] dark:text-white"
+								class:text-red-600={score_by_username[player] === 0 ||
+									score_by_username[player] === undefined}
+							>
+								+{score_by_username[player] ?? '0'}
+							</td>
+						{/if}
+					</tr>
+				{/each}
+			</table>
+		</div>
+	</div>
 </div>

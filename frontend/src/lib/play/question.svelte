@@ -256,17 +256,15 @@
 						/>
 					</div>
 
-					<div class="w-full max-w-xs text-center mt-10">
+					<div class="w-full max-w-xs flex justify-center mt-10">
 						<button 
 						type="button"
-						class="bg-gradient-to-r from-[#FE700A] via-[#FFFFFF] to-[#FF4D00] shadow-x rounded-full p-1 "
+						class="bg-[#0056BD] border-[#fff] flex items-center border-2 gap-2 text-[#fff] font-semibold px-9 py-2 rounded-full disabled:cursor-not-allowed disabled:opacity-90"
 						disabled={selected_answer !== undefined}
 						on:click={() => selectRangeAnswer(slider_value[0])}
 						>
-						<span class="bg-[#FFE500] p-2 px-6 flex w-full rounded-full uppercase text-[#00529B] font-semibold items-center justify-center gap-3" >
 							<RightArrow />
 							{$t('words.submit')}
-						</span>
 						</button>
 						<!-- <BrownButton
 							disabled={selected_answer !== undefined}
@@ -285,29 +283,27 @@
 				style="width: {(100 / parseInt(question.time)) * parseInt(timer_res)}vw"
 			/>
 			<div class="w-full max-w-md px-4 mt-10">
-			  <label for="answer-input" class="block mb-2 mt-5 text-lg font-medium text-white dark:text-gray-200">Type your answer here:</label>
+			  <label for="answer-input" class="block mb-2 mt-5 text-lg font-medium text-[#003FA7] dark:text-gray-200">Type your answer here:</label>
 			  <input
 				id="answer-input"
 				type="text"
 				bind:value={text_input}
 				disabled={selected_answer}
-				class="bg-white focus:ring placeholder-[#DCE1E7] text-[#DCE1E7] shadow-inner bg-opacity-50 font-bold rounded-xl focus:ring-blue-500 block w-full p-2 dark:bg-gray-700 dark:text-white dark:focus:ring-blue-500 outline-none transition text-center disabled:opacity-50 disabled:cursor-not-allowed "
+				class="bg-white focus:ring placeholder-[#DCE1E7] text-black border-[#003FA7] border-2 shadow-inner bg-opacity-50 font-bold rounded-xl focus:ring-blue-500 block w-full py-4 px-3 dark:bg-[#0AEDFE]/20 dark:text-white dark:focus:ring-blue-500 outline-none transition text-center disabled:opacity-50 disabled:cursor-not-allowed "
 				placeholder="Enter your answer"
 			  />
 			</div>
-			<div class="mt-4 w-4/5 max-w-xs mx-auto text-center">
+			<div class="mt-4 w-4/5 max-w-xs mx-auto flex justify-center">
 				<button 
 				type="button"
-				class="bg-gradient-to-r from-[#FE700A] via-[#FFFFFF] to-[#FF4D00] shadow-x rounded-full p-1 "
+				class="bg-[#0056BD] border-[#fff] flex items-center border-2 gap-2 text-[#fff] font-semibold px-9 py-2 rounded-full disabled:cursor-not-allowed disabled:opacity-90"
 				disabled={selected_answer}
 				on:click={() => {
 					selectAnswer(text_input);
 				}}
 				>
-				<span class="bg-[#FFE500] p-2 px-6 flex w-full rounded-full uppercase text-[#00529B] font-semibold items-center justify-center gap-3" >
 					<RightArrow />
 					{$t('words.submit')}
-				</span>
 				</button>
 				<!-- <BrownButton
 					type="button"
@@ -339,7 +335,7 @@
 				class="fixed top-0 bg-red-500 h-8 transition-all"
 				style="width: {(100 / parseInt(question.time)) * parseInt(timer_res)}vw"
 			/>
-			<div class="flex flex-col w-full h-full gap-4 px-4 mt-2">
+			<div class="flex flex-col items-center justify-center w-full min-h-screen gap-4 px-4 mt-2">
 				{#each question.answers as answer, i (answer.id)}
 					<div
 						class="w-full h-fit flex-row rounded-lg p-2 align-middle"
@@ -350,7 +346,7 @@
 							on:click={() => {
 								question.answers = swapArrayElements(question.answers, i, i - 1);
 							}}
-							class="disabled:opacity-50 transition shadow-lg bg-black bg-opacity-30 w-full flex justify-center rounded-lg p-2 hover:bg-opacity-20 transition"
+							class="disabled:opacity-50 transition shadow-lg bg-black text-white bg-opacity-30 w-full flex justify-center rounded-lg p-2 hover:bg-opacity-20 transition"
 							type="button"
 							disabled={i === 0 || selected_answer}
 						>
@@ -371,8 +367,7 @@
 								/>
 							</svg>
 						</button>
-						<p class="w-full text-center p-2 text-2xl"
-						style="color: {getTextColor(answer.color ?? '#004A93')}">
+						<p class="w-full text-center p-2 text-2xl text-white">
 							{answer.answer}
 						</p>
 
@@ -380,7 +375,7 @@
 							on:click={() => {
 								question.answers = swapArrayElements(question.answers, i, i + 1);
 							}}
-							class="disabled:opacity-50 transition shadow-lg bg-black bg-opacity-30 w-full flex justify-center rounded-lg p-2 hover:bg-opacity-20 transition"
+							class="disabled:opacity-50 transition shadow-lg bg-black text-white bg-opacity-30 w-full flex justify-center rounded-lg p-2 hover:bg-opacity-20 transition"
 							type="button"
 							disabled={i === question.answers.length - 1 || selected_answer}
 						>
@@ -403,19 +398,18 @@
 						</button>
 					</div>
 				{/each}
-				<div class="w-full text-center mt-2">
+				<div class="w-full flex justify-center mt-2">
 					<button 
 						type="button"
-						class="bg-gradient-to-r from-[#FE700A] via-[#FFFFFF] to-[#FF4D00] shadow-x rounded-full p-1 "
+						class="bg-[#0056BD] border-[#fff] flex items-center border-2 gap-2 text-[#fff] font-semibold px-9 py-2 rounded-full disabled:cursor-not-allowed disabled:opacity-90"
 						disabled={selected_answer}
 						on:click={() => {
 							select_complex_answer(question.answers);
 						}}
 						>
-						<span class="bg-[#FFE500] p-2 px-6 flex w-full rounded-full uppercase text-[#00529B] font-semibold items-center justify-center gap-3" >
+						
 							<RightArrow />
 							{$t('words.submit')}
-						</span>
 					</button>
 					<!-- <BrownButton
 						type="button"
@@ -449,15 +443,15 @@
 	{#if showPlayerAnswers}
 	    <div class={`${game_mode !== 'normal' ? 'h-screen flex justify-center items-center' : ''}`}>
 			<div class="px-4 text-center">
-				<p class="text-lg font-semibold text-white dark:text-white mt-10">Your answer:</p>
+				<p class="text-lg font-semibold text-[#00529B] dark:text-[#fff] mt-10">Your answer:</p>
 				{#if Array.isArray(selected_answer)}
-				<ul class="list-disc list-inside mx-auto text-left text-white inline-block dark:text-white">
+				<ul class="list-disc list-inside mx-auto text-left text-[#00529B] inline-block dark:text-[#fff]">
 					{#each selected_answer as ans}
 					<li class="text-lg">{ans}</li>
 					{/each}
 				</ul>
 				{:else}
-				<p class="text-lg text-white dark:text-white">{selected_answer}</p>
+				<p class="text-lg text-[#00529B] bg-[#E3ECF4] p-4 rounded-lg mt-10">{selected_answer}</p>
 				{/if}
 			</div>
 		</div>

@@ -52,33 +52,24 @@
 	<div class="fixed top-0 left-0">
 		<AudioPlayer bind:play={play_music} />
 	</div>
-	<div class=" text-center" style="padding:20px;">
-		<p class="text-white text-sm md:text-xl mt-20" >Please use your phone camera to scan the QR code or visit https://ai.zoni.edu/play
+	<div class=" text-center flex flex-col justify-center items-center" style="padding:20px;">
+		<p class="mt-4 text-[#00529B] text-sm dark:text-white md:text-5xl">
+			{$t('play_page.players_waiting', { count: players.length ?? 0 })}
+		</p>
+		<p class="text-[#0056BD] dark:text-white font-semibold text-sm md:text-xl mt-16" >Please use your phone camera to scan the QR code or visit https://ai.zoni.edu/play
 		</p>
 		<!-- svelte-ignore a11y-click-events-have-key-events -->
-		<p on:click={copyUrl} class="underline cursor-pointer text-white sm:mb-10 text-sm md:text-xl mb-3"  >Copy URL</p>
+		<p on:click={copyUrl} class="underline cursor-pointer text-[#0056BD] dark:text-white font-normal sm:mb-10 text-sm w-fit px-4 py-2 md:text-xl mb-3 rounded-xl"  >Copy URL</p>
 		<div class=" flex flex-col justify-center items-center">
 			<!-- svelte-ignore a11y-click-events-have-key-events -->
-			 <div class="bg-[#7EF4EF] rounded-xl bg-opacity-50 p-5   flex flex-col justify-center">
+			 <div class="bg-[#EF3E42] rounded-xl  flex flex-col justify-center">
 				 <img
 					 on:click={() => (fullscreen_open = true)}
 					 alt={$t('qr_code_to_join_the_game')}
 					 src={`/api/v1/utils/qr/${game_pin}`}
-					 class="sm:m-10 bg-white p-3 "
+					 class="sm:m-10 bg-[#E3ECF4] p-3 "
 				 />
-				 <div class="flex justify-center w-full sm:-mb-12 mt-3 -mb-12">
-					<div class="btn" >
-						<GrayButton
-							disabled={players.length < 1}
-							on:click={() => {
-								socket.emit('start_game', '');
-							}}
-							> 
-							<img src="{playBtn}" alt="">
-							{$t('admin_page.start_game')}
-						</GrayButton>
-					</div>
-				</div>
+				
 			 </div>
 		</div>
 		<!-- <button
@@ -98,21 +89,19 @@
 	</div>
 	
 	<div class="flex flex-col items-center
-	 justify-center md:mt-10">
-		<p class=" mt-4 text-white  text-sm md:text-xl">
+	 justify-center md:mt-10 border-4 bg-[#00529B] border-[#003FA7]/50 shadow-[#003FA7]/50 shadow-lg dark:border-white dark:shadow-none rounded-xl  p-5">
+		<p class="text-white dark:text-white text-sm md:text-xl">
 			Play and enter the activity 
 		</p>
-		<p class=" text-white font-bold text-sm md:text-xl">
+		<p class=" text-white dark:text-white font-bold text-sm md:text-xl">
 			CODE: {game_pin}
 		</p>
-		<p class="mt-4 text-white  text-sm md:text-xl">
-			{$t('play_page.players_waiting', { count: players.length ?? 0 })}
-		</p>
 	</div>
+	
 	<div class="flex flex-row justify-center w-full mt-4 px-10 flex-wrap">
 		{#if players.length > 0}
 			{#each players as player}
-				<div class="p-2 m-2  text-white bg-[#7EF4EF] bg-opacity-50 rounded hover:cursor-pointer">
+				<div class="p-2 m-2  text-white bg-[#0056BD] dark:bg-[#0C81FF] bg-opacity-50 rounded hover:cursor-pointer">
 					<!-- svelte-ignore a11y-click-events-have-key-events -->
 					<span
 						class="hover:line-through text-lg"
@@ -122,6 +111,23 @@
 				</div>
 			{/each}
 		{/if}
+	</div>
+	<div class="flex justify-center w-full sm:-mb-12 mt-3 -mb-12">
+		<div 
+		class="px-5 py-2 flex items-center justify-center gap-5 border-[#00EDFF] my-3 border-4 bg-gradient-to-r from-[#0056BD] dark:from-[#FFE500] from-0%  to-[#5436AB] dark:to-[#FFB800] to-100% leading-5 text-white dark:text-[#00529B] transition-colors duration-200 transform rounded-full hover:bg-gray-600 focus:outline-none disabled:cursor-not-allowed disabled:opacity-50"
+		
+		 >
+		 <img src="{playBtn}" alt="">
+			<GrayButton
+				disabled={players.length < 1}
+				on:click={() => {
+					socket.emit('start_game', '');
+				}}
+				textColor="#fff"
+				> 
+				{$t('admin_page.start_game')}
+			</GrayButton>
+		</div>
 	</div>
 </div>
 

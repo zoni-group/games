@@ -46,19 +46,22 @@ SPDX-License-Identifier: MPL-2.0
   }
 </style>
 
-<div class="flex flex-col justify-center items-center w-screen h-1/6 p-0 mb-2 -mt-12">
-	<div class="bg-white flex flex-col items-center justify-center rounded-3xl w-[90vw] w-full pb-5" >
-		<div class="m-auto bg-white lg:-mt-16 -mt-9 rounded-full p-3">
-			<CircularTimer
-				bind:text={timer_res}
-				bind:progress={circular_progress}
-				color="#ef4444"
-			/>
+<div class="flex justify-center " >
+	<div class="flex flex-col justify-center items-center sm:w-2/3 xl:w-screen h-1/6 p-0 mb-2 px-3">
+		<div class="bg-white shadow-[#003FA7]/50 shadow-md border-[#003FA7] dark:shadow-none flex flex-col items-center border-[#003FA7] border-2 justify-center rounded-3xl w-[90vw] w-full pb-5" >
+			<div class="m-auto bg-white lg:-mt-16 -mt-9 rounded-full p-3">
+				<CircularTimer
+					bind:text={timer_res}
+					bind:progress={circular_progress}
+					color="#ef4444"
+				/>
+			</div>
+			<h1 class="lg:text-3xl text-base  text-center text-[#00529B]">
+				{@html quiz_data.questions[selected_question].question}
+			</h1>
 		</div>
-		<h1 class="lg:text-3xl text-base  text-center text-[#00529B]">
-			{@html quiz_data.questions[selected_question].question}
-		</h1>
 	</div>
+
 </div>
 <div class="lg:flex-col flex mt-8 p-5 items-center">
 	{#if quiz_data.questions[selected_question].image !== null}
@@ -74,18 +77,17 @@ SPDX-License-Identifier: MPL-2.0
 		<div class="grid grid-rows-2 grid-flow-col auto-cols-auto gap-2 w-4/5 lg:w-full ps-1 justify-items-stretch">
 			{#each quiz_data.questions[selected_question].answers as answer, i}
 				<div
-					class="rounded-lg h-full flex border-4 border-white items-center overflow-auto max-h-[30vh] max-w-[50vw]"
+					class="rounded-lg h-full flex border-2 border-[#0056BD] items-center  max-h-[30vh] max-w-[50vw]"
 					style="background-color: {answer.color ?? default_colors[i]};"
 					class:opacity-50={!answer.right &&
 						timer_res === '0' &&
 						quiz_data.questions[selected_question].type === QuizQuestionType.ABCD}
 				>
-					<span class="md:text-7xl text-4xl font-bold text-white ps-1">
+					<span class="md:text-7xl text-4xl font-bold text-[#fff] ps-1">
 						{optionsLabel[i]}
 					</span>
 					<span
-						class="text-center fluid-text-md px-2 py-2 w-full"
-						style="color: white"
+						class="text-center fluid-text-md px-2 py-2 w-full text-[#fff] "
 						>{answer.answer}</span
 					>
 				</div>
@@ -105,7 +107,7 @@ SPDX-License-Identifier: MPL-2.0
 			</div>
 		{:else}
 			<div class="flex justify-center text-white">
-				<p class="fluid-text-md text-white">{$t('admin_page.enter_answer_into_field')}</p>
+				<p class="fluid-text-md text-[#00529B] dark:text-white">{$t('admin_page.enter_answer_into_field')}</p>
 			</div>
 		{/if}
 	{/if}
