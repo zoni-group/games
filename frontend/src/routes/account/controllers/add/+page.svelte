@@ -43,7 +43,7 @@ SPDX-License-Identifier: MPL-2.0
 			class="w-full max-w-sm mx-auto overflow-hidden bg-white rounded-lg shadow-md dark:bg-gray-800"
 		>
 			<div class="px-6 py-4">
-				<h2 class="text-3xl font-bold text-center text-gray-700 dark:text-white">
+				<h2 class="text-3xl font-bold text-center text-[#0056BD] dark:text-white">
 					ClassQuiz
 				</h2>
 
@@ -59,14 +59,14 @@ SPDX-License-Identifier: MPL-2.0
 									id="player_name"
 									name="player_name"
 									type="text"
-									class="w-full peer bg-transparent h-10 rounded-lg text-gray-700 dark:text-white placeholder-transparent ring-2 px-2 ring-gray-500 focus:ring-sky-600 focus:outline-none focus:border-rose-600"
+									class="w-full peer bg-transparent h-10 rounded-lg text-[#0056BD] dark:text-white placeholder-transparent ring-2 px-2 ring-gray-500 focus:ring-sky-600 focus:outline-none focus:border-rose-600"
 									class:ring-red-700={input_data.player_name.length === 0}
 									class:ring-green-600={input_data.player_name.length !== 0}
 									bind:value={input_data.player_name}
 								/>
 								<label
 									for="player_name"
-									class="absolute cursor-text left-0 -top-3 text-sm text-gray-700 dark:text-white bg-inherit mx-1 px-1 peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-500 peer-placeholder-shown:top-2 peer-focus:-top-3 peer-focus:text-sky-600 peer-focus:text-sm transition-all"
+									class="absolute cursor-text left-0 -top-3 text-sm text-[#0056BD] dark:text-white bg-inherit mx-1 px-1 peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-500 peer-placeholder-shown:top-2 peer-focus:-top-3 peer-focus:text-sky-600 peer-focus:text-sm transition-all"
 								>
 									Player name
 								</label>
@@ -78,7 +78,7 @@ SPDX-License-Identifier: MPL-2.0
 									id="name"
 									name="name"
 									type="text"
-									class="w-full peer bg-transparent h-10 rounded-lg text-gray-700 dark:text-white placeholder-transparent ring-2 px-2 ring-gray-500 focus:ring-sky-600 focus:outline-none focus:border-rose-600"
+									class="w-full peer bg-transparent h-10 rounded-lg text-[#0056BD] dark:text-white placeholder-transparent ring-2 px-2 ring-gray-500 focus:ring-sky-600 focus:outline-none focus:border-rose-600"
 									placeholder="Name"
 									class:ring-red-700={input_data.name.length === 0}
 									class:ring-green-600={input_data.name.length !== 0}
@@ -86,7 +86,7 @@ SPDX-License-Identifier: MPL-2.0
 								/>
 								<label
 									for="name"
-									class="absolute cursor-text left-0 -top-3 text-sm text-gray-700 dark:text-white bg-inherit mx-1 px-1 peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-500 peer-placeholder-shown:top-2 peer-focus:-top-3 peer-focus:text-sky-600 peer-focus:text-sm transition-all"
+									class="absolute cursor-text left-0 -top-3 text-sm text-[#0056BD] dark:text-white bg-inherit mx-1 px-1 peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-500 peer-placeholder-shown:top-2 peer-focus:-top-3 peer-focus:text-sky-600 peer-focus:text-sm transition-all"
 								>
 									Name
 								</label>

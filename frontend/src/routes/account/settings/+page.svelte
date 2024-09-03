@@ -179,8 +179,8 @@ SPDX-License-Identifier: MPL-2.0
 		<div class="grid grid-rows-2 col-start-2 col-end-7">
 			<div class="grid grid-cols-2">
 				<div>
-					<h1 class="text-4xl font-bold my-2 text-white">{user.username}</h1>
-					<p class="text-lg mb-6 md:max-w-lg text-white">
+					<h1 class="text-4xl font-bold my-2 text-[#0056BD] dark:text-white">{user.username}</h1>
+					<p class="text-lg mb-6 md:max-w-lg text-[#0056BD] dark:text-white">
 						{$t('words.email')}: {user.email}
 					</p>
 				</div>
@@ -195,7 +195,7 @@ SPDX-License-Identifier: MPL-2.0
 				</div>
 			</div>
 			<div>
-				<form class="flex flex-col md:flex-row text-white" on:submit|preventDefault={changePassword}>
+				<form class="flex flex-col md:flex-row text-[#0056BD] dark:text-white" on:submit|preventDefault={changePassword}>
 					<label
 						>{$t('settings_page.old_password')}:<input
 							type="password"

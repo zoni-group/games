@@ -89,7 +89,7 @@ SPDX-License-Identifier: MPL-2.0
 </script>
 
 <div>
-	<div class="w-full flex flex-col">
+	<div class="w-full flex flex-col text-[#0056BD] dark:text-white">
 		<h2 class="text-2xl mx-auto">{$t('controllers.controller_name')}</h2>
 		<div class="mx-auto flex">
 			<input
@@ -100,7 +100,7 @@ SPDX-License-Identifier: MPL-2.0
 			<SaveIndicator status={saved_status} />
 		</div>
 	</div>
-	<div class="flex flex-col">
+	<div class="flex flex-col text-[#0056BD] dark:text-white">
 		<h2 class="mx-auto text-2xl">{$t('controllers.player_name')}</h2>
 		<div class="mx-auto flex">
 			<input
@@ -111,12 +111,12 @@ SPDX-License-Identifier: MPL-2.0
 			<SaveIndicator status={saved_status} />
 		</div>
 	</div>
-	<div class="flex flex-col">
+	<div class="flex flex-col text-[#0056BD] dark:text-white">
 		<h2 class="mx-auto text-2xl">{$t('words.update')}</h2>
 		{#await get_latest_version()}
 			<Spinner my_20={false} />
 		{:then _}
-			<p class="mx-auto">
+			<p class="mx-auto text-[#0056BD] dark:text-white">
 				{$t('controllers.version_overview', {
 					newest_version,
 					current_version: controller.os_version
@@ -124,7 +124,7 @@ SPDX-License-Identifier: MPL-2.0
 			</p>
 		{/await}
 		{#if newest_version && controller.os_version}
-			<div class="mx-auto">
+			<div class="mx-auto text-[#0056BD] dark:text-white">
 				<BrownButton
 					disabled={newest_version === controller.os_version}
 					on:click={allow_update_to_version}

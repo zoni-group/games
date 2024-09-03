@@ -37,23 +37,23 @@ SPDX-License-Identifier: MPL-2.0
 			>{$t('words.close')}
 		</button>
 		<div
-			class="bg-white dark:bg-gray-700 rounded-b-lg rounded-tr-lg w-full h-full flex flex-col"
+			class="bg-white dark:bg-gray-700 rounded-b-lg rounded-tr-lg w-full h-full flex flex-col text-[#0056BD] dark:text-white"
 		>
 			<h2 class="text-3xl m-auto">{$t('security_settings.backup_codes.your_backup_code')}</h2>
 			<p
-				class="select-all font-mono text-xl m-auto"
+				class="select-all font-mono text-xl m-auto text-[#0056BD] dark:text-white"
 				on:click={() => {
 					download_code(false);
 				}}
 			>
 				{backup_code}
 			</p>
-			<p class="m-auto">{$t('security_settings.backup_codes.save_somewhere_save')}</p>
+			<p class="m-auto text-[#0056BD] dark:text-white">{$t('security_settings.backup_codes.save_somewhere_save')}</p>
 			<button
 				on:click={() => {
 					download_code(true);
 				}}
-				class="m-auto p-2 bg-[#004A93] rounded-lg"
+				class="m-auto p-2 bg-[#004A93] rounded-lg text-[#fff] dark:text-white"
 				>{$t('security_settings.backup_codes.download_code')}
 			</button>
 		</div>

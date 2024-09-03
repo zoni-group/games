@@ -22,7 +22,7 @@ SPDX-License-Identifier: MPL-2.0
 <div class="w-full">
 	<div class="flex justify-center w-full">
 		<table class="w-11/12 m-auto">
-			<tr class="border-b-2 dark:border-gray-500 text-left border-gray-300">
+			<tr class="border-b-2 dark:border-gray-500 text-left border-gray-300 text-[#0056BD] dark:text-white">
 				<th class="border-r dark:border-gray-500 p-1 mx-auto border-gray-300"
 					>{$t('result_page.player_name')}
 				</th>
@@ -34,7 +34,7 @@ SPDX-License-Identifier: MPL-2.0
 				{/if}
 			</tr>
 			{#each usernames as uname}
-				<tr class="text-left">
+				<tr class="text-left text-[#0056BD] dark:text-white">
 					<td class="border-r dark:border-gray-500 p-1 border-gray-300">{uname}</td>
 					<td class="p-1">{scores[uname]}</td>
 					{#if custom_field[uname]}

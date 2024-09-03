@@ -43,11 +43,11 @@ SPDX-License-Identifier: MPL-2.0
 		</div>
 		{#if controller_seen}
 			<div class="mt-10">
-				<p class="text-center">Controller set up successfully!</p>
+				<p class="text-center text-[#0056BD] dark:text-white">Controller set up successfully!</p>
 			</div>
 		{:else}
 			<div class="mt-10 flex-col flex gap-2 justify-center">
-				<p>Checking if controller has been connected in {5 - check_tick} seconds.</p>
+				<p class="text-[#0056BD] dark:text-white" >Checking if controller has been connected in {5 - check_tick} seconds.</p>
 				<Spinner my_20={false} />
 			</div>
 		{/if}

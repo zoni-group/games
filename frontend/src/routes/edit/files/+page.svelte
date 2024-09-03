@@ -82,7 +82,7 @@ SPDX-License-Identifier: MPL-2.0
 </script>
 
 <div>
-	<h2 class="text-center text-4xl text-white">
+	<h2 class="text-center text-4xl text-[#0056BD] dark:text-white">
 		{$t('file_dashboard.storage_usage', {
 			used: (data.storage_usage.used / (1024 * 1024)).toFixed(2),
 			total: (data.storage_usage.limit / (1024 * 1024)).toFixed(0),
@@ -126,27 +126,27 @@ SPDX-License-Identifier: MPL-2.0
 					<p class="text-black dark:text-white">Unsupported media type</p>
 				{/if}
 				<div class="flex flex-col my-auto ml-4 ">
-					<p class="text-slate-300">
+					<p class="text-[#0056BD] dark:text-white">
 						{$t('file_dashboard.size', {
 							size: (image.size / (1024 * 1024)).toFixed(2)
 						})}
 					</p>
-					<p class="text-slate-300">
+					<p class="text-[#0056BD] dark:text-white">
 						{$t('file_dashboard.caption', {
 							caption: image.alt_text ?? $t('file_dashboard.missing')
 						})}
 					</p>
-					<p class="text-slate-300">
+					<p class="text-[#0056BD] dark:text-white">
 						{$t('file_dashboard.filename', {
 							filename: image.filename ?? $t('file_dashboard.missing')
 						})}
 					</p>
-					<p class="text-slate-300">
+					<p class="text-[#0056BD] dark:text-white">
 						{$t('file_dashboard.uploaded', {
 							date: new Date(image.uploaded_at).toLocaleString()
 						})}
 					</p>
-					<p class="text-slate-300">
+					<p class="text-[#0056BD] dark:text-white">
 						{$t('file_dashboard.imported', {
 							yes_or_no: image.imported ? $t('words.yes') : $t('words.no')
 						})}
@@ -182,8 +182,8 @@ SPDX-License-Identifier: MPL-2.0
 		class="fixed top-0 left-0 h-screen w-screen z-40 flex bg-black bg-opacity-50"
 		on:click={close_popup_handler}
 	>
-		<div class="w-auto h-auto m-auto rounded bg-white dark:bg-gray-700 p-6 text-black dark:text-white shadow-lg">
-			<h1 class="text-2xl text-center mb-4">{$t('file_dashboard.edit_the_image')}</h1>
+		<div class="w-auto h-auto m-auto rounded bg-white dark:bg-[#0056BD] p-6 text-black dark:text-white shadow-lg">
+			<h1 class="text-2xl text-center mb-4 text-[#0056BD] dark:text-white">{$t('file_dashboard.edit_the_image')}</h1>
 			<form class="flex flex-col gap-4" on:submit|preventDefault={save_image_metadata}>
 				<div class="flex flex-row gap-4 items-center">
 					<div class="flex flex-col mr-4">
@@ -192,13 +192,13 @@ SPDX-License-Identifier: MPL-2.0
 					</div>
 					<div class="flex flex-col gap-3 w-full">
 						<input
-							class="rounded outline-none dark:bg-gray-500 dark:text-white p-2 border border-gray-300 dark:border-gray-600"
+							class="rounded outline-none dark:bg-[#fff] dark:text-white p-2 border border-gray-300 dark:border-gray-600"
 							id="name"
 							type="text"
 							bind:value={edit_popup.filename}
 						/>
 						<input
-							class="rounded outline-none dark:bg-gray-500 dark:text-white p-2 border border-gray-300 dark:border-gray-600"
+							class="rounded outline-none dark:bg-[#fff] dark:text-white p-2 border border-gray-300 dark:border-gray-600"
 							class:border-red-700={!edit_popup.alt_text}
 							id="alt_text"
 							type="text"

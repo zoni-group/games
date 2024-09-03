@@ -40,7 +40,7 @@ SPDX-License-Identifier: MPL-2.0
 				on:click={() => {
 					selected_tab = SelectedTab.Overview;
 				}}
-				class="m-auto w-full h-full"
+				class="m-auto w-full h-full text-[#0056BD] dark:text-white"
 				>{$t('words.overview')}
 			</button>
 		</div>
@@ -53,7 +53,7 @@ SPDX-License-Identifier: MPL-2.0
 				on:click={() => {
 					selected_tab = SelectedTab.Players;
 				}}
-				class="m-auto w-full h-full"
+				class="m-auto w-full h-full text-[#0056BD] dark:text-white"
 			>
 				{$t('words.player', { count: 2 })}
 			</button>
@@ -67,7 +67,7 @@ SPDX-License-Identifier: MPL-2.0
 				on:click={() => {
 					selected_tab = SelectedTab.Questions;
 				}}
-				class="m-auto w-full h-full"
+				class="m-auto w-full h-full text-[#0056BD] dark:text-white"
 				>{$t('words.question', { count: 2 })}
 			</button>
 		</div>

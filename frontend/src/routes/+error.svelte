@@ -17,14 +17,14 @@ SPDX-License-Identifier: MPL-2.0
 <svelte:head>
 	<title>{$t('words.error')} - {status}</title>
 </svelte:head>
-<h1 class="text-6xl text-center">{status}</h1>
+<h1 class="text-6xl text-center text-[#0056BD] dark:text-white">{status}</h1>
 
 {#if status === 404}
-	<p class="text-center">
+	<p class="text-center text-[#0056BD] dark:text-white">
 		{$t('error_page.404_text')}
 	</p>
 {:else}
-	<p class="text-center">
+	<p class="text-center text-[#0056BD] dark:text-white">
 		{$t('error_page.unknown_error_text')}
 	</p>
 {/if}
