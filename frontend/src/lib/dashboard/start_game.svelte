@@ -14,6 +14,7 @@ SPDX-License-Identifier: MPL-2.0
     import { createTippy } from 'svelte-tippy';
     import { getLocalization } from '$lib/i18n';
     import playIcon from "$lib/assets/all/play.svg";
+	import playIconDark from "$lib/assets/all/play_dark.svg";
 
     const { t } = getLocalization();
     export let quiz_id;
@@ -213,10 +214,11 @@ SPDX-License-Identifier: MPL-2.0
         <div class="flex justify-center" >
             <button 
             on:click={() => start_game(quiz_id)}
-            class="px-8 py-2 flex items-center font-bold justify-center gap-3 border-[#00EDFF] my-3 -mb-10 border-4 bg-gradient-to-r from-[#0056BD] dark:from-[#FFE500] from-0%  to-[#5436AB] dark:to-[#FFB800] to-100% leading-5 text-white transition-colors duration-200 transform rounded-full hover:bg-gray-600 focus:outline-none disabled:cursor-not-allowed disabled:opacity-50"
+            class="px-8 py-2 flex items-center font-bold justify-center gap-3 border-[#00EDFF] my-3 -mb-10 border-4 bg-gradient-to-r from-[#0056BD] dark:text-[#00529B] dark:from-[#FFE500] from-0%  to-[#5436AB] dark:to-[#FFB800] to-100% leading-5 text-white transition-colors duration-200 transform rounded-full hover:bg-gray-600 focus:outline-none disabled:cursor-not-allowed disabled:opacity-50"
             
         >
-            <img src="{playIcon}" alt="">
+        <img src="{playIcon}" alt="" class="dark:hidden block">
+        <img src="{playIconDark}" alt="" class="hidden dark:block ">
             {$t('start_game.start_game')}
             </button>
         </div>
