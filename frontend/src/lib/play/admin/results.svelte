@@ -143,7 +143,7 @@ SPDX-License-Identifier: MPL-2.0
 							<td
 								in:fly={{ x: 300 }}
 								class:hidden={i > 3}
-								class="p-2 text-[#00529B]"
+								class="p-2 text-[#00529B] dark:text-white"
 								class:text-red-600={score_by_username[player] === 0 ||
 									score_by_username[player] === undefined}
 							>
