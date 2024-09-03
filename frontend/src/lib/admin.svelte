@@ -146,7 +146,7 @@ SPDX-License-Identifier: MPL-2.0
 {/if}
 
 
-<div class="w-full h-full" class:pt-28={control_visible} class:pt-12={!control_visible}>
+<div class="w-full h-full" class:pt-10={control_visible} class:pt-12={!control_visible}>
 	{#if timer_res !== undefined && !final_results_clicked && !question_results}
 		<!-- Question is shown -->
 		{#if quiz_data.questions[selected_question].type === QuizQuestionType.SLIDE}

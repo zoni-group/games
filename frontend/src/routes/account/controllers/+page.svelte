@@ -32,24 +32,24 @@ SPDX-License-Identifier: MPL-2.0
 					>
 				</div>
 			</div>
-			<table class="w-full">
-				<tr class="border-b-2 dark:border-gray-500 text-left border-gray-300">
-					<th class="border-r dark:border-gray-500 text-white p-1 mx-auto border-gray-300"
+			<table class="w-full ">
+				<tr class="border-b-2 dark:border-gray-500 text-left border-gray-300 ">
+					<th class="border-r dark:border-gray-500 text-[#0056BD] dark:text-white p-1 mx-auto border-gray-300"
 						>{$t('words.name')}</th
 					>
-					<th class="border-r dark:border-gray-500 text-white p-1 mx-auto border-gray-300"
+					<th class="border-r dark:border-gray-500 text-[#0056BD] dark:text-white p-1 mx-auto border-gray-300"
 						>{$t('controllers.player_name')}
 					</th>
-					<th class="border-r dark:border-gray-500 text-white p-1 mx-auto border-gray-300"
+					<th class="border-r dark:border-gray-500 text-[#0056BD] dark:text-white p-1 mx-auto border-gray-300"
 						>{$t('controllers.first_seen')}
 					</th>
-					<th class="border-r dark:border-gray-500 text-white p-1 mx-auto border-gray-300"
+					<th class="border-r dark:border-gray-500 text-[#0056BD] dark:text-white p-1 mx-auto border-gray-300"
 						>{$t('controllers.last_seen')}
 					</th>
-					<th class="mx-auto p-1 text-white">{$t('words.version')}</th>
+					<th class="mx-auto p-1 text-[#0056BD] dark:text-white">{$t('words.version')}</th>
 				</tr>
 				{#each data.controllers as controller}
-					<tr class="text-left">
+					<tr class="text-left text-[#0056BD] dark:text-white">
 						<td class="border-r dark:border-gray-500 p-1 border-gray-300"
 							><a
 								href="/account/controllers/{controller.id}"

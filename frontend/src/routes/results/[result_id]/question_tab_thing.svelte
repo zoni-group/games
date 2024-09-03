@@ -70,7 +70,7 @@ SPDX-License-Identifier: MPL-2.0
 							</div>
 							<p>{get_answer_count_for_answer(answer.answer)}</p>
 							{#if question.type !== QuizQuestionType.VOTING && question.type !== QuizQuestionType.TEXT}
-								<p class="ml-1">
+								<p class="ml-1 text-[#0056BD] dark:text-white">
 									{#if answer.right}✅{:else}❌{/if}
 								</p>
 							{/if}
@@ -81,7 +81,7 @@ SPDX-License-Identifier: MPL-2.0
 		{/if}
 		<div>
 			<table class="w-full text-left">
-				<tr class="border-b-2 dark:border-gray-500 text-left border-gray-300">
+				<tr class="border-b-2 dark:border-gray-500 text-left border-gray-300 text-[#0056BD] dark:text-white">
 					<th class="border-r dark:border-gray-500 p-1 mx-auto border-gray-300"
 						>{$t('result_page.player_name')}
 					</th>
@@ -101,7 +101,7 @@ SPDX-License-Identifier: MPL-2.0
 					{/if}
 				</tr>
 				{#each answers as answer}
-					<tr>
+					<tr class="text-[#0056BD] dark:text-white" >
 						<td class="border-r dark:border-gray-500 p-1 border-gray-300"
 							>{answer.username}</td
 						>

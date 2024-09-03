@@ -38,7 +38,7 @@ SPDX-License-Identifier: MPL-2.0
 
 <div class="w-full">
 	<div class="flex justify-center w-full">
-		<p class="text-3xl w-5/6 text-center">
+		<p class="text-3xl w-5/6 text-center text-[#0056BD] dark:text-white">
 			{$t('results_page.general_overview.sentence', {
 				title,
 				date: new Date(timestamp).toLocaleString(),

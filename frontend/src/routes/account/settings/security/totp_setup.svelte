@@ -21,7 +21,7 @@ SPDX-License-Identifier: MPL-2.0
 <div class="w-screen h-screen fixed top-0 left-0 p-48 z-30 bg-black bg-opacity-50">
 	<div class="w-full h-full">
 		<button
-			class="bg-gray-200 dark:bg-gray-900 px-2 py-1 rounded-t-lg hover:bg-gray-300 transition"
+			class="bg-gray-200 dark:bg-gray-900 px-2 py-1 rounded-t-lg hover:bg-gray-300 transition text-[#0056BD] dark:text-white"
 			on:click={() => {
 				totp_data = undefined;
 			}}
@@ -32,18 +32,18 @@ SPDX-License-Identifier: MPL-2.0
 				<div class="flex flex-col justify-center w-full h-5/6">
 					<span class="m-auto" />
 					<div class="h-5/6 flex">
-						<p class="my-auto ml-auto">
+						<p class="my-auto ml-auto text-[#0056BD] dark:text-white">
 							{$t('security_settings.totp_setup.scan_to_set_up')}
 						</p>
 					</div>
 					<div class="flex">
-						<p class="my-auto ml-auto">
+						<p class="my-auto ml-auto text-[#0056BD] dark:text-white">
 							{$t('security_settings.totp_setup.enter_as_secret_if_no_see_code')}
 						</p>
 					</div>
 				</div>
 				<div class="flex flex-col justify-start w-full h-5/6">
-					<h2 class="text-2xl m-auto">{$t('security_settings.totp_setup.totp_setup')}</h2>
+					<h2 class="text-2xl m-auto text-[#0056BD] dark:text-white">{$t('security_settings.totp_setup.totp_setup')}</h2>
 					{#await get_image_url()}
 						<Spinner my_20={false} />
 					{:then data}
@@ -55,10 +55,10 @@ SPDX-License-Identifier: MPL-2.0
 							/>
 						</div>
 					{/await}
-					<p class="m-auto select-all font-mono">{totp_data.secret}</p>
+					<p class="m-auto select-all font-mono text-[#0056BD] dark:text-white">{totp_data.secret}</p>
 				</div>
 				<div class="flex justify-center h-5/6 w-full">
-					<p class="m-auto text-3xl p-4">
+					<p class="m-auto text-3xl p-4 text-[#0056BD] dark:text-white">
 						{$t('security_settings.totp_setup.do_not_forget_backup_code')}
 					</p>
 				</div>

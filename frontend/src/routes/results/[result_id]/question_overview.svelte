@@ -60,19 +60,19 @@ SPDX-License-Identifier: MPL-2.0
 					class="w-full bg-white p-2 rounded grid grid-cols-3 z-40 dark:bg-gray-700 bg-opacity-60 dark:bg-opacity-80"
 				>
 					<button
-						class="text-center underline text-xl"
+						class="text-center underline text-xl text-[#0056BD] dark:text-white"
 						on:click={() => {
 							toggle_dropdown(i);
 						}}>{@html question.question}</button
 					>
 					{#if question.type !== QuizQuestionType.VOTING}
 						{@const correct_answers = get_number_of_correct_answers(i)}
-						<p class="text-center text-sm my-auto">
+						<p class="text-center text-sm my-auto text-[#0056BD] dark:text-white">
 							{$t('result_page.average_score', {
 								average_score: get_average_score(i)
 							})}
 						</p>
-						<p class="text-center text-sm my-auto">
+						<p class="text-center text-sm my-auto text-[#0056BD] dark:text-white">
 							{$t('result_page.correct_answer', { count: correct_answers })}
 							<!--							{correct_answers} correct
 							{#if correct_answers === 1}Answer{:else}Answers{/if}-->

@@ -41,7 +41,7 @@
 </script>
 
 {#if show_final_results}
-	<div class="min-h-screen flex flex-col items-center justify-center py-8">
+	<div class="min-h-screen flex flex-col items-center justify-center py-10">
 		<canvas bind:this={canvas} class="absolute inset-0 w-full h-full pointer-events-none" />
 		<div class="relative z-10 w-full max-w-3xl p-4 bg-white rounded-lg shadow-lg">
 			{#each player_names as player, i}
@@ -68,7 +68,7 @@
 			{/each}
 		</div>
 		{#if data[username]}
-			<div class="fixed bottom-0 left-0 flex justify-center w-full mb-6 z-10">
+			<div class="mt-16 flex justify-center w-full mb-6 z-10">
 				<div class="bg-white p-4 border-4 border-[#003FA7] rounded-lg shadow-lg dark:bg-[#0AEDFE]/20">
 					<p class="text-center text-lg font-semibold text-[#00529B] dark:text-[#fff]">{$t('play_page.your_score', { score: data[username] })}</p>
 					{#each player_names as player, i}

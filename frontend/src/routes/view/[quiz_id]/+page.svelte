@@ -15,6 +15,7 @@
 	import ModComponent from './ModComponent.svelte';
 	import { get_foreground_color } from '$lib/helpers.ts';
 	import playIcon from "$lib/assets/all/play.svg";
+	import playIconDark from "$lib/assets/all/play_dark.svg";
 
 	const default_colors = ['#C8E6C9', '#FFE0B2', '#FFF9C4', '#B3E5FC'];
 
@@ -181,10 +182,11 @@
 							on:click={() => {
 								start_game = quiz.id;
 							}}
-					class="px-5 py-2 border-[#00EDFF] flex items-center justify-center gap-3 font-bold w-full my-3 border-4 bg-gradient-to-r from-[#0056BD] dark:from-[#FFE500] from-0%  to-[#5436AB] dark:to-[#FFB800] to-100% leading-5 text-white transition-colors duration-200 transform rounded-full hover:bg-gray-600 focus:outline-none disabled:cursor-not-allowed disabled:opacity-50"
+					class="px-5 py-2 border-[#00EDFF] flex items-center justify-center gap-3 font-bold w-full my-3 border-4 bg-gradient-to-r from-[#0056BD] dark:from-[#FFE500] from-0%  to-[#5436AB] dark:to-[#FFB800] to-100% leading-5 text-white transition-colors duration-200 transform dark:text-[#00529B] rounded-full hover:bg-gray-600 focus:outline-none disabled:cursor-not-allowed disabled:opacity-50"
 							
 						>
-							<img src="{playIcon}" alt="">
+							<img src="{playIcon}" alt="" class="dark:hidden block">
+							<img src="{playIconDark}" alt="" class="hidden dark:block ">
 							{$t('words.start')}
 						</button>
 					</div>
@@ -193,10 +195,11 @@
 						<div class="w-full flex justify-center">
 							<button 
 								
-						class="px-5 py-2 border-[#00EDFF] flex items-center justify-center gap-3 font-bold w-full my-3 border-4 bg-gradient-to-r from-[#0056BD] dark:from-[#FFE500] from-0%  to-[#5436AB] dark:to-[#FFB800] to-100% leading-5 text-white transition-colors duration-200 transform rounded-full hover:bg-gray-600 focus:outline-none disabled:cursor-not-allowed disabled:opacity-50"
+						class="px-5 py-2 border-[#00EDFF] flex items-center justify-center gap-3 font-bold w-full my-3 border-4 dark:text-[#00529B] bg-gradient-to-r from-[#0056BD] dark:from-[#FFE500] from-0%  to-[#5436AB] dark:to-[#FFB800] to-100% leading-5 text-white transition-colors duration-200 transform rounded-full hover:bg-gray-600 focus:outline-none disabled:cursor-not-allowed disabled:opacity-50"
 								
 							>
-								<img src="{playIcon}" alt="">
+							<img src="{playIcon}" alt="" class="dark:hidden block">
+							<img src="{playIconDark}" alt="" class="hidden dark:block ">
 								{$t('words.start')}
 							</button>
 						</div>
