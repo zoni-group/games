@@ -164,11 +164,11 @@ SPDX-License-Identifier: MPL-2.0
 									>
 										{$t('words.url')}
 									</label>
-									<p class="text-sm">
+									<p class="text-sm text-[#0056BD] dark:text-white mt-2">
 										{$t('import_page.url_should_look_like_this')}
 									</p>
 								</div>
-								<p class="mt-2">
+								<p class="mt-2 text-[#0056BD] dark:text-white">
 									{$t('import_page.side_import_kahoot')}
 								</p>
 							</div>
@@ -217,9 +217,9 @@ SPDX-License-Identifier: MPL-2.0
 										class:ring-red-700={!file_input}
 										class:ring-green-600={file_input}
 									/>
-									<p class="text-sm">{$t('import_page.upload_file_ending')}</p>
+									<p class="text-sm text-[#0056BD] dark:text-white">{$t('import_page.upload_file_ending')}</p>
 								</div>
-								<p class="mt-2">
+								<p class="mt-2 text-[#0056BD] dark:text-white">
 									{$t('import_page.this_side_classquiz')}
 									<br />
 									{$t('import_page.this_side_classquiz_excel')}
