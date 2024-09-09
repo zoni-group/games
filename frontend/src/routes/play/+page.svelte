@@ -21,6 +21,8 @@ SPDX-License-Identifier: MPL-2.0
 	const { t } = getLocalization();
 	import ZoniLogo from '$lib/components/zoniLogoPlay.svelte';
 
+	let disconnectedMessage = '';
+
 	// Exports
 	export let data;
 	let { game_pin } = data;
@@ -58,6 +60,13 @@ SPDX-License-Identifier: MPL-2.0
 	let preventReload = true;
 
 	// Functions
+	function handleDisconnection(reason: string) {
+    disconnectedMessage = reason;
+	if (browser) {
+			window.alert(`Disconnected: ${reason}`);
+		}
+	}
+
 	function restart() {
 		unique = {};
 	}
@@ -147,6 +156,23 @@ SPDX-License-Identifier: MPL-2.0
 		Cookies.set('kicked', 'value', { expires: 1 });
 		window.location.reload();
 	});
+
+	socket.on('connect_error', () => {
+		handleDisconnection('Connection error occurred.');
+	});
+
+	socket.on('reconnect_failed', () => {
+		handleDisconnection('Reconnection failed.');
+	});
+
+	socket.on('reconnect_attempt', () => {
+		handleDisconnection('Attempting to reconnect...');
+	});
+
+	socket.on('disconnect_reason', (data) => {
+  		handleDisconnection(data.reason);
+	});
+
 	socket.on('final_results', (data) => {
 		final_results = data;
 		Cookies.remove('joined_game');
