@@ -250,7 +250,7 @@
         "export_results": "Ergebnisse exportieren",
         "show_next_question": "Zeige die nächste Frage",
         "start_by_showing_first_question": "Beginne damit, die erste Frage zu zeigen!",
-        "no_answers": "Keine Antworten!",
+        "no_answers": "Hoppla! Sie haben keine Antwort übermittelt. Bitte warten Sie auf die Ergebnisse.",
         "stop_time": "Zeit stoppen",
         "save_results": "Ergebnisse speichern",
         "next_question": "Nächste Frage ({{question}})",

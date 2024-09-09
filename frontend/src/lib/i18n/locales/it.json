@@ -244,7 +244,7 @@
         "get_results": "Ottieni i risultati",
         "export_results": "Esporta i risultati",
         "show_next_question": "Mostra la prossima domanda",
-        "no_answers": "Nessuna risposta!",
+        "no_answers": "Ops! Non hai inviato una risposta. Si prega di attendere i risultati.",
         "get_final_results": "Risultati finali",
         "start_by_showing_first_question": "Avvia mostrando la prima domanda.",
         "get_results_and_stop_time": "Raccogli i risultati e ferma il tempo",

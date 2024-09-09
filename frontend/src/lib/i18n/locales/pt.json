@@ -245,7 +245,7 @@
     "admin_page": {
         "stop_time_and_solutions": "Parar o tempo e mostrar as respostas",
         "already_registered_as_admin": "Já existe um administrador registado para este jogo.",
-        "no_answers": "Sem respostas!",
+        "no_answers": "Ops! Você não enviou uma resposta. Por favor, aguarde os resultados.",
         "start_by_showing_first_question": "Comece mostrando a primeira pergunta.",
         "request_export_results": "Solicitar download dos resultados",
         "time_left": "Tempo restante",

@@ -438,7 +438,11 @@
 				{/await}
 			{/if}
 		{/if}
-	{/if}
+		{:else if !showPlayerAnswers}
+			<div class="w-full flex justify-center min-h-screen items-center">
+				<h1 class="text-3xl dark:text-white text-[#0056BD]">{$t('admin_page.no_answers')}</h1>
+			</div>
+		{/if}
 	<!-- Display the submitted answer -->
 	{#if showPlayerAnswers}
 	    <div class={`${game_mode !== 'normal' ? 'h-screen flex justify-center items-center' : ''}`}>
