@@ -531,6 +531,17 @@ async def kick_player(sid: str, data: dict):
     )
     await sio.leave_room(player_sid, session["game_pin"])
     await sio.emit("kick", room=player_sid)
+    await sio.emit("disconnect_reason", {"reason": "You were kicked by the admin."}, room=player_sid)
+
+
+@sio.event
+async def disconnect(sid):
+    session = await sio.get_session(sid)
+    reason = "Connection lost."
+    if session.get('kicked', False):
+        reason = "You were kicked from the game."
+    
+    await sio.emit("disconnect_reason", {"reason": reason}, room=sid)
 
 
 class _RegisterAsRemoteInput(BaseModel):
