@@ -4,6 +4,9 @@ SPDX-FileCopyrightText: 2023 Marlon W (Mawoka)
 SPDX-License-Identifier: MPL-2.0
 -->
 <script lang="ts">
+	
+	import roundLogo from '$lib/assets/all/round_logo.webp';
+	import roundLogoDark from '$lib/assets/all/dark_logo.webp';
 	export let session_data = {};
 	export let step;
 	export let selected_method;
@@ -22,14 +25,21 @@ SPDX-License-Identifier: MPL-2.0
 </script>
 
 <div class="px-6 py-4">
-	<h2 class="text-3xl font-bold text-center text-gray-700 dark:text-white">ClassQuiz</h2>
+	<div class="dark:hidden" >
+		<img src="{roundLogo}" alt="Zoni Logo" class="mx-auto z-1 -mt-20">
+	</div>
+	<div class="hidden dark:block">
+		<img src="{roundLogoDark}" alt="Zoni Logo" class="mx-auto z-1 -mt-20">
+	</div>
+	<h2 class="text-style my-5 dark:text-transparent">Zoni AI</h2>
 
 	<div class="w-full mt-4">
-		<div class="dark:bg-gray-800 bg-white p-4 rounded-lg">
+		<div class="dark:bg-transparent bg-white p-4 rounded-lg">
 			<ul class="flex flex-col gap-4">
 				{#if available_methods.includes('PASSKEY')}
+					<!-- svelte-ignore a11y-click-events-have-key-events -->
 					<div
-						class="flex flex-row bg-gray-100 dark:bg-gray-700 rounded-lg p-2 hover:cursor-pointer hover:bg-gray-200 transition"
+						class="flex flex-row bg-gray-100 dark:bg-transparent rounded-lg p-2 hover:cursor-pointer hover:bg-gray-200 transition"
 						on:click={() => {
 							selected_method = 'PASSKEY';
 						}}
@@ -56,6 +66,7 @@ SPDX-License-Identifier: MPL-2.0
 					</div>
 				{/if}
 				{#if available_methods.includes('PASSWORD')}
+					<!-- svelte-ignore a11y-click-events-have-key-events -->
 					<div
 						class="flex flex-row bg-gray-100 dark:bg-gray-700 rounded-lg p-2 hover:cursor-pointer hover:bg-gray-200 transition"
 						on:click={() => {
@@ -99,6 +110,7 @@ SPDX-License-Identifier: MPL-2.0
 					</div>
 				{/if}
 				{#if available_methods.includes('TOTP')}
+					<!-- svelte-ignore a11y-click-events-have-key-events -->
 					<div
 						class="flex flex-row bg-gray-100 rounded-lg p-2 hover:cursor-pointer hover:bg-gray-200 transition"
 						on:click={() => {
