@@ -255,7 +255,7 @@
         "export_results": "Exporter les résultats",
         "show_next_question": "Montrer la prochaine question",
         "start_by_showing_first_question": "Démarrer en montrant la première question.",
-        "no_answers": "Pas de réponses !",
+        "no_answers": "Oups ! Vous n'avez pas soumis de réponse. Veuillez attendre les résultats.",
         "stop_time": "Arrêter le temps",
         "next_question": "Question suivante ({{question}})",
         "show_results": "Montrer les résultats",

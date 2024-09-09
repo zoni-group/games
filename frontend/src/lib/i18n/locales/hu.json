@@ -237,7 +237,7 @@
         "get_results": "Eredmények megtekintése",
         "get_final_results": "Végső eredmények megtekintése",
         "show_next_question": "Következő kérdés megtekintse",
-        "no_answers": "Nincsenek válaszok!",
+        "no_answers": "Hoppá! nem adtál választ. Kérjük, várja meg az eredményeket.",
         "save_results": "Eredmények mentése",
         "show_results": "Eredmények mutatása",
         "enter_answer_into_field": "Írja be a választ a beviteli mezőbe!",

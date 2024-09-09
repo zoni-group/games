@@ -213,7 +213,7 @@
         "time_left": "Tiempo restante",
         "get_final_results": "Ver los resultados finales",
         "start_by_showing_first_question": "Comienza mostrando la primera pregunta.",
-        "no_answers": "¡No hay respuestas!",
+        "no_answers": "¡Ups! No enviaste una respuesta. Espere los resultados.",
         "save_results": "Guardar los resultados",
         "next_question": "Siguiente pregunta ({{question}})",
         "show_results": "Mostrar los resultados",

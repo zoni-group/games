@@ -172,7 +172,7 @@
     "admin_page": {
         "stop_time_and_solutions": "Dừng thời gian và hiển thị đáp án",
         "already_registered_as_admin": "Đã có quản trị viên đăng ký cho trò chơi này.",
-        "no_answers": "Không có câu trả lời!",
+        "no_answers": "Ối! Bạn đã không gửi câu trả lời. Hãy chờ đợi kết quả.",
         "start_by_showing_first_question": "Bắt đầu bằng cách hiển thị câu hỏi đầu tiên.",
         "request_export_results": "Yêu cầu tải xuống kết quả",
         "time_left": "Thời gian còn lại",

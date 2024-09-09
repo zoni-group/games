@@ -139,7 +139,7 @@
         "show_next_question": "顯示下一個問題",
         "time_left": "剩餘時間",
         "stop_time": "停止計時",
-        "no_answers": "沒有答案！",
+        "no_answers": "哎呀！您没有提交答案。请等待结果。",
         "start_by_showing_first_question": "開始時顯示第一個問題。",
         "save_results": "儲存結果",
         "already_registered_as_admin": "此遊戲已有一位管理員。",

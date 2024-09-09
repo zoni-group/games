@@ -209,7 +209,7 @@
         "export_results": "Sonuçları dışa aktar",
         "show_next_question": "Bir sonraki soruyu göster",
         "start_by_showing_first_question": "İlk soruyu göstererek başla.",
-        "no_answers": "Cevap yok!",
+        "no_answers": "Hata! Yanıt göndermediniz. Lütfen sonuçları bekleyin.",
         "stop_time": "Zamanı durdur",
         "answers_submitted": "{{answer_count}} Gönderilen cevaplar",
         "request_export_results": "Sonuç indirmeyi talep et",
