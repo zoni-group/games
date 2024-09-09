@@ -24,7 +24,7 @@ SPDX-License-Identifier: MPL-2.0
 
 	let html_el;
 
-	$: text = text.replace('<p>', '').replace('</p>', '');
+	$: text = text.replace('<p>', '').replace('</p>', '').replaceAll('&nbsp;','');
 
 	/*	Editor.builtinPlugins = [
 		Autoformat,
@@ -85,10 +85,10 @@ SPDX-License-Identifier: MPL-2.0
 	});
 </script>
 
-<div class="w-fit rounded-lg border-gray-500 border">
+<div class="w-fit rounded-lg border-slate-500 border">
 	<div
 		bind:this={html_el}
 		contenteditable="true"
-		class="rounded-lg border-gray-500 border text-center w-fit h-fit resize-none dark:bg-gray-500 min-w-[5rem]"
+		class="rounded-lg border-slate-500 border bg-slate-300 text-center w-fit h-fit dark:text-white text-black resize-none dark:bg-slate-500 min-w-[5rem]"
 	/>
 </div>
