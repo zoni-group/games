@@ -8,7 +8,8 @@ SPDX-License-Identifier: MPL-2.0
 	import { startAuthentication } from '@simplewebauthn/browser';
 	import { getLocalization } from '$lib/i18n';
 	// import { alertModal } from '$lib/stores';
-
+	import roundLogo from '$lib/assets/all/round_logo.webp';
+	import roundLogoDark from '$lib/assets/all/dark_logo.webp';
 	const { t } = getLocalization();
 	export let session_data;
 	export let selected_method;
@@ -75,22 +76,22 @@ SPDX-License-Identifier: MPL-2.0
 </script>
 
 <div class="px-6 py-4">
-	<h2 class="text-3xl font-bold text-center text-gray-700 dark:text-white">ClassQuiz</h2>
-	<p class="mt-1 text-center text-gray-500 dark:text-gray-400">
+	<div class="dark:hidden" >
+	<img src="{roundLogo}" alt="Zoni Logo" class="mx-auto z-1 -mt-20">
+	</div>
+	<div class="hidden dark:block">
+		<img src="{roundLogoDark}" alt="Zoni Logo" class="mx-auto z-1 -mt-20">
+	</div>
+	<h2 class="text-style my-5 dark:text-transparent">Zoni AI</h2>
+	<p class="text-3xl font-bold text-center text-[#0056BD] dark:text-white">
 		Start the Security-Key verification
 	</p>
 
 	<div class="w-full mt-4">
 		<div class="flex items-center justify-between mt-4">
+			
 			<button
-				on:click={() => {
-					selected_method = 'BACKUP';
-				}}
-				class="text-sm text-gray-600 dark:text-gray-200 hover:text-gray-500"
-				>{$t('login_page.use_backup_code')}</button
-			>
-			<button
-				class="px-4 py-2 leading-5 text-white transition-colors duration-200 transform bg-gray-700 rounded hover:bg-gray-600 focus:outline-none disabled:cursor-not-allowed disabled:opacity-50"
+				class="px-5 py-2 border-[#00EDFF] my-3 border-4 bg-gradient-to-r from-[#0056BD] dark:from-[#FFE500] from-0%  to-[#5436AB] dark:to-[#FFB800] to-100% leading-5 text-white dark:text-[#00529B] font-semibold transition-colors duration-200 transform rounded-full hover:bg-gray-600 focus:outline-none disabled:cursor-not-allowed disabled:opacity-50"
 				disabled={isLoading}
 				on:click={start_thing}
 			>
@@ -109,6 +110,15 @@ SPDX-License-Identifier: MPL-2.0
 					{$t('words.start')}
 				{/if}
 			</button>
+		</div>
+		<div class="flex items-end w-full  flex-col justify-between mt-4" >
+			<button
+				on:click={() => {
+					selected_method = 'BACKUP';
+				}}
+				class="text-sm text-gray-600 dark:text-gray-200 hover:text-gray-500"
+				>{$t('login_page.use_backup_code')}</button
+			>
 		</div>
 	</div>
 </div>

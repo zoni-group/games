@@ -451,9 +451,15 @@
 					{/each}
 				</ul>
 				{:else}
-				<p class="text-lg text-[#00529B] bg-[#E3ECF4] p-4 rounded-lg mt-10">{selected_answer}</p>
+				<p class="text-lg text-[#00529B] selected-ans bg-[#FFFFFF] font-bold p-4 rounded-lg mt-10">{selected_answer}</p>
 				{/if}
 			</div>
 		</div>
 	{/if}
 </div>
+<style>
+	.selected-ans{
+		box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25) inset; 
+		border-radius: 16px
+	}
+</style>

@@ -91,7 +91,7 @@
 	<div class="flex flex-col items-center
 	 justify-center md:mt-10 border-4 bg-[#00529B] border-[#003FA7]/50 shadow-[#003FA7]/50 shadow-lg dark:border-white dark:shadow-none rounded-xl  p-5">
 		<p class="text-white dark:text-white text-sm md:text-xl">
-			Play and enter the activity 
+			Join using the activity
 		</p>
 		<p class=" text-white dark:text-white font-bold text-sm md:text-xl">
 			CODE: {game_pin}

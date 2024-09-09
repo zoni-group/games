@@ -204,8 +204,9 @@ SPDX-License-Identifier: MPL-2.0
 					<h1 class="text-3xl">{$t('admin_page.no_answers')}</h1>
 				</div>
 			{:else}
+			<div class="min-h-screen flex flex-col items-center justify-center" >
 				<div>
-					<h2 class="text-center text-[#00529B] dark:text-[#fff] text-3xl my-8">{$t('words.result', { count: 2 })}</h2>
+					<h2 class="text-center text-[#00529B] dark:text-[#fff] font-bold sm:text-3xl text-lg my-8">{$t('words.result', { count: 2 })}</h2>
 				</div>
 				{#key unique}
 					<KahootResults
@@ -214,6 +215,8 @@ SPDX-License-Identifier: MPL-2.0
 						bind:scores
 					/>
 				{/key}
+
+			</div>
 			{/if}
 		{/if}
 	</div>
