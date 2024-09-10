@@ -96,7 +96,7 @@
 					<button 
 						type="button"
 						class="bg-[#0056BD] border-[#fff] flex items-center border-2 gap-2 text-[#fff] font-semibold px-9 py-2 rounded-full disabled:cursor-not-allowed disabled:opacity-90"
-						disabled={!selected_answer}
+						disabled={selected_answer.length<2}
 						on:click={handleSubmit}
 						>
 						

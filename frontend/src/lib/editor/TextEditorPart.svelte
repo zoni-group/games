@@ -27,7 +27,7 @@ SPDX-License-Identifier: MPL-2.0
 			case_sensitive: false
 		};
 	}
-
+	
 	const tippy = createTippy({
 		arrow: true,
 		animation: 'perspective-subtle'

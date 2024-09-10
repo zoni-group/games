@@ -89,6 +89,7 @@ SPDX-License-Identifier: MPL-2.0
 		localStorage.setItem('edit_game', JSON.stringify(data));
 		return 'unload';
 	};
+	
 	const saveQuiz = async () => {
 		if (schemaInvalid) {
 			return;
