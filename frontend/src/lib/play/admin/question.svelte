@@ -87,7 +87,7 @@ SPDX-License-Identifier: MPL-2.0
 						{optionsLabel[i]}
 					</span>
 					<span
-						class="text-center fluid-text-md px-2 py-2 w-full text-[#fff] "
+						class="text-center fluid-text-md lg:text-3xl md:text-xl sm:text-lg px-2 py-2 w-full text-[#fff] "
 						>{answer.answer}</span
 					>
 				</div>
