@@ -15,6 +15,7 @@ SPDX-License-Identifier: MPL-2.0
 	import BrownButton from '$lib/components/buttons/brown.svelte';
 	import login_icon from "$lib/assets/all/login_icon.webp";
 	import hand_click_icon from "$lib/assets/all/hand_click_icon.svg";
+	import hand_click_icon_dark from "$lib/assets/all/hand_click_icon_dark.svg";
 
 	const { t } = getLocalization();
 	export let game_pin: string;
@@ -293,11 +294,12 @@ SPDX-License-Identifier: MPL-2.0
 				{/if}
 				<div class="mt-2 flex justify-center items-center">
 					<button 
-					class="px-5 py-2 flex items-center gap-2 border-[#00EDFF] my-3 border-4 bg-gradient-to-r from-[#0056BD] dark:from-[#FFE500] from-0%  to-[#5436AB] dark:to-[#FFB800] to-100% leading-5 text-white transition-colors duration-200 transform rounded-full hover:bg-gray-600 focus:outline-none disabled:cursor-not-allowed disabled:opacity-50"
+					class="px-5 py-2 flex items-center text-white dark:text-[#00529B] font-semibold gap-2 border-[#00EDFF] my-3 border-4 bg-gradient-to-r from-[#0056BD] dark:from-[#FFE500] from-0%  to-[#5436AB] dark:to-[#FFB800] to-100% leading-5 transition-colors duration-200 transform rounded-full hover:bg-gray-600 focus:outline-none disabled:cursor-not-allowed disabled:opacity-50"
 					
 					disabled={username.length <= 3} on:click={setUsername}
 					>
-						<img src="{hand_click_icon}" alt="icon" class="" >
+						<img src="{hand_click_icon}" alt="icon" class="block dark:hidden" >
+						<img src="{hand_click_icon_dark}" alt="icon" class="hidden dark:block" >
 						{$t('words.submit')}
 					</button>
 					<!-- <BrownButton disabled={game_pin.length < 6}>{$t('words.submit')}</BrownButton> -->
