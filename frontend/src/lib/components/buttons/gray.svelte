@@ -13,6 +13,7 @@ SPDX-License-Identifier: MPL-2.0
 	export let target: undefined | string = '_self';
 	export let theme: "light" | "dark" | "primary" | "secondary" | "info" | "success" | "warning" | "danger" = "primary";
 	export let textColor = "#003FA7";
+	export let classes = "text-[#003FA7] dark:text-white";
 </script>
 
 <style>
@@ -84,7 +85,7 @@ SPDX-License-Identifier: MPL-2.0
 	<a
 		{href}
 		{target}
-		class=" text-[{textColor}] dark:text-white font-bold text-4xl flex items-center gap-2"
+		class=" {classes}  font-bold text-4xl flex items-center gap-2"
 		class:disabled={disabled}
 		on:click
 	>
@@ -94,7 +95,7 @@ SPDX-License-Identifier: MPL-2.0
 	<button 
 	
 		{disabled}
-		class="  text-[{textColor}] dark:text-white  font-bold text-4xl flex items-center gap-2"
+		class="  {classes} font-bold text-4xl flex items-center gap-2"
 		
 		class:disabled={disabled}
 		on:click

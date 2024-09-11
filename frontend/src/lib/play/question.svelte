@@ -23,6 +23,7 @@
 	$: console.log(question_index, question, 'hi!');
 
 	console.log(question);
+	
 	if (question.type === undefined) {
 		question.type = QuizQuestionType.ABCD;
 	} else {
@@ -180,7 +181,8 @@
 		return isColorLight(backgroundColor) ? 'black' : 'white';
 	}
 </script>
-	<div class={`w-screen ${game_mode !== 'normal' ? 'h-4/5 flex items-start justify-center' : 'h-screen'}`}>
+
+	<div class={`w-screen ${game_mode !== 'normal' ? 'h-4/5 flex items-start justify-center' : 'h-full'}`}>
 	{#if game_mode === 'normal'}
 		<div
 			class="flex flex-col justify-start"
@@ -252,7 +254,8 @@
 							pips
 							float
 							all="label"
-							class="w-full"
+							
+							class="w-full !border-[#00EDFF] border-2 "
 						/>
 					</div>
 
@@ -438,8 +441,8 @@
 			{/if}
 		{/if}
 		{:else if !showPlayerAnswers}
-			<div class="w-full flex justify-center min-h-screen items-center">
-				<h1 class="text-3xl dark:text-white text-[#0056BD]">{$t('admin_page.no_answers')}</h1>
+			<div class="w-full flex justify-center h-full items-center">
+				<h1 class="text-3xl dark:text-white text-[#0056BD] text-center p-3">{$t('admin_page.no_answers')}</h1>
 			</div>
 		{/if}
 	<!-- Display the submitted answer -->
@@ -465,4 +468,5 @@
 		box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25) inset; 
 		border-radius: 16px
 	}
+
 </style>
