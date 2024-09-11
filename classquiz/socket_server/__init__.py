@@ -92,22 +92,33 @@ async def rejoin_game(sid: str, data: dict):
     if redis_res is None:
         await sio.emit("game_not_found", room=sid)
         return
+
     try:
         data = _RejoinGameData(**data)
     except ValidationError as e:
         await sio.emit("error", room=sid)
         print(e)
+
+    # Retrieve the player's old SID and check if they were in the game before
     redis_sid_key = f"game_session:{data.game_pin}:players:{data.username}"
     old_sid = await redis.get(redis_sid_key)
+
+    # Ensure the player was already part of the game
     if old_sid != data.old_sid:
         return
+
+    # Sync time and session management
     encrypted_datetime = fernet.encrypt(datetime.now().isoformat().encode("utf-8")).decode("utf-8")
     await sio.emit("time_sync", encrypted_datetime, room=sid)
+
+    # Update the player's session SID in Redis
     await redis.set(redis_sid_key, sid)
     await redis.srem(
         f"game_session:{data.game_pin}:players", GamePlayer(username=data.username, sid=data.old_sid).json()
     )
     await redis.sadd(f"game_session:{data.game_pin}:players", GamePlayer(username=data.username, sid=sid).json())
+
+    # Restore the game state from Redis and send it to the player
     game_data = PlayGame.parse_raw(redis_res)
     session = {
         "game_pin": data.game_pin,
@@ -117,6 +128,8 @@ async def rejoin_game(sid: str, data: dict):
     }
     await sio.save_session(sid, session)
     await sio.enter_room(sid, data.game_pin)
+
+    # Send the restored game state to the player
     await sio.emit(
         "rejoined_game",
         {
@@ -125,6 +138,10 @@ async def rejoin_game(sid: str, data: dict):
         },
         room=sid,
     )
+
+    # Restore player score or any other game data if necessary
+    player_scores = await redis.hgetall(f"game_session:{data.game_pin}:player_scores")
+    await sio.emit("player_scores", player_scores, room=sid)
 
 
 @sio.event
