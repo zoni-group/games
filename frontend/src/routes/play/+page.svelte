@@ -9,7 +9,7 @@ SPDX-License-Identifier: MPL-2.0
 	import { socket } from '$lib/socket';
 	import { browser } from '$app/environment';
 	import JoinGame from '$lib/play/join.svelte';
-	import type { Answer, Question as QuestionType } from '$lib/quiz_types';
+	import { QuizQuestionType, type Answer, type Question as QuestionType } from '$lib/quiz_types';
 	import ShowTitle from '$lib/play/title.svelte';
 	import Question from '$lib/play/question.svelte';
 	// import ShowResults from '$lib/play/show_results.svelte';
@@ -231,17 +231,22 @@ SPDX-License-Identifier: MPL-2.0
 				</div>
 			{:else}
 			<div class="min-h-screen flex flex-col items-center justify-center" >
+				{#if question.type != QuizQuestionType.VOTING}
+					<div>
+						<h2 class="text-center text-[#00529B] dark:text-[#fff] font-bold sm:text-3xl text-lg my-8">{$t('words.result', { count: 2 })}</h2>
+					</div>
+					{#key unique}
+						<KahootResults
+							bind:username
+							bind:question_results={answer_results}
+							bind:scores
+						/>
+					{/key}
+				{:else}
 				<div>
-					<h2 class="text-center text-[#00529B] dark:text-[#fff] font-bold sm:text-3xl text-lg my-8">{$t('words.result', { count: 2 })}</h2>
+					<h2 class="text-center text-[#00529B] dark:text-[#fff] font-bold sm:text-3xl text-lg my-8">Nice progress! Let’s continue</h2>
 				</div>
-				{#key unique}
-					<KahootResults
-						bind:username
-						bind:question_results={answer_results}
-						bind:scores
-					/>
-				{/key}
-
+				{/if}
 			</div>
 			{/if}
 		{/if}
