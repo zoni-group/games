@@ -54,7 +54,7 @@
 
 	// Functions for handling game state persistence using localStorage
 	function storeState() {
-		const state = { game_pin, username, question_index, gameMeta, gameData };
+		const state = { game_pin, username, question_index, gameMeta, gameData, scores, answer_results, final_results, game_mode};
 		localStorage.setItem('game_state', JSON.stringify(state));
 	}
 
@@ -66,13 +66,32 @@
 				username: storedUsername,
 				question_index: storedQuestionIndex,
 				gameMeta: storedGameMeta,
-				gameData: storedGameData
+				gameData: storedGameData,
+				scores: storedScores,
+				answer_results: storedAnswerResults,
+				final_results: storedFinalResults,
+				game_mode: storedGameMode,
 			} = JSON.parse(savedState);
+
 			game_pin = storedGamePin || game_pin;
 			username = storedUsername || username;
 			question_index = storedQuestionIndex || question_index;
 			gameMeta = storedGameMeta || gameMeta;
 			gameData = storedGameData || gameData;
+			scores = storedScores || scores;
+			answer_results = storedAnswerResults || answer_results;
+			final_results = storedFinalResults || final_results;
+			game_mode = storedGameMode || game_mode;
+
+			// Retrieve the stored socket ID and emit rejoin event
+			const storedSocketId = localStorage.getItem('socket_id');
+            if (storedSocketId) {
+                socket.emit('rejoin_game', {
+                    old_sid: storedSocketId,  // Use the stored Socket ID
+                    username: storedUsername,
+                    game_pin: storedGamePin,
+                });
+            }
 		}
 	}
 
@@ -89,6 +108,7 @@
 		if (preventReload) {
 			event.preventDefault();
 			event.returnValue = '';
+			storeState(); // Ensure state is saved before reload
 		}
 	};
 
@@ -99,6 +119,7 @@
 
 	socket.on('connect', async () => {
 		console.log('Connected!');
+		localStorage.setItem('socket_id', socket.id);  // Store the current Socket ID
 		restoreState(); // Restore the state from localStorage if present
 		const savedState = localStorage.getItem('game_state');
 		if (savedState) {
@@ -110,6 +131,7 @@
 
 	socket.on('joined_game', (data) => {
 		gameData = data;
+		game_mode = data.game_mode;
 		storeState();  // Save state after joining the game
 	});
 
@@ -124,6 +146,7 @@
 
 	socket.on('game_not_found', () => {
 		localStorage.removeItem('game_state');
+		alert('Game session not found!');
 		window.location.reload();
 	});
 
