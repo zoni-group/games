@@ -1,4 +1,6 @@
 <script lang="ts">
+	import { onMount } from 'svelte';
+	import NoSleep from 'nosleep.js';
 	import { socket } from '$lib/socket';
 	import { browser } from '$app/environment';
 	import JoinGame from '$lib/play/join.svelte';
@@ -13,6 +15,7 @@
 
 	const { t } = getLocalization();
 
+	let noSleep;
 	let disconnectedMessage = '';
 
 	// Exports
@@ -223,6 +226,9 @@
 	socket.on('final_results', (data) => {
 		final_results = data;
 		clearState();  // Clear state when the game ends
+		if (browser) {
+			noSleep.disable(); // Disable wake lock when the game ends
+		}
 	});
 
 	socket.on('solutions', (data) => {
@@ -238,6 +244,21 @@
 
 	let bg_color;
 	$: bg_color = gameData ? gameData.background_color : (darkMode ? '#383838' : '#FFFFFF');
+
+
+	onMount(() => {
+		if (browser) {
+			noSleep = new NoSleep(); // Create a NoSleep instance
+
+			const enableNoSleep = () => {
+				noSleep.enable(); // Enable wake lock to prevent the screen from locking
+				window.removeEventListener('click', enableNoSleep);
+			};
+
+			// Add event listener to enable NoSleep on the first user interaction
+			window.addEventListener('click', enableNoSleep);
+		}
+	});
 </script>
 
 <svelte:window on:beforeunload={confirmUnload} />
