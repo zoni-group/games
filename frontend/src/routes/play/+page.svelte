@@ -2,7 +2,7 @@
 	import { socket } from '$lib/socket';
 	import { browser } from '$app/environment';
 	import JoinGame from '$lib/play/join.svelte';
-	import { QuizQuestionType, type Answer, type Question as QuestionType } from '$lib/quiz_types';
+	import type { Answer, Question as QuestionType } from '$lib/quiz_types';
 	import ShowTitle from '$lib/play/title.svelte';
 	import Question from '$lib/play/question.svelte';
 	import { navbarVisible } from '$lib/stores';
