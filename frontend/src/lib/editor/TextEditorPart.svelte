@@ -21,13 +21,13 @@ SPDX-License-Identifier: MPL-2.0
 		data.questions[selected_question].answers = [];
 	}
 
-	for (let i = 0; i < data.questions[selected_question].answers.length; i++) {
-		data.questions[selected_question].answers[i] = {
-			answer: data.questions[selected_question].answers[i].answer,
-			case_sensitive: false
-		};
-	}
-
+	// for (let i = 0; i < data.questions[selected_question].answers.length; i++) {
+	// 	data.questions[selected_question].answers[i] = {
+	// 		answer: data.questions[selected_question].answers[i].answer,
+	// 		case_sensitive: false
+	// 	};
+	// }
+	
 	const tippy = createTippy({
 		arrow: true,
 		animation: 'perspective-subtle'

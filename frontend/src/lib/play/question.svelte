@@ -189,15 +189,15 @@
 			class:mt-10={[QuizQuestionType.RANGE, QuizQuestionType.ORDER, QuizQuestionType.TEXT]}
 		>
 			<h1
-				class="lg:text-2xl text-lg text-center text-black dark:text-white mt-2 break-normal mb-2 mt-20"
+				class="lg:text-2xl text-lg text-center text-[#0056BD] dark:text-white mt-2 break-normal mb-2 mt-20"
 			>
 				{@html question.question}
 			</h1>
 			{#if question.image !== null && game_mode !== 'kahoot'}
-				<div class="relative mb-8 flex justify-center items-center" style="max-height: 28vh;">
+				<div class="flex justify-center lg:w-1/3 lg:w-full p-0 mt-5">
 					<MediaComponent
 						src={question.image}
-						css_classes="object-cover mx-auto mb-8 max-h-[90%]"
+						css_classes="max-h-[50vh] object-cover mx-auto mb-8 w-auto"
 					/>
 				</div>
 			{/if}
@@ -231,7 +231,7 @@
 							{#if game_mode === 'kahoot'}
 								<img class="inline-block m-auto max-h-[30vh]" alt="Icon" src={kahoot_icons[i]} />
 							{:else}
-								<p class="m-auto button-text text-sm sm:text-base md:text-lg lg:text-xl" style="color: {getTextColor(answer.color ?? '#004A93')}">{answer.answer}</p>
+								<p class="m-auto button-text text-sm text-[{getTextColor(answer.color ?? '#fff')}] dark:text-[{getTextColor(answer.color ?? '#fff')}] sm:text-base md:text-lg lg:text-xl">{answer.answer}</p>
 							{/if}
 						</button>
 					{/each}
@@ -291,7 +291,6 @@
 				id="answer-input"
 				type="text"
 				bind:value={text_input}
-				disabled={selected_answer}
 				class="bg-white focus:ring placeholder-[#DCE1E7] text-black border-[#003FA7] border-2 shadow-inner bg-opacity-50 font-bold rounded-xl focus:ring-blue-500 block w-full py-4 px-3 dark:bg-[#0AEDFE]/20 dark:text-white dark:focus:ring-blue-500 outline-none transition text-center disabled:opacity-50 disabled:cursor-not-allowed "
 				placeholder="Enter your answer"
 			  />
@@ -300,7 +299,7 @@
 				<button 
 				type="button"
 				class="bg-[#0056BD] border-[#fff] flex items-center border-2 gap-2 text-[#fff] font-semibold px-9 py-2 rounded-full disabled:cursor-not-allowed disabled:opacity-90"
-				disabled={selected_answer}
+				disabled={!text_input}
 				on:click={() => {
 					selectAnswer(text_input);
 				}}
