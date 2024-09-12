@@ -108,6 +108,7 @@
 	"type": "module",
 	"dependencies": {
 		"@zerodevx/svelte-toast": "^0.9.5",
+		"nosleep.js": "^0.12.0",
 		"svelte-icons": "^2.1.0"
 	}
 }
