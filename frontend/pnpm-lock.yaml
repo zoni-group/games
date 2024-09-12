@@ -11,6 +11,9 @@ importers:
       '@zerodevx/svelte-toast':
         specifier: ^0.9.5
         version: 0.9.5(svelte@3.59.2)
+      nosleep.js:
+        specifier: ^0.12.0
+        version: 0.12.0
       svelte-icons:
         specifier: ^2.1.0
         version: 2.1.0
@@ -1910,6 +1913,9 @@ packages:
   normalize-range@0.1.2:
     resolution: {integrity: sha512-bdok/XvKII3nUpklnV6P2hxtMNrCboOjAcyBuQnWEhO665FwrSNRxU+AqpsyvO6LgGYPspN+lu5CLtw4jPRKNA==}
     engines: {node: '>=0.10.0'}
+
+  nosleep.js@0.12.0:
+    resolution: {integrity: sha512-9d1HbpKLh3sdWlhXMhU6MMH+wQzKkrgfRkYV0EBdvt99YJfj0ilCJrWRDYG2130Tm4GXbEoTCx5b34JSaP+HhA==}
 
   nth-check@2.1.1:
     resolution: {integrity: sha512-lqjrjmaOoAnWfMmBPL+XNnynZh2+swxiX3WUE0s4yEHI6m+AwrK2UZOimIRl3X/4QctVqS8AiZjFqyOGrMXb/w==}
@@ -4484,6 +4490,8 @@ snapshots:
   normalize-path@3.0.0: {}
 
   normalize-range@0.1.2: {}
+
+  nosleep.js@0.12.0: {}
 
   nth-check@2.1.1:
     dependencies:
