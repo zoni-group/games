@@ -7,6 +7,7 @@
 	import { toast } from '@zerodevx/svelte-toast';
 	import { onMount } from 'svelte';
     import playBtn from "$lib/assets/all/play.svg";
+    import playDark from "$lib/assets/all/play_dark.svg";
 	export let game_pin: string;
 	export let players;
 	export let socket;
@@ -117,13 +118,15 @@
 		class="px-5 py-2 flex items-center justify-center gap-5 border-[#00EDFF] my-3 border-4 bg-gradient-to-r from-[#0056BD] dark:from-[#FFE500] from-0%  to-[#5436AB] dark:to-[#FFB800] to-100% leading-5 text-white dark:text-[#00529B] transition-colors duration-200 transform rounded-full hover:bg-gray-600 focus:outline-none disabled:cursor-not-allowed disabled:opacity-50"
 		
 		 >
-		 <img src="{playBtn}" alt="">
+		 <img src="{playBtn}" class="block dark:hidden" alt="">
+		 <img src="{playDark}" class="hidden dark:block" alt="">
 			<GrayButton
 				disabled={players.length < 1}
 				on:click={() => {
 					socket.emit('start_game', '');
 				}}
 				textColor="#fff"
+				classes="text-[#fff] dark:text-[#00529B]"
 				> 
 				{$t('admin_page.start_game')}
 			</GrayButton>
