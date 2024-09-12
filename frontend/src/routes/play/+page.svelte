@@ -296,6 +296,16 @@
 				<div>
 					<h2 class="text-center text-[#00529B] dark:text-[#fff] font-bold sm:text-3xl text-lg my-8">Nice progress! Let’s continue</h2>
 				</div>
+				{#key unique}
+				<div class="flex items-center  justify-center p-4">
+					<div class="flex flex-col items-center bg-[#00529B] dark:bg-[#0AEDFE]/20 result-container  dark:bg-opacity-70 rounded-lg p-8">
+						
+						<p class="text-lg sm:text-xl md:text-2xl lg:text-3xl text-[#fff] dark:text-[#fff]">
+							Total score: {scores[username] ?? '0'}
+						</p>
+					</div>
+				</div>
+					{/key}
 				{/if}
 			</div>
 
@@ -303,3 +313,10 @@
 		{/if}
 	</div>	
 </div>
+<style>
+	.result-container {
+		box-shadow: 1px 1px 9px #00EDFF, 1px 1px 9px #00EDFF inset; 
+		border-radius: 16px; 
+		border: 4px #fff solid; 
+	}
+</style>
