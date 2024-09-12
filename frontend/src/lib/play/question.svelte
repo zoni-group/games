@@ -231,7 +231,7 @@
 							{#if game_mode === 'kahoot'}
 								<img class="inline-block m-auto max-h-[30vh]" alt="Icon" src={kahoot_icons[i]} />
 							{:else}
-								<p class="m-auto button-text text-sm text-[#fff] dark:text-[#fff] sm:text-base md:text-lg lg:text-xl">{answer.answer}</p>
+								<p class="m-auto button-text text-sm text-[{getTextColor(answer.color ?? '#fff')}] dark:text-[{getTextColor(answer.color ?? '#fff')}] sm:text-base md:text-lg lg:text-xl">{answer.answer}</p>
 							{/if}
 						</button>
 					{/each}
