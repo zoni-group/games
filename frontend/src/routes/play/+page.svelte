@@ -54,12 +54,26 @@
 
 	// Functions for handling game state persistence using localStorage
 	function storeState() {
-		const state = { game_pin, username, question_index, gameMeta, gameData, scores, answer_results, final_results, game_mode};
+		const state = {
+			game_pin,
+			username,
+			question_index,
+			gameMeta,
+			gameData,
+			scores,
+			answer_results,
+			final_results,
+			game_mode,
+			question,
+			solution
+		};
 		localStorage.setItem('game_state', JSON.stringify(state));
+		console.log('State saved:', state);
 	}
 
 	function restoreState() {
 		const savedState = localStorage.getItem('game_state');
+
 		if (savedState) {
 			const {
 				game_pin: storedGamePin,
@@ -71,8 +85,26 @@
 				answer_results: storedAnswerResults,
 				final_results: storedFinalResults,
 				game_mode: storedGameMode,
+				question: storedQuestion,
+				solution: storedSolution,
 			} = JSON.parse(savedState);
 
+			// Compare URL game_pin with stored game_pin
+			console.log('Compare Game Pin:', game_pin, storedGamePin);
+			if (game_pin !== storedGamePin) {
+				// If pins don't match, clear the state and allow the user to start a new session
+				clearState();
+				game_pin = ''; // Clear the game_pin so the user can enter a new one
+				username = '';  // Reset username and other states
+				question_index = '';
+				gameMeta = { started: false };
+				answer_results = undefined;
+				final_results = [null];
+				game_mode = '';
+				return;
+			}
+
+			// If pins match, restore the stored state
 			game_pin = storedGamePin || game_pin;
 			username = storedUsername || username;
 			question_index = storedQuestionIndex || question_index;
@@ -82,21 +114,24 @@
 			answer_results = storedAnswerResults || answer_results;
 			final_results = storedFinalResults || final_results;
 			game_mode = storedGameMode || game_mode;
+			question = storedQuestion || question;
+			solution = storedSolution || solution;
 
 			// Retrieve the stored socket ID and emit rejoin event
 			const storedSocketId = localStorage.getItem('socket_id');
-            if (storedSocketId) {
-                socket.emit('rejoin_game', {
-                    old_sid: storedSocketId,  // Use the stored Socket ID
-                    username: storedUsername,
-                    game_pin: storedGamePin,
-                });
-            }
+			if (storedSocketId) {
+				socket.emit('rejoin_game', {
+					old_sid: storedSocketId,  // Use the stored Socket ID
+					username: storedUsername,
+					game_pin: storedGamePin,
+				});
+			}
 		}
 	}
 
 	function clearState() {
 		localStorage.removeItem('game_state');
+		localStorage.removeItem('socket_id');
 	}
 
 	// Restore game state on load
@@ -145,7 +180,7 @@
 	});
 
 	socket.on('game_not_found', () => {
-		localStorage.removeItem('game_state');
+		clearState();
 		alert('Game session not found!');
 		window.location.reload();
 	});
@@ -161,11 +196,13 @@
 
 	socket.on('start_game', () => {
 		gameMeta.started = true;
+		storeState();
 	});
 
 	socket.on('question_results', (data) => {
 		restart();
 		answer_results = data;
+		storeState();
 	});
 
 	socket.on('username_already_exists', () => {
@@ -175,9 +212,7 @@
 	socket.on('kick', () => {
 		window.alert('You got kicked');
 		preventReload = false;
-		game_pin = '';
-		username = '';
-		localStorage.removeItem('game_state');
+		clearState();
 		window.location.reload();
 	});
 
@@ -192,6 +227,7 @@
 
 	socket.on('solutions', (data) => {
 		solution = data;
+		storeState();
 	});
 
 	let darkMode = false;
