@@ -4,7 +4,7 @@
 	import { socket } from '$lib/socket';
 	import { browser } from '$app/environment';
 	import JoinGame from '$lib/play/join.svelte';
-	import type { Answer, Question as QuestionType } from '$lib/quiz_types';
+	import { QuizQuestionType, type Answer, type Question as QuestionType } from '$lib/quiz_types';
 	import ShowTitle from '$lib/play/title.svelte';
 	import Question from '$lib/play/question.svelte';
 	import { navbarVisible } from '$lib/stores';
@@ -302,9 +302,10 @@
 			{:else}
 			<div class="min-h-screen flex flex-col items-center justify-center" >
 				{#if question.type != QuizQuestionType.VOTING}
+			<div class="min-h-screen flex flex-col items-center justify-center" >
+				{#if question.type != QuizQuestionType.VOTING}
 					<div>
 						<h2 class="text-center text-[#00529B] dark:text-[#fff] font-bold sm:text-3xl text-lg my-8">{$t('words.result', { count: 2 })}</h2>
-
 					</div>
 					{#key unique}
 						<KahootResults
