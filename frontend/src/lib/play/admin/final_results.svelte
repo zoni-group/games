@@ -71,14 +71,14 @@
 						<div class="flex items-center justify-between w-full space-x-4">
 							<div class="flex items-center space-x-6" >
 								<p class="text-2xl font-semibold text-[#FFE500] " class:!text-white={i>=3} >{i+1}</p>
-								<p>{player}</p>
+								<p class="text-white" >{player}</p>
 							</div>
 							<p>
 								{#if i == 0}
 								<ZoniStar />
 								{/if}
 							</p>
-							<p>{data[player]}</p>
+							<p class="text-white" >{data[player]}</p>
 						</div>
 					</div>
 				{/if}
