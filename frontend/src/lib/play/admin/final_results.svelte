@@ -49,7 +49,7 @@
 				<div class=" p-4 border-4 flex items-center border-[#00EDFF] rounded-lg shadow-lg bg-gradient-to-r from-[#0056BD] to-[#5436AB]">
 					<FinishingFlag />
 					<div class="w-2/3 m-auto" >
-						<p class="text-center text-lg font-medium text-[#00529B] dark:text-[#fff]">{$t('play_page.your_score', { score: data[username] })}</p>
+						<p class="text-center text-lg font-medium text-[#fff] dark:text-[#fff]">{$t('play_page.your_score', { score: data[username] })}</p>
 						{#each player_names as player, i}
 							{#if player === username}
 								<p class="text-center text-[#FFE500] text-xl font-semibold mt-2">{$t('play_page.your_place', { place: i + 1 })}</p>
