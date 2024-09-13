@@ -302,8 +302,6 @@
 			{:else}
 			<div class="min-h-screen flex flex-col items-center justify-center" >
 				{#if question.type != QuizQuestionType.VOTING}
-			<div class="min-h-screen flex flex-col items-center justify-center" >
-				{#if question.type != QuizQuestionType.VOTING}
 					<div>
 						<h2 class="text-center text-[#00529B] dark:text-[#fff] font-bold sm:text-3xl text-lg my-8">{$t('words.result', { count: 2 })}</h2>
 					</div>
@@ -327,10 +325,9 @@
 						</p>
 					</div>
 				</div>
-					{/key}
+				{/key}
 				{/if}
 			</div>
-
 			{/if}
 		{/if}
 	</div>	
