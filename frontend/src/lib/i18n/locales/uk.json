@@ -178,6 +178,7 @@
         "start_by_showing_first_question": "",
         "request_export_results": "",
         "time_left": "",
+        "after_voting": "Хороший прогрес! Давайте продовжимо",
         "show_next_question": "",
         "stop_time": "",
         "show_results": "",

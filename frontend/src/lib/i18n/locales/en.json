@@ -257,6 +257,7 @@
         "show_next_question": "Show next question",
         "start_by_showing_first_question": "Start by showing the first question.",
         "no_answers": "Oops! You didn’t submit an answer. Please wait for the results.",
+        "after_voting": "Nice progress! Let’s continue",
         "stop_time": "Stop time",
         "save_results": "Save results",
         "next_question": "Next Question ({{question}})",

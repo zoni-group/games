@@ -175,6 +175,7 @@
         "export_results": "Eksporter resultater",
         "show_next_question": "Vis neste spørsmål",
         "no_answers": "Oops! Du har ikke sendt inn noe svar. Vennligst vent på resultatene.",
+        "after_voting": "Fin fremgang! La oss fortsette",
         "already_registered_as_admin": "Det er allerede en administrator registrert for dette spillet.",
         "start_game": "Start spillet",
         "start_by_showing_first_question": "Start ved å vise det første spørsmålet.",

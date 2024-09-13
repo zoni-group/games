@@ -4,7 +4,7 @@
 	import { socket } from '$lib/socket';
 	import { browser } from '$app/environment';
 	import JoinGame from '$lib/play/join.svelte';
-	import type { Answer, Question as QuestionType } from '$lib/quiz_types';
+	import { QuizQuestionType, type Answer, type Question as QuestionType } from '$lib/quiz_types';
 	import ShowTitle from '$lib/play/title.svelte';
 	import Question from '$lib/play/question.svelte';
 	import { navbarVisible } from '$lib/stores';
@@ -300,11 +300,12 @@
 					<h1 class="text-3xl">{$t('admin_page.no_answers')}</h1>
 				</div>
 			{:else}
-				<div class="min-h-screen flex flex-col items-center justify-center">
+			<div class="min-h-screen flex flex-col items-center justify-center" >
+				{#if question.type != QuizQuestionType.VOTING}
+			<div class="min-h-screen flex flex-col items-center justify-center" >
+				{#if question.type != QuizQuestionType.VOTING}
 					<div>
-						<h2 class="text-center text-[#00529B] dark:text-[#fff] font-bold sm:text-3xl text-lg my-8">
-							{$t('words.result', { count: 2 })}
-						</h2>
+						<h2 class="text-center text-[#00529B] dark:text-[#fff] font-bold sm:text-3xl text-lg my-8">{$t('words.result', { count: 2 })}</h2>
 					</div>
 					{#key unique}
 						<KahootResults
@@ -313,8 +314,31 @@
 							bind:scores
 						/>
 					{/key}
+				{:else}
+				<div>
+					<h2 class="text-center text-[#00529B] dark:text-[#fff] font-bold sm:text-3xl text-lg my-8">{$t('admin_page.after_voting')}</h2>
 				</div>
+				{#key unique}
+				<div class="flex items-center  justify-center p-4">
+					<div class="flex flex-col items-center bg-[#00529B] dark:bg-[#0AEDFE]/20 result-container  dark:bg-opacity-70 rounded-lg p-8">
+						
+						<p class="text-lg sm:text-xl md:text-2xl lg:text-3xl text-[#fff] dark:text-[#fff]">
+							Total score: {scores[username] ?? '0'}
+						</p>
+					</div>
+				</div>
+					{/key}
+				{/if}
+			</div>
+
 			{/if}
 		{/if}
 	</div>	
 </div>
+<style>
+	.result-container {
+		box-shadow: 1px 1px 9px #00EDFF, 1px 1px 9px #00EDFF inset; 
+		border-radius: 16px; 
+		border: 4px #fff solid; 
+	}
+</style>

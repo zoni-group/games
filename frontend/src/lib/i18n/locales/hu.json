@@ -245,6 +245,7 @@
         "already_registered_as_admin": "Ehhez a játékhoz már regisztrált adminisztrátor.",
         "get_results_and_stop_time": "Eredmények megtekintése és állítsa meg az időzítőt",
         "start_by_showing_first_question": "Kezdje az első kérdés megtekintésével.",
+        "after_voting": "Szép haladás! Folytassuk",
         "stop_time": "Időzítő leállítása",
         "next_question": "Következő kérdés ({{question}})",
         "stop_time_and_solutions": "Időzítőt megállítása és megoldások megtekintése",
