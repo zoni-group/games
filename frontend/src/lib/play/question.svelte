@@ -441,7 +441,7 @@
 			{/if}
 		{/if}
 		{:else if !showPlayerAnswers}
-			<div class="w-full flex justify-center min-h-screen items-center">
+			<div class={`w-full flex justify-center items-center ${game_mode === 'normal' ? 'h-full' : 'min-h-screen'}`}>
 				<h1 class="text-3xl dark:text-white text-[#0056BD] text-center p-3">{$t('admin_page.no_answers')}</h1>
 			</div>
 		{/if}
