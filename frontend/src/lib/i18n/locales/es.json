@@ -205,6 +205,7 @@
     "admin_page": {
         "export_results": "Exportar los resultados",
         "show_next_question": "Muestra la siguiente pregunta",
+        "after_voting": "¡Buen progreso! continuemos",
         "stop_time": "Detener el tiempo",
         "get_results": "Obtener resultados",
         "get_results_and_stop_time": "Obtén los resultados y pará el tiempo",

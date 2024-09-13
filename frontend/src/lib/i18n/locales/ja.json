@@ -94,6 +94,7 @@
         "get_results": "結果を得る",
         "show_next_question": "次の質問を表示",
         "no_answers": "おっと！回答を送信していません。結果をお待ちください。",
+        "after_voting": "素晴らしい進歩です！続けましょう",
         "stop_time": "停止時間",
         "enter_answer_into_field": "入力欄に回答を入力してください!",
         "request_export_results": "リクエスト結果のダウンロード",

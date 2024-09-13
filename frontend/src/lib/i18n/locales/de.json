@@ -251,6 +251,7 @@
         "show_next_question": "Zeige die nächste Frage",
         "start_by_showing_first_question": "Beginne damit, die erste Frage zu zeigen!",
         "no_answers": "Hoppla! Sie haben keine Antwort übermittelt. Bitte warten Sie auf die Ergebnisse.",
+        "after_voting": "Schöner Fortschritt! Machen wir weiter",
         "stop_time": "Zeit stoppen",
         "save_results": "Ergebnisse speichern",
         "next_question": "Nächste Frage ({{question}})",

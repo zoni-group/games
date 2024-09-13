@@ -316,7 +316,7 @@
 					{/key}
 				{:else}
 				<div>
-					<h2 class="text-center text-[#00529B] dark:text-[#fff] font-bold sm:text-3xl text-lg my-8">Nice progress! Let’s continue</h2>
+					<h2 class="text-center text-[#00529B] dark:text-[#fff] font-bold sm:text-3xl text-lg my-8">{$t('admin_page.after_voting')}</h2>
 				</div>
 				{#key unique}
 				<div class="flex items-center  justify-center p-4">

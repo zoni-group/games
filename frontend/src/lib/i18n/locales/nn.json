@@ -212,6 +212,7 @@
         "show_next_question": "",
         "stop_time": "",
         "show_results": "",
+        "after_voting": "Fin fremgang! La oss fortsette",
         "save_results": "",
         "enter_answer_into_field": "",
         "get_results_and_stop_time": "",

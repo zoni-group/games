@@ -256,6 +256,7 @@
         "show_next_question": "Montrer la prochaine question",
         "start_by_showing_first_question": "Démarrer en montrant la première question.",
         "no_answers": "Oups ! Vous n'avez pas soumis de réponse. Veuillez attendre les résultats.",
+        "after_voting": "Belle progression ! Continuons",
         "stop_time": "Arrêter le temps",
         "next_question": "Question suivante ({{question}})",
         "show_results": "Montrer les résultats",
