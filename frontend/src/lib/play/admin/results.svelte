@@ -137,12 +137,12 @@ SPDX-License-Identifier: MPL-2.0
 				</tr>
 				{#each player_names as player, i (player)}
 					<tr animate:flip>
-						<td class:hidden={i > 3} class="p-2 border-r border-r-white  text-[#00529B] dark:text-white">{player}</td>
-						<td class:hidden={i > 3} class="p-2 text-[#00529B] dark:text-white">{data[player]}</td>
+						<td class:hidden={i > 4} class="p-2 border-r border-r-white  text-[#00529B] dark:text-white">{player}</td>
+						<td class:hidden={i > 4} class="p-2 text-[#00529B] dark:text-white">{data[player]}</td>
 						{#if show_new_score_clicked}
 							<td
 								in:fly={{ x: 300 }}
-								class:hidden={i > 3}
+								class:hidden={i > 4}
 								class="p-2 text-[#00529B] dark:text-white"
 								class:text-red-600={score_by_username[player] === 0 ||
 									score_by_username[player] === undefined}
