@@ -11,11 +11,22 @@ SPDX-License-Identifier: MPL-2.0
 	import BrownButton from '$lib/components/buttons/brown.svelte';
 	import { getLocalization } from '$lib/i18n';
 	import { onMount } from 'svelte';
-
+	enum AvailableUploadTypes {
+		// eslint-disable-next-line no-unused-vars
+		Image,
+		// eslint-disable-next-line no-unused-vars
+		Video,
+		// eslint-disable-next-line no-unused-vars
+		Library,
+		// eslint-disable-next-line no-unused-vars
+		Pixabay,
+		// eslint-disable-next-line no-unused-vars
+		Audio,
+	}
 	export let data: EditorData;
 	export let selected_question: number;
 	export let modalOpen: boolean;
-
+	export let selected_type: AvailableUploadTypes | null;
 	const { t } = getLocalization();
 
 	const fetch_images = async (): Promise<PrivateImageData> => {
@@ -79,17 +90,21 @@ SPDX-License-Identifier: MPL-2.0
 {:then images}
 	<div class="flex w-screen p-8 h-screen">
 		<div
-			class="flex flex-col w-1/3 m-auto overflow-scroll h-full rounded p-4 gap-4 bg-white dark:bg-gray-700"
+			class="flex flex-col w-1/3 m-auto overflow-scroll h-full rounded p-4 gap-4 bg-white dark:bg-gray-700" style="scrollbar-width: none;"
 		>
+		<!-- svelte-ignore a11y-click-events-have-key-events -->
+		<span class="material-symbols-outlined self-end bg-red-500 text-white rounded-xl p-2 cursor-pointer" on:click={() => {modalOpen = false; selected_type = null}} >
+			close
+		</span>
 			{#each images as image}
 				<div class="rounded border-2 border-[#004A93] p-2 flex-col flex gap-2">
-					<div>
+					<div class="w-full h-full flex items-center justify-center" >
 						{#if contentTypes[image.id]?.startsWith('image')}
 							<img
 								src={`/api/v1/storage/download/${image.id}`}
 								loading="lazy"
 								alt={image.alt_text}
-								class="object-contain w-full h-full max-h-full rounded"
+								class="object-contain w-1/2 h-full max-h-full rounded"
 							/>
 						{:else if contentTypes[image.id]?.startsWith('video')}
 							<!-- svelte-ignore a11y-media-has-caption -->

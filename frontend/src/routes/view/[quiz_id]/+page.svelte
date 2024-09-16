@@ -17,7 +17,7 @@
 	import playIcon from "$lib/assets/all/play.svg";
 	import playIconDark from "$lib/assets/all/play_dark.svg";
 
-	const default_colors = ['#C8E6C9', '#FFE0B2', '#FFF9C4', '#B3E5FC'];
+	const default_colors = ['#FFA800', '#00A3FF', '#FF1D38', '#00D749'];
 
 	const tippy = createTippy({
 		arrow: true,
@@ -366,7 +366,7 @@
 										default_colors[index_answer]}; color: {get_foreground_color(
 										answer.color ?? default_colors[index_answer]
 									)}">
-											<h4 class="text-center text-black dark:text-white">
+											<h4 class="text-center ">
 												{quiz.questions[index_question].answers[index_answer]
 													.answer}
 											</h4>

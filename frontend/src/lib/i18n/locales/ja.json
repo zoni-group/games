@@ -85,7 +85,7 @@
         "download_template_here": "テンプレートをダウンロード",
         "classquiz_quiz": "ClassQuizクイズ",
         "upload_file_ending": ".cqa または .xlsx で終わるファイルをアップロードする",
-        "this_side_classquiz": "ここでは、ClassQuizからエクスポートされたクイズをインポートできます.",
+        "this_side_classquiz": "こちら側では、Zoni AI からエクスポートされたアクティビティをインポートできます。",
         "need_help": "ヘルプが必要？",
         "a_kahoot_quiz": "Kahoot! のクイズ"
     },

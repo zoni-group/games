@@ -250,7 +250,7 @@ SPDX-License-Identifier: MPL-2.0
 			</div>
 		{:else if selected_type === AvailableUploadTypes.Library}
 			<div>
-				<Library bind:data {selected_question} bind:modalOpen />
+				<Library bind:data {selected_question} bind:modalOpen bind:selected_type />
 			</div>
 		{:else if selected_type === AvailableUploadTypes.Pixabay}
 			<div>

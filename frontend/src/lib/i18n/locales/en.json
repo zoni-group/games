@@ -243,7 +243,7 @@
         "side_import_kahoot": "On this side, you can import activities that are available on Kahoot!",
         "classquiz_quiz": "A Zoni AI-Activity",
         "upload_file_ending": "Upload the file ending in .cqa or .xlsx",
-        "this_side_classquiz": "On this side you can import activities, which were exported from Zoni AI.",
+        "this_side_classquiz": "On this side you can import activities that were exported from Zoni AI.",
         "this_side_classquiz_excel": "You can also upload Excel files if you've filled out the following template. If an activity with the same title already exists, it will append the questions to the existing activity.",
         "download_template_here": "Download the template"
     },
