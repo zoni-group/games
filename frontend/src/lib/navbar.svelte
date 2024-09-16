@@ -8,6 +8,7 @@ SPDX-License-Identifier: MPL-2.0
     import '@fontsource/marck-script/index.css';
     import { getLocalization } from '$lib/i18n';
     import { signedIn, pathname } from '$lib/stores';
+    import { page } from '$app/stores';
     import { createTippy } from 'svelte-tippy';
     import BrownButton from '$lib/components/buttons/brown.svelte';
     import { browser } from '$app/environment';
@@ -19,9 +20,7 @@ SPDX-License-Identifier: MPL-2.0
         animation: 'perspective-subtle',
         placement: 'bottom'
     });
-
     const { t } = getLocalization();
-
     let menuIsClosed = true;
     const toggleMenu = () => {
         menuIsClosed = !menuIsClosed;
@@ -54,10 +53,10 @@ SPDX-License-Identifier: MPL-2.0
                 <img src="/zoni/images/zoni_logo.svg" alt="Zoni Logo" class="h-8 lg:h-10"> <!-- Adjust height as needed -->
             </a>
             <a class="btn-nav bg-[#0038FF] !px-9 !text-white rounded-lg" href="/play">{$t('words.play')}</a>
-            <a class="btn-nav" href="/explore">{$t('words.explore')}</a>
-            <a class="btn-nav" href="/search">{$t('words.search')}</a>
+            <a class="btn-nav" class:active={$page.url.pathname === "/explore"} href="/explore">{$t('words.explore')}</a>
+            <a class="btn-nav" class:active={$page.url.pathname === "/search"} href="/search">{$t('words.search')}</a>
             {#if $signedIn}
-                <a class="btn-nav" href="/dashboard">{$t('words.dashboard')}</a>
+                <a class="btn-nav" class:active={$page.url.pathname === "/dashboard"} href="/dashboard">{$t('words.dashboard')}</a>
             {:else}
                 <!--
                 <a class="btn-nav" href="/docs">{$t('words.docs')}</a>
@@ -277,10 +276,10 @@ SPDX-License-Identifier: MPL-2.0
         <!-- Navbar content -->
         {#if !menuIsClosed}
             <div class="flex flex-col" transition:slide={{ duration: 400 }}>
-                <a class="btn-nav" href="/explore">{$t('words.explore')}</a>
-                <a class="btn-nav" href="/search">{$t('words.search')}</a>
+                <a class="btn-nav" class:active={$page.url.pathname === "/explore"} href="/explore">{$t('words.explore')}</a>
+                <a class="btn-nav" class:active={$page.url.pathname === "/search"} href="/search">{$t('words.search')}</a>
                 {#if $signedIn}
-                    <a class="btn-nav" href="/dashboard">{$t('words.dashboard')}</a>
+                    <a class="btn-nav" class:active={$page.url.pathname === "/dashboard"} href="/dashboard">{$t('words.dashboard')}</a>
                 {:else}
                     <!--
                     <a class="btn-nav" href="/docs">{$t('words.docs')}</a>
@@ -340,6 +339,9 @@ SPDX-License-Identifier: MPL-2.0
 
 <style lang="scss">
     .btn-nav {
-        @apply text-lg font-medium px-3 text-gray-600 hover:text-green-600 py-1.5 transition-all duration-300;
+        @apply text-lg font-medium px-3 text-gray-600 hover:text-[#00529B] py-1.5 transition-all duration-300;
+    }
+    .active {
+        @apply text-[#00529B] font-bold;
     }
 </style>
