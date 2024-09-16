@@ -272,7 +272,7 @@
         "side_import_kahoot": "På denne siden kan du importere spørrekonkurranser som bor på Kahoot!.",
         "upload_file_ending": "Last opp filen som slutter med «.cqa» eller .xlsx",
         "classquiz_quiz": "En ClassQuiz-spørrekonkurranse",
-        "this_side_classquiz": "På denne siden kan du importere spørrekonkurranser som ble eksportert fra ClassQuiz.",
+        "this_side_classquiz": "På denne siden kan du importere aktiviteter som ble eksportert fra Zoni AI.",
         "url_should_look_like_this": "Nettadressen skal være utformet slik: https://create.kahoot.it/details/…",
         "this_side_classquiz_excel": "Du kan også laste opp Excel-filer, hvis du har fylt ut følgende mal:",
         "download_template_here": "Last ned malen"

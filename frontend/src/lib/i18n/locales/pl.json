@@ -276,7 +276,7 @@
         "url_should_look_like_this": "Adres URL powinien wyglądać tak: https://create.kahoot.it/details/...",
         "side_import_kahoot": "Na tej stronie możesz importować quizy, które są dostępne w Kahoot!.",
         "upload_file_ending": "Prześlij plik z rozszerzeniem .cqa lub .xlsx",
-        "this_side_classquiz": "Na tej stronie można importować quizy, które zostały wyeksportowane z ClassQuiz.",
+        "this_side_classquiz": "Na tej stronie możesz importować aktywności wyeksportowane z Zoni AI.",
         "a_kahoot_quiz": "Quiz Kahoot",
         "classquiz_quiz": "Quiz ClassQuiz",
         "download_template_here": "Pobierz szablon",

@@ -224,7 +224,7 @@
         "upload_file_ending": "Töltsön fel egy .cqa vagy .xlsx végződésű fájlt",
         "this_side_classquiz_excel": "Excel fájlokat is feltölthet, ha kitöltötte az alábbi sablont.",
         "download_template_here": "Töltse le a sablont",
-        "this_side_classquiz": "Ezen az oldalon importálhat ClassQuizból exportált kvízeket.",
+        "this_side_classquiz": "Ezen az oldalon importálhat olyan tevékenységeket, amelyeket a Zoni AI-ből exportáltak.",
         "a_kahoot_quiz": "Egy Kahoot!-Kvíz",
         "side_import_kahoot": "Ezen az oldalon importálhat kvízeket, amelyek a Kahoot!-on aktívak.",
         "need_help": "Segíthetünk?",
