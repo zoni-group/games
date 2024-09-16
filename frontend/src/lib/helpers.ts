@@ -54,5 +54,5 @@ export const get_foreground_color = (bg_color: string): 'black' | 'white' => {
 	const black_rgb: RGB = [0, 0, 0];
 	const black_contrast = getContrast(black_rgb, bg_rgb);
 	const white_contrast = getContrast(white_rgb, bg_rgb);
-	return black_contrast < white_contrast ? 'black' : 'white';
+	return black_contrast < white_contrast ? 'white' : 'black';
 };

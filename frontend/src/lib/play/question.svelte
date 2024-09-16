@@ -164,7 +164,7 @@
 		}
 	};
 	$: console.log(slider_value, 'values');
-	const default_colors = ['#C8E6C9', '#FFE0B2', '#FFF9C4', '#B3E5FC'];
+	const default_colors = ['#FFA800', '#00A3FF', '#FF1D38', '#00D749'];
 
 	// Function to determine if the color is light or dark
 	function isColorLight(color) {
