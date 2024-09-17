@@ -43,12 +43,19 @@ SPDX-License-Identifier: MPL-2.0
 	let id_to_position_map = {};
 
 	const getData = async (): Promise<Array<QuizData>> => {
+		const [quiz_res, quiztivity_res] = await Promise.all([
+			fetch('/api/v1/quiz/list?page_size=100'),
+			fetch('/api/v1/quiztivity/')
+		]);
+
+		const quizzes = await quiz_res.json();
+		const quiztivities = await quiztivity_res.json();
 		items_to_show = [];
-		for (let i = 0; i < data.quizzes.length; i++) {
-			items_to_show.push({ ...data.quizzes[i], type: 'quiz' });
+		for (let i = 0; i < quizzes.length; i++) {
+			items_to_show.push({ ...quizzes[i], type: 'quiz' });
 		}
-		for (let i = 0; i < data.quiztivities.length; i++) {
-			items_to_show.push({ ...data.quiztivities[i], type: 'quiztivity' });
+		for (let i = 0; i < quiztivities.length; i++) {
+			items_to_show.push({ ...quiztivities[i], type: 'quiztivity' });
 		}
 		fuse = new Fuse(items_to_show, {
 			keys: ['title', 'description', 'questions.title'],
@@ -138,7 +145,7 @@ SPDX-License-Identifier: MPL-2.0
 						<div class="border-[#003FA7] flex dark:border-[#fff] border-2 rounded-lg" >
 							<input
 								bind:value={search_term}
-								class="p-2 rounded-lg rounded-e-none outline-none text-center sm:w-96 w-full bg-transparent dark:bg-white dark:text-white"
+								class="p-2 rounded-lg rounded-e-none outline-none text-center sm:w-96 w-full bg-transparent dark:bg-transparent dark:text-white"
 								placeholder={$t('dashboard.search_for_own_quizzes')}
 							/>
 							<button
