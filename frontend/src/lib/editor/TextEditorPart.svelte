@@ -11,7 +11,7 @@ SPDX-License-Identifier: MPL-2.0
 	import { reach } from 'yup';
 	import { TextQuestionSchema } from '$lib/yupSchemas';
 	import { createTippy } from 'svelte-tippy';
-
+	import { toast } from '@zerodevx/svelte-toast';
 	export let selected_question: number;
 	export let data: EditorData;
 
@@ -39,6 +39,17 @@ SPDX-License-Identifier: MPL-2.0
 			case_sensitive: false
 		};
 	};
+	const handleTextChange = (selectedQuestion: number, index: number) =>{
+		if(data.questions[selectedQuestion].answers[index].answer.length >= 100){
+			toast.push("Over 100 characters, please shorten the answer");
+			
+			
+		}else{
+			console.log("Under 100");
+			
+		}
+		
+	}
 </script>
 
 <div class="grid grid-cols-2 gap-4 w-full px-10">
@@ -82,6 +93,8 @@ SPDX-License-Identifier: MPL-2.0
 					type="text"
 					class="border-b-2 border-dotted w-5/6 text-center rounded-lg bg-transparent outline-none"
 					placeholder={$t('editor.enter_answer')}
+					on:input={() => handleTextChange(selected_question,index)}
+					maxlength="100"
 				/>
 				<button
 					type="button"

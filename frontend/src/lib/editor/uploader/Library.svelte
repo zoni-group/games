@@ -94,7 +94,7 @@ SPDX-License-Identifier: MPL-2.0
 		>
 		<!-- svelte-ignore a11y-click-events-have-key-events -->
 		<span class="material-symbols-outlined self-end bg-red-500 text-white rounded-xl p-2 cursor-pointer" on:click={() => {modalOpen = false; selected_type = null}} >
-			close
+			Close
 		</span>
 			{#each images as image}
 				<div class="rounded border-2 border-[#004A93] p-2 flex-col flex gap-2">
