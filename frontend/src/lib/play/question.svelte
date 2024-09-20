@@ -12,6 +12,7 @@
 	import MediaComponent from '$lib/editor/MediaComponent.svelte';
 	import { toast } from '@zerodevx/svelte-toast';
 	import RightArrow from '$lib/icons/rightArrow.svelte';
+	import en from '$lib/i18n/locales/en.json';
 
 	const { t } = getLocalization();
 
@@ -19,6 +20,7 @@
 	export let game_mode;
 	export let question_index: string | number;
 	export let solution;
+	export let language;
 
 	$: console.log(question_index, question, 'hi!');
 
@@ -442,7 +444,13 @@
 		{/if}
 		{:else if !showPlayerAnswers}
 			<div class={`w-full flex justify-center items-center ${game_mode === 'normal' ? 'h-full' : 'min-h-screen'}`}>
-				<h1 class="text-3xl dark:text-white text-[#0056BD] text-center p-3">{$t('admin_page.no_answers')}</h1>
+				<h1 class="text-3xl dark:text-white text-[#0056BD] text-center p-3">
+					{#if language}
+						{en.admin_page.no_answers}
+					{:else}
+						{$t('admin_page.no_answers')}
+					{/if}
+				</h1>
 			</div>
 		{/if}
 	<!-- Display the submitted answer -->

@@ -25,6 +25,7 @@ export interface QuizData {
 	dislikes: number;
 	plays: number;
 	views: number;
+	language_toggle?: boolean;
 }
 
 export enum QuizQuestionType {
@@ -91,6 +92,7 @@ export interface EditorData {
 	cover_image?: string;
 	background_color?: string;
 	background_image?: string;
+	language_toggle?: boolean;
 }
 
 export interface PrivateImageData {

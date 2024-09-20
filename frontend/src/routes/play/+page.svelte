@@ -10,14 +10,13 @@
 	import { navbarVisible } from '$lib/stores';
 	import ShowEndScreen from '$lib/play/admin/final_results.svelte';
 	import KahootResults from '$lib/play/results_kahoot.svelte';
-	import { getLocalization } from '$lib/i18n';
+	import { getLocalization, initLocalizationContext } from '$lib/i18n';
 	import ZoniLogo from '$lib/components/zoniLogoPlay.svelte';
-
-	const { t } = getLocalization();
+	import en from '$lib/i18n/locales/en.json';
+	const { t, currentLanguage } = getLocalization();
 
 	let noSleep;
 	let disconnectedMessage = '';
-
 	// Exports
 	export let data;
 	let { game_pin } = data;
@@ -47,7 +46,7 @@
 	let gameMeta: GameMeta = { started: false };
 	let question;
 	let preventReload = true;
-
+	let language;
 	// Define the restart function that resets the game state
 	function restart() {
 		unique = {};
@@ -245,7 +244,8 @@
 	let bg_color;
 	$: bg_color = gameData ? gameData.background_color : (darkMode ? '#383838' : '#FFFFFF');
 
-
+	console.log('Game Meta:', gameMeta);
+	
 	onMount(() => {
 		if (browser) {
 			noSleep = new NoSleep(); // Create a NoSleep instance
@@ -259,6 +259,9 @@
 			window.addEventListener('click', enableNoSleep);
 		}
 	});
+	$: language = gameData ? gameData.language_toggle : false;
+	$: console.log('Language:', language);
+	
 </script>
 
 <svelte:window on:beforeunload={confirmUnload} />
@@ -289,7 +292,7 @@
 		{:else if gameMeta.started && gameData !== undefined && question_index !== '' && answer_results === undefined}
 			{#key unique}
 				<div class="text-[#00529B] dark:text-[#00529B]">
-					<Question bind:game_mode bind:question bind:question_index bind:solution />
+					<Question bind:game_mode bind:question bind:question_index bind:solution bind:language />
 				</div>
 			{/key}
 	
@@ -297,13 +300,25 @@
 		{:else if gameMeta.started && answer_results !== undefined}
 			{#if answer_results === null}
 				<div class="w-full flex justify-center">
-					<h1 class="text-3xl">{$t('admin_page.no_answers')}</h1>
+					<h1 class="text-3xl">
+						{#if language}
+						{en.admin_page.no_answers}
+						{:else}
+						{$t('admin_page.no_answers')}
+						{/if}
+					</h1>
 				</div>
 			{:else}
 			<div class="min-h-screen flex flex-col items-center justify-center" >
 				{#if question.type != QuizQuestionType.VOTING}
 					<div>
-						<h2 class="text-center text-[#00529B] dark:text-[#fff] font-bold sm:text-3xl text-lg my-8">{$t('words.result', { count: 2 })}</h2>
+						<h2 class="text-center text-[#00529B] dark:text-[#fff] font-bold sm:text-3xl text-lg my-8">
+							{#if language}
+								{en.words.result}
+							{:else}
+								{$t('words.result', { count: 2 })}
+							{/if}
+						</h2>
 					</div>
 					{#key unique}
 						<KahootResults
@@ -314,7 +329,13 @@
 					{/key}
 				{:else}
 				<div>
-					<h2 class="text-center text-[#00529B] dark:text-[#fff] font-bold sm:text-3xl text-lg my-8">{$t('admin_page.after_voting')}</h2>
+					<h2 class="text-center text-[#00529B] dark:text-[#fff] font-bold sm:text-3xl text-lg my-8">
+						{#if language}
+							 {en.admin_page.after_voting}
+						{:else}
+							{$t('admin_page.after_voting')}
+						{/if}
+					</h2>
 				</div>
 				{#key unique}
 				<div class="flex items-center  justify-center p-4">

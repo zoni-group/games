@@ -164,6 +164,7 @@ class QuizInput(BaseModel):
     background_color: str | None
     questions: list[QuizQuestion]
     background_image: str | None
+    language_toggle: bool = True
 
 
 class Quiz(ormar.Model):
@@ -185,6 +186,7 @@ class Quiz(ormar.Model):
     plays: int = ormar.Integer(nullable=False, default=0, server_default="0")
     views: int = ormar.Integer(nullable=False, default=0, server_default="0")
     mod_rating: int | None = ormar.SmallInteger(nullable=True)
+    language_toggle: bool = ormar.Boolean(default=True)
 
     class Meta:
         tablename = "quiz"
@@ -235,6 +237,7 @@ class PlayGame(BaseModel):
     background_image: str | None
     custom_field: str | None
     question_show: bool = False
+    language_toggle: bool = True
 
 
 class GamePlayer(BaseModel):
