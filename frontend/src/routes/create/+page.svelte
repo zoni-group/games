@@ -21,6 +21,7 @@ SPDX-License-Identifier: MPL-2.0
 		title: string;
 		description: string;
 		questions: Question[];
+		language_toggle: boolean;
 	}
 
 	let responseData = {
@@ -45,7 +46,8 @@ SPDX-License-Identifier: MPL-2.0
 						time: '20',
 						answers: [{ right: false, answer: '' }]
 					}*/
-				]
+				],
+				language_toggle: true
 			};
 		} else {
 			data = JSON.parse(from_localstorage);

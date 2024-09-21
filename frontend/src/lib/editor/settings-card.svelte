@@ -29,13 +29,14 @@
 	let bg_uppy_open = false;
 
 	let custom_bg_color = Boolean(data.background_color);
+	let language = data.language_toggle;
 	const tippy = createTippy({
 		arrow: true,
 		animation: 'perspective-subtle'
 	});
 
 	$: data.background_color = custom_bg_color ? data.background_color : undefined;
-
+	$: data.language_toggle = language;
 	let contentTypes: { [id: string]: string | null } = {};
 
 	async function fetchContentType(url: string) {
@@ -180,6 +181,27 @@
 				</button>
 			</div>
 
+			<div class="pt-10 w-full flex flex-col items-center justify-center">
+				<p class="text-center mb-5" >English Language</p>
+				<div class="grid grid-cols-3 w-fit h-fit gap-4">
+					<div class="max-w-full transition-all">
+						<div class=" rounded-lg w-full h-full p-1">
+							<span>OFF</span>
+						</div>
+					</div>
+					<div>
+						<label for="language-toggle" class="inline-flex relative items-center cursor-pointer">
+							<input type="checkbox" bind:checked={language} id="language-toggle" class="sr-only peer" />
+							<span class="w-14 h-7 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 dark:peer-focus:ring-blue-800 rounded-full peer dark:bg-gray-800 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-0.5 after:left-[4px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-6 after:w-6 after:transition-all dark:border-gray-600 peer-checked:bg-blue-600" />
+						</label>
+					</div>
+					<div class="max-w-full transition-all">
+						<div class=" rounded-lg w-full h-full p-1">
+							<span>ON</span>
+						</div>
+					</div>
+				</div>
+			</div>
 			<div class="pt-10 w-full flex justify-center">
 				<div class="grid grid-cols-3 w-fit h-fit gap-4">
 					<div class="max-w-full transition-all" class:opacity-50={custom_bg_color} use:tippy={{ content: 'use the standard background', placement: 'left' }}>

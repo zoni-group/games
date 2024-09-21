@@ -55,6 +55,7 @@ SPDX-License-Identifier: MPL-2.0
 		const res = await fetch(`/api/v1/quiz/play/check_captcha/${game_pin}`);
 		const json = await res.json();
 		game_mode = json.game_mode;
+		
 	};
 	onMount(() => {
 		if (auto_connect) {
