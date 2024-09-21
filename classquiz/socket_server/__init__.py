@@ -2,7 +2,6 @@
 #
 # SPDX-License-Identifier: MPL-2.0
 
-
 import base64
 import hashlib
 import json
@@ -104,8 +103,8 @@ async def rejoin_game(sid: str, data: dict):
     old_sid = await redis.get(redis_sid_key)
 
     # Ensure the player was already part of the game
-    if old_sid != data.old_sid:
-        return
+    # if old_sid != data.old_sid:
+    #    return
 
     # Sync time and session management
     encrypted_datetime = fernet.encrypt(datetime.now().isoformat().encode("utf-8")).decode("utf-8")
@@ -157,9 +156,37 @@ async def join_game(sid: str, data: dict):
         print(e)
         return
     game_data = PlayGame.parse_raw(redis_res)
+
     if game_data.started:
-        await sio.emit("game_already_started", room=sid)
-        return
+        # Allow late join but emit a warning or set conditions for the player
+        await sio.emit("game_already_started_but_allowed", room=sid)
+
+        # Emit current game state and question to late joiners
+        print("Joining game late")
+        await sio.emit(
+            "joined_game_late",
+            {
+                **json.loads(game_data.json(exclude={"quiz_id", "questions", "user_id"})),
+                "current_question": game_data.current_question,
+                "question_count": len(game_data.questions),
+            },
+            room=sid,
+        )
+
+        # Send the current question to the late joiner
+        current_question = game_data.questions[game_data.current_question]
+        if current_question.type == QuizQuestionType.SLIDE:
+            await sio.emit("set_question_number", {"question_index": game_data.current_question}, room=sid)
+        else:
+            await sio.emit(
+                "set_question_number",
+                {
+                    "question_index": game_data.current_question,
+                    "question": current_question.dict(),
+                },
+                room=sid,
+            )
+
     # +++ START checking captcha +++
     if game_data.captcha_enabled:
         async with aiohttp.ClientSession() as session:

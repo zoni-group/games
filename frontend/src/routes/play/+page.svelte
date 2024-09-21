@@ -47,6 +47,26 @@
 	let question;
 	let preventReload = true;
 	let language;
+
+	// Fetch game state in the browser
+	async function fetchGameState(game_pin: string) {
+		try {
+		// Replace the URL with your actual backend URL
+		const response = await fetch(`/api/v1/game_state/${game_pin}`);
+		console.log('Fetch Game State Response:', response);
+
+		if (!response.ok) {
+			throw new Error(`Failed to fetch game state: ${response.statusText}`);
+		}
+
+		const gameState = await response.json();
+		return gameState;
+		} catch (error) {
+			console.error('Error fetching game state:', error);
+			return null;
+		}
+	}
+
 	// Define the restart function that resets the game state
 	function restart() {
 		unique = {};
@@ -56,6 +76,9 @@
 
 	// Functions for handling game state persistence using localStorage
 	function storeState() {
+		if (!username || !game_pin || !question_index) {
+			return;
+		}
 		const state = {
 			game_pin,
 			username,
@@ -95,16 +118,16 @@
 			console.log('Compare Game Pin:', game_pin, storedGamePin);
 			if (game_pin !== storedGamePin) {
 				// If pins don't match, clear the state and allow the user to start a new session
-				clearState();
-				game_pin = ''; // Clear the game_pin so the user can enter a new one
-				username = '';  // Reset username and other states
-				question_index = '';
-				gameMeta = { started: false };
-				answer_results = undefined;
-				final_results = [null];
-				game_mode = '';
-				return;
-			}
+						clearState();
+						game_pin = ''; // Clear the game_pin so the user can enter a new one
+						username = '';  // Reset username and other states
+						question_index = '';
+						gameMeta = { started: false };
+						answer_results = undefined;
+						final_results = [null];
+						game_mode = '';
+						return;
+					}
 
 			// If pins match, restore the stored state
 			game_pin = storedGamePin || game_pin;
@@ -163,6 +186,25 @@
 			const { game_pin: savedGamePin, username: savedUsername } = JSON.parse(savedState);
 			// Rejoin the game automatically with saved session data
 			socket.emit('rejoin_game', { old_sid: socket.id, username: savedUsername, game_pin: savedGamePin });
+		} else {
+			// Check if game already started and allow late joining
+			if (gameMeta.started) {
+				socket.emit('join_late', { sid: socket.id , username: username, game_pin: game_pin });
+
+				// Rejoin logic, emitting a late join event if the game has already started
+				// Use the fetchGameState function to get the game state
+				fetchGameState(game_pin).then((gameState) => {
+					if (gameState) {
+						gameData = gameState;
+						game_mode = gameState.game_mode;
+						if (gameState.started) {
+							gameMeta.started = true;
+							question_index = gameState.question_index;
+						}
+					}
+				});
+				socket.emit('rejoin_game', { old_sid: socket.id, username: username, game_pin: game_pin });
+			}		
 		}
 	});
 
@@ -172,11 +214,23 @@
 		storeState();  // Save state after joining the game
 	});
 
+	socket.on('joined_game_late', (data) => {
+		// Handle receiving the current game state for late joiners
+		console.log('Joined late:', data);
+
+		gameData = data;
+		game_mode = data.game_mode;
+		gameMeta.started = true;  // Ensure the game state reflects that it's in progress
+		storeState();  // Store the current game state locally
+	});
+
+
 	socket.on('rejoined_game', (data) => {
 		console.log('Game rejoined successfully!');
 		gameData = data;
 		if (data.started) {
 			gameMeta.started = true;
+			question_index = data.question_index;  // Set current question
 		}
 		storeState();  // Store state after rejoining
 	});
