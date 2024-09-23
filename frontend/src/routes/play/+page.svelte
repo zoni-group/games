@@ -76,7 +76,7 @@
 
 	// Functions for handling game state persistence using localStorage
 	function storeState() {
-		if (!username || !game_pin || !question_index) {
+		if (!username || !game_pin || !(question_index + 1)) {
 			return;
 		}
 		const state = {
@@ -211,6 +211,7 @@
 	socket.on('joined_game', (data) => {
 		gameData = data;
 		game_mode = data.game_mode;
+		localStorage.removeItem("acknowledge");
 		storeState();  // Save state after joining the game
 	});
 
