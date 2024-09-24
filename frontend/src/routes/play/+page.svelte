@@ -213,7 +213,9 @@
 	socket.on('joined_game', (data) => {
 		gameData = data;
 		game_mode = data.game_mode;
-		localStorage.removeItem("acknowledge");
+		const gameState = JSON.parse(localStorage.getItem("game_state")) || {};
+		delete gameState.acknowledge;
+		localStorage.setItem("game_state", JSON.stringify(gameState));
 		storeState();  // Save state after joining the game
 	});
 
