@@ -20,6 +20,7 @@ SPDX-License-Identifier: MPL-2.0
 	export let quiz_data: QuizData;
 	export let game_mode: string;
 	export let bg_color: string;
+	export let game_pin: string;
 
 	const { t } = getLocalization();
 	const default_colors = ['#FFA800', '#FF1D38', '#00A3FF', '#00D749'];
@@ -142,6 +143,7 @@ SPDX-License-Identifier: MPL-2.0
 		{question_results}
 		{game_token}
 		{shown_question_now}
+		{game_pin}
 	/>
 {/if}
 
