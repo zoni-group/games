@@ -161,6 +161,12 @@
 		localStorage.removeItem('socket_id');
 	}
 
+	function resetAcknowledgement() {
+  		const gameState = JSON.parse(localStorage.getItem("game_state")) || {};
+  		delete gameState.acknowledge;
+  		localStorage.setItem("game_state", JSON.stringify(gameState));
+	}
+
 	// Restore game state on load
 	if (browser) {
 		restoreState();
@@ -213,9 +219,7 @@
 	socket.on('joined_game', (data) => {
 		gameData = data;
 		game_mode = data.game_mode;
-		const gameState = JSON.parse(localStorage.getItem("game_state")) || {};
-		delete gameState.acknowledge;
-		localStorage.setItem("game_state", JSON.stringify(gameState));
+		resetAcknowledgement();  // Reset the acknowledgement state
 		storeState();  // Save state after joining the game
 	});
 
@@ -252,9 +256,7 @@
 		question = data.question;
 		question_index = data.question_index;
 		answer_results = undefined;
-		const storeStates = JSON.parse(localStorage.getItem("game_state"));
-		delete storeStates.acknowledge;
-		localStorage.setItem("game_state", JSON.stringify(storeStates));
+		resetAcknowledgement(); // Reset the acknowledgement state
 		storeState();  // Save state when the question index changes
 	});
 
