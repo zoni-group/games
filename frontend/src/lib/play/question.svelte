@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { onMount } from 'svelte';
 	import type { Question } from '$lib/quiz_types';
 	import { QuizQuestionType } from '$lib/quiz_types';
 	import { socket } from '$lib/socket';
@@ -33,11 +34,29 @@
 	}
 
 	let timer_res = question.time;
-	const gameState = JSON.parse(localStorage.getItem("game_state")) || {};
-	let selected_answer = gameState.acknowledgement?.answer;
-	let acknowledgement = gameState.acknowledgement?.answered ?? false;
+	let selected_answer;
 	let text_answer = [];
-	let showPlayerAnswers = acknowledgement || false;
+	let acknowledgement;
+	let showPlayerAnswers = false;
+	let gameState: { acknowledgement?: { answered: boolean; answer: string } } = { acknowledgement: { answered: false, answer: '' } };
+
+	onMount(() => {
+		// Read gameState from localStorage once
+		let gameState = {};
+		try {
+			// Attempt to parse the 'game_state' from localStorage
+  			gameState = JSON.parse(localStorage.getItem("game_state")) || {};
+		} catch (e) {
+			// Log the error and remove corrupted 'game_state' data
+  			console.error("Failed to parse game_state:", e);
+  			localStorage.removeItem("game_state"); // Optionally clear corrupted data
+		}
+
+		// Initialize variables from gameState
+		selected_answer = (gameState as { acknowledgement?: { answered: boolean; answer: string } }).acknowledgement?.answer;
+		acknowledgement = (gameState as { acknowledgement?: { answered: boolean } }).acknowledgement?.answered ?? false;
+    	showPlayerAnswers = acknowledgement || false;
+	});
 
 	// Stop the timer if the question is answered
 	const timer = (time: string) => {
@@ -83,10 +102,9 @@
 			answered: true,
 			answer: selected_answer,
 		};
-		const storeState = JSON.parse(localStorage.getItem("game_state"));
-		storeState.acknowledgement = val;
-		localStorage.setItem("game_state", JSON.stringify(storeState));
-		showPlayerAnswers = true;
+		gameState.acknowledgement = val; // Update cached gameState
+		localStorage.setItem("game_state", JSON.stringify(gameState)); // Write back to localStorage
+  		showPlayerAnswers = true;
 	});
 
 	const selectRangeAnswer = (answer: string) => {
