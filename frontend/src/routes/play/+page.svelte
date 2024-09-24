@@ -79,7 +79,7 @@
 		if (!username || !game_pin || question_index === null || question_index === undefined) {
 			return;
 		}
-		const acknowledge = JSON.parse(localStorage.getItem('game_state'))?.acknowledge || {};
+		const acknowledgement = JSON.parse(localStorage.getItem('game_state'))?.acknowledgement || {};
 		const state = {
 			game_pin,
 			username,
@@ -92,7 +92,7 @@
 			game_mode,
 			question,
 			solution,
-			acknowledge
+			acknowledgement
 		};
 		localStorage.setItem('game_state', JSON.stringify(state));
 		console.log('State saved:', state);
@@ -175,9 +175,9 @@
   			console.error("Failed to parse game_state:", e);
   			localStorage.removeItem("game_state"); // Optionally clear corrupted data
 		}
-		// Check if 'acknowledge' exists before attempting to delete
-		if ('acknowledge' in gameState) {
-			delete gameState.acknowledge;
+		// Check if 'acknowledgement' exists before attempting to delete
+		if ('acknowledgement' in gameState) {
+			delete gameState.acknowledgement;
 			localStorage.setItem("game_state", JSON.stringify(gameState));
 		}
 	}

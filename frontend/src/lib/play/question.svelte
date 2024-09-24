@@ -34,8 +34,8 @@
 
 	let timer_res = question.time;
 	const gameState = JSON.parse(localStorage.getItem("game_state")) || {};
-	let selected_answer = gameState.acknowledge?.answer;
-	let acknowledgement = gameState.acknowledge?.answered ?? false;
+	let selected_answer = gameState.acknowledgement?.answer;
+	let acknowledgement = gameState.acknowledgement?.answered ?? false;
 	let text_answer = [];
 	let showPlayerAnswers = acknowledgement || false;
 
@@ -84,7 +84,7 @@
 			answer: selected_answer,
 		};
 		const storeState = JSON.parse(localStorage.getItem("game_state"));
-		storeState.acknowledge = val;
+		storeState.acknowledgement = val;
 		localStorage.setItem("game_state", JSON.stringify(storeState));
 		showPlayerAnswers = true;
 	});
