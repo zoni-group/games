@@ -161,10 +161,25 @@
 		localStorage.removeItem('socket_id');
 	}
 
+	/**
+ 	* Resets the 'acknowledge' property in the 'game_state' stored in localStorage.
+ 	* Handles JSON parsing errors and optionally removes corrupted 'game_state' data.
+ 	*/
 	function resetAcknowledgement() {
-  		const gameState = JSON.parse(localStorage.getItem("game_state")) || {};
-  		delete gameState.acknowledge;
-  		localStorage.setItem("game_state", JSON.stringify(gameState));
+		let gameState = {};
+		try {
+			// Attempt to parse the 'game_state' from localStorage
+  			gameState = JSON.parse(localStorage.getItem("game_state")) || {};
+		} catch (e) {
+			// Log the error and remove corrupted 'game_state' data
+  			console.error("Failed to parse game_state:", e);
+  			localStorage.removeItem("game_state"); // Optionally clear corrupted data
+		}
+		// Check if 'acknowledge' exists before attempting to delete
+		if ('acknowledge' in gameState) {
+			delete gameState.acknowledge;
+			localStorage.setItem("game_state", JSON.stringify(gameState));
+		}
 	}
 
 	// Restore game state on load
