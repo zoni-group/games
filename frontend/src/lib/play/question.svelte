@@ -33,9 +33,10 @@
 	}
 
 	let timer_res = question.time;
-	let selected_answer: string | [] =  JSON.parse(localStorage.getItem("game_state"))?.acknowledge?.answer || undefined;
+	const gameState = JSON.parse(localStorage.getItem("game_state")) || {};
+	let selected_answer = gameState.acknowledge?.answer;
+	let acknowledgement = gameState.acknowledge?.answered ?? false;
 	let text_answer = [];
-	let acknowledgement = JSON.parse(localStorage.getItem("game_state"))?.acknowledge?.answered || false;
 	let showPlayerAnswers = acknowledgement || false;
 
 	// Stop the timer if the question is answered
