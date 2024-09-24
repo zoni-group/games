@@ -76,7 +76,7 @@
 
 	// Functions for handling game state persistence using localStorage
 	function storeState() {
-		if (!username || !game_pin || !(question_index + 1)) {
+		if (!username || !game_pin || question_index === null || question_index === undefined) {
 			return;
 		}
 		const acknowledge = JSON.parse(localStorage.getItem('game_state'))?.acknowledge || {};
