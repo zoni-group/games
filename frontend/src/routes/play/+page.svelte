@@ -76,9 +76,10 @@
 
 	// Functions for handling game state persistence using localStorage
 	function storeState() {
-		if (!username || !game_pin || !question_index) {
+		if (!username || !game_pin || question_index === null || question_index === undefined) {
 			return;
 		}
+		const acknowledgement = JSON.parse(localStorage.getItem('game_state'))?.acknowledgement || {};
 		const state = {
 			game_pin,
 			username,
@@ -90,7 +91,8 @@
 			final_results,
 			game_mode,
 			question,
-			solution
+			solution,
+			acknowledgement
 		};
 		localStorage.setItem('game_state', JSON.stringify(state));
 		console.log('State saved:', state);
@@ -159,6 +161,27 @@
 		localStorage.removeItem('socket_id');
 	}
 
+	/**
+ 	* Resets the 'acknowledge' property in the 'game_state' stored in localStorage.
+ 	* Handles JSON parsing errors and optionally removes corrupted 'game_state' data.
+ 	*/
+	function resetAcknowledgement() {
+		let gameState = {};
+		try {
+			// Attempt to parse the 'game_state' from localStorage
+  			gameState = JSON.parse(localStorage.getItem("game_state")) || {};
+		} catch (e) {
+			// Log the error and remove corrupted 'game_state' data
+  			console.error("Failed to parse game_state:", e);
+  			localStorage.removeItem("game_state"); // Optionally clear corrupted data
+		}
+		// Check if 'acknowledgement' exists before attempting to delete
+		if ('acknowledgement' in gameState) {
+			delete gameState.acknowledgement;
+			localStorage.setItem("game_state", JSON.stringify(gameState));
+		}
+	}
+
 	// Restore game state on load
 	if (browser) {
 		restoreState();
@@ -211,6 +234,7 @@
 	socket.on('joined_game', (data) => {
 		gameData = data;
 		game_mode = data.game_mode;
+		resetAcknowledgement();  // Reset the acknowledgement state
 		storeState();  // Save state after joining the game
 	});
 
@@ -247,6 +271,7 @@
 		question = data.question;
 		question_index = data.question_index;
 		answer_results = undefined;
+		resetAcknowledgement(); // Reset the acknowledgement state
 		storeState();  // Save state when the question index changes
 	});
 
