@@ -79,6 +79,7 @@
 		if (!username || !game_pin || !(question_index + 1)) {
 			return;
 		}
+		const acknowledge = JSON.parse(localStorage.getItem('game_state'))?.acknowledge || {};
 		const state = {
 			game_pin,
 			username,
@@ -90,7 +91,8 @@
 			final_results,
 			game_mode,
 			question,
-			solution
+			solution,
+			acknowledge
 		};
 		localStorage.setItem('game_state', JSON.stringify(state));
 		console.log('State saved:', state);
@@ -248,6 +250,9 @@
 		question = data.question;
 		question_index = data.question_index;
 		answer_results = undefined;
+		const storeStates = JSON.parse(localStorage.getItem("game_state"));
+		delete storeStates.acknowledge;
+		localStorage.setItem("game_state", JSON.stringify(storeStates));
 		storeState();  // Save state when the question index changes
 	});
 

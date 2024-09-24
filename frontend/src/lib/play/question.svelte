@@ -33,9 +33,9 @@
 	}
 
 	let timer_res = question.time;
-	let selected_answer: string | [] =  JSON.parse(localStorage.getItem("acknowledge"))?.answer || undefined;
+	let selected_answer: string | [] =  JSON.parse(localStorage.getItem("game_state"))?.acknowledge?.answer || undefined;
 	let text_answer = [];
-	let acknowledgement = JSON.parse(localStorage.getItem("acknowledge"))?.answered;
+	let acknowledgement = JSON.parse(localStorage.getItem("game_state"))?.acknowledge?.answered || false;
 	let showPlayerAnswers = acknowledgement || false;
 
 	// Stop the timer if the question is answered
@@ -78,11 +78,13 @@
 	};
 
 	socket.on('answer_acknowledged', () => {
-		const val = JSON.stringify({
+		const val = {
 			answered: true,
 			answer: selected_answer,
-		});
-		localStorage.setItem("acknowledge", val);
+		};
+		const storeState = JSON.parse(localStorage.getItem("game_state"));
+		storeState.acknowledge = val;
+		localStorage.setItem("game_state", JSON.stringify(storeState));
 		showPlayerAnswers = true;
 	});
 
