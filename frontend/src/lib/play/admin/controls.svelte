@@ -128,7 +128,7 @@ SPDX-License-Identifier: MPL-2.0
 					
 					<div class=" flex flex-col justify-center items-center w-full p-3">
 						<!-- svelte-ignore a11y-click-events-have-key-events -->
-						<div class=" rounded-xl flex flex-col justify-center rounded-xl">
+						<div class=" rounded-xl flex flex-col justify-center rounded-xl bg-[#FFFFFF] dark:bg-[#BFBFBF]">
 							<img
 								on:click={() => (fullscreen_open = true)}
 								alt={$t('qr_code_to_join_the_game')}
@@ -141,7 +141,6 @@ SPDX-License-Identifier: MPL-2.0
 					</div>
 					<p class="text-[1.2rem] font-bold text-[#0056BD] dark:text-white" >Join: </p>
 					<div class="flex justify-center items-center mt-2 gap-2" >
-						<p class="text-[1.2rem] font-bold text-[#0056BD] dark:text-white" >Link: </p>
 						<p
 							on:click={copyUrl}
 							class="underline cursor-pointer text-[#0056BD] dark:text-white text-[1.2rem] font-bold w-fit  rounded-xl"
