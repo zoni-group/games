@@ -19,7 +19,7 @@
 	let disconnectedMessage = '';
 	// Exports
 	export let data;
-	let game_pin = '';
+	let { game_pin } = data;
 	let username = '';
 	let game_mode = '';
 	
