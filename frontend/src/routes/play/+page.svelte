@@ -20,7 +20,17 @@
 	// Exports
 	export let data;
 	let { game_pin } = data;
-
+	onMount(() => {
+		if (browser) {
+			const pin = JSON.parse(localStorage.getItem('game_state'));
+			
+			if (pin) {
+				game_pin = (pin.game_pin && pin.final_results[0] === null) ? pin.game_pin : '';
+			}else{
+				game_pin = '';
+			}
+		}
+	})
 	// Types
 	interface GameMeta {
 		started: boolean;
@@ -117,7 +127,6 @@
 			} = JSON.parse(savedState);
 
 			// Compare URL game_pin with stored game_pin
-			console.log('Compare Game Pin:', game_pin, storedGamePin);
 			if (game_pin !== storedGamePin) {
 				// If pins don't match, clear the state and allow the user to start a new session
 						clearState();
@@ -183,9 +192,11 @@
 	}
 
 	// Restore game state on load
-	if (browser) {
-		restoreState();
-	}
+	onMount(() => {
+		if (browser) {
+			restoreState();
+		}
+	})
 
 	const confirmUnload = () => {
 		if (preventReload) {
