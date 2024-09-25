@@ -20,17 +20,22 @@
 	// Exports
 	export let data;
 	let { game_pin } = data;
+	
+	// Restore game state on load
 	onMount(() => {
-		if (browser) {
-			const pin = JSON.parse(localStorage.getItem('game_state'));
-			
-			if (pin) {
-				game_pin = (pin.game_pin && pin.final_results[0] === null) ? pin.game_pin : '';
-			}else{
-				game_pin = '';
-			}
-		}
-	})
+    	if (browser) {
+			restoreState();
+			noSleep = new NoSleep(); // Create a NoSleep instance
+        	const enableNoSleep = () => {
+				noSleep.enable(); // Enable wake lock to prevent the screen from locking
+				window.removeEventListener('click', enableNoSleep);
+			};
+
+			// Add event listener to enable NoSleep on the first user interaction
+			window.addEventListener('click', enableNoSleep);
+    	}
+	});
+
 	// Types
 	interface GameMeta {
 		started: boolean;
@@ -126,6 +131,11 @@
 				solution: storedSolution,
 			} = JSON.parse(savedState);
 
+			// Set game_pin to storedGamePin if it's not already set
+            if (!game_pin) {
+                game_pin = storedGamePin;
+            }
+
 			// Compare URL game_pin with stored game_pin
 			if (game_pin !== storedGamePin) {
 				// If pins don't match, clear the state and allow the user to start a new session
@@ -190,13 +200,6 @@
 			localStorage.setItem("game_state", JSON.stringify(gameState));
 		}
 	}
-
-	// Restore game state on load
-	onMount(() => {
-		if (browser) {
-			restoreState();
-		}
-	})
 
 	const confirmUnload = () => {
 		if (preventReload) {
@@ -336,19 +339,6 @@
 
 	console.log('Game Meta:', gameMeta);
 	
-	onMount(() => {
-		if (browser) {
-			noSleep = new NoSleep(); // Create a NoSleep instance
-
-			const enableNoSleep = () => {
-				noSleep.enable(); // Enable wake lock to prevent the screen from locking
-				window.removeEventListener('click', enableNoSleep);
-			};
-
-			// Add event listener to enable NoSleep on the first user interaction
-			window.addEventListener('click', enableNoSleep);
-		}
-	});
 	$: language = gameData ? gameData.language_toggle : false;
 	// $: console.log('Language:', language);
 	
