@@ -10,7 +10,11 @@ export async function load({ url, parent }) {
 		signedIn.set(true);
 	}
 	const token = url.searchParams.get('pin');
-	return {
-		game_pin: token === null ? '' : token
-	};
+	if (token !== null) {
+		return {
+			game_pin: token
+		};
+	}
+	// Return an empty object or other data as needed
+	return {};
 }

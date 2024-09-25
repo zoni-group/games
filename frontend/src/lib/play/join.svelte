@@ -1,9 +1,3 @@
-<!--
-SPDX-FileCopyrightText: 2023 Marlon W (Mawoka)
-
-SPDX-License-Identifier: MPL-2.0
--->
-
 <script lang="ts">
 	import { socket } from '$lib/socket';
 	import { onDestroy, onMount } from 'svelte';
@@ -18,13 +12,13 @@ SPDX-License-Identifier: MPL-2.0
 	import hand_click_icon_dark from "$lib/assets/all/hand_click_icon_dark.svg";
 
 	const { t } = getLocalization();
-	export let game_pin: string;
+	export let game_pin: string = '';
 	export let game_mode;
 
-	export let username;
+	export let username = '';
 	let custom_field;
 	let custom_field_value;
-	let captcha_enabled;
+	let captcha_enabled = false;
 
 	let hcaptchaSitekey = import.meta.env.VITE_HCAPTCHA;
 
@@ -39,7 +33,7 @@ SPDX-License-Identifier: MPL-2.0
 		if (browser) {
 			prefetch_username();
 			hcaptcha = window.hcaptcha;
-			if (hcaptcha.render) {
+			if (hcaptcha && hcaptcha.render) {
 				hcaptchaWidgetID = hcaptcha.render('hcaptcha', {
 					sitekey: hcaptchaSitekey,
 					size: 'invisible',
@@ -69,6 +63,10 @@ SPDX-License-Identifier: MPL-2.0
 	};
 
 	const set_game_pin = async () => {
+		if (!game_pin) {
+			console.error('Game PIN is undefined or empty.');
+			return;
+		}
 		let process_var;
 		try {
 			process_var = process;
@@ -103,13 +101,13 @@ SPDX-License-Identifier: MPL-2.0
 		}
 	};
 
-	$: if (game_pin.length > 5) {
+	$: if (game_pin && game_pin.length > 5) {
 		console.log('Setting game pin');
 		set_game_pin();
 	}
 
 	const setUsername = async () => {
-		if (username.length <= 3) {
+		if (username.length <= 3 || !game_pin) {
 			return;
 		}
 		let captcha_resp: string;
@@ -175,8 +173,8 @@ SPDX-License-Identifier: MPL-2.0
 		}
 	});
 
-	$: console.log(game_pin, game_pin.length > 6);
-	$: game_pin = game_pin.replace(/\D/g, '');
+	$: console.log(game_pin, game_pin && game_pin.length > 6);
+	$: game_pin = (game_pin || '').replace(/\D/g, '');
 </script>
 
 <svelte:head>
