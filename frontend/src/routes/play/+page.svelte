@@ -19,7 +19,7 @@
 	let disconnectedMessage = '';
 	// Exports
 	export let data;
-	let { game_pin } = data;
+	let game_pin = data.game_pin;
 	
 	// Restore game state on load
 	onMount(() => {
@@ -131,13 +131,13 @@
 				solution: storedSolution,
 			} = JSON.parse(savedState);
 
-			// Set game_pin to storedGamePin if it's not already set
+			// Use storedGamePin if game_pin is undefined or empty
             if (!game_pin) {
                 game_pin = storedGamePin;
             }
 
-			// Compare URL game_pin with stored game_pin
-			if (game_pin !== storedGamePin) {
+			// Compare pins only if game_pin is defined
+			if (game_pin && game_pin !== storedGamePin) {
 				// If pins don't match, clear the state and allow the user to start a new session
 						clearState();
 						game_pin = ''; // Clear the game_pin so the user can enter a new one
