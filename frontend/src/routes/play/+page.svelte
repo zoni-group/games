@@ -95,7 +95,7 @@
 			acknowledgement
 		};
 		localStorage.setItem('game_state', JSON.stringify(state));
-		console.log('State saved:', state);
+		// console.log('State saved:', state);
 	}
 
 	function restoreState() {
@@ -254,7 +254,7 @@
 		gameData = data;
 		if (data.started) {
 			gameMeta.started = true;
-			question_index = data.question_index;  // Set current question
+			question_index = data.current_question;  // Set current question
 		}
 		storeState();  // Store state after rejoining
 	});
@@ -339,7 +339,7 @@
 		}
 	});
 	$: language = gameData ? gameData.language_toggle : false;
-	$: console.log('Language:', language);
+	// $: console.log('Language:', language);
 	
 </script>
 
