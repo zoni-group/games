@@ -20,6 +20,21 @@
 	// Exports
 	export let data;
 	let { game_pin } = data;
+	
+	// Restore game state on load
+	onMount(() => {
+    	if (browser) {
+			restoreState();
+			noSleep = new NoSleep(); // Create a NoSleep instance
+        	const enableNoSleep = () => {
+				noSleep.enable(); // Enable wake lock to prevent the screen from locking
+				window.removeEventListener('click', enableNoSleep);
+			};
+
+			// Add event listener to enable NoSleep on the first user interaction
+			window.addEventListener('click', enableNoSleep);
+    	}
+	});
 
 	// Types
 	interface GameMeta {
@@ -116,8 +131,12 @@
 				solution: storedSolution,
 			} = JSON.parse(savedState);
 
+			// Set game_pin to storedGamePin if it's not already set
+            if (!game_pin) {
+                game_pin = storedGamePin;
+            }
+
 			// Compare URL game_pin with stored game_pin
-			console.log('Compare Game Pin:', game_pin, storedGamePin);
 			if (game_pin !== storedGamePin) {
 				// If pins don't match, clear the state and allow the user to start a new session
 						clearState();
@@ -180,11 +199,6 @@
 			delete gameState.acknowledgement;
 			localStorage.setItem("game_state", JSON.stringify(gameState));
 		}
-	}
-
-	// Restore game state on load
-	if (browser) {
-		restoreState();
 	}
 
 	const confirmUnload = () => {
@@ -325,19 +339,6 @@
 
 	console.log('Game Meta:', gameMeta);
 	
-	onMount(() => {
-		if (browser) {
-			noSleep = new NoSleep(); // Create a NoSleep instance
-
-			const enableNoSleep = () => {
-				noSleep.enable(); // Enable wake lock to prevent the screen from locking
-				window.removeEventListener('click', enableNoSleep);
-			};
-
-			// Add event listener to enable NoSleep on the first user interaction
-			window.addEventListener('click', enableNoSleep);
-		}
-	});
 	$: language = gameData ? gameData.language_toggle : false;
 	// $: console.log('Language:', language);
 	
