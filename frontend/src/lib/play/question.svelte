@@ -34,6 +34,7 @@
 	}
 
 	let timer_res = question.time;
+	let timer_interval; // Declare this outside to ensure there's only one interval running at a time
 	let selected_answer;
 	let text_answer = [];
 	let acknowledgement;
@@ -56,27 +57,45 @@
 		selected_answer = (gameState as { acknowledgement?: { answered: boolean; answer: string } }).acknowledgement?.answer;
 		acknowledgement = (gameState as { acknowledgement?: { answered: boolean } }).acknowledgement?.answered ?? false;
     	showPlayerAnswers = acknowledgement || false;
+		// Initialize and start timer based on `timer_res`
+		startTimer(timer_res, acknowledgement);
 	});
 
-	// Stop the timer if the question is answered
-	const timer = (time: string) => {
+	// Function to handle the timer and count down
+	function startTimer(time: string, answered: boolean = false) {
+		clearInterval(timer_interval); // Clear any existing timer before starting a new one
 		let seconds = Number(time);
-		let timer_interval = setInterval(() => {
-			if (timer_res === '0') {
+		timer_res = seconds.toString(); // Ensure timer_res is initialized
+
+		timer_interval = setInterval(() => {
+			if (seconds <= 0 || answered) {
 				clearInterval(timer_interval);
-				return;
+				timer_res = '0'; // Ensure the timer stops at zero
 			} else {
 				seconds--;
+				timer_res = seconds.toString();
 			}
-
-			timer_res = seconds.toString();
 		}, 1000);
-	};
+	}
+
+	
 	socket.on('everyone_answered', (_) => {
 		timer_res = '0';
 	});
 
-	timer(question.time);
+	// Listen to server events for remaining time and time_up
+	socket.on('remaining_time', (data) => {
+		console.log('Remaining time received:', data.time_left);
+		timer_res = Math.floor(data.time_left).toString(); // Update timer_res
+		startTimer(timer_res, acknowledgement); // Restart timer with remaining time
+	});
+
+	socket.on('time_up', () => {
+		console.log('Time is up!');
+		timer_res = '0'; // Set timer_res to 0 when time is up
+		clearInterval(timer_interval); // Ensure the timer stops
+	});
+
 
 	$: {
 		if (solution !== undefined) {
