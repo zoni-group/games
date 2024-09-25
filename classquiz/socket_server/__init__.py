@@ -72,6 +72,19 @@ async def set_answer(answers, game_pin: str, q_index: int, data: AnswerData) -> 
     return answers
 
 
+# Helper function to calculate remaining time
+async def calculate_remaining_time(game_pin: str, game_data: PlayGame) -> float | None:
+    time_q_started_str = await redis.get(f"game:{game_pin}:current_time")
+    if time_q_started_str:
+        time_q_started = datetime.fromisoformat(time_q_started_str)
+        now = datetime.now()
+        elapsed_time = (now - time_q_started).total_seconds()
+        max_time = float(game_data.questions[game_data.current_question].time)
+        return max_time - elapsed_time
+    else:
+        return None
+
+
 class _JoinGameData(BaseModel):
     username: str
     game_pin: str
@@ -142,6 +155,16 @@ async def rejoin_game(sid: str, data: dict):
     player_scores = await redis.hgetall(f"game_session:{data.game_pin}:player_scores")
     await sio.emit("player_scores", player_scores, room=sid)
 
+    remaining_time = await calculate_remaining_time(data.game_pin, game_data)
+    if remaining_time is not None:
+        if remaining_time > 0:
+            await sio.emit("remaining_time", {"time_left": remaining_time}, room=sid)
+        else:
+            await sio.emit("time_up", room=sid)
+    else:
+        print("No question start time found")
+        await sio.emit("error", room=sid)
+
 
 @sio.event
 async def join_game(sid: str, data: dict):
@@ -186,6 +209,16 @@ async def join_game(sid: str, data: dict):
                 },
                 room=sid,
             )
+
+        remaining_time = await calculate_remaining_time(data.game_pin, game_data)
+        if remaining_time is not None:
+            if remaining_time > 0:
+                await sio.emit("remaining_time", {"time_left": remaining_time}, room=sid)
+            else:
+                await sio.emit("time_up", room=sid)
+        else:
+            print("No question start time found")
+            await sio.emit("error", room=sid)
 
     # +++ START checking captcha +++
     if game_data.captcha_enabled:
@@ -419,8 +452,28 @@ async def submit_answer(sid: str, data: dict):
         await sio.emit("error", room=sid)
         print(e)
         return
+
+    # Get the current question start time from Redis
     session = await sio.get_session(sid)
     game_data = PlayGame.parse_raw(await redis.get(f"game:{session['game_pin']}"))
+    time_q_started_str = await redis.get(f"game:{session['game_pin']}:current_time")
+
+    if not time_q_started_str:
+        await sio.emit("error", room=sid)
+        print("No question start time found")
+        return
+
+    time_q_started = datetime.fromisoformat(time_q_started_str)
+
+    # Calculate the elapsed time since the question started
+    elapsed_time = (now - time_q_started).total_seconds()
+
+    # Check if the time is already up
+    max_time = float(game_data.questions[game_data.current_question].time)
+    if elapsed_time > max_time + 1:
+        await sio.emit("time_up", room=sid)
+        return  # The time is up, no more answers are accepted
+
     answer_right = False
     if game_data.questions[int(float(data.question_index))].type == QuizQuestionType.ABCD:
         for answer in game_data.questions[int(float(data.question_index))].answers:
