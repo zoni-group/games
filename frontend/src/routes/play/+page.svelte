@@ -19,8 +19,39 @@
 	let disconnectedMessage = '';
 	// Exports
 	export let data;
-	let game_pin = data.game_pin;
+	let game_pin = '';
+	let username = '';
+	let game_mode = '';
 	
+	// Types
+	interface GameMeta {
+		started: boolean;
+	}
+
+	interface PlayerAnswer {
+		username: string;
+		answer: string;
+		right: string;
+	}
+
+	let final_results: Array<null> | Array<Array<PlayerAnswer>> = [null];
+	let question_index = '';
+	let unique = {};
+	navbarVisible.set(false);
+	let game_pin_valid: boolean;
+	let answer_results: Array<Answer>;
+	let gameData;
+	let solution: QuestionType;
+	let scores = {};
+	let gameMeta: GameMeta = { started: false };
+	let question;
+	let preventReload = true;
+	let language;
+
+	if (browser) {
+    	restoreState();
+  	}
+
 	// Restore game state on load
 	onMount(() => {
     	if (browser) {
@@ -36,32 +67,6 @@
     	}
 	});
 
-	// Types
-	interface GameMeta {
-		started: boolean;
-	}
-
-	interface PlayerAnswer {
-		username: string;
-		answer: string;
-		right: string;
-	}
-
-	let game_mode;
-	let final_results: Array<null> | Array<Array<PlayerAnswer>> = [null];
-	let question_index = '';
-	let unique = {};
-	navbarVisible.set(false);
-	let game_pin_valid: boolean;
-	let answer_results: Array<Answer>;
-	let gameData;
-	let solution: QuestionType;
-	let username = '';
-	let scores = {};
-	let gameMeta: GameMeta = { started: false };
-	let question;
-	let preventReload = true;
-	let language;
 
 	// Fetch game state in the browser
 	async function fetchGameState(game_pin: string) {
@@ -132,7 +137,7 @@
 			} = JSON.parse(savedState);
 
 			// Use storedGamePin if game_pin is undefined or empty
-            if (!game_pin) {
+            if (!game_pin || game_pin === '') {
                 game_pin = storedGamePin;
             }
 
