@@ -23,6 +23,8 @@
 	export let question_index: string | number;
 	export let solution;
 	export let language;
+	export let selected_answer;
+	export let acknowledgement;
 
 	$: console.log(question_index, question, 'hi!');
 
@@ -36,11 +38,8 @@
 
 	let timer_res = question.time;
 	let timer_interval; // Declare this outside to ensure there's only one interval running at a time
-	let selected_answer;
 	let text_answer = [];
-	let acknowledgement;
 	let showPlayerAnswers = false;
-	let gameState: { acknowledgement?: { answered: boolean; answer: string } } = { acknowledgement: { answered: false, answer: '' } };
 
 	const dispatch = createEventDispatcher();
 
@@ -48,24 +47,19 @@
     	dispatch('storeStateNeeded');
   	}
 
+	function triggerRestoreState() {
+    	dispatch('restoreStateNeeded');
+  	}
+
+
 	onMount(() => {
 		// Read gameState from localStorage once
-		let gameState = {};
-		try {
-			// Attempt to parse the 'game_state' from localStorage
-  			gameState = JSON.parse(localStorage.getItem("game_state")) || {};
-		} catch (e) {
-			// Log the error and remove corrupted 'game_state' data
-  			console.error("Failed to parse game_state:", e);
-  			localStorage.removeItem("game_state"); // Optionally clear corrupted data
-		}
+		triggerRestoreState();
 
 		// Initialize variables from gameState
-		selected_answer = (gameState as { acknowledgement?: { answered: boolean; answer: string } }).acknowledgement?.answer;
-		acknowledgement = (gameState as { acknowledgement?: { answered: boolean } }).acknowledgement?.answered ?? false;
-    	showPlayerAnswers = acknowledgement || false;
+    	showPlayerAnswers = acknowledgement.answered || false;
 		// Initialize and start timer based on `timer_res`
-		startTimer(timer_res, acknowledgement);
+		startTimer(timer_res, acknowledgement.answered);
 	});
 
 	// Function to handle the timer and count down
@@ -94,7 +88,7 @@
 	socket.on('remaining_time', (data) => {
 		console.log('Remaining time received:', data.time_left);
 		timer_res = Math.floor(data.time_left).toString(); // Update timer_res
-		startTimer(timer_res, acknowledgement); // Restart timer with remaining time
+		startTimer(timer_res, acknowledgement.answered); // Restart timer with remaining time
 	});
 
 	socket.on('time_up', () => {
@@ -125,11 +119,8 @@
 	};
 
 	socket.on('answer_acknowledged', () => {
-		const val = {
-			answered: true,
-			answer: selected_answer,
-		};
-		gameState.acknowledgement = val;
+		acknowledgement.answered = true;
+		acknowledgement.selected_answer = selected_answer;
   		showPlayerAnswers = true;
 		triggerStoreState();
 	});
@@ -182,7 +173,7 @@
 		if (question.type !== QuizQuestionType.RANGE) {
 			return;
 		}
-		if (selected_answer === undefined && time === '0') {
+		if (selected_answer === '' && time === '0') {
 			selected_answer = `${slider_value[0]}`;
 			selectAnswer(selected_answer);
 		}
@@ -284,7 +275,7 @@
 						<button
 							class="rounded-lg h-full  flex items-center justify-center disabled:opacity-60 border-4 border-white transition-all my-2"
 							style="background-color: {answer.color ?? default_colors[i]}; color: {get_foreground_color(answer.color ?? default_colors[i])}"
-							disabled={selected_answer !== undefined}
+							disabled={selected_answer !== ''}
 							on:click={() => selectAnswer(answer.answer)}
 						>
 							{#if game_mode === 'kahoot'}
@@ -322,7 +313,7 @@
 						<button 
 						type="button"
 						class="bg-[#0056BD] border-[#fff] flex items-center border-2 gap-2 text-[#fff] font-semibold px-9 py-2 rounded-full disabled:cursor-not-allowed disabled:opacity-90"
-						disabled={selected_answer !== undefined}
+						disabled={selected_answer !== ''}
 						on:click={() => selectRangeAnswer(slider_value[0])}
 						>
 							<RightArrow />
@@ -405,7 +396,7 @@
 				style="width: {(100 / parseInt(question.time)) * parseInt(timer_res)}vw"
 			/>
 			<div class="flex flex-col items-center justify-center w-full min-h-screen gap-4 px-4 mt-2">
-				{#each question.answers as answer, i (answer.id)}
+				{#each question.answers as answer, i (i)}
 					<div
 						class="w-full h-fit flex-row rounded-lg p-2 align-middle"
 						animate:flip={{ duration: 100 }}
@@ -417,7 +408,7 @@
 							}}
 							class="disabled:opacity-50 transition shadow-lg bg-black text-white bg-opacity-30 w-full flex justify-center rounded-lg p-2 hover:bg-opacity-20 transition"
 							type="button"
-							disabled={i === 0 || selected_answer}
+							disabled={i === 0 || selected_answer !== ''}
 						>
 							<svg
 								class="w-8 h-8"
