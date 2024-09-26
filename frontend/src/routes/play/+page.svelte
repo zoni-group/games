@@ -365,7 +365,7 @@
 	
 		<!-- Show Final Results if the game has ended and results are available -->
 		{:else if JSON.stringify(final_results) !== JSON.stringify([null])}
-			<ShowEndScreen bind:data={scores} show_final_results={true} bind:username />
+			<ShowEndScreen bind:data={scores} bind:language show_final_results={true} bind:username />
 	
 		<!-- Show the Title if the game hasn't started yet and there's no question_index -->
 		{:else if !gameMeta.started && question_index === ''}
