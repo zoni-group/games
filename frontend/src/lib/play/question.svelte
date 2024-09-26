@@ -326,7 +326,11 @@
 						on:click={() => selectRangeAnswer(slider_value[0])}
 						>
 							<RightArrow />
-							{$t('words.submit')}
+							{#if language}
+								{en.words.submit}
+							{:else}
+								{$t('words.submit')}
+							{/if}
 						</button>
 						<!-- <BrownButton
 							disabled={selected_answer !== undefined}
@@ -364,7 +368,11 @@
 				}}
 				>
 					<RightArrow />
-					{$t('words.submit')}
+					{#if language}
+						{en.words.submit}
+					{:else}
+						{$t('words.submit')}
+					{/if}
 				</button>
 				<!-- <BrownButton
 					type="button"
@@ -470,7 +478,12 @@
 						>
 						
 							<RightArrow />
-							{$t('words.submit')}
+							
+							{#if language}
+								{en.words.submit}
+							{:else}
+								{$t('words.submit')}
+							{/if}
 					</button>
 					<!-- <BrownButton
 						type="button"

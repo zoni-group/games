@@ -11,7 +11,7 @@
 	export let data;
 	export let username;
 	export let show_final_results: boolean;
-
+	export let language: boolean;
 	function sortObjectbyValue(obj) {
 		const ret = {};
 		Object.keys(obj)
@@ -49,10 +49,22 @@
 				<div class=" p-4 border-4 flex items-center border-[#00EDFF] rounded-lg shadow-lg bg-gradient-to-r from-[#0056BD] to-[#5436AB]">
 					<FinishingFlag />
 					<div class="w-2/3 m-auto" >
-						<p class="text-center text-lg font-medium text-[#fff] dark:text-[#fff]">{$t('play_page.your_score', { score: data[username] })}</p>
+						<p class="text-center text-lg font-medium text-[#fff] dark:text-[#fff]">
+							{#if language}
+								Your score: {data[username]}
+							{:else}
+								{$t('play_page.your_score', { score: data[username] })}
+							{/if}
+						</p>
 						{#each player_names as player, i}
 							{#if player === username}
-								<p class="text-center text-[#FFE500] text-xl font-semibold mt-2">{$t('play_page.your_place', { place: i + 1 })}</p>
+								<p class="text-center text-[#FFE500] text-xl font-semibold mt-2">
+									{#if language}
+									You're in position {i + 1 }!
+									{:else}
+										{$t('play_page.your_place', { place: i + 1 })}
+									{/if}
+								</p>
 							{/if}
 						{/each}
 					</div>
