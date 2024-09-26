@@ -25,6 +25,7 @@ SPDX-License-Identifier: MPL-2.0
 
 	export let shown_question_now: number;
 	let fullscreen_open = false;
+	let show_qr = false;
 	const { t } = getLocalization();
 	const set_question_number = (q_number: number) => {
 		socket.emit('set_question_number', q_number.toString());
@@ -121,41 +122,54 @@ SPDX-License-Identifier: MPL-2.0
 			{$t('admin_page.answers_submitted', { answer_count: answer_count })}
 		</div>
 		{#if selected_question + 1 != quiz_data.questions.length}
-			<div
-				class="fixed right-0 top-32 lg:text-sm text-xs px-4 py-2 mr-3 mt-4 rounded-xl  text-white  "
+			{#if question_results === null}
+			<button
+				on:click={() => show_qr = !show_qr}
+				class=" fixed right-0 top-32 slide-control-btn mr-3 mt-4"
 			>
-				<div class="flex flex-col justify-center items-center border-2 dark:bg-transparent bg-[#FFFFFF] border-[#9E9E9E] py-1 rounded-3xl shadow-lg">
+			{#if show_qr}
+				Hide
+			{:else}
+				Show 
+			{/if} 	
+			Join Info
+			</button>
+		{/if}
+			{#if show_qr || question_results !== null}
+			<div
+				class="fixed right-0 top-32 lg:text-sm text-xs  mr-3 mt-4 rounded-xl  text-white  " class:top-44={question_results === null}
+			>
+				<div class="flex flex-col justify-center items-center border-2 dark:bg-[#002897] bg-[#FFFFFF] border-[#9E9E9E] py-1 rounded-3xl shadow-lg">
 					
 					<div class=" flex flex-col justify-center items-center w-full p-3">
 						<!-- svelte-ignore a11y-click-events-have-key-events -->
-						<div class=" rounded-xl flex flex-col justify-center rounded-xl bg-[#FFFFFF] dark:bg-[#BFBFBF]">
+						<div class=" flex flex-col justify-center  bg-[#FFFFFF] dark:bg-[#FFFFFF]">
 							<img
 								on:click={() => (fullscreen_open = true)}
 								alt={$t('qr_code_to_join_the_game')}
 								src={`/api/v1/utils/qr/${game_pin}`}
-								class=" bg-[#FFFFF] "
-								width="150"
-								height="150"
+								class=" bg-[#FFFFF] sm:w-[100px] w-[80px] sm:h-[100px] w-[80px] lg:w-[150px] lg:h-[150px] p-2 "
 							/>
 						</div>
 					</div>
-					<p class="text-[1.2rem] font-bold text-[#0056BD] dark:text-white" >Join: </p>
-					<div class="flex justify-center items-center mt-2 gap-2" >
+					<p class="lg:text-[1.2rem] sm:text-[0.8rem] text-[0.6rem] font-bold text-[#0056BD] dark:text-white" >Join: </p>
+					<div class="flex justify-center items-center sm:mt-2 gap-2" >
 						<p
 							on:click={copyUrl}
-							class="underline cursor-pointer text-[#0056BD] dark:text-white text-[1.2rem] font-bold w-fit  rounded-xl"
+							class="underline cursor-pointer text-[#0056BD] dark:text-white lg:text-[1.2rem] sm:text-[0.8rem] text-[0.6rem] font-bold w-fit  rounded-xl"
 						>
 							ai.zoni.edu
 						</p>
 					</div>
-					<div class="flex justify-center items-center my-2 gap-2" >
-						<p class="text-[1.2rem] font-bold text-[#0056BD] dark:text-white" >Code: </p>
-						<p class="  text-[#0056BD] dark:text-white text-[1.2rem] font-bold w-fit  text-[#0056BD] dark:text-white rounded-xl" >
+					<div class="flex justify-center items-center sm:my-2 gap-2" >
+						<p class="lg:text-[1.2rem] sm:text-[0.8rem] text-[0.6rem] font-bold text-[#0056BD] dark:text-white" >Code: </p>
+						<p class="  text-[#0056BD] dark:text-white lg:text-[1.2rem] sm:text-[0.8rem] text-[0.6rem] font-bold w-fit  text-[#0056BD] dark:text-white rounded-xl" >
 							{game_pin}
 						</p>
 					</div>
 				</div>
 			</div>
+			{/if}
 		{/if}
 	</div>
 	{#if fullscreen_open}
