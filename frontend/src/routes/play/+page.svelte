@@ -47,6 +47,11 @@
 	let question;
 	let preventReload = true;
 	let language;
+	let acknowledgement = {
+		answered: false,
+		answer: '',
+	};
+	let selected_answer = '';
 
 	if (browser) {
     	restoreState();
@@ -99,7 +104,6 @@
 		if (!username || !game_pin || question_index === null || question_index === undefined) {
 			return;
 		}
-		const acknowledgement = JSON.parse(localStorage.getItem('game_state'))?.acknowledgement || {};
 		const state = {
 			game_pin,
 			username,
@@ -112,10 +116,11 @@
 			game_mode,
 			question,
 			solution,
-			acknowledgement
+			acknowledgement,
+			selected_answer
 		};
 		localStorage.setItem('game_state', JSON.stringify(state));
-		// console.log('State saved:', state);
+		console.log('State saved:', state);
 	}
 
 	function restoreState() {
@@ -134,6 +139,8 @@
 				game_mode: storedGameMode,
 				question: storedQuestion,
 				solution: storedSolution,
+				acknowledgement: storedAcknowledgement,
+				selected_answer: storedSelectedAnswer,
 			} = JSON.parse(savedState);
 
 			// Use storedGamePin if game_pin is undefined or empty
@@ -167,6 +174,8 @@
 			game_mode = storedGameMode || game_mode;
 			question = storedQuestion || question;
 			solution = storedSolution || solution;
+			acknowledgement = storedAcknowledgement || acknowledgement;
+			selected_answer = storedSelectedAnswer || selected_answer;
 
 			// Retrieve the stored socket ID and emit rejoin event
 			const storedSocketId = localStorage.getItem('socket_id');
@@ -177,33 +186,13 @@
 					game_pin: storedGamePin,
 				});
 			}
+			console.log('State restored:', savedState);
 		}
 	}
 
 	function clearState() {
 		localStorage.removeItem('game_state');
 		localStorage.removeItem('socket_id');
-	}
-
-	/**
- 	* Resets the 'acknowledge' property in the 'game_state' stored in localStorage.
- 	* Handles JSON parsing errors and optionally removes corrupted 'game_state' data.
- 	*/
-	function resetAcknowledgement() {
-		let gameState = {};
-		try {
-			// Attempt to parse the 'game_state' from localStorage
-  			gameState = JSON.parse(localStorage.getItem("game_state")) || {};
-		} catch (e) {
-			// Log the error and remove corrupted 'game_state' data
-  			console.error("Failed to parse game_state:", e);
-  			localStorage.removeItem("game_state"); // Optionally clear corrupted data
-		}
-		// Check if 'acknowledgement' exists before attempting to delete
-		if ('acknowledgement' in gameState) {
-			delete gameState.acknowledgement;
-			localStorage.setItem("game_state", JSON.stringify(gameState));
-		}
 	}
 
 	function handlePageHide() {
@@ -255,7 +244,9 @@
 	socket.on('joined_game', (data) => {
 		gameData = data;
 		game_mode = data.game_mode;
-		resetAcknowledgement();  // Reset the acknowledgement state
+		acknowledgement.answered = false;
+		acknowledgement.answer = '';
+		selected_answer = '';
 		storeState();  // Save state after joining the game
 	});
 
@@ -292,7 +283,9 @@
 		question = data.question;
 		question_index = data.question_index;
 		answer_results = undefined;
-		resetAcknowledgement(); // Reset the acknowledgement state
+		acknowledgement.answered = false;
+		acknowledgement.answer = '';
+		selected_answer = '';
 		storeState();  // Save state when the question index changes
 	});
 
@@ -379,7 +372,7 @@
 		{:else if gameMeta.started && gameData !== undefined && question_index !== '' && answer_results === undefined}
 			{#key unique}
 				<div class="text-[#00529B] dark:text-[#00529B]">
-					<Question bind:game_mode bind:question bind:question_index bind:solution bind:language on:storeStateNeeded={storeState}/>
+					<Question bind:game_mode bind:question bind:question_index bind:solution bind:language bind:acknowledgement bind:selected_answer on:storeStateNeeded={storeState} on:restoreStateNeeded={restoreState}/>
 				</div>
 			{/key}
 	
