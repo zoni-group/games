@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { createEventDispatcher } from 'svelte';
 	import { onMount } from 'svelte';
 	import type { Question } from '$lib/quiz_types';
 	import { QuizQuestionType } from '$lib/quiz_types';
@@ -40,6 +41,12 @@
 	let acknowledgement;
 	let showPlayerAnswers = false;
 	let gameState: { acknowledgement?: { answered: boolean; answer: string } } = { acknowledgement: { answered: false, answer: '' } };
+
+	const dispatch = createEventDispatcher();
+
+	function triggerStoreState() {
+    	dispatch('storeStateNeeded');
+  	}
 
 	onMount(() => {
 		// Read gameState from localStorage once
@@ -114,6 +121,7 @@
 			answer: cleanAnswer(answer)
 		});
 		toast.push(`You selected: ${cleanAnswer(selected_answer)}`);
+		triggerStoreState();
 	};
 
 	socket.on('answer_acknowledged', () => {
@@ -121,9 +129,9 @@
 			answered: true,
 			answer: selected_answer,
 		};
-		gameState.acknowledgement = val; // Update cached gameState
-		localStorage.setItem("game_state", JSON.stringify(gameState)); // Write back to localStorage
+		gameState.acknowledgement = val;
   		showPlayerAnswers = true;
+		triggerStoreState();
 	});
 
 	const selectRangeAnswer = (answer: string) => {
@@ -134,6 +142,7 @@
 		});
 		toast.push(`You selected: ${answer}`);
 		showPlayerAnswers = true;
+		triggerStoreState();
 	};
 
 	const selectCheckAnswer = (answer: string, text_answer: []) => {
@@ -144,6 +153,7 @@
 		});
 		toast.push(`Your answer has been submitted!`);
 		showPlayerAnswers = true;
+		triggerStoreState();
 	};
 
 	const select_complex_answer = (data) => {
@@ -159,6 +169,7 @@
 		});
 		toast.push(`Your answer has been submitted!`);
 		showPlayerAnswers = true;
+		triggerStoreState();
 	};
 
 	let text_input = '';

@@ -206,13 +206,15 @@
 		}
 	}
 
-	const confirmUnload = () => {
-		if (preventReload) {
-			event.preventDefault();
-			event.returnValue = '';
-			storeState(); // Ensure state is saved before reload
-		}
-	};
+	function handlePageHide() {
+		storeState();
+	}
+
+	function handleVisibilityChange() {
+  		if (document.visibilityState === 'hidden') {
+    		storeState();
+  		}
+	}
 
 	// Socket events for managing the game connection and state
 	socket.on('time_sync', (data) => {
@@ -349,7 +351,7 @@
 	
 </script>
 
-<svelte:window on:beforeunload={confirmUnload} />
+<svelte:window on:pagehide={handlePageHide} on:visibilitychange={handleVisibilityChange} />
 <svelte:head>
 	<title>Zoni® AI - Play</title>
 </svelte:head>
@@ -377,7 +379,7 @@
 		{:else if gameMeta.started && gameData !== undefined && question_index !== '' && answer_results === undefined}
 			{#key unique}
 				<div class="text-[#00529B] dark:text-[#00529B]">
-					<Question bind:game_mode bind:question bind:question_index bind:solution bind:language />
+					<Question bind:game_mode bind:question bind:question_index bind:solution bind:language on:storeStateNeeded={storeState}/>
 				</div>
 			{/key}
 	
