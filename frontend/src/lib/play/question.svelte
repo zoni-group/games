@@ -518,15 +518,25 @@
 	{#if showPlayerAnswers}
 	    <div class={`${game_mode !== 'normal' ? 'h-screen flex justify-center items-center' : ''}`}>
 			<div class="px-4 text-center">
-				<p class="text-lg font-semibold text-[#00529B] dark:text-[#fff] mt-10">Your answer:</p>
-				{#if Array.isArray(selected_answer)}
-				<ul class="list-disc list-inside mx-auto text-left text-[#00529B] inline-block dark:text-[#fff]">
-					{#each selected_answer as ans}
-					<li class="text-lg">{ans}</li>
-					{/each}
-				</ul>
+				{#if selected_answer !== undefined && selected_answer !== ''}	
+					<p class="text-lg font-semibold text-[#00529B] dark:text-[#fff] mt-10">Your answer:</p>
+					{#if Array.isArray(selected_answer)}
+					<ul class="list-disc list-inside mx-auto text-left text-[#00529B] inline-block dark:text-[#fff]">
+						{#each selected_answer as ans}
+						<li class="text-lg">{ans}</li>
+						{/each}
+					</ul>
+					{:else}
+					<p class="text-lg text-[#00529B] selected-ans bg-[#FFFFFF] font-bold p-4 rounded-lg mt-10">{selected_answer}</p>
+					{/if}
 				{:else}
-				<p class="text-lg text-[#00529B] selected-ans bg-[#FFFFFF] font-bold p-4 rounded-lg mt-10">{selected_answer}</p>
+					<p class="text-lg text-[#00529B] selected-ans bg-[#FFFFFF] font-bold p-4 rounded-lg mt-10">
+						{#if language}
+							{en.admin_page.no_answers}
+						{:else}
+							{$t('admin_page.no_answers')}
+						{/if}
+					</p>
 				{/if}
 			</div>
 		</div>

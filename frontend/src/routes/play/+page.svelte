@@ -233,6 +233,11 @@
 						if (gameState.started) {
 							gameMeta.started = true;
 							question_index = gameState.question_index;
+							if (gameData.question_show === false) {
+        						acknowledgement.answered = true;
+        					} else {
+								acknowledgement.answered = false;
+							}
 						}
 					}
 				});
@@ -244,9 +249,14 @@
 	socket.on('joined_game', (data) => {
 		gameData = data;
 		game_mode = data.game_mode;
-		acknowledgement.answered = false;
-		acknowledgement.answer = '';
 		selected_answer = '';
+
+		if (data.question_show === false) {
+        	acknowledgement.answered = true;
+        } else {
+			acknowledgement.answered = false;
+		}
+
 		storeState();  // Save state after joining the game
 	});
 
@@ -257,6 +267,13 @@
 		gameData = data;
 		game_mode = data.game_mode;
 		gameMeta.started = true;  // Ensure the game state reflects that it's in progress
+
+		if (data.question_show === false) {
+        	acknowledgement.answered = true;
+        } else {
+			acknowledgement.answered = false;
+		}
+
 		storeState();  // Store the current game state locally
 	});
 
@@ -268,6 +285,13 @@
 			gameMeta.started = true;
 			question_index = data.current_question;  // Set current question
 		}
+
+		if (data.question_show === false) {
+        	acknowledgement.answered = true;
+        } else {
+			acknowledgement.answered = false;
+		}
+
 		storeState();  // Store state after rejoining
 	});
 
@@ -283,7 +307,11 @@
 		question = data.question;
 		question_index = data.question_index;
 		answer_results = undefined;
-		acknowledgement.answered = false;
+		if (data.question_show === false) {
+        	acknowledgement.answered = true;
+        } else {
+			acknowledgement.answered = false;
+		}
 		acknowledgement.answer = '';
 		selected_answer = '';
 		storeState();  // Save state when the question index changes

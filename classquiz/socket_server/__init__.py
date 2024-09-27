@@ -147,12 +147,15 @@ async def rejoin_game(sid: str, data: dict):
         {
             **json.loads(game_data.json(exclude={"quiz_id", "questions", "user_id"})),
             "question_count": len(game_data.questions),
+            "question_show": game_data.question_show,
         },
         room=sid,
     )
 
     # Restore player score or any other game data if necessary
     player_scores = await redis.hgetall(f"game_session:{data.game_pin}:player_scores")
+    if data.username not in player_scores:
+        await redis.hset(f"game_session:{data.game_pin}:player_scores", data.username, 0)
     await sio.emit("player_scores", player_scores, room=sid)
 
     remaining_time = await calculate_remaining_time(data.game_pin, game_data)
@@ -192,6 +195,7 @@ async def join_game(sid: str, data: dict):
                 **json.loads(game_data.json(exclude={"quiz_id", "questions", "user_id"})),
                 "current_question": game_data.current_question,
                 "question_count": len(game_data.questions),
+                "question_show": game_data.question_show,
             },
             room=sid,
         )
@@ -206,6 +210,7 @@ async def join_game(sid: str, data: dict):
                 {
                     "question_index": game_data.current_question,
                     "question": current_question.dict(),
+                    "question_show": game_data.question_show,
                 },
                 room=sid,
             )
@@ -269,6 +274,7 @@ async def join_game(sid: str, data: dict):
         {
             **json.loads(game_data.json(exclude={"quiz_id", "questions", "user_id"})),
             "question_count": len(game_data.questions),
+            "question_show": game_data.question_show
         },
         room=sid,
     )
@@ -288,7 +294,7 @@ async def join_game(sid: str, data: dict):
     # )
     await sio.emit(
         "player_joined",
-        {"username": data.username, "sid": sid},
+        {"username": data.username, "sid": sid, "question_show": game_data.question_show},
         room=f"admin:{data.game_pin}",
     )
     # +++ Time-Sync +++
@@ -296,6 +302,8 @@ async def join_game(sid: str, data: dict):
     await sio.emit("time_sync", encrypted_datetime, room=sid)
     # --- Time-Sync ---
     await sio.enter_room(sid, data.game_pin)
+    # Initialize player score to 0 when they join
+    await redis.hset(f"game_session:{data.game_pin}:player_scores", data.username, 0)
 
 
 @sio.event
@@ -472,6 +480,7 @@ async def submit_answer(sid: str, data: dict):
     max_time = float(game_data.questions[game_data.current_question].time)
     if elapsed_time > max_time + 1:
         await sio.emit("time_up", room=sid)
+        game_data.question_show = False
         return  # The time is up, no more answers are accepted
 
     answer_right = False
@@ -592,6 +601,11 @@ async def show_solutions(sid: str, _data: dict):
     game_data = PlayGame(**json.loads(await redis.get(f"game:{session['game_pin']}")))
     if not session["admin"]:
         return
+    # Set question_show to False
+    game_data.question_show = False
+    # Save the updated game data back to Redis
+    await redis.set(f"game:{session['game_pin']}", game_data.json())
+    # Emit the solutions to all connected clients
     await sio.emit("solutions", game_data.questions[game_data.current_question].dict(), room=session["game_pin"])
 
 
