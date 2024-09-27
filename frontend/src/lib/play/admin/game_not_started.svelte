@@ -57,7 +57,7 @@
 		<p class="mt-4 text-[#00529B] text-sm dark:text-white md:text-5xl">
 			{$t('play_page.players_waiting', { count: players.length ?? 0 })}
 		</p>
-		<p class="text-[#0056BD] dark:text-white font-semibold text-sm md:text-xl mt-16" >Please use your phone camera to scan the QR code or visit https://ai.zoni.edu/play
+		<p class="text-[#0056BD] dark:text-white font-semibold text-sm md:text-xl mt-16" >Please use your phone camera to scan the QR code or visit https://ai.zoni.edu
 		</p>
 		<!-- svelte-ignore a11y-click-events-have-key-events -->
 		<p on:click={copyUrl} class="underline cursor-pointer text-[#0056BD] dark:text-white font-normal sm:mb-10 text-sm w-fit px-4 py-2 md:text-xl mb-3 rounded-xl"  >Copy URL</p>
