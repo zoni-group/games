@@ -52,6 +52,7 @@
 		answer: '',
 	};
 	let selected_answer = '';
+	let gameEnded = false;
 
 	if (browser) {
     	restoreState();
@@ -101,7 +102,7 @@
 
 	// Functions for handling game state persistence using localStorage
 	function storeState() {
-		if (!username || !game_pin || question_index === null || question_index === undefined) {
+		if (!username || !game_pin || question_index === null || question_index === undefined || gameEnded) {
 			return;
 		}
 		const state = {
@@ -345,6 +346,7 @@
 
 	socket.on('final_results', (data) => {
 		final_results = data;
+		gameEnded = true;
 		clearState();  // Clear state when the game ends
 		if (browser) {
 			noSleep.disable(); // Disable wake lock when the game ends
