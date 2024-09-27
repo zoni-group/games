@@ -74,21 +74,21 @@ SPDX-License-Identifier: MPL-2.0
 		</div>
 	{/if}
 	{#if quiz_data.questions[selected_question].type === QuizQuestionType.ABCD || quiz_data.questions[selected_question].type === QuizQuestionType.VOTING || quiz_data.questions[selected_question].type === QuizQuestionType.CHECK}
-		<div class="grid grid-rows-2 grid-flow-col auto-cols-auto gap-2 w-4/5 lg:w-full ps-1 justify-items-stretch">
+		<div class="grid grid-rows-2 grid-flow-col auto-cols-auto gap-2 w-4/5 lg:w-full ps-1 ">
 			{#each quiz_data.questions[selected_question].answers as answer, i}
 				<div
-					class="rounded-lg h-full flex border-2 border-[#0056BD] items-center  max-h-[30vh] max-w-[50vw]"
+					class="rounded-lg h-full flex border-2 border-[#0056BD] items-center flex-grow lg:h-[20vh] lg:w-[48vw] lg:max-h-[20vh] lg:max-w-[48vw] w-[30vw] transition-all"
 					style="background-color: {answer.color ?? default_colors[i]};"
 					class:opacity-50={!answer.right &&
 						timer_res === '0' &&
 						quiz_data.questions[selected_question].type === QuizQuestionType.ABCD}
 				>
-					<span class="md:text-7xl text-4xl font-bold text-[#fff] ps-1">
+					<p class="md:text-7xl text-4xl font-bold text-[#fff] ps-1">
 						{optionsLabel[i]}
-					</span>
-					<span
-						class="text-center fluid-text-md lg:text-3xl md:text-xl sm:text-lg px-2 py-2 w-full text-[#fff] "
-						>{answer.answer}</span
+					</p>
+					<p
+						class="text-center fluid-text-md lg:text-2xl break-all md:text-xl sm:text-lg px-2 overflow-auto py-2 w-full text-[#fff] "
+						>{answer.answer}</p
 					>
 				</div>
 			{/each}

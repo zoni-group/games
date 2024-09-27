@@ -59,7 +59,7 @@
         {#each quiz_answers as answer, i}
           <div class="w-full md:w-1/2 lg:w-1/3 p-4">
             <div class="flex items-center justify-between p-4 border rounded shadow-lg bg-gray-100 dark:bg-[#0AEDFE]/20">
-              <span class="text-lg text-[#00529B] dark:text-[#fff]">{answer}</span>
+              <p class="text-lg text-[#00529B] dark:text-[#fff] break-all">{answer}</p>
               <span class="text-xl font-bold" class:text-green-500={isCorrect(answer)} class:text-red-500={isIncorrect(answer)}>
                 {isCorrect(answer) ? '✓' : isIncorrect(answer) ? '✗' : ''}
               </span>
