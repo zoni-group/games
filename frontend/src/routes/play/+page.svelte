@@ -52,6 +52,7 @@
 		answer: '',
 	};
 	let selected_answer = '';
+	let gameEnded = false;
 
 	if (browser) {
     	restoreState();
@@ -101,7 +102,7 @@
 
 	// Functions for handling game state persistence using localStorage
 	function storeState() {
-		if (!username || !game_pin || question_index === null || question_index === undefined) {
+		if (!username || !game_pin || question_index === null || question_index === undefined || gameEnded) {
 			return;
 		}
 		const state = {
@@ -205,6 +206,15 @@
   		}
 	}
 
+	function checkFinalizedGame(gameData) {
+		if (gameData.current_question + 1 === gameData.question_count && gameData.question_show === false) {
+			gameEnded = true;
+			clearState();
+			alert('This session has already ended.');
+			window.location.href = '/play';
+		}
+	}
+
 	// Socket events for managing the game connection and state
 	socket.on('time_sync', (data) => {
 		socket.emit('echo_time_sync', data);
@@ -228,6 +238,7 @@
 				// Use the fetchGameState function to get the game state
 				fetchGameState(game_pin).then((gameState) => {
 					if (gameState) {
+						checkFinalizedGame(gameData);
 						gameData = gameState;
 						game_mode = gameState.game_mode;
 						if (gameState.started) {
@@ -263,6 +274,7 @@
 	socket.on('joined_game_late', (data) => {
 		// Handle receiving the current game state for late joiners
 		console.log('Joined late:', data);
+		checkFinalizedGame(data);
 
 		gameData = data;
 		game_mode = data.game_mode;
@@ -345,6 +357,7 @@
 
 	socket.on('final_results', (data) => {
 		final_results = data;
+		gameEnded = true;
 		clearState();  // Clear state when the game ends
 		if (browser) {
 			noSleep.disable(); // Disable wake lock when the game ends
