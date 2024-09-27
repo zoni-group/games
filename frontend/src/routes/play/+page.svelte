@@ -206,6 +206,15 @@
   		}
 	}
 
+	function checkFinalizedGame(gameData) {
+		if (gameData.current_question + 1 === gameData.question_count && gameData.question_show === false) {
+			gameEnded = true;
+			clearState();
+			alert('This session has already ended.');
+			window.location.href = '/play';
+		}
+	}
+
 	// Socket events for managing the game connection and state
 	socket.on('time_sync', (data) => {
 		socket.emit('echo_time_sync', data);
@@ -229,6 +238,7 @@
 				// Use the fetchGameState function to get the game state
 				fetchGameState(game_pin).then((gameState) => {
 					if (gameState) {
+						checkFinalizedGame(gameData);
 						gameData = gameState;
 						game_mode = gameState.game_mode;
 						if (gameState.started) {
@@ -264,6 +274,7 @@
 	socket.on('joined_game_late', (data) => {
 		// Handle receiving the current game state for late joiners
 		console.log('Joined late:', data);
+		checkFinalizedGame(data);
 
 		gameData = data;
 		game_mode = data.game_mode;

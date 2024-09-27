@@ -53,6 +53,23 @@
 		}
 	});
 
+	async function fetchGameState(game_pin: string) {
+		try {
+		const response = await fetch(`/api/v1/game_state/${game_pin}`);
+		console.log('Fetch Game State Response:', response);
+
+		if (!response.ok) {
+			throw new Error(`Failed to fetch game state: ${response.statusText}`);
+		}
+
+		const gameState = await response.json();
+		return gameState;
+		} catch (error) {
+			console.error('Error fetching game state:', error);
+			return null;
+		}
+	}
+
 	const prefetch_username = async () => {
 		const res = await fetch('/api/v1/users/me');
 		if (res.status !== 200) {
@@ -64,7 +81,7 @@
 
 	const set_game_pin = async () => {
 		if (!game_pin) {
-			console.error('Game PIN is undefined or empty.');
+			console.error('PIN is undefined or empty.');
 			return;
 		}
 		let process_var;
@@ -73,6 +90,16 @@
 		} catch {
 			process_var = { env: { API_URL: undefined } };
 		}
+
+		fetchGameState(game_pin).then((gameState) => {
+			console.log('Game State:', gameState);
+			if (gameState) {
+				if ((gameState.current_question + 1 === gameState.questions_count) && !gameState.question_show) {
+				alert('This session has already ended.');
+				window.location.href = '/play';
+				}
+			}
+		});
 
 		const res = await fetch(
 			`${process_var.env.API_URL ?? ''}/api/v1/quiz/play/check_captcha/${game_pin}`
