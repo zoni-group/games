@@ -22,5 +22,6 @@ async def fetch_game_state(game_pin: str):
         "description": data.description,
         "cover_image": data.cover_image,
         "background_color": data.background_color,
-        "background_image": data.background_image
+        "background_image": data.background_image,
+        "question_show": data.question_show
     }
