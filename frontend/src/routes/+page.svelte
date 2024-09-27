@@ -12,12 +12,16 @@ SPDX-License-Identifier: MPL-2.0
 	import JpgOpenGraph from '$lib/assets/landing/opengraph-home.jpg';
 	import login_icon from "$lib/assets/all/login_icon.webp";
 	import { fly, fade } from 'svelte/transition';
-
+	import hand_click_icon from "$lib/assets/all/hand_click_icon.svg";
+	import hand_click_icon_dark from "$lib/assets/all/hand_click_icon_dark.svg";
 	/*	import LandingPromo from '$lib/landing/landing-promo.svelte';*/
 
 	import { onMount } from 'svelte';
+	import { redirect } from '@sveltejs/kit';
+	import { goto } from '$app/navigation';
 
 	const { t } = getLocalization();
+	let game_pin: string = '';
 
 	navbarVisible.set(true);
 
@@ -113,6 +117,10 @@ SPDX-License-Identifier: MPL-2.0
 		}
 	];
 	let selected_classquiz_reason = 0;
+
+	const submitHandler = () =>{
+		goto(`/play?pin=${game_pin}`);
+	}
 </script>
 
 <svelte:head>
@@ -159,6 +167,38 @@ SPDX-License-Identifier: MPL-2.0
 		</div>
 	 </div>
 </section> -->
+<section class="w-screen flex h-screen items-center justify-center" >
+	<div class="bg-gradient-to-t from-[#D3E1EE] dark:from-[#00529B] to-[#FCFDFE] dark:to-[#00529B] shadow-[#003FA7]/50 shadow-md border border-[#003FA7]/50 rounded-xl dark:bg-gray-300 dark:shadow-none  bg-opacity-40 xl:w-1/4 sm:w-1/2  p-5 mt-20" >
+		<div class="w-full justify-center flex" >
+			<img src="{login_icon}" alt="" class="-mt-20">
+		</div>
+		<div class="flex flex-col items-center my-5" >
+			<p class="text-[#003FA7] dark:text-white font-bold mb-0" >{$t('words.game_pin')}</p>
+		</div>
+
+		<form on:submit|preventDefault = {submitHandler} class="flex-col flex justify-center align-center mx-auto mb-12">
+			<input
+				class="border border-gray-400 md:w-1/2 w-full self-center text-center text-black bg-white bg-opacity-50 ring-0 shadow-inner  outline-none p-2 rounded-lg  transition-all"
+				bind:value={game_pin}
+				maxlength="6"
+				inputmode="numeric"
+			/>
+			<!--				use:tippy={{content: "Please enter the game pin", sticky: true, placement: 'top'}}-->
+
+			<br />
+			<div class="mt-2 flex justify-center items-center">
+				<button 
+				class="px-5 py-2 flex items-center border-[#00EDFF] my-3 border-4 bg-gradient-to-r from-[#0056BD] dark:from-[#FFE500] from-0%  to-[#5436AB] dark:to-[#FFB800] to-100% leading-5 text-white transition-colors duration-200 transform rounded-full hover:bg-gray-600 focus:outline-none disabled:cursor-not-allowed disabled:opacity-50"
+				 disabled={game_pin.length < 6} >
+					<img src="{hand_click_icon}" alt="icon" class="" >
+					{$t('words.submit')}
+				</button>
+				<!-- <BrownButton disabled={game_pin.length < 6}>{$t('words.submit')}</BrownButton> -->
+			</div>
+		</form>
+	 </div>
+
+</section>
 <Footer />
 
 <style>
