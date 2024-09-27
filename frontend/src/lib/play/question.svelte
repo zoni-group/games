@@ -39,7 +39,6 @@
 	let timer_res = question.time;
 	let timer_interval; // Declare this outside to ensure there's only one interval running at a time
 	let text_answer = [];
-	let showPlayerAnswers = false;
 
 	const dispatch = createEventDispatcher();
 
@@ -56,8 +55,6 @@
 		// Read gameState from localStorage once
 		triggerRestoreState();
 
-		// Initialize variables from gameState
-    	showPlayerAnswers = acknowledgement.answered || false;
 		// Initialize and start timer based on `timer_res`
 		startTimer(timer_res, acknowledgement.answered);
 	});
@@ -121,7 +118,6 @@
 	socket.on('answer_acknowledged', () => {
 		acknowledgement.answered = true;
 		acknowledgement.selected_answer = selected_answer;
-  		showPlayerAnswers = true;
 		triggerStoreState();
 	});
 
@@ -132,7 +128,7 @@
 			answer: answer
 		});
 		toast.push(`You selected: ${answer}`);
-		showPlayerAnswers = true;
+		acknowledgement.answered = true;
 		triggerStoreState();
 	};
 
@@ -143,7 +139,7 @@
 			answer: answer,
 		});
 		toast.push(`Your answer has been submitted!`);
-		showPlayerAnswers = true;
+		acknowledgement.answered = true;
 		triggerStoreState();
 	};
 
@@ -159,7 +155,7 @@
 			complex_answer: new_array
 		});
 		toast.push(`Your answer has been submitted!`);
-		showPlayerAnswers = true;
+		acknowledgement.answered = true;
 		triggerStoreState();
 	};
 
@@ -253,7 +249,7 @@
 			{/if}
 		</div>
 	{/if}
-	{#if timer_res !== '0' && !showPlayerAnswers}
+	{#if timer_res !== '0' && !acknowledgement.answered}
 		{#if question.type === QuizQuestionType.ABCD || question.type === QuizQuestionType.VOTING}
 		<div class="flex flex-col justify-start items-start w-full p-4 mt-0 ${game_mode !== 'normal' ? ' h-4/5' : ''}">
 			<div class={`flex-grow relative w-full ${game_mode !== 'normal' ? 'h-full' : ''}`}>
@@ -486,7 +482,7 @@
 				</div>
 			</div>
 		{:else if question.type === QuizQuestionType.CHECK}
-			{#if !showPlayerAnswers}
+			{#if !acknowledgement.answered}
 				{#await import('./questions/check.svelte')}
 					<Spinner />
 				{:then c}
@@ -503,7 +499,7 @@
 				{/await}
 			{/if}
 		{/if}
-		{:else if !showPlayerAnswers}
+		{:else if !acknowledgement.answered}
 			<div class={`w-full flex justify-center items-center ${game_mode === 'normal' ? 'h-full' : 'min-h-screen'}`}>
 				<h1 class="text-3xl dark:text-white text-[#0056BD] text-center p-3">
 					{#if language}
@@ -515,7 +511,7 @@
 			</div>
 		{/if}
 	<!-- Display the submitted answer -->
-	{#if showPlayerAnswers}
+	{#if acknowledgement.answered}
 	    <div class={`${game_mode !== 'normal' ? 'h-screen flex justify-center items-center' : ''}`}>
 			<div class="px-4 text-center">
 				{#if selected_answer !== undefined && selected_answer !== ''}	

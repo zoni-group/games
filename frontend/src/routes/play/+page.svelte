@@ -366,7 +366,10 @@
 
 	socket.on('solutions', (data) => {
 		solution = data;
+		acknowledgement.answered = true;
+		console.log('Acknowledgement before store:', acknowledgement);
 		storeState();
+		console.log('Acknowledgement after store:', acknowledgement);
 	});
 
 	let darkMode = false;
