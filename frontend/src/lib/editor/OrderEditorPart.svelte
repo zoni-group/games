@@ -10,6 +10,7 @@ SPDX-License-Identifier: MPL-2.0
 	import { fade } from 'svelte/transition';
 	import { flip } from 'svelte/animate';
 	import { get_foreground_color } from '$lib/helpers.ts';
+	import { toast } from '@zerodevx/svelte-toast';
 
 	const { t } = getLocalization();
 
@@ -64,6 +65,14 @@ SPDX-License-Identifier: MPL-2.0
 		set_colors_if_unset();
 		data;
 		selected_question;
+	}
+
+	const handleTextChange = (selectedQuestion: number, index: number) =>{
+		if(data.questions[selectedQuestion].answers[index].answer.length >= 100){
+			toast.push("Over 100 characters, please shorten the answer");	
+		}else{
+			console.log("Under 100");
+		}
 	}
 </script>
 
@@ -158,6 +167,8 @@ SPDX-License-Identifier: MPL-2.0
 					style="background-color: {answer.color}; color: {get_foreground_color(
 						answer.color
 					)}"
+					maxlength="100"
+					on:input={() => handleTextChange(selected_question,i)}
 					placeholder={$t('editor.empty')}
 				/>
 				<input

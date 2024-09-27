@@ -12,6 +12,7 @@ SPDX-License-Identifier: MPL-2.0
 	import { ABCDQuestionSchema } from '$lib/yupSchemas';
 	import { getLocalization } from '$lib/i18n';
 	import { get_foreground_color } from '$lib/helpers';
+	import { toast } from '@zerodevx/svelte-toast';
 
 	const { t } = getLocalization();
 
@@ -62,6 +63,13 @@ SPDX-License-Identifier: MPL-2.0
 		data;
 		selected_question;
 	}
+	const handleTextChange = (selectedQuestion: number, index: number) =>{
+		if(data.questions[selectedQuestion].answers[index].answer.length >= 100){
+			toast.push("Over 100 characters, please shorten the answer");	
+		}else{
+			console.log("Under 100");
+		}
+	}
 </script>
 
 <div class="grid grid-rows-2 grid-flow-col auto-cols-auto gap-4 w-full px-10">
@@ -107,6 +115,8 @@ SPDX-License-Identifier: MPL-2.0
 					style="background-color: {answer.color}; color: {get_foreground_color(
 						answer.color
 					)}"
+					maxlength="100"
+					on:input={() => handleTextChange(selected_question,index)}
 					placeholder={$t('editor.enter_answer')}
 				/>
 				<button

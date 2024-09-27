@@ -11,6 +11,7 @@ SPDX-License-Identifier: MPL-2.0
 	import { getLocalization } from '$lib/i18n';
 	import { VotingQuestionSchema } from '$lib/yupSchemas';
 	import { get_foreground_color } from '$lib/helpers';
+	import { toast } from '@zerodevx/svelte-toast';
 
 	const { t } = getLocalization();
 
@@ -39,6 +40,13 @@ SPDX-License-Identifier: MPL-2.0
 		set_colors_if_unset();
 		data;
 		selected_question;
+	}
+	const handleTextChange = (selectedQuestion: number, index: number) =>{
+		if(data.questions[selectedQuestion].answers[index].answer.length >= 100){
+			toast.push("Over 100 characters, please shorten the answer");	
+		}else{
+			console.log("Under 100");
+		}
 	}
 	/*console.log(data.questions[selected_question].answers, 'moIn!', data.questions[selected_question].answers.length);
     onMount(() => {
@@ -91,6 +99,8 @@ SPDX-License-Identifier: MPL-2.0
 					class="border-b-2 border-dotted w-5/6 text-center rounded-lg"
 					style="background-color: {answer.color ??
 						'transparent'}; color: {get_foreground_color(answer.color)}"
+					maxlength="100"
+					on:input={() => handleTextChange(selected_question,index)}
 					placeholder={$t('editor.empty')}
 				/>
 				<input
