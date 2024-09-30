@@ -188,7 +188,7 @@
 		_arr[b] = temp;
 		return _arr;
 	};
-	$: set_answer_if_not_set_range(timer_res);
+	// $: set_answer_if_not_set_range(timer_res);
 	let circular_progress = 0;
 	$: {
 		try {
