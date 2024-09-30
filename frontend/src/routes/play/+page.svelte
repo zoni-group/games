@@ -292,18 +292,27 @@
 
 	socket.on('rejoined_game', (data) => {
 		console.log('Game rejoined successfully!');
+		console.log('Latest answer:', data.latest_answer);
 		gameData = data;
 		if (data.started) {
 			gameMeta.started = true;
 			question_index = data.current_question;  // Set current question
 		}
 
-		if (data.question_show === false) {
-        	acknowledgement.answered = true;
-        } else {
-			acknowledgement.answered = false;
+		if (data.latest_answer) {
+			if (data.latest_answer.question_index === question_index) {
+				acknowledgement.answered = true;
+				acknowledgement.answer = data.latest_answer.answer;
+			} else {
+				acknowledgement.answered = false;
+			}
+		} else {
+			if (data.question_show === false) {
+        		acknowledgement.answered = true;
+        	} else {
+				acknowledgement.answered = false;
+			}
 		}
-
 		storeState();  // Store state after rejoining
 	});
 
