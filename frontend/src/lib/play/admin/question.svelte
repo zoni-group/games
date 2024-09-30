@@ -95,17 +95,16 @@ SPDX-License-Identifier: MPL-2.0
 		</div>
 	{:else if quiz_data.questions[selected_question].type === QuizQuestionType.TEXT}
 		{#if timer_res === '0'}
-			<div class="grid grid-cols-2 gap-2 w-full p-4">
+			<div class="grid grid-rows-2 grid-flow-col auto-cols-auto gap-2 w-4/5 lg:w-full ps-1 ">
 				{#each quiz_data.questions[selected_question].answers as answer, i}
-					<div class="rounded-lg h-fit flex" style="background-color: {answer.color ??
+					<div class="rounded-lg h-full flex border-2 border-[#0056BD] items-center flex-grow lg:min-h-[7vh] lg:w-[48vw] lg:max-h-[20vh] lg:max-w-[48vw] w-[30vw] transition-all" style="background-color: {answer.color ??
 										default_colors[i]};">
-						<span class="text-center fluid-text-md px-2 py-4 w-full"
+						<span class="text-center fluid-text-md lg:text-2xl break-all md:text-xl sm:text-lg px-2 overflow-auto py-2 w-full text-[#fff] "
 						style="color: {get_foreground_color(
 												answer.color ?? default_colors[i]
 											)}"
 							>{answer.answer}</span
 						>
-						<span class="pl-4 w-10" />
 					</div>
 				{/each}
 			</div>
