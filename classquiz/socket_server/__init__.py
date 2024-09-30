@@ -85,6 +85,37 @@ async def calculate_remaining_time(game_pin: str, game_data: PlayGame) -> float 
         return None
 
 
+async def get_latest_submitted_answer(game_pin: str, username: str, current_question_index: int) -> dict | None:
+    """
+    Get the latest submitted answer for a given player in the current question.
+
+    Args:
+        game_pin (str): The game PIN to identify the game session.
+        username (str): The player's username.
+        current_question_index (int): The index of the current question.
+
+    Returns:
+        dict | None: A dictionary containing the latest submitted answer if found, or None if no answer exists.
+    """
+    # Fetch answers from Redis for the current question
+    answers = await redis.get(f"game_session:{game_pin}:{current_question_index}")
+
+    if answers is not None:
+        # Parse the list of answers
+        answers = AnswerDataList.parse_raw(answers)
+        # Iterate through the answers to find the player's answer
+        for answer in answers.__root__:
+            if answer.username == username:
+                # Return the answer details if found
+                return {
+                    "question_index": current_question_index,
+                    "answer": answer.answer,
+                }
+
+    # Return None if no answer is found
+    return None
+
+
 class _JoinGameData(BaseModel):
     username: str
     game_pin: str
@@ -141,6 +172,8 @@ async def rejoin_game(sid: str, data: dict):
     await sio.save_session(sid, session)
     await sio.enter_room(sid, data.game_pin)
 
+    latest_answer = await get_latest_submitted_answer(data.game_pin, data.username, game_data.current_question)
+
     # Send the restored game state to the player
     await sio.emit(
         "rejoined_game",
@@ -148,6 +181,7 @@ async def rejoin_game(sid: str, data: dict):
             **json.loads(game_data.json(exclude={"quiz_id", "questions", "user_id"})),
             "question_count": len(game_data.questions),
             "question_show": game_data.question_show,
+            "latest_answer": latest_answer
         },
         room=sid,
     )
