@@ -95,7 +95,7 @@ SPDX-License-Identifier: MPL-2.0
 		</div>
 	{:else if quiz_data.questions[selected_question].type === QuizQuestionType.TEXT}
 		{#if timer_res === '0'}
-			<div class="grid grid-rows-2 grid-flow-col auto-cols-auto gap-2 w-4/5 lg:w-full ps-1 ">
+			<div class="grid grid-cols-2 grid-flow-col auto-cols-auto gap-2 w-4/5 lg:w-full ps-1 ">
 				{#each quiz_data.questions[selected_question].answers as answer, i}
 					<div class="rounded-lg h-full flex border-2 border-[#0056BD] items-center flex-grow lg:min-h-[7vh] lg:w-[48vw] lg:max-h-[20vh] lg:max-w-[48vw] w-[30vw] transition-all" style="background-color: {answer.color ??
 										default_colors[i]};">
