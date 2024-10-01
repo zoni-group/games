@@ -275,7 +275,10 @@
 		// Handle receiving the current game state for late joiners
 		console.log('Joined late:', data);
 		checkFinalizedGame(data);
-
+		let converted_scores =  Object.fromEntries(Object.entries(data.player_scores).map(([key, value]) => [key, Number(value)])); // This statement converts string values to numbers in an object
+		scores = converted_scores;
+		console.log('scores', scores);
+		
 		gameData = data;
 		game_mode = data.game_mode;
 		gameMeta.started = true;  // Ensure the game state reflects that it's in progress
