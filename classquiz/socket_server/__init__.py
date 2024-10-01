@@ -220,7 +220,7 @@ async def join_game(sid: str, data: dict):
     if game_data.started:
         # Allow late join but emit a warning or set conditions for the player
         await sio.emit("game_already_started_but_allowed", room=sid)
-
+        player_scores = await redis.hgetall(f"game_session:{data.game_pin}:player_scores")
         # Emit current game state and question to late joiners
         print("Joining game late")
         await sio.emit(
@@ -230,6 +230,7 @@ async def join_game(sid: str, data: dict):
                 "current_question": game_data.current_question,
                 "question_count": len(game_data.questions),
                 "question_show": game_data.question_show,
+                "player_scores": player_scores
             },
             room=sid,
         )
