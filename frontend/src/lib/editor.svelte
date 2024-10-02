@@ -7,12 +7,13 @@ SPDX-License-Identifier: MPL-2.0
 <script lang="ts">
 	// import { mint } from '$lib/hashcash';
 	import { dataSchema } from '$lib/yupSchemas';
-	import type { EditorData, Question } from './quiz_types';
+	import { QuizQuestionType, type EditorData, type Question } from './quiz_types';
 	import Sidebar from '$lib/editor/sidebar.svelte';
 	import SettingsCard from '$lib/editor/settings-card.svelte';
 	import QuizCard from '$lib/editor/card.svelte';
 	import Spinner from './Spinner.svelte';
 	import { getLocalization } from '$lib/i18n';
+	import { toast } from '@zerodevx/svelte-toast';
 
 	const { t } = getLocalization();
 
@@ -25,17 +26,46 @@ SPDX-License-Identifier: MPL-2.0
 	let imgur_links_valid = false;
 
 	const validateInput = async (data: EditorData) => {
-		// console.log("input", data)
-		try {
-			await dataSchema.validate(data, { abortEarly: false });
+	try {
+		// Validate against the data schema
+		await dataSchema.validate(data, { abortEarly: false });
+
+		let errors = 0;
+
+		// Loop through the questions to perform additional checks
+		data.questions.forEach((question, index) => {
+			let correctAnswerCount = question.answers.reduce((count, answer) => count + (answer.right ? 1 : 0), 0);
+
+			if (question.type === QuizQuestionType.CHECK) {
+				if (correctAnswerCount < 2) {
+					errors += 1;
+					console.error(`Please select at least two correct answers in Question ${index + 1}`);
+					// toast.push(`Please select at least two correct answers in Question ${index + 1}`);
+				}
+			} else if (question.type === QuizQuestionType.ABCD) {
+				if (correctAnswerCount < 1) {
+					errors += 1;
+					console.error(`Please select at least one correct answer in Question ${index + 1}`);
+					// toast.push(`Please select at least one correct answer in Question ${index + 1}`);
+				}
+			}
+		});
+
+		// Set schemaInvalid and error message if errors were found
+		if (errors > 0) {
+			schemaInvalid = true;
+			yupErrorMessage = "There is a question which hasn't fulfilled the correct answer requirements";
+		} else {
 			schemaInvalid = false;
 			yupErrorMessage = '';
-		} catch (err) {
-			console.log('erro!', err.errors);
-			schemaInvalid = true;
-			yupErrorMessage = err.errors ? err.errors[0] : '';
 		}
-	};
+	} catch (err) {
+		console.error('Validation error:', err.errors);
+		schemaInvalid = true;
+		yupErrorMessage = err.errors ? err.errors[0] : '';
+	}
+};
+
 	$: validateInput(data);
 
 	const checkIfAllQuestionImagesComplyWithRegex = (questions: Array<Question>) => {
