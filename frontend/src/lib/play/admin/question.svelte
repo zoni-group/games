@@ -34,6 +34,7 @@ SPDX-License-Identifier: MPL-2.0
 			circular_progress = 0;
 		}
 	}
+	const totalAns = quiz_data.questions[selected_question].answers.length;
 </script>
 <style>
 	 .fluid-text {
@@ -95,9 +96,9 @@ SPDX-License-Identifier: MPL-2.0
 		</div>
 	{:else if quiz_data.questions[selected_question].type === QuizQuestionType.TEXT}
 		{#if timer_res === '0'}
-			<div class="grid grid-cols-2 grid-flow-col auto-cols-auto gap-2 w-4/5 lg:w-full ps-1 ">
+			<div class="grid   auto-cols-auto gap-2 w-4/5 lg:w-full ps-1 " class:grid-cols-2={totalAns > 2} class:grid-flow-cols={totalAns > 2}  class:grid-flow-rows={totalAns <= 2} class:grid-rows-2={totalAns <= 2} >
 				{#each quiz_data.questions[selected_question].answers as answer, i}
-					<div class="rounded-lg h-full flex border-2 border-[#0056BD] items-center flex-grow lg:min-h-[7vh] lg:w-[48vw] lg:max-h-[20vh] lg:max-w-[48vw] w-[30vw] transition-all" style="background-color: {answer.color ??
+					<div class="rounded-lg h-full flex border-2 border-[#0056BD] items-center flex-grow lg:min-h-[7vh]  lg:max-h-[20vh] transition-all" style="background-color: {answer.color ??
 										default_colors[i]};">
 						<span class="text-center fluid-text-md lg:text-2xl break-all md:text-xl sm:text-lg px-2 overflow-auto py-2 w-full text-[#fff] "
 						style="color: {get_foreground_color(
