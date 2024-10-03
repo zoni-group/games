@@ -79,7 +79,7 @@
 			<div class="mt-16 flex justify-center w-full mb-6 z-10">
 				<div class=" p-4 flex flex-col justify-center items-center">
 					<ZoniStar />
-					<p>Your presence today made a difference! Thank you for being part of our learning adventure!</p>
+					<p>Your presence today made a difference! <br> Thank you for being part of our learning adventure!</p>
 				</div>
 			</div>
 		
@@ -88,7 +88,7 @@
 			<div class="mt-16 flex justify-center w-full mb-6 z-10">
 				<div class=" p-4 flex flex-col justify-center items-center">
 					<ZoniStar />
-					<p>Your presence today made a difference! Thank you for being part of our learning adventure!</p>
+					<p>Your presence today made a difference! <br> Thank you for being part of our learning adventure!</p>
 				</div>
 			</div>
 		{:else if isExists || isAdmin}
