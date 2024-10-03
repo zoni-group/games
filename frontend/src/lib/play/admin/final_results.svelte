@@ -12,6 +12,8 @@
 	export let username;
 	export let show_final_results: boolean;
 	export let language: boolean;
+	let isAdmin = (username === undefined)? true: false;
+	let isExists = (data[username]) ? true : false;
 	function sortObjectbyValue(obj) {
 		const ret = {};
 		Object.keys(obj)
@@ -22,10 +24,13 @@
 
 	$: data = sortObjectbyValue(data);
 	$: console.log(data, 'sorted, final');
-
+	$: console.log(!data[username], " ", username, 'username');
+	$: console.log(isAdmin, 'Is Admin');
+	$: console.log(data[player_names[0]], 'data[username]');
+	$: console.log(isExists, 'Is Exists');
+	
 	let player_names;
 	$: player_names = Object.keys(data).sort((a, b) => data[b] - data[a]);
-
 	let player_count_or_five;
 	$: player_count_or_five = player_names.length >= 5 ? 5 : player_names.length;
 
@@ -70,31 +75,48 @@
 					</div>
 				</div>
 			</div>
+			{:else if !isAdmin && !isExists}
+			<div class="mt-16 flex justify-center w-full mb-6 z-10">
+				<div class=" p-4 flex flex-col justify-center items-center">
+					<ZoniStar />
+					<p>Your presence today made a difference! Thank you for being part of our learning adventure!</p>
+				</div>
+			</div>
+		
 		{/if}
-		<div class="relative z-10 w-full max-w-3xl p-4 rounded-lg ">
-			
-			{#each player_names as player, i}
-				{#if i <= player_count_or_five - 1}
-					<div
-						in:fly={{ y: -300, delay: player_count_or_five * 1200 - (i + 1) * 1000 }}
-						class="flex items-center justify-between mb-4 p-4 rounded-lg  from-[#0056BD] bg-[#2082CD] to-[#002857] text-white" class:bg-gradient-to-r={i<3} class:border-4={player === username} class:border-yellow-400={player === username}
-						style="font-size: {1.5 + (player_count_or_five - i) / 2}rem"
-					>
-						<div class="flex items-center justify-between w-full space-x-4">
-							<div class="flex items-center space-x-6" >
-								<p class="text-2xl font-semibold text-[#FFE500] " class:!text-white={i>=3} >{i+1}</p>
-								<p class="text-white" >{player}</p>
+		{#if isAdmin && (data[player_names[0]] <= 0 || !data[player_names[0]])}
+			<div class="mt-16 flex justify-center w-full mb-6 z-10">
+				<div class=" p-4 flex flex-col justify-center items-center">
+					<ZoniStar />
+					<p>Your presence today made a difference! Thank you for being part of our learning adventure!</p>
+				</div>
+			</div>
+		{:else if isExists || isAdmin}
+			<div class="relative z-10 w-full max-w-3xl p-4 rounded-lg ">
+				
+				{#each player_names as player, i}
+					{#if i <= player_count_or_five - 1}
+						<div
+							in:fly={{ y: -300, delay: player_count_or_five * 1200 - (i + 1) * 1000 }}
+							class="flex items-center justify-between mb-4 p-4 rounded-lg  from-[#0056BD] bg-[#2082CD] to-[#002857] text-white" class:bg-gradient-to-r={i<3} class:border-4={player === username} class:border-yellow-400={player === username}
+							style="font-size: {1.5 + (player_count_or_five - i) / 2}rem"
+						>
+							<div class="flex items-center justify-between w-full space-x-4">
+								<div class="flex items-center space-x-6" >
+									<p class="text-2xl font-semibold text-[#FFE500] " class:!text-white={i>=3} >{i+1}</p>
+									<p class="text-white" >{player}</p>
+								</div>
+								<p>
+									{#if i == 0}
+									<ZoniStar />
+									{/if}
+								</p>
+								<p class="text-white" >{data[player]}</p>
 							</div>
-							<p>
-								{#if i == 0}
-								<ZoniStar />
-								{/if}
-							</p>
-							<p class="text-white" >{data[player]}</p>
 						</div>
-					</div>
-				{/if}
-			{/each}
-		</div>
+					{/if}
+				{/each}
+			</div>
+		{/if}
 	</div>
 {/if}
