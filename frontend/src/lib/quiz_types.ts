@@ -62,6 +62,7 @@ export interface Question {
 	type?: QuizQuestionType;
 	image?: string;
 	answers: Answers;
+	ansType: "TEXT" | "IMAGE";
 }
 
 export type Answers =

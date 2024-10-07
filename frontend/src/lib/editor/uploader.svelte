@@ -34,7 +34,9 @@ SPDX-License-Identifier: MPL-2.0
 	export let data: EditorData;
 	export let selected_question: number;
 	export let video_upload = false;
+	export let other_upload = false;
 	export let library_enabled = true;
+	export let selected_answer = -1;
 
 	// eslint-disable-next-line no-undef
 	let video_popup: undefined | WindowProxy = undefined;
@@ -110,16 +112,25 @@ SPDX-License-Identifier: MPL-2.0
 				data.background_audio = audio_id;
 			}
 		} else {
-			if (selected_type === AvailableUploadTypes.Image) {
-                if (!data.questions[selected_question]) {
-                    data.questions[selected_question] = {};
-                }
-				data.questions[selected_question].image = image_id;
-			} else if (selected_type === AvailableUploadTypes.Audio) {
-                if (!data.questions[selected_question]) {
-                    data.questions[selected_question] = {};
-                }
-				data.questions[selected_question].image = audio_id;
+			if(selected_answer === -1) {
+				if (selected_type === AvailableUploadTypes.Image) {
+					if (!data.questions[selected_question]) {
+						data.questions[selected_question] = {};
+					}
+					data.questions[selected_question].image = image_id;
+				} else if (selected_type === AvailableUploadTypes.Audio) {
+					if (!data.questions[selected_question]) {
+						data.questions[selected_question] = {};
+					}
+					data.questions[selected_question].image = audio_id;
+				}
+			}else if(selected_answer !== -1) {
+				if (selected_type === AvailableUploadTypes.Image) {
+					if (!data.questions[selected_question]) {
+						data.questions[selected_question] = {};
+					}
+					data.questions[selected_question].answers[selected_answer].answer = image_id;
+				}
 			}
 		}
 
@@ -200,6 +211,7 @@ SPDX-License-Identifier: MPL-2.0
 					{#if library_enabled}
 						<div class="w-full">
 							<BrownButton
+								disabled={!other_upload}
 								on:click={() => {
 									selected_type = AvailableUploadTypes.Library;
 								}}
@@ -209,6 +221,7 @@ SPDX-License-Identifier: MPL-2.0
 					{/if}
 					<div class="w-full">
 						<BrownButton
+							disabled={!other_upload}
 							on:click={() => {
 								selected_type = AvailableUploadTypes.Pixabay;
 							}}
