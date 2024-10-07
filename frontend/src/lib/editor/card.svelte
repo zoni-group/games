@@ -57,8 +57,9 @@ SPDX-License-Identifier: MPL-2.0
 	const update_image_url = () => {
 		image_url = data.questions[selected_question].image;
 	};
+	
 	$: {
-		update_image_url();
+		update_image_url();		
 		selected_question;
 		data.questions;
 	}
@@ -205,6 +206,7 @@ SPDX-License-Identifier: MPL-2.0
 								this={c.default}
 								bind:data
 								bind:selected_question
+								bind:edit_id
 								check_choice={type === QuizQuestionType.CHECK}
 							/>
 						{/await}

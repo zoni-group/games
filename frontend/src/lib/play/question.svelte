@@ -17,7 +17,7 @@
 	import en from '$lib/i18n/locales/en.json';
 
 	const { t } = getLocalization();
-
+	const default_options = ['A', 'B', 'C', 'D'];
 	export let question: Question;
 	export let game_mode;
 	export let question_index: string | number;
@@ -25,7 +25,7 @@
 	export let language;
 	export let selected_answer;
 	export let acknowledgement;
-
+	let ans_index = -1;
 	$: console.log(question_index, question, 'hi!');
 
 	console.log(question);
@@ -105,13 +105,18 @@
 		return answer.trim().replace(/\s+/g, ' ');
 	};
 
-	const selectAnswer = (answer: string) => {
+	const selectAnswer = (answer: string, i:number = 0) => {
 		selected_answer = answer;
+		ans_index = question.ansType === 'TEXT' || question.ansType === null ? -1 : i;
 		socket.emit('submit_answer', {
 			question_index: question_index,
 			answer: cleanAnswer(answer)
 		});
-		toast.push(`You selected: ${cleanAnswer(selected_answer)}`);
+		if(question.ansType === 'TEXT' || question.ansType === null){
+			toast.push(`You selected: ${cleanAnswer(selected_answer)}`);
+		}else{
+			toast.push(`You selected: ${default_options[i]}`);
+		}
 		triggerStoreState();
 	};
 
@@ -134,6 +139,7 @@
 
 	const selectCheckAnswer = (answer: string, text_answer: []) => {
 		selected_answer = text_answer;
+		ans_index = question.ansType === 'TEXT' || question.ansType === null ? -1 : 1;
 		socket.emit('submit_answer', {
 			question_index: question_index,
 			answer: answer,
@@ -272,7 +278,7 @@
 							class="rounded-lg h-full  flex items-center justify-center disabled:opacity-60 border-4 border-white transition-all my-2"
 							style="background-color: {answer.color ?? default_colors[i]}; color: {get_foreground_color(answer.color ?? default_colors[i])}"
 							disabled={selected_answer !== ''}
-							on:click={() => selectAnswer(answer.answer)}
+							on:click={() => selectAnswer(answer.answer,i)}
 						>
 							{#if game_mode === 'kahoot'}
 								<img class="inline-block m-auto max-h-[30vh]" alt="Icon" src={kahoot_icons[i]} />
@@ -519,11 +525,19 @@
 					{#if Array.isArray(selected_answer)}
 					<ul class="list-disc list-inside mx-auto text-left text-[#00529B] inline-block dark:text-[#fff]">
 						{#each selected_answer as ans}
+						{#if ans_index === -1}
 						<li class="text-lg">{ans}</li>
+						{:else}
+							<li class="text-lg">{default_options[question.answers.findIndex((a) => a.answer === ans)]}</li>
+						{/if}
 						{/each}
 					</ul>
 					{:else}
-					<p class="text-lg text-[#00529B] selected-ans bg-[#FFFFFF] font-bold p-4 rounded-lg mt-10">{selected_answer}</p>
+						{#if ans_index !== -1}
+						<p class="text-lg text-[#00529B] selected-ans bg-[#FFFFFF] font-bold p-4 rounded-lg mt-10">{default_options[ans_index]}</p>
+						{:else}
+							<p class="text-lg text-[#00529B] selected-ans bg-[#FFFFFF] font-bold p-4 rounded-lg mt-10">{selected_answer}</p>
+						{/if}
 					{/if}
 				{:else}
 					<p class="text-lg text-[#00529B] selected-ans bg-[#FFFFFF] font-bold p-4 rounded-lg mt-10">
