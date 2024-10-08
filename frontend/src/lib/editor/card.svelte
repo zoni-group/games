@@ -118,6 +118,7 @@ SPDX-License-Identifier: MPL-2.0
 							>
 								<svelte:component
 									this={c.default}
+									data={data}
 									bind:text={data.questions[selected_question].question}
 								/>
 							</div>
