@@ -6,6 +6,7 @@ SPDX-License-Identifier: MPL-2.0
 
 <script lang="ts">
 	import BalloonEditor from '@ckeditor/ckeditor5-build-balloon';
+	import { validateSchema } from '@felte/validator-yup';
 	// import Essentials from '@ckeditor/ckeditor5-essentials/src/essentials';
 	// import Bold from '@ckeditor/ckeditor5-basic-styles/src/bold.js';
 	// import Italic from '@ckeditor/ckeditor5-basic-styles/src/italic.js';
@@ -15,9 +16,10 @@ SPDX-License-Identifier: MPL-2.0
 	// import Autoformat from "@ckeditor/ckeditor5-autoformat/src/autoformat"
 
 	export let text = '';
-
+	export let data;
 	const triggerChange = () => {
 		text = editor.getData();
+		validateSchema(data); //used to trigger validation every time data changes
 	};
 
 	import { onMount } from 'svelte';
