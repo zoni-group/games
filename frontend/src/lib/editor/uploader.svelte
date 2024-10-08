@@ -26,6 +26,7 @@ SPDX-License-Identifier: MPL-2.0
 	import { onMount } from 'svelte';
 	import Library from '$lib/editor/uploader/Library.svelte';
 	import Pixabay from '$lib/editor/uploader/Pixabay.svelte';
+	import { toast } from '@zerodevx/svelte-toast';
 
 	const { t } = getLocalization();
 
@@ -35,6 +36,7 @@ SPDX-License-Identifier: MPL-2.0
 	export let selected_question: number;
 	export let video_upload = false;
 	export let other_upload = false;
+	export let option_upload = false;
 	export let library_enabled = true;
 	export let selected_answer = -1;
 
@@ -92,6 +94,16 @@ SPDX-License-Identifier: MPL-2.0
 
 	let image_id;
 	let audio_id;
+	uppy.on('file-added', (file) => {
+		if(option_upload){
+			console.log("Inside file-added", file);
+			
+			if (file.extension !== 'webp') {
+				uppy.removeFile(file.id,"removed-by-user");
+				toast.push(`Unsupported file type ${file.extension} for ${file.name}`);
+			} 
+		}
+	});
 
 	uppy.on('upload-success', (file, response) => {
 		if (selected_type === AvailableUploadTypes.Image) {

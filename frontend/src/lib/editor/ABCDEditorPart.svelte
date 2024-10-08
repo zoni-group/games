@@ -167,6 +167,7 @@ SPDX-License-Identifier: MPL-2.0
 								bind:edit_id
 								other_upload={false}
 								selected_answer={index}
+								option_upload={true}
 								bind:data
 								bind:selected_question
 								video_upload={false}
