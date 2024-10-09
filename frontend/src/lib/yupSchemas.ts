@@ -5,6 +5,16 @@
 // skipcq: JS-C1003
 import * as yup from 'yup';
 
+const getPath = (path: string) => {
+	let res = path || '0';
+	if (res.includes("[") && res.includes("]")) {
+		res = path.split("[")[1].split("]")[0];
+	}else{
+		res = '0';
+	}
+	return res;
+};
+
 export const ABCDQuestionSchema = yup
 	.array()
 	.of(
@@ -62,7 +72,7 @@ export const dataSchema = yup.object({
 		.array()
 		.of(
 			yup.object({
-				question: yup.string().required('A question-title is required').max(60, "The title should be shorter than 60 characters"),
+				question: yup.string().required(({path})=>`A question-title is required in question ${Number(getPath(path)) + 1}`).max(60, ({ path }) => `The question has to be shorter than 60 characters in question ${Number(getPath(path)) + 1}`),
 				time: yup.number().required().positive('The time has to be positive'),
 				image: yup.string().nullable().lowercase(),
 				answers: yup.lazy((v) => {
