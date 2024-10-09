@@ -567,7 +567,8 @@ async def submit_answer(sid: str, data: dict):
         answer_right = bool(correct_string == data.answer)
     else:
         raise NotImplementedError
-    latency = int(float((await sio.get_session(sid))["ping"]))
+    session = await sio.get_session(sid)
+    latency = int(float(session.get("ping", 0)))  # use 0 if ping is not set
     time_q_started = datetime.fromisoformat(await redis.get(f"game:{session['game_pin']}:current_time"))
 
     diff = (time_q_started - now).total_seconds() * 1000  # - timedelta(milliseconds=latency)
