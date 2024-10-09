@@ -26,47 +26,54 @@ SPDX-License-Identifier: MPL-2.0
 	let imgur_links_valid = false;
 
 	const validateInput = async (data: EditorData) => {
+		let warnings = [''];
+		let errors = 0;
 	try {
 		// Validate against the data schema
 		await dataSchema.validate(data, { abortEarly: false });
 
-		let errors = 0;
-
 		// Loop through the questions to perform additional checks
 		data.questions.forEach((question, index) => {
-			let correctAnswerCount = question.answers.reduce((count, answer) => count + (answer.right ? 1 : 0), 0);
-
-			if (question.type === QuizQuestionType.CHECK) {
-				if (correctAnswerCount < 2) {
-					errors += 1;
-					throw new Error(`Please select at least two correct answers in Question ${index + 1}`);
-					// toast.push(`Please select at least two correct answers in Question ${index + 1}`);
+			if(question.type === QuizQuestionType.ABCD || question.type === QuizQuestionType.CHECK){
+				
+					let correctAnswerCount = question.answers.reduce((count, answer) => count + (answer.right ? 1 : 0), 0);
+		
+					if (question.type === QuizQuestionType.CHECK) {
+						if (correctAnswerCount < 2) {
+							errors += 1;
+							warnings.push(`Please select at least two correct answers in Question ${index + 1}`);
+							//throw new Error(`Please select at least two correct answers in Question ${index + 1}`);
+							// toast.push(`Please select at least two correct answers in Question ${index + 1}`);
+						}
+					} else if (question.type === QuizQuestionType.ABCD) {
+						if (correctAnswerCount < 1) {
+							errors += 1;
+							warnings.push(`Please select at least one correct answer in Question ${index + 1}`);
+							//throw new Error(`Please select at least one correct answer in Question ${index + 1}`);
+							// toast.push(`Please select at least one correct answer in Question ${index + 1}`);
+						}else if (correctAnswerCount > 1){
+							errors += 1;
+							warnings.push(`Please select only one correct answer in Question ${index + 1}`);
+							//throw new Error(`Please select only one correct answer in Question ${index + 1}`);
+							 //toast.push(`Please select only one correct answer in Question ${index + 1}`);
+						}
+					}
 				}
-			} else if (question.type === QuizQuestionType.ABCD) {
-				if (correctAnswerCount < 1) {
-					errors += 1;
-					throw new Error(`Please select at least one correct answer in Question ${index + 1}`);
-					// toast.push(`Please select at least one correct answer in Question ${index + 1}`);
-				}else if (correctAnswerCount > 1){
-					errors += 1;
-					throw new Error(`Please select only one correct answer in Question ${index + 1}`);
-					 //toast.push(`Please select only one correct answer in Question ${index + 1}`);
-				}
-			}
 		});
 
 		// Set schemaInvalid and error message if errors were found
 		if (errors > 0) {
 			schemaInvalid = true;
-			yupErrorMessage = "There is a question which hasn't fulfilled the correct answer requirements";
+			yupErrorMessage = warnings[errors - 1];
 		} else {
 			schemaInvalid = false;
 			yupErrorMessage = '';
 		}
 	} catch (err) {
+		err.message = err.message.includes('Cannot read properties of undefined')? 'Please fill in all required fields' : err.message;
 		console.error('Validation error:', err.errors);
 		schemaInvalid = true;
-		yupErrorMessage = err.errors ? err.errors[0] : err;
+		yupErrorMessage = err.errors ? err.errors[0] : err.message;
 	}
 };
 
