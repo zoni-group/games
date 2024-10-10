@@ -17,7 +17,6 @@
 	import en from '$lib/i18n/locales/en.json';
 
 	const { t } = getLocalization();
-
 	export let question: Question;
 	export let game_mode;
 	export let question_index: string | number;
@@ -25,7 +24,6 @@
 	export let language;
 	export let selected_answer;
 	export let acknowledgement;
-
 	$: console.log(question_index, question, 'hi!');
 
 	console.log(question);
@@ -111,7 +109,11 @@
 			question_index: question_index,
 			answer: cleanAnswer(answer)
 		});
-		toast.push(`You selected: ${cleanAnswer(selected_answer)}`);
+		if(question.ansType === 'TEXT' || question.ansType === null){
+			toast.push(`You selected: ${cleanAnswer(selected_answer)}`);
+		}else{
+			toast.push(`Answer submitted!`);
+		}
 		triggerStoreState();
 	};
 
@@ -275,9 +277,23 @@
 							on:click={() => selectAnswer(answer.answer)}
 						>
 							{#if game_mode === 'kahoot'}
-								<img class="inline-block m-auto max-h-[30vh]" alt="Icon" src={kahoot_icons[i]} />
+								{#if question.ansType === 'IMAGE'}
+									<MediaComponent 
+										css_classes="inline-block m-auto max-h-[30vh]" 
+										bind:src={answer.answer} 
+									/>
+								{:else}
+									<img class="inline-block m-auto max-h-[30vh]" alt="Icon" src={kahoot_icons[i]} />
+								{/if}
 							{:else}
-								<p class="m-auto button-text text-sm text-[{getTextColor(answer.color ?? '#fff')}] dark:text-[{getTextColor(answer.color ?? '#fff')}] sm:text-base md:text-lg lg:text-xl">{answer.answer}</p>
+								{#if question.ansType === 'IMAGE'}
+									<MediaComponent 
+										css_classes="inline-block m-auto max-h-[30vh]" 
+										bind:src={answer.answer} 
+									/>
+								{:else}
+									<p class="m-auto button-text text-sm text-[{getTextColor(answer.color ?? '#fff')}] dark:text-[{getTextColor(answer.color ?? '#fff')}] sm:text-base md:text-lg lg:text-xl">{answer.answer}</p>
+								{/if}
 							{/if}
 						</button>
 					{/each}
@@ -523,7 +539,14 @@
 						{/each}
 					</ul>
 					{:else}
-					<p class="text-lg text-[#00529B] selected-ans bg-[#FFFFFF] font-bold p-4 rounded-lg mt-10">{selected_answer}</p>
+						{#if question.ansType === "IMAGE"}
+							<MediaComponent 
+								css_classes="w-fit m-2 h-full}" 
+								bind:src={selected_answer} 
+							/>
+						{:else}
+							<p class="text-lg text-[#00529B] selected-ans bg-[#FFFFFF] font-bold p-4 rounded-lg mt-10">{selected_answer}</p>
+						{/if}
 					{/if}
 				{:else}
 					<p class="text-lg text-[#00529B] selected-ans bg-[#FFFFFF] font-bold p-4 rounded-lg mt-10">
