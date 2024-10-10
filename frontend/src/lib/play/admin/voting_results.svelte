@@ -15,13 +15,11 @@ SPDX-License-Identifier: MPL-2.0
 	let quiz_answers = [];
 	let quiz_colors = [];
 	let answer_correct: boolean[] = [];
-	let answer_type: string[] = [];
 
 	for (const i of question.answers) {
 		quiz_answers.push(i.answer);
 		quiz_colors.push(i.color);
 		answer_correct.push(i.right);
-		answer_type.push(i.ansType);
 	}
 
 	let sorted_data = {};
@@ -93,7 +91,12 @@ SPDX-License-Identifier: MPL-2.0
 		<div class="flex gap-12">
 			{#each quiz_answers as answer, i}
 				<div class="w-20">
-					{#if answer_type[i] === "TEXT" || answer_type[i] === null}
+					{#if question.ansType === "IMAGE"}
+						<MediaComponent 
+							css_classes="w-fit m-2 h-full border-4 {answer_correct[i] ? 'border-green-500' : 'border-red-500'}" 
+							bind:src={answer} 
+						/>
+					{:else}
 						<p
 							class=" text-base  text-str text-[#00529B] font-bold dark:text-white"
 							class:line-through={!answer_correct[i] &&
@@ -101,11 +104,6 @@ SPDX-License-Identifier: MPL-2.0
 						>
 							{@html answer}
 						</p>
-					{:else}
-						<MediaComponent 
-							css_classes="w-fit m-2 h-full border-4 {answer_correct[i] ? 'border-green-500' : 'border-red-500'}" 
-							bind:src={answer} 
-						/>
 					{/if}
 				</div>
 			{/each}
