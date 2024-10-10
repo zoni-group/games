@@ -13,6 +13,7 @@ SPDX-License-Identifier: MPL-2.0
 	import { flip } from 'svelte/animate';
 	import BrownButton from '$lib/components/buttons/brown.svelte';
 	import MediaComponent from '$lib/editor/MediaComponent.svelte';
+	import { get_foreground_color } from '../helpers';
 
 	export let question: Question;
 
@@ -89,10 +90,30 @@ SPDX-License-Identifier: MPL-2.0
 		order_corrected = true;
 		timer_res = '0';
 	};
+
+	const default_colors = ['#FFA800', '#00A3FF', '#FF1D38', '#00D749'];
+
+
+	// Function to determine if the color is light or dark
+	function isColorLight(color) {
+		const hex = color.replace('#', '');
+		const r = parseInt(hex.substring(0, 2), 16);
+		const g = parseInt(hex.substring(2, 4), 16);
+		const b = parseInt(hex.substring(4, 6), 16);
+		const brightness = (r * 299 + g * 587 + b * 114) / 1000;
+		return brightness > 155; // higher value means the color is light
+	}
+	
+	// Function to get the appropriate text color
+	function getTextColor(backgroundColor) {
+		return isColorLight(backgroundColor) ? 'black' : 'white';
+	}
 </script>
 
 <div class="w-full px-6 lg:px-20 h-[80vh] absolute" in:fly={{ x: 100 }} out:fly={{ x: -100 }}>
-	<h1 class="text-3xl text-center">{@html question.question}</h1>
+	<h1 class="lg:text-2xl text-lg text-center text-[#0056BD] dark:text-white mt-2 break-normal mb-2 mt-20">
+		{@html question.question}
+	</h1>
 	{#if question.image !== null}
 		<div>
 			<MediaComponent
@@ -101,10 +122,10 @@ SPDX-License-Identifier: MPL-2.0
 			/>
 		</div>
 	{/if}
-	<p class="text-center">{timer_res}</p>
+	<p class="text-center text-[#0056BD] dark:text-white">{timer_res}</p>
 	{#if question.type === QuizQuestionType.ABCD}
 		{#if show_results}
-			<div>
+			<div class='grid grid-rows-2 gap-2 w-full grid-cols-2'>
 				{#each question.answers as answer, i}
 					<button
 						disabled
@@ -112,34 +133,56 @@ SPDX-License-Identifier: MPL-2.0
 						class:bg-red-500={!question.answers[i].right}
 						class:text-xl={i === selected_answer}
 						class:underline={i === selected_answer}
-						class="p-2 rounded-lg flex justify-center w-full transition my-5 text-black"
-						>{answer.answer}</button
+						class="rounded-lg h-full  flex items-center justify-center disabled:opacity-60 border-4 border-white transition-all my-2"
+					>
+					{#if question.ansType === 'IMAGE'}
+						<MediaComponent 
+							css_classes="inline-block m-auto max-h-[30vh]" 
+							src={answer.answer}
+							allow_fullscreen={false}
+						/>
+					{:else}
+						<p class="m-auto button-text text-sm text-[{getTextColor(answer.color ?? '#fff')}] dark:text-[{getTextColor(answer.color ?? '#fff')}] sm:text-base md:text-lg lg:text-xl">{answer.answer}</p>
+					{/if}
+					</button
 					>
 				{/each}
 			</div>
 		{:else}
-			<div>
+			<div class='grid grid-rows-2 gap-2 w-full grid-cols-2'>
 				{#each question.answers as answer, i}
 					<button
 						disabled={selected_answer !== undefined || timer_res === '0'}
 						type="button"
-						class="p-2 rounded-lg flex justify-center w-full transition bg-amber-300 my-5 disabled:grayscale text-black"
+						class="rounded-lg h-full  flex items-center justify-center disabled:opacity-60 border-4 border-white transition-all my-2 disabled:grayscale text-black"
+						style="background-color: {answer.color ?? default_colors[i]}; color: {get_foreground_color(answer.color ?? default_colors[i])}"
 						on:click={() => {
 							selected_answer = i;
 							timer_res = '0';
-						}}>{answer.answer}</button
+						}}>
+						{#if question.ansType === 'IMAGE'}
+							<MediaComponent 
+								css_classes="inline-block m-auto max-h-[30vh]" 
+								src={answer.answer}
+								allow_fullscreen={false}
+							/>
+						{:else}
+							<p class="m-auto button-text text-sm text-[{getTextColor(answer.color ?? '#fff')}] dark:text-[{getTextColor(answer.color ?? '#fff')}] sm:text-base md:text-lg lg:text-xl">{answer.answer}</p>
+						{/if}
+					</button
 					>
 				{/each}
-				{#if timer_res === '0'}
+			</div>
+			{#if timer_res === '0'}
+				<div class="relative z-10 flex justify-center">
 					<button
-						class="bg-orange-500 p-2 rounded-lg flex justify-center w-full transition my-5 text-black"
+						class="bg-orange-500 p-2 rounded-lg flex justify-center w-1/2 max-w-xs transition my-5 text-black"
 						type="button"
 						on:click={() => {
 							show_results = true;
-						}}>{$t('admin_page.get_results')}</button
-					>
-				{/if}
-			</div>
+						}}>{$t('admin_page.get_results')}</button>
+				</div>
+			{/if}			
 		{/if}
 	{:else if question.type === QuizQuestionType.RANGE}
 		{#if timer_res === '0'}
@@ -188,19 +231,31 @@ SPDX-License-Identifier: MPL-2.0
 			{/await}
 		{/if}
 	{:else if question.type === QuizQuestionType.VOTING}
-		{#each question.answers as answer, i}
-			<button
-				type="button"
-				disabled={selected_answer !== undefined || timer_res === '0'}
-				class="p-2 rounded-lg flex justify-center w-full transition bg-amber-300 my-5 disabled:grayscale text-black"
-				on:click={() => {
-					selected_answer = i;
-					timer_res = '0';
-				}}>{answer.answer}</button
-			>
-		{/each}
+		<div class='grid grid-rows-2 gap-2 w-full grid-cols-2'>
+			{#each question.answers as answer, i}
+				<button
+					type="button"
+					disabled={selected_answer !== undefined || timer_res === '0'}
+					class="rounded-lg h-full  flex items-center justify-center disabled:opacity-60 border-4 border-white transition-all my-2 disabled:grayscale text-black"
+					style="background-color: {answer.color ?? default_colors[i]}; color: {get_foreground_color(answer.color ?? default_colors[i])}"
+					on:click={() => {
+						selected_answer = i;
+						timer_res = '0';
+					}}>
+					{#if question.ansType === 'IMAGE'}
+						<MediaComponent 
+							css_classes="inline-block m-auto max-h-[30vh]" 
+							src={answer.answer}
+							allow_fullscreen={false}
+						/>
+					{:else}
+						<p class="m-auto button-text text-sm text-[{getTextColor(answer.color ?? '#fff')}] dark:text-[{getTextColor(answer.color ?? '#fff')}] sm:text-base md:text-lg lg:text-xl">{answer.answer}</p>
+					{/if}
+				</button>
+			{/each}
+		</div>
 		{#if timer_res === '0'}
-			<p>No correct answers, since this is a poll-question</p>
+			<p class="text-center text-[#0056BD] dark:text-white">No correct answers, since this is a poll-question</p>
 		{/if}
 	{:else if question.type === QuizQuestionType.SLIDE}
 		{#await import('$lib/play/admin/slide.svelte')}
