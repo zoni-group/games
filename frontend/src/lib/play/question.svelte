@@ -112,7 +112,7 @@
 		if(question.ansType === 'TEXT' || question.ansType === null){
 			toast.push(`You selected: ${cleanAnswer(selected_answer)}`);
 		}else{
-			toast.push(`You selected an image`);
+			toast.push(`Answer submitted!`);
 		}
 		triggerStoreState();
 	};

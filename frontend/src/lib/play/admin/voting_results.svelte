@@ -92,10 +92,26 @@ SPDX-License-Identifier: MPL-2.0
 			{#each quiz_answers as answer, i}
 				<div class="w-20">
 					{#if question.ansType === "IMAGE"}
-						<MediaComponent 
-							css_classes="w-fit m-2 h-full border-4 {answer_correct[i] ? 'border-green-500' : 'border-red-500'}" 
-							bind:src={answer} 
-						/>
+						{#if question.type === QuizQuestionType.VOTING}
+							<div style="background-color: {quiz_colors[i] ? quiz_colors[i] : '#001293'}; padding: 4px;">
+								<MediaComponent 
+									css_classes="w-fit h-full m-0 border-0" 
+									bind:src={answer} 
+								/>
+							</div>
+						{:else}
+							<div class="relative">
+								<MediaComponent 
+									css_classes="w-fit m-2 h-full border-4 {answer_correct[i] ? 'border-green-500' : 'border-red-500'}" 
+									bind:src={answer} 
+								/>
+								{#if answer_correct[i]}
+									<span class="absolute top-0 right-0 text-green-500 text-2xl font-bold">✓</span>
+								{:else}
+									<span class="absolute top-0 right-0 text-red-500 text-2xl font-bold">✗</span>
+								{/if}
+							</div>
+						{/if}
 					{:else}
 						<p
 							class=" text-base  text-str text-[#00529B] font-bold dark:text-white"
