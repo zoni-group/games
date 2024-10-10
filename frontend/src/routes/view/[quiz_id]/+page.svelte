@@ -51,6 +51,7 @@
 		question: string;
 		image?: string;
 		answers: Answer[];
+		ansType: string;
 	}
 
 	interface Answer {
@@ -333,8 +334,14 @@
 												question.type !== QuizQuestionType.VOTING}
 										>
 											<h4 class="text-center text-white">
-												{quiz.questions[index_question].answers[index_answer]
-													.answer}
+												{#if quiz.questions[index_question].ansType !== 'IMAGE'}
+													{quiz.questions[index_question].answers[index_answer].answer}
+												{:else}
+												<MediaComponent 
+													css_classes="inline-block m-auto max-h-[30vh]" 
+													src={quiz.questions[index_question].answers[index_answer].answer}
+												/>
+												{/if}
 											</h4>
 										</div>
 									{/each}
@@ -367,8 +374,14 @@
 										answer.color ?? default_colors[index_answer]
 									)}">
 											<h4 class="text-center ">
-												{quiz.questions[index_question].answers[index_answer]
-													.answer}
+												{#if quiz.questions[index_question].ansType !== 'IMAGE'}
+													{quiz.questions[index_question].answers[index_answer].answer}
+												{:else}
+													<MediaComponent 
+														css_classes="inline-block m-auto max-h-[30vh]" 
+														src={quiz.questions[index_question].answers[index_answer].answer}
+													/>
+												{/if}
 											</h4>
 										</div>
 									{/each}
