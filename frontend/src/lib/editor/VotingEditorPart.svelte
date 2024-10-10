@@ -99,7 +99,7 @@ SPDX-License-Identifier: MPL-2.0
 						/>
 					</svg>
 				</button>
-				{#if optionsType === 'TEXT' || optionsType === undefined}
+				{#if optionsType !== 'IMAGE'}
 				<input
 					bind:value={answer.answer}
 					type="text"

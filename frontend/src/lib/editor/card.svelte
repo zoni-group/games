@@ -59,7 +59,7 @@ SPDX-License-Identifier: MPL-2.0
 	};
 	
 	$: {
-		update_image_url();		
+		update_image_url();
 		selected_question;
 		data.questions;
 	}

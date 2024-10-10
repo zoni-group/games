@@ -24,7 +24,6 @@
 	export let language;
 	export let selected_answer;
 	export let acknowledgement;
-	let ans_index = -1;
 	$: console.log(question_index, question, 'hi!');
 
 	console.log(question);
