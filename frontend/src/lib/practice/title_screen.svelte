@@ -61,15 +61,15 @@ SPDX-License-Identifier: MPL-2.0
 		</div>
 		<div class="dark:bg-gray-700">
 			<div class="flex justify-center pt-10 w-full">
-				<p
-					class="p-3 rounded-lg border-gray-500 border text-center w-11/12 lg:w-1/3 text-lg font-semibold dark:bg-gray-500"
+				<h1
+					class="text-4xl text-center text-[#0056BD] dark:text-[#fff] my-2 font-bold"
 				>
 					{@html data.title}
-				</p>
+			</h1>
 			</div>
-			<div class="flex justify-center pt-10 w-full max-h-32">
+			<div class="flex justify-center pt-10 w-full max-h-32 p-5">
 				<p
-					class="p-3 rounded-lg border-gray-500 border text-center w-11/12 lg:w-1/3 h-20 resize-none dark:bg-gray-500"
+					class="text-[#0056BD] dark:text-[#fff] font-medium"
 				>
 					{@html data.description}
 				</p>
