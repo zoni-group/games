@@ -320,14 +320,11 @@
 								<span class="text-lg">{question.time}s</span>
 							</p>
 							{#if question.type === QuizQuestionType.ABCD || question.type === undefined || question.type === QuizQuestionType.CHECK}
-								<div class="grid grid-cols-2 gap-4 m-4 p-6">
+								<div class="grid grid-rows-2 gap-2 w-full grid-cols-2">
 									{#each question.answers as answer, index_answer}
 										<div
-											class="p-1 rounded-lg py-4 "
-											style="background-color: {answer.color ??
-												default_colors[index_answer]}; color: {get_foreground_color(
-												answer.color ?? default_colors[index_answer]
-											)}"
+											class="rounded-lg h-full  flex items-center justify-center disabled:opacity-60 border-4 border-white transition-all my-2 disabled:grayscale text-black"
+											style="background-color: {answer.color ?? default_colors[index_answer]}; color: {get_foreground_color(answer.color ?? default_colors[index_answer])}"
 											class:shadow-blue-500={answer.right &&
 												question.type !== QuizQuestionType.VOTING}
 											class:shadow-yellow-500={!answer.right &&
