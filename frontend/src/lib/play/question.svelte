@@ -278,9 +278,23 @@
 							on:click={() => selectAnswer(answer.answer)}
 						>
 							{#if game_mode === 'kahoot'}
-								<img class="inline-block m-auto max-h-[30vh]" alt="Icon" src={kahoot_icons[i]} />
+								{#if question.ansType === 'IMAGE'}
+									<MediaComponent 
+										css_classes="inline-block m-auto max-h-[30vh]" 
+										bind:src={answer.answer} 
+									/>
+								{:else}
+									<img class="inline-block m-auto max-h-[30vh]" alt="Icon" src={kahoot_icons[i]} />
+								{/if}
 							{:else}
-								<p class="m-auto button-text text-sm text-[{getTextColor(answer.color ?? '#fff')}] dark:text-[{getTextColor(answer.color ?? '#fff')}] sm:text-base md:text-lg lg:text-xl">{answer.answer}</p>
+								{#if question.ansType === 'IMAGE'}
+									<MediaComponent 
+										css_classes="inline-block m-auto max-h-[30vh]" 
+										bind:src={answer.answer} 
+									/>
+								{:else}
+									<p class="m-auto button-text text-sm text-[{getTextColor(answer.color ?? '#fff')}] dark:text-[{getTextColor(answer.color ?? '#fff')}] sm:text-base md:text-lg lg:text-xl">{answer.answer}</p>
+								{/if}
 							{/if}
 						</button>
 					{/each}
