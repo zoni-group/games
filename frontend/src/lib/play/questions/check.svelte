@@ -39,7 +39,6 @@
 	};
 
 	const handleSubmit = () => {
-		//selectAnswer(selected_answer);
     	dispatch('submit', { selected_answer, text_answer });
 	};
 	

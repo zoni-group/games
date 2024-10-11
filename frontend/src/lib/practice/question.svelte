@@ -384,18 +384,30 @@ SPDX-License-Identifier: MPL-2.0
 				{/each}
 			</div>
 		{:else}
-			<div>
+			<div class="grid grid-rows-2 gap-2 w-full grid-cols-2">
 				{#each question.answers as answer, i}
 					<button
 						type="button"
 						disabled={selected_answer !== undefined || timer_res === '0'}
-						class="p-2 rounded-lg flex justify-center w-full transition bg-amber-300 my-5 disabled:grayscale text-black opacity-50"
+						class="rounded-lg h-full w-9/10 flex items-center justify-center disabled:opacity-60 border-2 border-black transition-all my-2"
+						style="background-color: {answer.color ?? default_colors[i]}; color: {get_foreground_color(answer.color ?? default_colors[i])}"
 						class:opacity-100={check_choice_selected[i]}
 						on:click={() => {
 							check_choice_selected[i] = !check_choice_selected[i];
-						}}>{answer.answer}</button
-					>
+						}}>
+						{#if question.ansType === 'IMAGE'}
+							<MediaComponent 
+								css_classes="inline-block m-auto max-h-[30vh]" 
+								src={answer.answer}
+								allow_fullscreen={false}
+							/>
+						{:else}
+							{answer.answer}
+						{/if}
+					</button>
 				{/each}
+			</div>
+			<div class="mt-5 w-full max-w-[50%] mx-auto">
 				<BrownButton
 					type="button"
 					on:click={() => {
