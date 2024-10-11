@@ -156,6 +156,8 @@ SPDX-License-Identifier: MPL-2.0
 						type="button"
 						class="rounded-lg h-full  flex items-center justify-center disabled:opacity-60 border-4 border-white transition-all my-2 disabled:grayscale text-black"
 						style="background-color: {answer.color ?? default_colors[i]}; color: {get_foreground_color(answer.color ?? default_colors[i])}"
+						class:disabled:opacity-60={selected_answer !== i}
+						class:disabled:grayscale={selected_answer !== i}
 						on:click={() => {
 							selected_answer = i;
 							timer_res = '0';
@@ -236,8 +238,10 @@ SPDX-License-Identifier: MPL-2.0
 				<button
 					type="button"
 					disabled={selected_answer !== undefined || timer_res === '0'}
-					class="rounded-lg h-full  flex items-center justify-center disabled:opacity-60 border-4 border-white transition-all my-2 disabled:grayscale text-black"
+					class="rounded-lg h-full  flex items-center justify-center border-4 border-white transition-all my-2 text-black"
 					style="background-color: {answer.color ?? default_colors[i]}; color: {get_foreground_color(answer.color ?? default_colors[i])}"
+					class:disabled:opacity-60={selected_answer !== i}
+					class:disabled:grayscale={selected_answer !== i}
 					on:click={() => {
 						selected_answer = i;
 						timer_res = '0';
@@ -371,41 +375,70 @@ SPDX-License-Identifier: MPL-2.0
 		</div>
 	{:else if question.type === QuizQuestionType.CHECK}
 		{#if show_results}
-			<div>
+			<div class='grid grid-rows-2 gap-2 w-full grid-cols-2'>
 				{#each question.answers as answer, i}
 					<button
-						type="button"
 						disabled
 						class:bg-green-500={question.answers[i].right}
 						class:bg-red-500={!question.answers[i].right}
-						class="p-2 rounded-lg flex justify-center w-full transition my-5 text-black"
-						>{answer.answer}</button
+						class:text-xl={i === selected_answer}
+						class:underline={i === selected_answer}
+						class="rounded-lg h-full  flex items-center justify-center border-4 border-white transition-all my-2"
+						class:opacity-60={!question.answers[i].right}
+					>
+					{#if question.ansType === 'IMAGE'}
+						<MediaComponent 
+							css_classes="inline-block m-auto max-h-[30vh]" 
+							src={answer.answer}
+							allow_fullscreen={false}
+						/>
+					{:else}
+						<p class="m-auto button-text text-sm text-[{getTextColor(answer.color ?? '#fff')}] dark:text-[{getTextColor(answer.color ?? '#fff')}] sm:text-base md:text-lg lg:text-xl">{answer.answer}</p>
+					{/if}
+					</button
 					>
 				{/each}
 			</div>
 		{:else}
-			<div>
+			<div class="grid grid-rows-2 gap-2 w-full grid-cols-2">
 				{#each question.answers as answer, i}
 					<button
 						type="button"
 						disabled={selected_answer !== undefined || timer_res === '0'}
-						class="p-2 rounded-lg flex justify-center w-full transition bg-amber-300 my-5 disabled:grayscale text-black opacity-50"
-						class:opacity-100={check_choice_selected[i]}
+						class="rounded-lg h-full w-9/10 flex items-center justify-center border-2 border-black transition-all my-2"
+						style="background-color: {answer.color ?? default_colors[i]}; color: {get_foreground_color(answer.color ?? default_colors[i])}"
+						class:opacity-60={!check_choice_selected[i]}
+						class:disabled:opacity-60={!check_choice_selected[i]}
+						class:disabled:grayscale={!check_choice_selected[i]}
 						on:click={() => {
 							check_choice_selected[i] = !check_choice_selected[i];
-						}}>{answer.answer}</button
-					>
+						}}>
+						{#if question.ansType === 'IMAGE'}
+							<MediaComponent 
+								css_classes="inline-block m-auto max-h-[30vh]" 
+								src={answer.answer}
+								allow_fullscreen={false}
+							/>
+						{:else}
+							{answer.answer}
+						{/if}
+					</button>
 				{/each}
+			</div>
+			<div class="relative z-10 flex justify-center items-center w-1/2 max-w-xs mt-5 mx-auto">
+				{#if timer_res !== '0'}
 				<BrownButton
 					type="button"
 					on:click={() => {
+						selected_answer = check_choice_selected;
 						timer_res = '0';
 					}}>{$t('words.submit')}</BrownButton
 				>
+				{/if}
 				{#if timer_res === '0'}
 					<button
 						type="button"
-						class="bg-orange-500 p-2 rounded-lg flex justify-center w-full transition my-5 text-black"
+						class="bg-orange-500 p-2 rounded-lg flex justify-center w-1/2 max-w-xs transition my-5 text-black"
 						on:click={() => {
 							show_results = true;
 						}}>{$t('admin_page.get_results')}</button
