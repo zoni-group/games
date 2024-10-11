@@ -39,7 +39,7 @@
 	};
 
 	const handleSubmit = () => {
-		selectAnswer(selected_answer);
+		//selectAnswer(selected_answer);
     	dispatch('submit', { selected_answer, text_answer });
 	};
 	
@@ -87,7 +87,7 @@
 							{#if question.ansType === 'IMAGE'}
 								<MediaComponent 
 									css_classes="inline-block m-auto max-h-[30vh]" 
-									bind:src={answer.answer} 
+									src={answer.answer} 
 									allow_fullscreen={false}
 								/>
 							{:else}
@@ -97,7 +97,7 @@
 							{#if question.ansType === 'IMAGE'}
 								<MediaComponent 
 									css_classes="inline-block m-auto max-h-[30vh]" 
-									bind:src={answer.answer}
+									src={answer.answer}
 									allow_fullscreen={false} 
 								/>
 							{:else}
