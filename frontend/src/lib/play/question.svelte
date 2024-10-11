@@ -280,7 +280,7 @@
 								{#if question.ansType === 'IMAGE'}
 									<MediaComponent 
 										css_classes="inline-block m-auto max-h-[30vh]" 
-										bind:src={answer.answer} 
+										src={answer.answer} 
 									/>
 								{:else}
 									<img class="inline-block m-auto max-h-[30vh]" alt="Icon" src={kahoot_icons[i]} />
@@ -289,7 +289,7 @@
 								{#if question.ansType === 'IMAGE'}
 									<MediaComponent 
 										css_classes="inline-block m-auto max-h-[30vh]" 
-										bind:src={answer.answer} 
+										src={answer.answer} 
 									/>
 								{:else}
 									<p class="m-auto button-text text-sm text-[{getTextColor(answer.color ?? '#fff')}] dark:text-[{getTextColor(answer.color ?? '#fff')}] sm:text-base md:text-lg lg:text-xl">{answer.answer}</p>
@@ -542,7 +542,7 @@
 										>
 											<MediaComponent 
 												css_classes="w-full h-full object-contain" 
-												bind:src={ans}
+												src={ans}
 												allow_fullscreen={false}
 											/>
 										</div>
@@ -560,7 +560,7 @@
 						{#if question.ansType === "IMAGE"}
 							<MediaComponent 
 								css_classes="w-fit m-2 h-full}" 
-								bind:src={selected_answer} 
+								src={selected_answer} 
 							/>
 						{:else}
 							<p class="text-lg text-[#00529B] selected-ans bg-[#FFFFFF] font-bold p-4 rounded-lg mt-10">{selected_answer}</p>
