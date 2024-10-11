@@ -533,11 +533,29 @@
 				{#if selected_answer !== undefined && selected_answer !== ''}	
 					<p class="text-lg font-semibold text-[#00529B] dark:text-[#fff] mt-10">Your answer:</p>
 					{#if Array.isArray(selected_answer)}
-					<ul class="list-disc list-inside mx-auto text-left text-[#00529B] inline-block dark:text-[#fff]">
-						{#each selected_answer as ans}
-						<li class="text-lg">{ans}</li>
-						{/each}
-					</ul>
+						{#if question.ansType === "IMAGE"}
+							<div class="w-full flex justify-center">
+								<div class='grid grid-rows-2 gap-2 w-3/5 h-full grid-flow-col auto-cols-auto justify-center items-center'>
+									{#each selected_answer as ans}
+										<div
+											class="rounded-lg flex items-center justify-center disabled:opacity-60 border-2 border-black transition-all my-2 dark:border-white"
+										>
+											<MediaComponent 
+												css_classes="w-full h-full object-contain" 
+												bind:src={ans}
+												allow_fullscreen={false}
+											/>
+										</div>
+									{/each}
+								</div>
+							</div>
+						{:else}
+							<ul class="list-disc list-inside mx-auto text-left text-[#00529B] inline-block dark:text-[#fff]">
+								{#each selected_answer as ans}
+								<li class="text-lg">{ans}</li>
+								{/each}
+							</ul>
+						{/if}
 					{:else}
 						{#if question.ansType === "IMAGE"}
 							<MediaComponent 

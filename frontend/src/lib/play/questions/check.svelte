@@ -4,8 +4,8 @@
 	import { get_foreground_color } from '$lib/helpers';
 	import { kahoot_icons } from '$lib/play/kahoot_mode_assets/kahoot_icons';
 	import CircularTimer from '$lib/play/circular_progress.svelte';
-	import BrownButton from '$lib/components/buttons/brown.svelte';
 	import RightArrow from '$lib/icons/rightArrow.svelte';
+	import MediaComponent from '$lib/editor/MediaComponent.svelte';
 
 	const default_colors = ['#C8E6C9', '#FFE0B2', '#FFF9C4', '#B3E5FC'];
 	export let question: Question;
@@ -84,9 +84,25 @@
 						class:opacity-50={!_selected_answers[i]}
 					>
 						{#if game_mode === 'kahoot'}
-							<img class="inline-block m-auto max-h-[30vh]" alt="Icon" src={kahoot_icons[i]} />
+							{#if question.ansType === 'IMAGE'}
+								<MediaComponent 
+									css_classes="inline-block m-auto max-h-[30vh]" 
+									bind:src={answer.answer} 
+									allow_fullscreen={false}
+								/>
+							{:else}
+								<img class="inline-block m-auto max-h-[30vh]" alt="Icon" src={kahoot_icons[i]} />
+							{/if}
 						{:else}
-							<p class="m-auto button-text text-sm sm:text-base md:text-lg lg:text-xl" style="color: {getTextColor(answer.color ?? '#004A93')}">{answer.answer}</p>
+							{#if question.ansType === 'IMAGE'}
+								<MediaComponent 
+									css_classes="inline-block m-auto max-h-[30vh]" 
+									bind:src={answer.answer}
+									allow_fullscreen={false} 
+								/>
+							{:else}
+								<p class="m-auto button-text text-sm sm:text-base md:text-lg lg:text-xl" style="color: {getTextColor(answer.color ?? '#004A93')}">{answer.answer}</p>
+							{/if}
 						{/if}
 					</button>
 				{/each}
