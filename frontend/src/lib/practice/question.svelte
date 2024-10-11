@@ -389,9 +389,9 @@ SPDX-License-Identifier: MPL-2.0
 					<button
 						type="button"
 						disabled={selected_answer !== undefined || timer_res === '0'}
-						class="rounded-lg h-full w-9/10 flex items-center justify-center disabled:opacity-60 border-2 border-black transition-all my-2"
+						class="rounded-lg h-full w-9/10 flex items-center justify-center border-2 border-black transition-all my-2"
 						style="background-color: {answer.color ?? default_colors[i]}; color: {get_foreground_color(answer.color ?? default_colors[i])}"
-						class:opacity-100={check_choice_selected[i]}
+						class:opacity-60={!check_choice_selected[i]}
 						on:click={() => {
 							check_choice_selected[i] = !check_choice_selected[i];
 						}}>
@@ -411,6 +411,7 @@ SPDX-License-Identifier: MPL-2.0
 				<BrownButton
 					type="button"
 					on:click={() => {
+						selected_answer = check_choice_selected;
 						timer_res = '0';
 					}}>{$t('words.submit')}</BrownButton
 				>
