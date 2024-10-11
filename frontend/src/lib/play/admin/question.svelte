@@ -34,7 +34,7 @@ SPDX-License-Identifier: MPL-2.0
 			circular_progress = 0;
 		}
 	}
-	const totalAns = quiz_data.questions[selected_question].answers.length;
+	const totalAns = quiz_data.questions[selected_question].answers.length;	
 </script>
 <style>
 	 .fluid-text {
@@ -47,77 +47,112 @@ SPDX-License-Identifier: MPL-2.0
   }
 </style>
 
-<div class="flex justify-center " >
-	<div class="flex flex-col justify-center items-center sm:w-2/3  h-1/6 p-0 mb-2 px-3">
-		<div class="bg-white shadow-[#003FA7]/50 shadow-md border-[#003FA7] dark:shadow-none flex flex-col items-center border-[#003FA7] border-2 justify-center rounded-3xl w-[90vw] w-full pb-5" >
-			<div class="m-auto bg-white lg:-mt-16 -mt-9 rounded-full p-3">
+<div class="flex justify-center mt-[135px] sm:mt-0">
+	<div class="flex flex-col justify-center items-center sm:w-2/3 h-1/6 p-0 mb-1 px-3 mt-1">
+		<div class="bg-white shadow-[#003FA7]/50 shadow-md border-[#003FA7] dark:shadow-none flex flex-col items-center border-[#003FA7] border-2 justify-center rounded-3xl w-[90vw] w-full pb-2">
+			<div class="m-auto bg-white lg:-mt-10 -mt-6 rounded-full p-1">
 				<CircularTimer
 					bind:text={timer_res}
 					bind:progress={circular_progress}
 					color="#ef4444"
 				/>
 			</div>
-			<h1 class="lg:text-3xl text-base  text-center text-[#00529B]">
-				{@html quiz_data.questions[selected_question].question}
-			</h1>
+			<!-- Question Text -->
+			<div class="flex-shrink-0 p-4">
+				<h1 class="text-center text-[#00529B]"
+					style="font-size: clamp(1rem, 3vw + 1vh, 4vh);">
+					{@html quiz_data.questions[selected_question].question}
+				</h1>
+			</div>
+			{#if quiz_data.questions[selected_question].image !== null}
+			<div class="flex justify-center w-full p-0">
+					<MediaComponent
+						src={quiz_data.questions[selected_question].image}
+						muted={false}
+						css_classes="max-h-[35vh] object-cover mx-auto mb-0 w-auto"
+					/>
+			</div>
+			{/if}
 		</div>
 	</div>
+	
 
 </div>
-<div class="lg:flex-col flex mt-8 p-5 items-center">
-	{#if quiz_data.questions[selected_question].image !== null}
-		<div class="flex justify-center w-1/3 lg:w-full p-0">
-			<MediaComponent
-				src={quiz_data.questions[selected_question].image}
-				muted={false}
-				css_classes="max-h-[50vh] object-cover mx-auto mb-8 w-auto"
-			/>
-		</div>
-	{/if}
-	{#if quiz_data.questions[selected_question].type === QuizQuestionType.ABCD || quiz_data.questions[selected_question].type === QuizQuestionType.VOTING || quiz_data.questions[selected_question].type === QuizQuestionType.CHECK}
-		<div class="grid grid-rows-2 grid-flow-col auto-cols-auto gap-2 w-4/5 lg:w-full ps-1 ">
+<div class="flex flex-col lg:flex-row mt-0 p-0 items-center">
+	{#if quiz_data.questions[selected_question].type === QuizQuestionType.ABCD ||
+		quiz_data.questions[selected_question].type === QuizQuestionType.VOTING ||
+		quiz_data.questions[selected_question].type === QuizQuestionType.CHECK}
+	<!-- Main Container -->
+	<div class="flex flex-col h-1/2">
+		<!-- Answers Grid -->
+		<div class="flex-grow flex items-center justify-center">
+		<div class="grid grid-rows-2 gap-2 w-screen max-h-[45vh] grid-flow-col auto-cols-auto p-4"
+			style="grid-template-rows: repeat(2, 1fr);
+					grid-template-columns: repeat(2, 1fr);">
 			{#each quiz_data.questions[selected_question].answers as answer, i}
 			<div
-			class="rounded-lg h-full flex border-2 border-[#0056BD] items-center p-2 flex-grow lg:min-h-[7vh] lg:min-w-full lg:max-h-[20vh] lg:max-w-[48vw] w-[30vw] transition-all" class:justify-center={quiz_data.questions[selected_question].ansType === "IMAGE"}
-			style="background-color: {answer.color ?? default_colors[i]};"
-			class:opacity-50={!answer.right &&
-						timer_res === '0' &&
-						quiz_data.questions[selected_question].type === QuizQuestionType.ABCD}
-				>
-				{#if quiz_data.questions[selected_question].ansType === "TEXT" || quiz_data.questions[selected_question].ansType === null}
-					<p class="md:text-7xl text-4xl font-bold text-[#fff] ps-1">
-						{optionsLabel[i]}
-					</p>
-					<p
-						class="text-center fluid-text-md lg:text-2xl break-all md:text-xl sm:text-lg px-2 overflow-auto py-2 w-full text-[#fff] "
-						>{answer.answer}</p
-					>
+				class="rounded-lg flex border-2 border-[#0056BD] items-center justify-center p-2 transition-all"
+				style="
+				background-color: {answer.color ?? default_colors[i]};
+				"
+				class:opacity-50={!answer.right && timer_res === '0' &&
+				quiz_data.questions[selected_question].type === QuizQuestionType.ABCD}>
+				{#if quiz_data.questions[selected_question].ansType === "TEXT" ||
+					quiz_data.questions[selected_question].ansType === null}
+				<p class="font-bold text-[#fff] ps-1"
+					style="font-size: clamp(2rem, 4vh, 8vh);">
+					{optionsLabel[i]}
+				</p>
+				<p class="text-center break-all px-2 py-2 w-full text-[#fff]"
+					style="font-size: clamp(1rem, 2vh, 4vh);">
+					{answer.answer}
+				</p>
 				{:else}
-					<MediaComponent css_classes="w-fit m-2 h-full" bind:src={answer.answer} />
+				<MediaComponent
+					css_classes="w-full h-full object-contain max-h-[25vh]"
+					bind:src={answer.answer} />
 				{/if}
-				</div>
-				
+			</div>
 			{/each}
 		</div>
+		</div>
+	</div>
 	{:else if quiz_data.questions[selected_question].type === QuizQuestionType.TEXT}
+	<!-- Main Container -->
+	<div class="flex flex-col h-screen">
+		<!-- Question Text -->
+		<div class="flex-shrink-0 p-4">
+		<h1 class="text-center text-[#00529B]"
+			style="font-size: clamp(1rem, 2vh, 4vh);">
+			{@html quiz_data.questions[selected_question].question}
+		</h1>
+		</div>
+		<!-- Answer Input or Display -->
 		{#if timer_res === '0'}
-			<div class="grid   auto-cols-auto gap-2 w-4/5 lg:w-full ps-1 " class:grid-cols-2={totalAns > 2} class:grid-flow-cols={totalAns > 2}  class:grid-flow-rows={totalAns <= 2} class:grid-rows-2={totalAns <= 2} >
-				{#each quiz_data.questions[selected_question].answers as answer, i}
-					<div class="rounded-lg h-full flex border-2 border-[#0056BD] items-center flex-grow lg:min-h-[7vh]  lg:max-h-[20vh] transition-all" style="background-color: {answer.color ??
-										default_colors[i]};">
-						<span class="text-center fluid-text-md lg:text-2xl break-all md:text-xl sm:text-lg px-2 overflow-auto py-2 w-full text-[#fff] "
-						style="color: {get_foreground_color(
-												answer.color ?? default_colors[i]
-											)}"
-							>{answer.answer}</span
-						>
-					</div>
-				{/each}
+		<!-- Display Answers After Timer Ends -->
+		<div class="flex-grow">
+			<div class="grid gap-2 w-full"
+				style="grid-auto-rows: 1fr; grid-template-columns: 1fr;">
+			{#each quiz_data.questions[selected_question].answers as answer, i}
+				<div class="rounded-lg flex items-center justify-center border-2 border-[#0056BD] transition-all"
+					style="background-color: {answer.color ?? default_colors[i]};">
+				<span class="text-center text-[#fff]"
+						style="font-size: clamp(1rem, 2vh, 4vh);">
+					{answer.answer}
+				</span>
+				</div>
+			{/each}
 			</div>
+		</div>
 		{:else}
-			<div class="flex justify-center text-white">
-				<p class="fluid-text-md text-[#00529B] dark:text-white">{$t('admin_page.enter_answer_into_field')}</p>
-			</div>
+		<!-- Input Field -->
+		<div class="flex-grow flex items-center justify-center">
+			<p class="text-center text-[#00529B] dark:text-white"
+			style="font-size: clamp(1rem, 2vh, 4vh);">
+			{$t('admin_page.enter_answer_into_field')}
+			</p>
+		</div>
 		{/if}
+	</div>
 	{/if}
 </div>

@@ -148,7 +148,7 @@ SPDX-License-Identifier: MPL-2.0
 {/if}
 
 
-<div class="w-full h-full" class:pt-10={control_visible} class:pt-12={!control_visible}>
+<div class="w-full h-full" class:pt-2={control_visible} class:pt-3={!control_visible}>
 	{#if timer_res !== undefined && !final_results_clicked && !question_results}
 		<!-- Question is shown -->
 		{#if quiz_data.questions[selected_question].type === QuizQuestionType.SLIDE}
@@ -197,7 +197,7 @@ SPDX-License-Identifier: MPL-2.0
 	{/if}
 	<br />
 	{#if get_question_title(selected_question + 1, quiz_data) === '' && selected_question + 1 === 0}
-		<div class="flex flex-col justify-center w-screen h-full">
+		<div class="flex flex-col justify-center w-screen h-1/5">
 			<h1 class="text-7xl text-center text-title">{@html quiz_data.title}</h1>
 			<p class="text-3xl pt-8 text-center text-title">{@html quiz_data.description}</p>
 			{#if quiz_data.cover_image}

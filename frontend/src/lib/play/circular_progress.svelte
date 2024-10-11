@@ -25,7 +25,7 @@ SPDX-License-Identifier: MPL-2.0
 	$: cssVarStyles = `--background:${background}`;
 </script>
 
-<div id="progress-circle" style={cssVarStyles} class="transition-all lg:text-4xl text-lg text-black">
+<div id="progress-circle" style={cssVarStyles} class="transition-all lg:text-2xl text-base text-black">
 	{text}
 </div>
 
@@ -33,10 +33,10 @@ SPDX-License-Identifier: MPL-2.0
 	#progress-circle {
 		background: var(--background);
 		border-radius: 50%;
-		width: 10vw;
-		height: 10vw;
-		max-width: 120px;
-		max-height: 120px;
+		width: 6vw; /* Reduced from 10vw to 6vw */
+    	height: 6vw; /* Reduced from 10vw to 6vw */
+    	max-width: 72px; /* Reduced from 120px to 72px */
+    	max-height: 72px; /* Reduced from 120px to 72px */
 		transition: all 500ms ease-in;
 		will-change: transform;
 		display: flex;
