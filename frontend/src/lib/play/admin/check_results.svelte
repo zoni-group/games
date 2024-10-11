@@ -76,15 +76,17 @@
       <div class="grid grid-rows-2 gap-2 w-full h-full grid-flow-col auto-cols-auto">						
         {#each quiz_answers as answer, i}
           <div 
-          class="rounded-lg h-full  flex items-center justify-center disabled:opacity-60 border-4 border-white transition-all my-2"
+          class="rounded-lg h-full  flex items-center justify-center disabled:opacity-60 border-4 border-white transition-all my-2 ${isIncorrect(answer) ? ' opacity-60' : ''}"
           style="background-color: {answer.color ?? default_colors[i]}; color: {get_foreground_color(answer.color ?? default_colors[i])}"
           >
-            {#if question.ansType !== "IMAGE"}
-              <p class="text-lg text-[#00529B] dark:text-[#fff] break-all">{answer}</p>
-            {:else}
-              <MediaComponent src={answer} css_classes="w-24 h-24" />
-            {/if}
-            <div class="flex items-center justify-between p-0 ml-2 border rounded shadow-lg bg-gray-100 dark:bg-[#0AEDFE]/20"
+            <div class="w-4/5">
+              {#if question.ansType !== "IMAGE"}
+                <p class="text-lg text-[#00529B] dark:text-[#fff]">{answer}</p>
+              {:else}
+                <MediaComponent src={answer} css_classes="w-24 h-24" />
+              {/if}
+            </div>
+            <div class="w-1/5 flex items-center justify-between p-0 ml-2 border rounded shadow-lg bg-gray-100 dark:bg-[#0AEDFE]/20"
                style="width: 20px; height: 20px;">
               <span class="text-xl font-bold" class:text-green-500={isCorrect(answer)} class:text-red-500={isIncorrect(answer)}>
                 {isCorrect(answer) ? '✓' : isIncorrect(answer) ? '✗' : ''}
