@@ -34,7 +34,6 @@ SPDX-License-Identifier: MPL-2.0
 			circular_progress = 0;
 		}
 	}
-	const totalAns = quiz_data.questions[selected_question].answers.length;
 </script>
 <style>
 	 .fluid-text {
