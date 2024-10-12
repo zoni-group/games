@@ -35,8 +35,6 @@ SPDX-License-Identifier: MPL-2.0
 		}
 	}
 	const totalAns = quiz_data.questions[selected_question].answers.length;
-	$: gridColumnsClass = totalAns <= 2 ? 'grid-cols-1' : 'grid-cols-2';
-	$: gridRowsClass = totalAns === 1 ? 'grid-rows-1' : 'grid-rows-2';
 </script>
 <style>
 	 .fluid-text {
@@ -71,7 +69,7 @@ SPDX-License-Identifier: MPL-2.0
 					<MediaComponent
 						src={quiz_data.questions[selected_question].image}
 						muted={false}
-						css_classes="max-h-[35vh] object-cover mx-auto mb-0 w-auto z-50"
+						css_classes="max-h-[35vh] object-cover mx-auto mb-0 w-auto"
 					/>
 			</div>
 			{/if}
