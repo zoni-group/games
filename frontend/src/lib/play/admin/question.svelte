@@ -34,7 +34,9 @@ SPDX-License-Identifier: MPL-2.0
 			circular_progress = 0;
 		}
 	}
-	const totalAns = quiz_data.questions[selected_question].answers.length;	
+	const totalAns = quiz_data.questions[selected_question].answers.length;
+	$: gridColumnsClass = totalAns <= 2 ? 'grid-cols-1' : 'grid-cols-2';
+	$: gridRowsClass = totalAns === 1 ? 'grid-rows-1' : 'grid-rows-2';
 </script>
 <style>
 	 .fluid-text {
@@ -69,7 +71,7 @@ SPDX-License-Identifier: MPL-2.0
 					<MediaComponent
 						src={quiz_data.questions[selected_question].image}
 						muted={false}
-						css_classes="max-h-[35vh] object-cover mx-auto mb-0 w-auto"
+						css_classes="max-h-[35vh] object-cover mx-auto mb-0 w-auto z-50"
 					/>
 			</div>
 			{/if}
@@ -78,7 +80,7 @@ SPDX-License-Identifier: MPL-2.0
 	
 
 </div>
-<div class="flex flex-col lg:flex-row mt-0 p-0 items-center">
+<div class="flex flex-col flex-row mt-0 p-0 items-center">
 	{#if quiz_data.questions[selected_question].type === QuizQuestionType.ABCD ||
 		quiz_data.questions[selected_question].type === QuizQuestionType.VOTING ||
 		quiz_data.questions[selected_question].type === QuizQuestionType.CHECK}
@@ -86,9 +88,7 @@ SPDX-License-Identifier: MPL-2.0
 	<div class="flex flex-col h-1/2">
 		<!-- Answers Grid -->
 		<div class="flex-grow flex items-center justify-center">
-		<div class="grid grid-rows-2 gap-2 w-screen max-h-[45vh] grid-flow-col auto-cols-auto p-4"
-			style="grid-template-rows: repeat(2, 1fr);
-					grid-template-columns: repeat(2, 1fr);">
+		<div class="grid grid-rows-2 gap-2 w-full h-full max-h-[45vh] min-w-[30vh] grid-flow-col auto-cols-auto p-4">
 			{#each quiz_data.questions[selected_question].answers as answer, i}
 			<div
 				class="rounded-lg flex border-2 border-[#0056BD] items-center justify-center p-2 transition-all"
@@ -119,20 +119,12 @@ SPDX-License-Identifier: MPL-2.0
 	</div>
 	{:else if quiz_data.questions[selected_question].type === QuizQuestionType.TEXT}
 	<!-- Main Container -->
-	<div class="flex flex-col h-screen">
-		<!-- Question Text -->
-		<div class="flex-shrink-0 p-4">
-		<h1 class="text-center text-[#00529B]"
-			style="font-size: clamp(1rem, 2vh, 4vh);">
-			{@html quiz_data.questions[selected_question].question}
-		</h1>
-		</div>
+	<div class="flex flex-col h-1/2">
 		<!-- Answer Input or Display -->
 		{#if timer_res === '0'}
 		<!-- Display Answers After Timer Ends -->
-		<div class="flex-grow">
-			<div class="grid gap-2 w-full"
-				style="grid-auto-rows: 1fr; grid-template-columns: 1fr;">
+		<div class="flex-grow flex items-center justify-center">
+			<div class="grid grid-rows-2 gap-2 w-full h-full max-h-[45vh] min-w-[30vh] grid-flow-col auto-cols-auto p-4">
 			{#each quiz_data.questions[selected_question].answers as answer, i}
 				<div class="rounded-lg flex items-center justify-center border-2 border-[#0056BD] transition-all"
 					style="background-color: {answer.color ?? default_colors[i]};">
@@ -146,7 +138,7 @@ SPDX-License-Identifier: MPL-2.0
 		</div>
 		{:else}
 		<!-- Input Field -->
-		<div class="flex-grow flex items-center justify-center">
+		<div class="flex-grow flex items-center justify-center h-full">
 			<p class="text-center text-[#00529B] dark:text-white"
 			style="font-size: clamp(1rem, 2vh, 4vh);">
 			{$t('admin_page.enter_answer_into_field')}
