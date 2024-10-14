@@ -407,15 +407,19 @@
 				class="fixed top-0 bg-red-500 h-8 transition-all"
 				style="width: {(100 / parseInt(question.time)) * parseInt(timer_res)}vw"
 			/>
-			<div class="flex flex-col items-center justify-center w-full min-h-screen gap-4 px-4 mt-2">
+			<div
+				class="flex flex-col items-center justify-start w-full min-h-screen gap-4 px-4 mt-2"
+				style="overflow-y: auto; -webkit-overflow-scrolling: touch;"
+			>
 				{#each question.answers as answer, i (i)}
 					<div
 						class="w-full h-fit flex-row rounded-lg p-2 align-middle"
 						animate:flip={{ duration: 100 }}
 						style="color: {getTextColor(answer.color ?? '#004A93')}; background-color: {answer.color ?? '#004A93'};"
 					>
+						<!-- svelte-ignore redundant-event-modifier -->
 						<button
-							on:click={() => {
+							on:click|passive={() => {
 								question.answers = swapArrayElements(question.answers, i, i - 1);
 							}}
 							class="disabled:opacity-50 transition shadow-lg bg-black text-white bg-opacity-30 w-full flex justify-center rounded-lg p-2 hover:bg-opacity-20 transition"
@@ -442,9 +446,9 @@
 						<p class="w-full text-center p-2 text-2xl text-white">
 							{answer.answer}
 						</p>
-
+						<!-- svelte-ignore redundant-event-modifier -->
 						<button
-							on:click={() => {
+							on:click|passive={() => {
 								question.answers = swapArrayElements(question.answers, i, i + 1);
 							}}
 							class="disabled:opacity-50 transition shadow-lg bg-black text-white bg-opacity-30 w-full flex justify-center rounded-lg p-2 hover:bg-opacity-20 transition"
