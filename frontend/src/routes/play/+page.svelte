@@ -338,11 +338,13 @@
 		}
 		acknowledgement.answer = '';
 		selected_answer = '';
+		window.scrollTo(0, 0);
 		storeState();  // Save state when the question index changes
 	});
 
 	socket.on('start_game', () => {
 		gameMeta.started = true;
+		window.scrollTo(0, 0);
 		storeState();
 	});
 
