@@ -42,7 +42,7 @@ SPDX-License-Identifier: MPL-2.0
   	}
 </script>
 
-<div class="flex flex-col justify-center w-screen h-screen p-4">
+<div class="flex flex-col justify-center aling-middle w-screen h-full p-4 mt-10">
 	<h1 class="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl text-center break-words text-[#00529B] dark:text-white">
 		{@html title}
 	</h1>
@@ -50,37 +50,35 @@ SPDX-License-Identifier: MPL-2.0
 		{@html description}
 	</p>
 	{#if cover_image}
-		<div class="flex justify-center align-middle items-center">
-			<div class="h-[20vh] sm:h-[25vh] md:h-[30vh] lg:h-[35vh] xl:h-[40vh] m-auto w-auto mt-8 sm:mt-10 md:mt-12">
-				{#if contentType?.startsWith('image')}
-					<img
-						class="max-h-full max-w-full block"
-						src={`/api/v1/storage/download/${cover_image}`}
-						alt="Not provided"
-					/>
-				{:else if contentType?.startsWith('video')}
+		<div class="flex justify-center align-middle items-center">		
+			{#if contentType?.startsWith('image')}
+				<img
+					css_classes="max-h-[35vh] object-cover mx-auto mb-1 w-auto"
+					src={`/api/v1/storage/download/${cover_image}`}
+					alt="Not provided"
+				/>
+			{:else if contentType?.startsWith('video')}
+				<!-- svelte-ignore a11y-media-has-caption -->
+				<video
+					css_classes="max-h-[35vh] object-cover mx-auto mb-1 w-auto"
+					src={getVideoUrl(`/api/v1/storage/download/${cover_image}`)}
+					controls
+					autoplay={false}
+					loop={false}
+				>
+					Your browser does not support the video tag.
+				</video>
+			{:else if contentType?.startsWith('audio')}
+				<div class="flex items-center justify-center h-full w-full">
 					<!-- svelte-ignore a11y-media-has-caption -->
-					<video
-						class="max-h-full max-w-full block"
-						src={getVideoUrl(`/api/v1/storage/download/${cover_image}`)}
-						controls
-						autoplay={false}
-						loop={false}
-					>
-						Your browser does not support the video tag.
-					</video>
-				{:else if contentType?.startsWith('audio')}
-					<div class="flex items-center justify-center h-full w-full">
-						<!-- svelte-ignore a11y-media-has-caption -->
-						<audio controls autoplay={false} loop={false} preload="auto" class="w-full">
-							<source src={getAudioUrl(`/api/v1/storage/download/${cover_image}`)} type="audio/mpeg" />
-							Your browser does not support the audio element.
-						</audio>
-					</div>
-				{:else}
-					<p>Unsupported media type</p>
-				{/if}
-			</div>
+					<audio controls autoplay={false} loop={false} preload="auto" class="w-full">
+						<source src={getAudioUrl(`/api/v1/storage/download/${cover_image}`)} type="audio/mpeg" />
+						Your browser does not support the audio element.
+					</audio>
+				</div>
+			{:else}
+				<p>Unsupported media type</p>
+			{/if}
 		</div>
 	{/if}
 </div>
