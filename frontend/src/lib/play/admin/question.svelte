@@ -54,6 +54,8 @@ SPDX-License-Identifier: MPL-2.0
 					bind:text={timer_res}
 					bind:progress={circular_progress}
 					color="#ef4444"
+					size={6}
+					maxSize={72}
 				/>
 			</div>
 			<!-- Question Text -->
