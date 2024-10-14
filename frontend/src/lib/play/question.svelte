@@ -242,19 +242,19 @@
 	<div class={`w-screen ${game_mode !== 'normal' ? 'h-4/5 flex items-start justify-center' : 'h-full'}`}>
 	{#if game_mode === 'normal'}
 		<div
-			class="flex flex-col justify-start"
+			class="flex flex-col justify-center items-center"
 			class:mt-10={[QuizQuestionType.RANGE, QuizQuestionType.ORDER, QuizQuestionType.TEXT]}
 		>
 			<h1
-				class="lg:text-2xl text-lg text-center text-[#0056BD] dark:text-white mt-2 break-normal mb-2 mt-20"
+				class="lg:text-2xl text-lg text-center text-[#0056BD] dark:text-white mt-2 break-normal mb-2"
 			>
 				{@html question.question}
 			</h1>
 			{#if question.image !== null && game_mode !== 'kahoot'}
-				<div class="flex justify-center lg:w-1/3 lg:w-full p-0 mt-5">
+				<div class="flex justify-center p-0 mt-1">
 					<MediaComponent
 						src={question.image}
-						css_classes="max-h-[50vh] object-cover mx-auto mb-8 w-auto"
+						css_classes="max-h-[40vh] object-cover mx-auto mb-1 w-auto"
 					/>
 				</div>
 			{/if}
@@ -360,8 +360,8 @@
 				class="fixed top-0 bg-red-500 h-8 transition-all"
 				style="width: {(100 / parseInt(question.time)) * parseInt(timer_res)}vw"
 			/>
-			<div class="w-full max-w-md px-4 mt-10">
-			  <label for="answer-input" class="block mb-2 mt-5 text-lg font-medium text-[#003FA7] dark:text-gray-200">Type your answer here:</label>
+			<div class="w-full max-w-md px-4 mt-1">
+			  <label for="answer-input" class="block mb-2 mt-1 text-lg font-medium text-[#003FA7] dark:text-gray-200">Type your answer here:</label>
 			  <input
 				id="answer-input"
 				type="text"
@@ -416,7 +416,7 @@
 			use:dndzone={{items, flipDurationMs}} 
 			on:consider={handleSort} 
 			on:finalize={handleSort}
-			class="flex flex-col items-center justify-start w-full min-h-screen gap-4 px-4 mt-10"
+			class="flex flex-col justify-center items-center w-screen gap-4 px-4 {game_mode !== 'normal' ? 'mt-10' : 'mt-2'}"
 			style="overflow-y: auto; -webkit-overflow-scrolling: touch;"
 		>
 			{#each items as item (item.id)}

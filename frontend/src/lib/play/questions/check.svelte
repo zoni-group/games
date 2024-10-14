@@ -57,7 +57,7 @@
 		return isColorLight(backgroundColor) ? 'black' : 'white';
 	}
 </script>
-<div class="flex flex-col justify-center items-center w-screen h-screen" >
+<div class="flex flex-col justify-center items-center w-screen" >
 	<div class="flex flex-col justify-start items-start w-full p-4 mt-0 ${game_mode !== 'normal' ? ' h-4/5' : ''}">
 		<div class={`flex-grow relative w-full ${game_mode !== 'normal' ? 'h-full' : ''}`}>
 			{#if game_mode !== 'normal'}
