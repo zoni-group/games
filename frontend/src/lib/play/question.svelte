@@ -416,32 +416,31 @@
 			use:dndzone={{items, flipDurationMs}} 
 			on:consider={handleSort} 
 			on:finalize={handleSort}
-			class="flex flex-col items-center justify-start w-full min-h-screen gap-4 px-4 mt-2"
+			class="flex flex-col items-center justify-start w-full min-h-screen gap-4 px-4 mt-10"
 			style="overflow-y: auto; -webkit-overflow-scrolling: touch;"
 		>
 			{#each items as item (item.id)}
 				<div 
-					class="w-full h-fit flex-row rounded-lg p-2 align-middle"
+					class="w-4/5 h-fit flex-row rounded-lg p-1 align-middle"
 					animate:flip={{ duration: flipDurationMs }}
 					style="color: {getTextColor(item.color ?? '#004A93')}; background-color: {item.color ?? '#004A93'};"
 				>
-					<p class="w-full text-center p-2 text-2xl text-white">
+					<p class="w-full text-center p-1 text-2xl text-white">
 						{item.answer.answer}
 					</p>
 				</div>
 			{/each}
-		</section>
-
-		<div class="w-full flex justify-center mt-2">
-			<button 
-				type="button"
-				class="bg-[#0056BD] border-[#fff] flex items-center border-2 gap-2 text-[#fff] font-semibold px-9 py-2 rounded-full disabled:cursor-not-allowed disabled:opacity-90"
-				on:click={() => select_complex_answer(items)}
-			>
-				<RightArrow />
-				Submit
-			</button>
-		</div>
+			<div class="w-full flex justify-center mt-4">
+				<button 
+					type="button"
+					class="bg-[#0056BD] border-[#fff] flex items-center border-2 gap-2 text-[#fff] font-semibold px-9 py-2 rounded-full disabled:cursor-not-allowed disabled:opacity-90"
+					on:click={() => select_complex_answer(items)}
+				>
+					<RightArrow />
+					Submit
+				</button>
+			</div>
+		</section>	
 		{:else if question.type === QuizQuestionType.CHECK}
 			{#if !acknowledgement.answered}
 				{#await import('./questions/check.svelte')}
