@@ -16,7 +16,7 @@ SPDX-License-Identifier: MPL-2.0
 
 	export let selected_question: number;
 	export let data: EditorData;
-
+	let list = data.questions[selected_question].answers;
 	let parent_el: HTMLDivElement;
 
 	const swapArrayElements = (arr: OrderQuizAnswer[], a: number, b: number): Array<any> => {
@@ -43,17 +43,20 @@ SPDX-License-Identifier: MPL-2.0
 		}
 	};
 
-	if (!Array.isArray(data.questions[selected_question].answers)) {
-		data.questions[selected_question].answers = [];
-	}
-	for (let i = 0; i < data.questions[selected_question].answers.length; i++) {
-		data.questions[selected_question].answers[i] = {
-			answer: data.questions[selected_question].answers[i].answer,
-			color: data.questions[selected_question].answers[i].color ?? undefined,
-			id: [i]
-		};
-	}
 	const default_colors = ['#FFA800', '#00A3FF', '#FF1D38', '#00D749'];
+	const sortData = () =>{
+		if (!Array.isArray(data.questions[selected_question].answers)) {
+			data.questions[selected_question].answers = [];
+		}
+		for (let i = 0; i < data.questions[selected_question].answers.length; i++) {
+			data.questions[selected_question].answers[i] = {
+				answer: data.questions[selected_question].answers[i].answer,
+				color: (default_colors.includes(data.questions[selected_question].answers[i].color)? default_colors[i]: data.questions[selected_question].answers[i].color) ?? default_colors[i],
+				id: [i]
+			};
+		}
+	}
+	sortData();
 	const set_colors_if_unset = () => {
 		for (let i = 0; i < data.questions[selected_question].answers.length; i++) {
 			if (!data.questions[selected_question].answers[i].color) {
@@ -74,6 +77,30 @@ SPDX-License-Identifier: MPL-2.0
 			console.log("Under 100");
 		}
 	}
+	
+	
+const drop = (event, target) => {
+  event.dataTransfer.dropEffect = 'move'; 
+  const start = parseInt(event.dataTransfer.getData("text/plain"));
+  const newTracklist = list;
+
+  if (start < target) {
+	newTracklist.splice(target + 1, 0, newTracklist[start]);
+	newTracklist.splice(start, 1);
+  } else {
+	newTracklist.splice(target, 0, newTracklist[start]);
+	newTracklist.splice(start + 1, 1);
+  }
+  data.questions[selected_question].answers = newTracklist
+}
+
+const dragstart = (event, i) => {
+  event.dataTransfer.effectAllowed = 'move';
+  event.dataTransfer.dropEffect = 'move';
+  list = data.questions[selected_question].answers;
+  const start = i;
+  event.dataTransfer.setData('text/plain', start);
+}
 </script>
 
 <div class="w-full">
@@ -82,7 +109,11 @@ SPDX-License-Identifier: MPL-2.0
 			<div
 				animate:flip={{ duration: 200 }}
 				out:fade|local={{ duration: 150 }}
-				class="p-4 rounded-lg flex justify-center w-full transition relative border border-gray-600 flex-row gap-4 m-2"
+				draggable={true} 
+				on:dragstart={event => dragstart(event, i)}
+				on:drop|preventDefault={event => drop(event, i)}
+				ondragover="return false"
+				class="p-4 rounded-lg flex justify-center w-full transition relative border border-gray-600 flex-row gap-4 m-2 cursor-grab active:cursor-grabbing "
 			>
 				<button
 					class="rounded-full absolute -top-2 -right-2 opacity-70 hover:opacity-100 transition"
@@ -91,6 +122,7 @@ SPDX-License-Identifier: MPL-2.0
 						data.questions[selected_question].answers.splice(i, 1);
 						data.questions[selected_question].answers =
 							data.questions[selected_question].answers;
+						sortData();
 					}}
 				>
 					<svg
