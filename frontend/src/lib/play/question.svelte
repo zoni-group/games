@@ -8,15 +8,17 @@
 	import { getLocalization } from '$lib/i18n';
 	import { kahoot_icons } from './kahoot_mode_assets/kahoot_icons';
 	import CircularTimer from '$lib/play/circular_progress.svelte';
+	import {dndzone} from 'svelte-dnd-action';
 	import { flip } from 'svelte/animate';
-	import BrownButton from '$lib/components/buttons/brown.svelte';
 	import { get_foreground_color } from '../helpers';
 	import MediaComponent from '$lib/editor/MediaComponent.svelte';
 	import { toast } from '@zerodevx/svelte-toast';
 	import RightArrow from '$lib/icons/rightArrow.svelte';
 	import en from '$lib/i18n/locales/en.json';
 
+
 	const { t } = getLocalization();
+	const flipDurationMs = 200;
 	export let question: Question;
 	export let game_mode;
 	export let question_index: string | number;
@@ -37,6 +39,16 @@
 	let timer_res = question.time;
 	let timer_interval; // Declare this outside to ensure there's only one interval running at a time
 	let text_answer = [];
+
+	let items = Array.isArray(question.answers) ? question.answers.map((answer, index) => ({
+        id: index, 
+        answer, 
+        color: answer.color
+	})) : [];
+
+	function handleSort(e) {
+        items = e.detail.items;
+    }
 
 	const dispatch = createEventDispatcher();
 
@@ -145,19 +157,16 @@
 		triggerStoreState();
 	};
 
-	const select_complex_answer = (data) => {
-		const new_array = [];
-		for (let i = 0; i < data.length; i++) {
-			new_array.push({ answer: data[i].answer });
-		}
-		selected_answer = data.map(a => a.answer);
-		socket.emit('submit_answer', {
-			question_index: question_index,
-			answer: 'a',
-			complex_answer: new_array
-		});
-		toast.push(`Your answer has been submitted!`);
-		acknowledgement.answered = true;
+	const select_complex_answer = (items) => {
+		const orderedAnswers = items.map(item => item.answer);
+		selected_answer = items.map(a => a.answer.answer);
+        socket.emit('submit_answer', {
+            question_index: question_index,
+            answer: 'a',
+            complex_answer: orderedAnswers
+        });
+        toast.push('Your answer has been submitted!');
+        acknowledgement.answered = true;
 		triggerStoreState();
 	};
 
@@ -403,104 +412,35 @@
 				</p>
 			{/if}
 		{:else if question.type === QuizQuestionType.ORDER}
-			<span
-				class="fixed top-0 bg-red-500 h-8 transition-all"
-				style="width: {(100 / parseInt(question.time)) * parseInt(timer_res)}vw"
-			/>
-			<div
-				class="flex flex-col items-center justify-start w-full min-h-screen gap-4 px-4 mt-2"
-				style="overflow-y: auto; -webkit-overflow-scrolling: touch;"
-			>
-				{#each question.answers as answer, i (i)}
-					<div
-						class="w-full h-fit flex-row rounded-lg p-2 align-middle"
-						animate:flip={{ duration: 100 }}
-						style="color: {getTextColor(answer.color ?? '#004A93')}; background-color: {answer.color ?? '#004A93'};"
-					>
-						<!-- svelte-ignore redundant-event-modifier -->
-						<button
-							on:click|passive={() => {
-								question.answers = swapArrayElements(question.answers, i, i - 1);
-							}}
-							class="disabled:opacity-50 transition shadow-lg bg-black text-white bg-opacity-30 w-full flex justify-center rounded-lg p-2 hover:bg-opacity-20 transition"
-							type="button"
-							disabled={i === 0 || selected_answer !== ''}
-						>
-							<svg
-								class="w-8 h-8"
-								stroke-width="2"
-								viewBox="0 0 24 24"
-								fill="none"
-								xmlns="http://www.w3.org/2000/svg"
-								color="currentColor"
-							>
-								<path
-									d="M12 22a2 2 0 110-4 2 2 0 010 4zM12 15V2m0 0l3 3m-3-3L9 5"
-									stroke="currentColor"
-									stroke-width="2"
-									stroke-linecap="round"
-									stroke-linejoin="round"
-								/>
-							</svg>
-						</button>
-						<p class="w-full text-center p-2 text-2xl text-white">
-							{answer.answer}
-						</p>
-						<!-- svelte-ignore redundant-event-modifier -->
-						<button
-							on:click|passive={() => {
-								question.answers = swapArrayElements(question.answers, i, i + 1);
-							}}
-							class="disabled:opacity-50 transition shadow-lg bg-black text-white bg-opacity-30 w-full flex justify-center rounded-lg p-2 hover:bg-opacity-20 transition"
-							type="button"
-							disabled={i === question.answers.length - 1 || selected_answer}
-						>
-							<svg
-								class="w-8 h-8"
-								stroke-width="2"
-								viewBox="0 0 24 24"
-								fill="none"
-								xmlns="http://www.w3.org/2000/svg"
-								color="currentColor"
-							>
-								<path
-									d="M12 6a2 2 0 110-4 2 2 0 010 4zM12 9v13m0 0l3-3m-3 3l-3-3"
-									stroke="currentColor"
-									stroke-width="2"
-									stroke-linecap="round"
-									stroke-linejoin="round"
-								/>
-							</svg>
-						</button>
-					</div>
-				{/each}
-				<div class="w-full flex justify-center mt-2">
-					<button 
-						type="button"
-						class="bg-[#0056BD] border-[#fff] flex items-center border-2 gap-2 text-[#fff] font-semibold px-9 py-2 rounded-full disabled:cursor-not-allowed disabled:opacity-90"
-						disabled={selected_answer}
-						on:click={() => {
-							select_complex_answer(question.answers);
-						}}
-						>
-						
-							<RightArrow />
-							
-							{#if language}
-								{en.words.submit}
-							{:else}
-								{$t('words.submit')}
-							{/if}
-					</button>
-					<!-- <BrownButton
-						type="button"
-						disabled={selected_answer}
-						on:click={() => {
-							select_complex_answer(question.answers);
-						}}>{$t('words.submit')}</BrownButton
-						> -->
+		<section 
+			use:dndzone={{items, flipDurationMs}} 
+			on:consider={handleSort} 
+			on:finalize={handleSort}
+			class="flex flex-col items-center justify-start w-full min-h-screen gap-4 px-4 mt-10"
+			style="overflow-y: auto; -webkit-overflow-scrolling: touch;"
+		>
+			{#each items as item (item.id)}
+				<div 
+					class="w-4/5 h-fit flex-row rounded-lg p-1 align-middle"
+					animate:flip={{ duration: flipDurationMs }}
+					style="color: {getTextColor(item.color ?? '#004A93')}; background-color: {item.color ?? '#004A93'};"
+				>
+					<p class="w-full text-center p-1 text-2xl text-white">
+						{item.answer.answer}
+					</p>
 				</div>
+			{/each}
+			<div class="w-full flex justify-center mt-4">
+				<button 
+					type="button"
+					class="bg-[#0056BD] border-[#fff] flex items-center border-2 gap-2 text-[#fff] font-semibold px-9 py-2 rounded-full disabled:cursor-not-allowed disabled:opacity-90"
+					on:click={() => select_complex_answer(items)}
+				>
+					<RightArrow />
+					Submit
+				</button>
 			</div>
+		</section>	
 		{:else if question.type === QuizQuestionType.CHECK}
 			{#if !acknowledgement.answered}
 				{#await import('./questions/check.svelte')}
