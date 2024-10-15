@@ -43,8 +43,10 @@
 		
 	onMount(() => {
 		socket.on('player_joined', (player) => {
-			players.push(player);
-			toast.push(`${player.username} has joined!`);
+			if (!players.some((p) => p.username === player.username)) {
+				players.push(player);
+				toast.push(`${player.username} has joined!`);
+			}
 		});
 	});
 </script>
