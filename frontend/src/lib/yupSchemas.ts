@@ -72,7 +72,7 @@ export const dataSchema = yup.object({
 		.array()
 		.of(
 			yup.object({
-				question: yup.string().required(({path})=>`A question-title is required in question ${Number(getPath(path)) + 1}`).max(60, ({ path }) => `The question has to be shorter than 60 characters in question ${Number(getPath(path)) + 1}`),
+				question: yup.string().required(({path})=>`A question-title is required in question ${Number(getPath(path)) + 1}`).max(140, ({ path }) => `The question has to be shorter than 140 characters in question ${Number(getPath(path)) + 1}`),
 				time: yup.number().required().positive('The time has to be positive'),
 				image: yup.string().nullable().lowercase(),
 				answers: yup.lazy((v) => {
