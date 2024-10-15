@@ -14,6 +14,7 @@
 	let items = data.questions[selected_question].answers.map((answer, i) => ({
 	  ...answer,
 	  id: i,
+	  color: answer.color || '#0000FF', // Default color if undefined
 	}));
 
 	const handleTextChange = (selectedQuestion: number, index: number) => {
@@ -32,7 +33,7 @@
 	function addAnswer() {
 	  const newItem = {
 		answer: '',
-		color: undefined,
+		color: '#0000FF', // Default color for new items
 		id: items.length,
 	  };
 	  items = [...items, newItem]; // Ensure reactivity
@@ -57,7 +58,7 @@
 		{#each items as answer, i (answer.id)}
 			<div
 				class="p-4 rounded-lg flex justify-center w-full transition relative border border-gray-600 flex-row gap-4 m-2"
-				style="background-color: {answer.color || 'transparent'}; color: {get_foreground_color(answer.color || '#ffffff')}"
+				style="background-color: {answer.color}; color: {get_foreground_color(answer.color)}"
 			>
 				<!-- Delete button -->
 				<button
@@ -96,7 +97,7 @@
 					class="rounded-lg p-1 border-black border"
 					type="color"
 					bind:value={answer.color}
-					on:contextmenu|preventDefault={() => { answer.color = null; }}
+					on:contextmenu|preventDefault={() => { answer.color = '#ffffff'; }}
 				/>
 			</div>
 		{/each}
