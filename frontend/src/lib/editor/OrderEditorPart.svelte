@@ -18,32 +18,37 @@
 	}));
 
 	const handleTextChange = (selectedQuestion: number, index: number) => {
-	  if (data.questions[selectedQuestion].answers[index].answer.length >= 100) {
-		toast.push("Over 100 characters, please shorten the answer");
-	  }
+		// Ensure text change is reactive
+		data.questions[selectedQuestion].answers = [...data.questions[selectedQuestion].answers]; // Trigger reactivity
+		if (data.questions[selectedQuestion].answers[index].answer.length >= 100) {
+			toast.push("Over 100 characters, please shorten the answer");
+		}
 	};
   
 	// Sort handler when items are rearranged using drag-and-drop
 	function handleSort(e) {
-	  items = e.detail.items;
-	  data.questions[selected_question].answers = items;
+		items = e.detail.items;
+		data.questions[selected_question].answers = items;
+		data.questions[selected_question].answers = [...data.questions[selected_question].answers]; // Ensure reactivity
 	}
   
 	// Add new answer functionality
 	function addAnswer() {
-	  const newItem = {
-		answer: '',
-		color: '#0000FF', // Default color for new items
-		id: items.length,
-	  };
-	  items = [...items, newItem]; // Ensure reactivity
-	  data.questions[selected_question].answers = items;
+		const newItem = {
+			answer: '',
+			color: '#0000FF', // Default color for new items
+			id: items.length,
+		};
+		items = [...items, newItem]; // Ensure reactivity
+		data.questions[selected_question].answers = items;
+		data.questions[selected_question].answers = [...data.questions[selected_question].answers]; // Trigger reactivity
 	}
 
 	// Remove answer functionality
 	function removeAnswer(index: number) {
-	  data.questions[selected_question].answers.splice(index, 1);
-	  items = [...data.questions[selected_question].answers];
+		data.questions[selected_question].answers.splice(index, 1);
+		items = [...data.questions[selected_question].answers];
+		data.questions[selected_question].answers = [...data.questions[selected_question].answers]; // Trigger reactivity
 	}
 </script>
 
