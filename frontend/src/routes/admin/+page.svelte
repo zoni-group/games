@@ -69,7 +69,9 @@ SPDX-License-Identifier: MPL-2.0
 		success = true;
 	});
 	socket.on('player_joined', (int_data) => {
-		players = [...players, int_data];
+		if (!players.some((player) => player.username === int_data.username)) {
+    		players = [...players, int_data];
+  		}
 	});
 	socket.on('already_registered_as_admin', () => {
 		// eslint-disable-next-line @typescript-eslint/ban-ts-comment
