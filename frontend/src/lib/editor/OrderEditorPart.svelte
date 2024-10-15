@@ -1,97 +1,102 @@
-<!--
-SPDX-FileCopyrightText: 2023 Marlon W (Mawoka)
-
-SPDX-License-Identifier: MPL-2.0
--->
-
 <script lang="ts">
 	import { getLocalization } from '$lib/i18n';
-	import type { EditorData, OrderQuizAnswer } from '$lib/quiz_types';
-	import { fade } from 'svelte/transition';
-	import { flip } from 'svelte/animate';
+	import type { EditorData } from '$lib/quiz_types';
 	import { get_foreground_color } from '$lib/helpers.ts';
 	import { toast } from '@zerodevx/svelte-toast';
+	import { dndzone } from 'svelte-dnd-action';
 
 	const { t } = getLocalization();
 
 	export let selected_question: number;
 	export let data: EditorData;
 
-	let parent_el: HTMLDivElement;
-
-	const swapArrayElements = (arr: OrderQuizAnswer[], a: number, b: number): Array<any> => {
-		let _arr = [...arr];
-		let temp = _arr[a];
-		_arr[a] = _arr[b];
-		_arr[b] = temp;
-		return _arr;
-	};
-
-	const move_item = (up: boolean, index: number) => {
-		if (up) {
-			data.questions[selected_question].answers = swapArrayElements(
-				data.questions[selected_question].answers,
-				index,
-				index - 1
-			);
-		} else {
-			data.questions[selected_question].answers = swapArrayElements(
-				data.questions[selected_question].answers,
-				index,
-				index + 1
-			);
-		}
-	};
-
-	if (!Array.isArray(data.questions[selected_question].answers)) {
-		data.questions[selected_question].answers = [];
-	}
-	for (let i = 0; i < data.questions[selected_question].answers.length; i++) {
-		data.questions[selected_question].answers[i] = {
-			answer: data.questions[selected_question].answers[i].answer,
-			color: data.questions[selected_question].answers[i].color ?? undefined,
-			id: [i]
-		};
-	}
 	const default_colors = ['#FFA800', '#00A3FF', '#FF1D38', '#00D749'];
-	const set_colors_if_unset = () => {
-		for (let i = 0; i < data.questions[selected_question].answers.length; i++) {
-			if (!data.questions[selected_question].answers[i].color) {
-				data.questions[selected_question].answers[i].color = default_colors[i];
-			}
+
+	let idCounter = 0;
+
+	// Initialize items for drag-and-drop
+	let items = data.questions[selected_question].answers.map((answer, index) => {
+		if (typeof answer.id !== 'number') {
+			answer.id = idCounter++;
+		}
+		return {
+			...answer,
+			color: answer.color || default_colors[index % default_colors.length], // Apply default color if undefined
+		};
+	});
+
+	const handleTextChange = (selectedQuestion: number, index: number) => {
+		data.questions[selectedQuestion].answers = [...data.questions[selectedQuestion].answers]; // Trigger reactivity
+		if (data.questions[selectedQuestion].answers[index].answer.length >= 100) {
+			toast.push("Over 100 characters, please shorten the answer");
 		}
 	};
-	$: {
-		set_colors_if_unset();
-		data;
-		selected_question;
+
+	// Sort handler when items are rearranged using drag-and-drop
+	function handleSort(e) {
+		items = e.detail.items;
+		data.questions[selected_question].answers = items;
+		data.questions[selected_question].answers = [...data.questions[selected_question].answers]; // Ensure reactivity
 	}
 
-	const handleTextChange = (selectedQuestion: number, index: number) =>{
-		if(data.questions[selectedQuestion].answers[index].answer.length >= 100){
-			toast.push("Over 100 characters, please shorten the answer");	
-		}else{
-			console.log("Under 100");
-		}
+	// Add new answer functionality
+	function addAnswer() {
+		const newItem = {
+			answer: '',
+			color: default_colors[items.length % default_colors.length], // Use default colors in sequence
+			id: idCounter++, // Assign a unique id
+		};
+		items = [...items, newItem]; // Ensure reactivity
+		data.questions[selected_question].answers = items;
+		data.questions[selected_question].answers = [...data.questions[selected_question].answers]; // Trigger reactivity
+	}
+
+	// Remove answer functionality
+	function removeAnswer(index: number) {
+		data.questions[selected_question].answers.splice(index, 1);
+		items = [...data.questions[selected_question].answers];
+		data.questions[selected_question].answers = [...data.questions[selected_question].answers]; // Trigger reactivity
 	}
 </script>
 
+<style>
+	.dnd-item {
+		transition: background-color 0.2s, transform 0.2s;
+	}
+
+	.dnd-item.dragging {
+		transform: scale(1.05);
+	}
+
+	.dnd-item.empty {
+		border: 2px dashed #ccc;
+	}
+
+	.answer-input.empty::placeholder {
+		color: #888;
+	}
+</style>
+
 <div class="w-full">
-	<div class="flex flex-col w-full px-8" bind:this={parent_el}>
-		{#each data.questions[selected_question].answers as answer, i (answer.id)}
+	<!-- Drag-and-drop zone -->
+	<div
+		class="flex flex-col w-full px-8"
+		use:dndzone={{ items, flipDurationMs: 200 }}
+		on:consider={handleSort}
+		on:finalize={handleSort}
+	>
+		{#each items as answer, i (answer.id)}
 			<div
-				animate:flip={{ duration: 200 }}
-				out:fade|local={{ duration: 150 }}
-				class="p-4 rounded-lg flex justify-center w-full transition relative border border-gray-600 flex-row gap-4 m-2"
+				class="p-4 rounded-lg flex justify-center w-full transition relative border border-gray-600 flex-row gap-4 m-2 dnd-item {answer.answer === '' ? 'empty' : ''}"
+				style="background-color: {answer.color}; color: {get_foreground_color(answer.color)}"
 			>
+				<!-- Delete button -->
 				<button
 					class="rounded-full absolute -top-2 -right-2 opacity-70 hover:opacity-100 transition"
 					type="button"
-					on:click={() => {
-						data.questions[selected_question].answers.splice(i, 1);
-						data.questions[selected_question].answers =
-							data.questions[selected_question].answers;
-					}}
+					on:mousedown|stopPropagation
+					on:touchstart|stopPropagation
+					on:click={() => removeAnswer(i)}
 				>
 					<svg
 						class="w-6 h-6 bg-red-500 rounded-full"
@@ -108,99 +113,36 @@ SPDX-License-Identifier: MPL-2.0
 						/>
 					</svg>
 				</button>
-				<div>
-					<button
-						on:click={() => {
-							move_item(true, i);
-						}}
-						class="disabled:opacity-50 transition"
-						type="button"
-						disabled={i === 0}
-					>
-						<svg
-							class="w-8 h-8"
-							stroke-width="2"
-							viewBox="0 0 24 24"
-							fill="none"
-							xmlns="http://www.w3.org/2000/svg"
-							color="currentColor"
-						>
-							<path
-								d="M12 22a2 2 0 110-4 2 2 0 010 4zM12 15V2m0 0l3 3m-3-3L9 5"
-								stroke="currentColor"
-								stroke-width="2"
-								stroke-linecap="round"
-								stroke-linejoin="round"
-							/>
-						</svg>
-					</button>
-					<button
-						on:click={() => {
-							move_item(false, i);
-						}}
-						class="disabled:opacity-50 transition"
-						type="button"
-						disabled={i === data.questions[selected_question].answers.length - 1}
-					>
-						<svg
-							class="w-8 h-8"
-							stroke-width="2"
-							viewBox="0 0 24 24"
-							fill="none"
-							xmlns="http://www.w3.org/2000/svg"
-							color="currentColor"
-						>
-							<path
-								d="M12 6a2 2 0 110-4 2 2 0 010 4zM12 9v13m0 0l3-3m-3 3l-3-3"
-								stroke="currentColor"
-								stroke-width="2"
-								stroke-linecap="round"
-								stroke-linejoin="round"
-							/>
-						</svg>
-					</button>
-				</div>
+
+				<!-- Answer input field -->
 				<input
 					bind:value={answer.answer}
 					type="text"
-					class="border-b-2 border-dotted w-5/6 text-center rounded-lg bg-transparent outline-none"
-					style="background-color: {answer.color}; color: {get_foreground_color(
-						answer.color
-					)}"
+					class="border-b-2 border-dotted w-5/6 text-center rounded-lg bg-transparent outline-none answer-input {answer.answer === '' ? 'empty' : ''}"
 					maxlength="100"
-					on:input={() => handleTextChange(selected_question,i)}
+					on:input={() => handleTextChange(selected_question, i)}
 					placeholder={$t('editor.empty')}
 				/>
+
+				<!-- Color picker -->
 				<input
 					class="rounded-lg p-1 border-black border"
 					type="color"
 					bind:value={answer.color}
-					on:contextmenu|preventDefault={() => {
-						answer.color = null;
-					}}
+					title="Pick a color"
+					on:contextmenu|preventDefault={() => { answer.color = default_colors[i % default_colors.length]; }}
 				/>
 			</div>
 		{/each}
 	</div>
 
+	<!-- Add new answer button -->
 	<div class="px-8 flex w-full">
-		{#if data.questions[selected_question].answers.length < 4}
+		{#if items.length < 4}
 			<button
 				class="p-4 rounded-lg bg-transparent border-gray-500 border-2 hover:bg-gray-300 transition dark:hover:bg-gray-600 m-2 w-full"
 				type="button"
-				in:fade|local={{ duration: 150 }}
-				on:click={() => {
-					data.questions[selected_question].answers = [
-						...data.questions[selected_question].answers,
-						{
-							...{
-								answer: '',
-								color: undefined,
-								id: data.questions[selected_question].answers.length
-							}
-						}
-					];
-				}}
+				on:click={addAnswer}
 			>
 				<span class="italic text-center">{$t('editor_page.add_an_answer')}</span>
 			</button>
