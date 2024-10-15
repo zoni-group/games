@@ -69,8 +69,12 @@
 				<button
 					class="rounded-full absolute -top-2 -right-2 opacity-70 hover:opacity-100 transition"
 					type="button"
-					on:click={() => removeAnswer(i)}
-				>
+					on:mousedown|stopPropagation
+					on:touchstart|stopPropagation
+					on:click={(e) => {
+						removeAnswer(i);
+					}}
+					>
 					<svg
 						class="w-6 h-6 bg-red-500 rounded-full"
 						fill="none"
@@ -79,10 +83,10 @@
 						xmlns="http://www.w3.org/2000/svg"
 					>
 						<path
-							stroke-linecap="round"
-							stroke-linejoin="round"
-							stroke-width="2"
-							d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z"
+						stroke-linecap="round"
+						stroke-linejoin="round"
+						stroke-width="2"
+						d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z"
 						/>
 					</svg>
 				</button>
