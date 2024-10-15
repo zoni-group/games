@@ -5,26 +5,27 @@
 	import { toast } from '@zerodevx/svelte-toast';
 	import { dndzone } from 'svelte-dnd-action';
 
-	const { t } = getLocalization();  
+	const { t } = getLocalization();
 
 	export let selected_question: number;
 	export let data: EditorData;
 
+	const default_colors = ['#FFA800', '#00A3FF', '#FF1D38', '#00D749'];
+
 	let idCounter = 0;
 
 	// Initialize items for drag-and-drop
-	let items = data.questions[selected_question].answers.map((answer) => {
+	let items = data.questions[selected_question].answers.map((answer, index) => {
 		if (typeof answer.id !== 'number') {
 			answer.id = idCounter++;
 		}
 		return {
 			...answer,
-			color: answer.color || '#0000FF', // Default color if undefined
+			color: answer.color || default_colors[index % default_colors.length], // Apply default color if undefined
 		};
 	});
 
 	const handleTextChange = (selectedQuestion: number, index: number) => {
-		// Ensure text change is reactive
 		data.questions[selectedQuestion].answers = [...data.questions[selectedQuestion].answers]; // Trigger reactivity
 		if (data.questions[selectedQuestion].answers[index].answer.length >= 100) {
 			toast.push("Over 100 characters, please shorten the answer");
@@ -42,7 +43,7 @@
 	function addAnswer() {
 		const newItem = {
 			answer: '',
-			color: '#0000FF', // Default color for new items
+			color: default_colors[items.length % default_colors.length], // Use default colors in sequence
 			id: idCounter++, // Assign a unique id
 		};
 		items = [...items, newItem]; // Ensure reactivity
@@ -58,6 +59,24 @@
 	}
 </script>
 
+<style>
+	.dnd-item {
+		transition: background-color 0.2s, transform 0.2s;
+	}
+
+	.dnd-item.dragging {
+		transform: scale(1.05);
+	}
+
+	.dnd-item.empty {
+		border: 2px dashed #ccc;
+	}
+
+	.answer-input.empty::placeholder {
+		color: #888;
+	}
+</style>
+
 <div class="w-full">
 	<!-- Drag-and-drop zone -->
 	<div
@@ -68,7 +87,7 @@
 	>
 		{#each items as answer, i (answer.id)}
 			<div
-				class="p-4 rounded-lg flex justify-center w-full transition relative border border-gray-600 flex-row gap-4 m-2"
+				class="p-4 rounded-lg flex justify-center w-full transition relative border border-gray-600 flex-row gap-4 m-2 dnd-item {answer.answer === '' ? 'empty' : ''}"
 				style="background-color: {answer.color}; color: {get_foreground_color(answer.color)}"
 			>
 				<!-- Delete button -->
@@ -99,7 +118,7 @@
 				<input
 					bind:value={answer.answer}
 					type="text"
-					class="border-b-2 border-dotted w-5/6 text-center rounded-lg bg-transparent outline-none"
+					class="border-b-2 border-dotted w-5/6 text-center rounded-lg bg-transparent outline-none answer-input {answer.answer === '' ? 'empty' : ''}"
 					maxlength="100"
 					on:input={() => handleTextChange(selected_question, i)}
 					placeholder={$t('editor.empty')}
@@ -110,7 +129,8 @@
 					class="rounded-lg p-1 border-black border"
 					type="color"
 					bind:value={answer.color}
-					on:contextmenu|preventDefault={() => { answer.color = '#ffffff'; }}
+					title="Pick a color"
+					on:contextmenu|preventDefault={() => { answer.color = default_colors[i % default_colors.length]; }}
 				/>
 			</div>
 		{/each}
