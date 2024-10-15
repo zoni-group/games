@@ -482,10 +482,10 @@
 								<div class='grid grid-rows-2 gap-2 w-3/5 h-full grid-flow-col auto-cols-auto justify-center items-center'>
 									{#each selected_answer as ans}
 										<div
-											class="rounded-lg flex items-center justify-center disabled:opacity-60 border-2 border-black transition-all my-2 dark:border-white"
+											class="rounded-lg flex items-center justify-center disabled:opacity-60 border-2 border-black transition-all my-2 w-2/3 mx-auto dark:border-white"
 										>
 											<MediaComponent 
-												css_classes="w-full h-full object-contain" 
+												css_classes="w-full h-full object-contain p-2" 
 												src={ans}
 												allow_fullscreen={false}
 											/>
@@ -503,7 +503,7 @@
 					{:else}
 						{#if question.ansType === "IMAGE"}
 							<MediaComponent 
-								css_classes="w-fit m-2 h-full}" 
+								css_classes="md:w-1/3 w-full object-contain mx-auto m-2 h-full" 
 								src={selected_answer} 
 							/>
 						{:else}

@@ -51,12 +51,13 @@ SPDX-License-Identifier: MPL-2.0
 							warnings.push(`Please select at least one correct answer in Question ${index + 1}`);
 							throw new Error(`Please select at least one correct answer in Question ${index + 1}`);
 							// toast.push(`Please select at least one correct answer in Question ${index + 1}`);
-						}else if (correctAnswerCount > 1){
-							errors += 1;
-							warnings.push(`Please select only one correct answer in Question ${index + 1}`);
-							throw new Error(`Please select only one correct answer in Question ${index + 1}`);
-							 //toast.push(`Please select only one correct answer in Question ${index + 1}`);
 						}
+						// else if (correctAnswerCount > 1){
+						// 	errors += 1;
+						// 	warnings.push(`Please select only one correct answer in Question ${index + 1}`);
+						// 	throw new Error(`Please select only one correct answer in Question ${index + 1}`);
+						// 	 //toast.push(`Please select only one correct answer in Question ${index + 1}`);
+						// }
 					}
 				}
 		});
