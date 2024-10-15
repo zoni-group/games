@@ -35,8 +35,8 @@
 		color: undefined,
 		id: items.length,
 	  };
-	  data.questions[selected_question].answers = [...data.questions[selected_question].answers, newItem];
-	  items = [...data.questions[selected_question].answers];
+	  items = [...items, newItem]; // Ensure reactivity
+	  data.questions[selected_question].answers = items;
 	}
 
 	// Remove answer functionality
@@ -57,7 +57,7 @@
 		{#each items as answer, i (answer.id)}
 			<div
 				class="p-4 rounded-lg flex justify-center w-full transition relative border border-gray-600 flex-row gap-4 m-2"
-				style="background-color: {answer.color}; color: {get_foreground_color(answer.color)}"
+				style="background-color: {answer.color || 'transparent'}; color: {get_foreground_color(answer.color || '#ffffff')}"
 			>
 				<!-- Delete button -->
 				<button
