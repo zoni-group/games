@@ -1,21 +1,27 @@
 <script lang="ts">
 	import { getLocalization } from '$lib/i18n';
-	import type { EditorData, OrderQuizAnswer } from '$lib/quiz_types';
+	import type { EditorData } from '$lib/quiz_types';
 	import { get_foreground_color } from '$lib/helpers.ts';
 	import { toast } from '@zerodevx/svelte-toast';
 	import { dndzone } from 'svelte-dnd-action';
-  
-	const { t } = getLocalization();
-  
+
+	const { t } = getLocalization();  
+
 	export let selected_question: number;
 	export let data: EditorData;
-  
+
+	let idCounter = 0;
+
 	// Initialize items for drag-and-drop
-	let items = data.questions[selected_question].answers.map((answer, i) => ({
-	  ...answer,
-	  id: i,
-	  color: answer.color || '#0000FF', // Default color if undefined
-	}));
+	let items = data.questions[selected_question].answers.map((answer) => {
+		if (typeof answer.id !== 'number') {
+			answer.id = idCounter++;
+		}
+		return {
+			...answer,
+			color: answer.color || '#0000FF', // Default color if undefined
+		};
+	});
 
 	const handleTextChange = (selectedQuestion: number, index: number) => {
 		// Ensure text change is reactive
@@ -24,20 +30,20 @@
 			toast.push("Over 100 characters, please shorten the answer");
 		}
 	};
-  
+
 	// Sort handler when items are rearranged using drag-and-drop
 	function handleSort(e) {
 		items = e.detail.items;
 		data.questions[selected_question].answers = items;
 		data.questions[selected_question].answers = [...data.questions[selected_question].answers]; // Ensure reactivity
 	}
-  
+
 	// Add new answer functionality
 	function addAnswer() {
 		const newItem = {
 			answer: '',
 			color: '#0000FF', // Default color for new items
-			id: items.length,
+			id: idCounter++, // Assign a unique id
 		};
 		items = [...items, newItem]; // Ensure reactivity
 		data.questions[selected_question].answers = items;
@@ -71,10 +77,8 @@
 					type="button"
 					on:mousedown|stopPropagation
 					on:touchstart|stopPropagation
-					on:click={(e) => {
-						removeAnswer(i);
-					}}
-					>
+					on:click={() => removeAnswer(i)}
+				>
 					<svg
 						class="w-6 h-6 bg-red-500 rounded-full"
 						fill="none"
@@ -83,10 +87,10 @@
 						xmlns="http://www.w3.org/2000/svg"
 					>
 						<path
-						stroke-linecap="round"
-						stroke-linejoin="round"
-						stroke-width="2"
-						d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z"
+							stroke-linecap="round"
+							stroke-linejoin="round"
+							stroke-width="2"
+							d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z"
 						/>
 					</svg>
 				</button>
