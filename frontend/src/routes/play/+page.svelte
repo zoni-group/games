@@ -394,8 +394,6 @@
 
 	let bg_color;
 	$: bg_color = gameData ? gameData.background_color : (darkMode ? '#383838' : '#FFFFFF');
-
-	console.log('Game Meta:', gameMeta);
 	
 	$: language = gameData ? gameData.language_toggle : false;
 	// $: console.log('Language:', language);

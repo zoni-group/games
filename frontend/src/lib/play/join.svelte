@@ -40,6 +40,10 @@
 					theme: 'dark'
 				});
 			}
+
+			if (game_pin && game_pin.length > 5) {
+				set_game_pin();
+			}
 		}
 	});
 
@@ -84,6 +88,7 @@
 			console.error('PIN is undefined or empty.');
 			return;
 		}
+
 		let process_var;
 		try {
 			process_var = process;
@@ -91,15 +96,17 @@
 			process_var = { env: { API_URL: undefined } };
 		}
 
-		fetchGameState(game_pin).then((gameState) => {
-			console.log('Game State:', gameState);
-			if (gameState) {
-				if ((gameState.current_question + 1 === gameState.questions_count) && !gameState.question_show) {
-				alert('This session has already ended.');
-				window.location.href = '/play';
+		if (browser) {
+			fetchGameState(game_pin).then((gameState) => {
+				console.log('Game State:', gameState);
+				if (gameState) {
+					if ((gameState.current_question + 1 === gameState.questions_count) && !gameState.question_show) {
+						alert('This session has already ended.');
+						window.location.href = '/play';
+					}
 				}
-			}
-		});
+			});
+		}
 
 		const res = await fetch(
 			`${process_var.env.API_URL ?? ''}/api/v1/quiz/play/check_captcha/${game_pin}`
@@ -128,10 +135,6 @@
 		}
 	};
 
-	$: if (game_pin && game_pin.length > 5) {
-		console.log('Setting game pin');
-		set_game_pin();
-	}
 
 	const setUsername = async () => {
 		if (username.length <= 3 || !game_pin) {
@@ -200,7 +203,7 @@
 		}
 	});
 
-	$: console.log(game_pin, game_pin && game_pin.length > 6);
+	// $: console.log(game_pin, game_pin && game_pin.length > 6);
 	$: game_pin = (game_pin || '').replace(/\D/g, '');
 </script>
 
