@@ -394,8 +394,6 @@
 
 	let bg_color;
 	$: bg_color = gameData ? gameData.background_color : (darkMode ? '#383838' : '#FFFFFF');
-
-	console.log('Game Meta:', gameMeta);
 	
 	$: language = gameData ? gameData.language_toggle : false;
 	// $: console.log('Language:', language);
@@ -481,10 +479,3 @@
 		{/if}
 	</div>	
 </div>
-<style>
-	.result-container {
-		box-shadow: 1px 1px 9px #00EDFF, 1px 1px 9px #00EDFF inset; 
-		border-radius: 16px; 
-		border: 4px #fff solid; 
-	}
-</style>

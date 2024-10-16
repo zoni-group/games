@@ -73,16 +73,6 @@
 
 <style lang="scss">
 
-	html {
-		height: 100%;
-		overflow: hidden;
-	}
-	body {
-		min-height: 100%;
-		margin: 0;
-		padding: 0;
-	}
-
 	:global(html.dark){
 		background-image: url('$lib/assets/all/bg_dark.webp') !important;
 		background-position: start;
