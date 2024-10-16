@@ -3,7 +3,9 @@
 	import type { EditorData } from '$lib/quiz_types';
 	import { get_foreground_color } from '$lib/helpers.ts';
 	import { toast } from '@zerodevx/svelte-toast';
-	import { dndzone } from 'svelte-dnd-action';
+	import { dndzone, SHADOW_ITEM_MARKER_PROPERTY_NAME } from 'svelte-dnd-action';
+	import { fade } from 'svelte/transition';
+	import { cubicIn } from 'svelte/easing';
 
 	const { t } = getLocalization();
 
@@ -75,13 +77,22 @@
 	.answer-input.empty::placeholder {
 		color: #888;
 	}
+	.custom-shadow-item {
+		position: absolute;
+		top: 0; left:0; right: 0; bottom: 0;
+		visibility: visible;
+		border: 1px dashed grey;
+		background: lightblue;
+		opacity: 0.5;
+		margin: 0;
+	}
 </style>
 
 <div class="w-full">
 	<!-- Drag-and-drop zone -->
 	<div
 		class="flex flex-col w-full px-8"
-		use:dndzone={{ items, flipDurationMs: 200 }}
+		use:dndzone={{ items, flipDurationMs: 200, dropTargetStyle:{"outline": "none"} ,dropTargetClasses: ["border-0","bg-slate-300/50","shadow-lg", "outline-none","rounded-lg","shadow-black","transition","ease-in-out"] }}
 		on:consider={handleSort}
 		on:finalize={handleSort}
 	>
@@ -132,6 +143,20 @@
 					title="Pick a color"
 					on:contextmenu|preventDefault={() => { answer.color = default_colors[i % default_colors.length]; }}
 				/>
+				{#if answer[SHADOW_ITEM_MARKER_PROPERTY_NAME]}
+							<div in:fade={{duration:200, easing: cubicIn}} class='custom-shadow-item w-full h-full flex-row rounded-lg p-1 align-middle opacity-10' style="color: white; ">
+								<p class="w-full text-center p-1 text-lg text-white">
+									<input
+										bind:value={answer.answer}
+										type="text"
+										class="border-b-2 border-dotted w-5/6 text-center rounded-lg bg-transparent outline-none answer-input {answer.answer === '' ? 'empty' : ''}"
+										maxlength="100"
+										on:input={() => handleTextChange(selected_question, i)}
+										placeholder={$t('editor.empty')}
+									/>
+								</p>
+							</div>
+						{/if}
 			</div>
 		{/each}
 	</div>

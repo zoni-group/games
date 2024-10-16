@@ -8,8 +8,10 @@
 	import { getLocalization } from '$lib/i18n';
 	import { kahoot_icons } from './kahoot_mode_assets/kahoot_icons';
 	import CircularTimer from '$lib/play/circular_progress.svelte';
-	import {dndzone} from 'svelte-dnd-action';
+	import {dndzone, SHADOW_ITEM_MARKER_PROPERTY_NAME} from 'svelte-dnd-action';
 	import { flip } from 'svelte/animate';
+	import {fade} from 'svelte/transition';
+	import {cubicIn} from 'svelte/easing';
 	import { get_foreground_color } from '../helpers';
 	import MediaComponent from '$lib/editor/MediaComponent.svelte';
 	import { toast } from '@zerodevx/svelte-toast';
@@ -412,24 +414,33 @@
 				</p>
 			{/if}
 		{:else if question.type === QuizQuestionType.ORDER}
-		<section 
-			use:dndzone={{items, flipDurationMs}} 
-			on:consider={handleSort} 
-			on:finalize={handleSort}
-			class="flex flex-col justify-center items-center w-screen gap-4 px-4 {game_mode !== 'normal' ? 'mt-10' : 'mt-2'}"
-			style="overflow-y: auto; -webkit-overflow-scrolling: touch;"
-		>
-			{#each items as item (item.id)}
-				<div 
-					class="w-4/5 h-fit flex-row rounded-lg p-1 align-middle"
-					animate:flip={{ duration: flipDurationMs }}
-					style="color: {getTextColor(item.color ?? '#004A93')}; background-color: {item.color ?? '#004A93'};"
-				>
-					<p class="w-full text-center p-1 text-2xl text-white">
-						{item.answer.answer}
-					</p>
-				</div>
-			{/each}
+		<div class="flex flex-col justify-center items-center w-full" >
+			<section 
+				use:dndzone={{items, flipDurationMs, dropTargetStyle:{"outline": "none"} ,dropTargetClasses: ["py-4","red-text","border-0","dark:bg-[#0AEDFE]/30","shadow-lg", "outline-none","rounded-lg","dark:shadow-black","shadow-black/40","transition-all","ease-in-out", "bg-[#E9F3FF]"]}} 
+				on:consider={handleSort} 
+				on:finalize={handleSort}
+				class="flex flex-col justify-center items-center md:w-3/4 w-full gap-4 px-4 {game_mode !== 'normal' ? 'mt-10' : 'mt-2'}"
+				style="overflow-y: auto; -webkit-overflow-scrolling: touch;"
+			>
+				{#each items as item (item.id)}
+					<div 
+						class="w-4/5 h-fit flex-row rounded-lg p-1 align-middle relative"
+						animate:flip={{ duration: flipDurationMs }}
+						style="color: {getTextColor(item.color ?? '#004A93')}; background-color: {item.color ?? '#004A93'};"
+					>
+						<p class="w-full text-center p-1 text-2xl text-white">
+							{item.answer.answer}
+						</p>
+						{#if item[SHADOW_ITEM_MARKER_PROPERTY_NAME]}
+							<div in:fade={{duration:200, easing: cubicIn}} class='custom-shadow-item w-full h-full flex-row rounded-lg p-1 align-middle opacity-10' style="color: {getTextColor(item.color ?? '#004A93')}; ">
+								<p class="w-full text-center p-1 text-2xl text-white">
+									{item.answer.answer}
+								</p>
+							</div>
+						{/if}
+					</div>
+				{/each}
+			</section>	
 			<div class="w-full flex justify-center mt-4">
 				<button 
 					type="button"
@@ -440,7 +451,7 @@
 					Submit
 				</button>
 			</div>
-		</section>	
+		</div>
 		{:else if question.type === QuizQuestionType.CHECK}
 			{#if !acknowledgement.answered}
 				{#await import('./questions/check.svelte')}
@@ -528,5 +539,13 @@
 		box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25) inset; 
 		border-radius: 16px
 	}
-
+	.custom-shadow-item {
+		position: absolute;
+		top: 0; left:0; right: 0; bottom: 0;
+		visibility: visible;
+		border: 1px dashed grey;
+		background: lightblue;
+		opacity: 0.5;
+		margin: 0;
+	}
 </style>
