@@ -46,6 +46,8 @@
 			if (!players.some((p) => p.username === player.username)) {
 				players.push(player);
 				toast.push(`${player.username} has joined!`);
+				console.log('New player joined:', player);
+				console.log('Players:',players);
 			}
 		});
 	});

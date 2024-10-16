@@ -262,7 +262,7 @@
         "show_results": "Montrer les résultats",
         "stop_time_and_solutions": "Arrêter le temps et montrer des solutions",
         "enter_answer_into_field": "Saisissez votre réponse dans le champ de saisie !",
-        "answers_submitted": "{{answer_count}} Réponses soumises",
+        "answers_submitted": "{{answer_count}} / {{players_count}} Réponses soumises",
         "request_export_results": "Demande de téléchargement des résultats",
         "save_results": "Sauvegarder les résultats",
         "download_export_results": "Télécharger les résultats"

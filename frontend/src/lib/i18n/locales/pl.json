@@ -300,7 +300,7 @@
         "show_results": "Pokaż wyniki",
         "stop_time_and_solutions": "Zatrzymaj czas i pokaż rozwiązania",
         "enter_answer_into_field": "Wprowadź swoją odpowiedź w pole wejściowe!",
-        "answers_submitted": "{{answer_count}} Przesłane odpowiedzi",
+        "answers_submitted": "{{answer_count}} / {{players_count}} Przesłane odpowiedzi",
         "request_export_results": "Żądanie pobrania wyników",
         "download_export_results": "Wyniki pobierania"
     },

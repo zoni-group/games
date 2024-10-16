@@ -262,7 +262,7 @@
         "enter_answer_into_field": "Typ je antwoord in het invoerveld!",
         "stop_time_and_solutions": "Stop de tijd en toon oplossingen",
         "download_export_results": "Resultaten downloaden",
-        "answers_submitted": "{{answer_count}} Antwoorden ingediend",
+        "answers_submitted": "{{answer_count}} / {{players_count}} Antwoorden ingediend",
         "request_export_results": "Resultaat download aanvragen"
     },
     "password_reset_page": {

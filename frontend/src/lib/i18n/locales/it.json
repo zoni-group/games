@@ -255,7 +255,7 @@
         "request_export_results": "Richiedi il download del risultato",
         "show_results": "Mostra i risultati",
         "enter_answer_into_field": "Inserisci la tua risposta nel campo inserimento!",
-        "answers_submitted": "{{answer_count}} Risposte inviate",
+        "answers_submitted": "{{answer_count}} / {{players_count}} Risposte inviate",
         "download_export_results": "Scarica i risultati",
         "next_question": "Prossima domanda ({{question}})"
     },
