@@ -106,7 +106,7 @@
         "next_question": "次の質問 ({{question}})",
         "show_results": "結果を表示",
         "stop_time_and_solutions": "時間を停止し、解決を示す",
-        "answers_submitted": "{{answer_count}} 提出された回答",
+        "answers_submitted": "{{answer_count}} / {{players_count}} 提出された回答",
         "time_left": "時間切れ",
         "save_results": "結果を保存",
         "download_export_results": "結果をダウンロード"

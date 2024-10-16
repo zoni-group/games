@@ -220,7 +220,7 @@
         "show_results": "Mostrar los resultados",
         "stop_time_and_solutions": "Detener el tiempo y mostrar los resultados",
         "enter_answer_into_field": "¡Ingresa tu respuesta en el campo de entrada!",
-        "answers_submitted": "{{answer_count}} Respuestas enviadas",
+        "answers_submitted": "{{answer_count}} / {{players_count}} Respuestas enviadas",
         "download_export_results": "Descargar los resultados",
         "request_export_results": "Solicitar la descarga de los resultados"
     },

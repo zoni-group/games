@@ -21,6 +21,7 @@ SPDX-License-Identifier: MPL-2.0
 	export let game_mode: string;
 	export let bg_color: string;
 	export let game_pin: string;
+	export let players;
 
 	const { t } = getLocalization();
 	const default_colors = ['#FFA800', '#FF1D38', '#00A3FF', '#00D749'];
@@ -138,6 +139,7 @@ SPDX-License-Identifier: MPL-2.0
 		{quiz_data}
 		{answer_count} 
 		bind:timer_res
+		bind:players
 		{final_results}
 		{socket}
 		{question_results}

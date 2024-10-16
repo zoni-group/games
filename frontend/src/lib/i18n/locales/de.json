@@ -258,7 +258,7 @@
         "show_results": "Ergebnisse anzeigen",
         "enter_answer_into_field": "Gib die Antwort in das Eingabefeld ein!",
         "stop_time_and_solutions": "Zeit stoppen und Ergebnisse zeigen",
-        "answers_submitted": "{{answer_count}} Antworten abgegeben",
+        "answers_submitted": "{{answer_count}} / {{players_count}} Antworten abgegeben",
         "request_export_results": "Frage den Ergebnis-Download an",
         "download_export_results": "Ergebnisse herunterladen"
     },

@@ -212,7 +212,7 @@
         "start_by_showing_first_question": "İlk soruyu göstererek başla.",
         "no_answers": "Hata! Yanıt göndermediniz. Lütfen sonuçları bekleyin.",
         "stop_time": "Zamanı durdur",
-        "answers_submitted": "{{answer_count}} Gönderilen cevaplar",
+        "answers_submitted": "{{answer_count}} / {{players_count}} Gönderilen cevaplar",
         "request_export_results": "Sonuç indirmeyi talep et",
         "download_export_results": "Sonuçları indir",
         "save_results": "Sonuçları kaydet",

@@ -22,6 +22,7 @@ SPDX-License-Identifier: MPL-2.0
 	export let game_token: string;
 	export let game_pin: string;
 	export let question_results;
+	export let players;
 
 	export let shown_question_now: number;
 	let fullscreen_open = false;
@@ -119,7 +120,7 @@ SPDX-License-Identifier: MPL-2.0
 		<div
 			class="fixed right-0 top-20 lg:text-sm text-xs px-4 py-2 mr-3 mt-4 rounded-xl text-white bg-black bg-opacity-20 shadow-lg"
 		>
-			{$t('admin_page.answers_submitted', { answer_count: answer_count })}
+		{$t('admin_page.answers_submitted', { answer_count: answer_count, players_count: players.length })}
 		</div>
 		{#if selected_question + 1 != quiz_data.questions.length}
 			{#if question_results === null}

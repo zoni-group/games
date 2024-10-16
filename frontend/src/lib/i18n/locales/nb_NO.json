@@ -186,7 +186,7 @@
         "show_results": "Vis resultater",
         "save_results": "Lagre resultat",
         "enter_answer_into_field": "Skriv inn svaret ditt i inndatafeltet.",
-        "answers_submitted": "{{answer_count}} svar innsendt",
+        "answers_submitted": "{{answer_count}} / {{players_count}} svar innsendt",
         "download_export_results": "Last ned resultat",
         "next_question": "Neste spørsmål ({{question}})"
     },

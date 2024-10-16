@@ -257,7 +257,7 @@
         "enter_answer_into_field": "Insira sua resposta na caixa de texto!",
         "get_results_and_stop_time": "Obter resultados e parar o tempo",
         "start_game": "Iniciar o jogo",
-        "answers_submitted": "{{answer_count}} Respostas enviadas",
+        "answers_submitted": "{{answer_count}} / {{players_count}} Respostas enviadas",
         "download_export_results": "Baixar resultados",
         "next_question": "Próxima pergunta ({{question}})",
         "get_results": "Obter resultados",

@@ -249,7 +249,7 @@
         "stop_time": "Időzítő leállítása",
         "next_question": "Következő kérdés ({{question}})",
         "stop_time_and_solutions": "Időzítőt megállítása és megoldások megtekintése",
-        "answers_submitted": "{{answer_count}} válasz elküldve",
+        "answers_submitted": "{{answer_count}} / {{players_count}} válasz elküldve",
         "request_export_results": "Eredmények letöltésének igénylése"
     },
     "password_reset_page": {

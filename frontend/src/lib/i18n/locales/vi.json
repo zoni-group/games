@@ -184,7 +184,7 @@
         "enter_answer_into_field": "Nhập câu trả lời của bạn vào ô nhập dữ liệu!",
         "get_results_and_stop_time": "Nhận kết quả và dừng thời gian",
         "start_game": "Bắt đầu game",
-        "answers_submitted": "{{answer_count}} Câu trả lời đã được gửi",
+        "answers_submitted": "{{answer_count}} / {{players_count}} Câu trả lời đã được gửi",
         "download_export_results": "Tải xuống kết quả",
         "next_question": "Câu hỏi tiếp theo ({{question}})",
         "get_results": "Xem kết quả",

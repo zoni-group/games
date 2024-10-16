@@ -71,6 +71,8 @@ SPDX-License-Identifier: MPL-2.0
 	socket.on('player_joined', (int_data) => {
 		if (!players.some((player) => player.username === int_data.username)) {
     		players = [...players, int_data];
+			console.log('New player joined:',int_data);
+			console.log('Players:',players);
   		}
 	});
 	socket.on('already_registered_as_admin', () => {
@@ -217,6 +219,7 @@ SPDX-License-Identifier: MPL-2.0
 				bind:bg_color
 				bind:player_scores
 				bind:control_visible
+				bind:players
 			/>
 		{/if}
 	</div>
