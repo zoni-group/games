@@ -479,10 +479,3 @@
 		{/if}
 	</div>	
 </div>
-<style>
-	.result-container {
-		box-shadow: 1px 1px 9px #00EDFF, 1px 1px 9px #00EDFF inset; 
-		border-radius: 16px; 
-		border: 4px #fff solid; 
-	}
-</style>
