@@ -15,17 +15,26 @@
 	const default_colors = ['#FFA800', '#00A3FF', '#FF1D38', '#00D749'];
 
 	let idCounter = 0;
+	let items = [];
+
+    // Keep track of the previous selected question
+    let prevSelectedQuestion = selected_question;
 
 	// Initialize items for drag-and-drop
-	let items = data.questions[selected_question].answers.map((answer, index) => {
-		if (typeof answer.id !== 'number') {
-			answer.id = idCounter++;
-		}
-		return {
-			...answer,
-			color: answer.color || default_colors[index % default_colors.length], // Apply default color if undefined
-		};
-	});
+	// Reactive statement to update items when selected_question changes
+	// Update items only when selected_question changes
+	$: if (selected_question !== prevSelectedQuestion) {
+        items = data.questions[selected_question].answers.map((answer, index) => {
+            if (typeof answer.id !== 'number') {
+                answer.id = idCounter++;
+            }
+            return {
+                ...answer,
+                color: answer.color || default_colors[index % default_colors.length],
+            };
+        });
+        prevSelectedQuestion = selected_question;
+    }
 
 	const handleTextChange = (selectedQuestion: number, index: number) => {
 		data.questions[selectedQuestion].answers = [...data.questions[selectedQuestion].answers]; // Trigger reactivity
