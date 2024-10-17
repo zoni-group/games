@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { onMount } from 'svelte';
+	import { onMount, onDestroy } from 'svelte';
 	import NoSleep from 'nosleep.js';
 	import { socket } from '$lib/socket';
 	import { browser } from '$app/environment';
@@ -70,9 +70,37 @@
 
 			// Add event listener to enable NoSleep on the first user interaction
 			window.addEventListener('click', enableNoSleep);
+
+			window.addEventListener('visibilitychange', handleVisibilityChange);
+    		socket.on('disconnect', handleDisconnect);
+    		socket.on('connect', handleConnect);
     	}
 	});
 
+	onDestroy(() => {
+		if (browser) {
+    		window.removeEventListener('visibilitychange', handleVisibilityChange);
+    		socket.off('disconnect', handleDisconnect);
+    		socket.off('connect', handleConnect);
+		}
+  	});
+
+	function handleConnect() {
+    	console.log('Socket connected');
+    	// Rejoin the game session
+    	if (username && game_pin) {
+      		socket.emit('rejoin_game', {
+        		old_sid: socket.id,
+        		username: username,
+        		game_pin: game_pin,
+      		});
+    	}
+  	}
+
+	function handleDisconnect(reason) {
+    	console.log('Socket disconnected:', reason);
+    	// Optionally update UI or state to reflect disconnection
+  	}
 
 	// Fetch game state in the browser
 	async function fetchGameState(game_pin: string) {
@@ -204,6 +232,12 @@
   		if (document.visibilityState === 'hidden') {
     		storeState();
   		}
+		if (document.visibilityState === 'visible') {
+      		if (!socket.connected) {
+        		console.log('Attempting to reconnect...');
+        		socket.connect();
+      		}
+    	}
 	}
 
 	function checkFinalizedGame(gameData) {
