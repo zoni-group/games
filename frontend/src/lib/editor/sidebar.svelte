@@ -142,7 +142,7 @@ SPDX-License-Identifier: MPL-2.0
 </script>
 
 <div class="h-screen relative">
-	<div class="h-10 flex justify-center w-full p-1 absolute z-20">
+	<!-- <div class="h-10 flex justify-center w-full p-1 absolute z-20">
 		<div>
 			<BrownButton on:click={() => (reorder_mode = !reorder_mode)}
 				>{#if reorder_mode}{$t('editor.disable_reorder')}{:else}{$t(
@@ -150,7 +150,7 @@ SPDX-License-Identifier: MPL-2.0
 					)}{/if}</BrownButton
 			>
 		</div>
-	</div>
+	</div> -->
 	<div class="border-r-2 pt-6 px-6 overflow-scroll h-full">
 		<!-- svelte-ignore a11y-click-events-have-key-events -->
 		<div
