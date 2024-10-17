@@ -91,10 +91,6 @@
 		transition: background-color 0.2s, transform 0.2s;
 	}
 
-	.dnd-item.dragging {
-		transform: scale(1.05);
-	}
-
 	.dnd-item.empty {
 		border: 2px dashed #ccc;
 	}

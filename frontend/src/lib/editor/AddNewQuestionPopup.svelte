@@ -101,6 +101,12 @@ SPDX-License-Identifier: MPL-2.0
 <div
 	class="fixed top-0 left-0 w-screen h-screen flex bg-black z-50 bg-opacity-50"
 	on:click={on_parent_click}
+	on:keydown={(e) => {
+		// Allow selection with Enter 
+		if (e.key === 'Enter') {
+			on_parent_click(e);
+		}
+	}}
 	transition:fade|local={{ duration: 100 }}
 >
 	<div class="m-auto w-2/3 h-5/6 rounded shadow-2xl bg-white dark:bg-gray-600 p-6 flex flex-col">
@@ -110,6 +116,12 @@ SPDX-License-Identifier: MPL-2.0
 				<div class="rounded p-6 border-[#004A93] border">
 					<button
 						class="text-xl text-black dark:text-white"
+						on:keydown={(e) => {
+							// Allow selection with Enter 
+							if (e.key === 'Enter') {
+								add_question(i);
+							}
+						}}
 						on:click={() => {
 							add_question(i);
 						}}>{qt.name}</button
