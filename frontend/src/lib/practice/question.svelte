@@ -7,17 +7,21 @@ SPDX-License-Identifier: MPL-2.0
 <script lang="ts">
 	import type { OrderQuizAnswer, Question } from '$lib/quiz_types';
 	import { QuizQuestionType } from '$lib/quiz_types';
-	import { fly } from 'svelte/transition';
+	import { fade, fly } from 'svelte/transition';
 	import { getLocalization } from '$lib/i18n';
 	import Spinner from '$lib/Spinner.svelte';
 	import { flip } from 'svelte/animate';
 	import BrownButton from '$lib/components/buttons/brown.svelte';
 	import MediaComponent from '$lib/editor/MediaComponent.svelte';
 	import { get_foreground_color } from '../helpers';
+	import { dndzone, SHADOW_ITEM_MARKER_PROPERTY_NAME } from 'svelte-dnd-action';
+	import { cubicIn } from 'svelte/easing';
+	import RightArrow from '$lib/icons/rightArrow.svelte';
 
 	export let question: Question;
 
 	const { t } = getLocalization();
+	const flipDurationMs = 200;
 
 	let selected_answer = undefined;
 	let timer_res = question.time;
@@ -43,7 +47,16 @@ SPDX-License-Identifier: MPL-2.0
 		slider_value[0] = (question.answers.max - question.answers.min) / 2 + question.answers.min;
 	}
 	let slider_values = [question.answers.min_correct ?? 0, question.answers.max_correct ?? 0];
-
+	let items = Array.isArray(question.answers) ? question.answers.map((answer, index) => ({
+        id: index, 
+        answer, 
+        color: answer.color
+	})) : [];
+	$: console.log(items, "moIn!", question.answers);
+	
+	function handleSort(e) {
+        items = e.detail.items;
+    }
 	let text_input;
 	timer(question.time);
 
@@ -299,80 +312,45 @@ SPDX-License-Identifier: MPL-2.0
 			</div>
 		{/if}
 	{:else if question.type === QuizQuestionType.ORDER}
-		<div class="flex flex-col w-full h-full gap-4 px-4 py-6">
-			{#each question.answers as answer, i (answer.id)}
-				<div
-					class="w-full h-fit flex-row rounded-lg p-2 align-middle"
-					animate:flip={{ duration: 100 }}
-					style="background-color: {answer.color ?? '#004A93'}"
+	<div class="flex flex-col justify-center items-center w-full" >
+		<section 
+			use:dndzone={{items, flipDurationMs, dropTargetStyle:{"outline": "none"} ,dropTargetClasses: ["py-4","border-0","dark:bg-[#0AEDFE]/30","shadow-lg", "outline-none","rounded-lg","dark:shadow-black","shadow-black/40","transition-all","ease-in-out", "bg-[#E9F3FF]"]}} 
+			on:consider={handleSort} 
+			on:finalize={handleSort}
+			class="flex flex-col justify-center items-center md:w-3/4 w-full gap-4 px-4 "
+			style="overflow-y: auto; -webkit-overflow-scrolling: touch;"
+		>
+			{#each items as item (item.id)}
+				<div 
+					class="w-4/5 h-fit flex-row rounded-lg p-1 align-middle relative"
+					animate:flip={{ duration: flipDurationMs }}
+					style="color: {getTextColor(item.color ?? '#004A93')}; background-color: {item.color ?? '#004A93'};"
 				>
-					<button
-						on:click={() => {
-							question.answers = swapArrayElements(question.answers, i, i - 1);
-						}}
-						class="disabled:opacity-50 transition shadow-lg bg-black bg-opacity-30 w-full flex justify-center rounded-lg p-2 hover:bg-opacity-20 transition"
-						style="color: white;"
-						type="button"
-						disabled={i === 0 || order_corrected}
-					>
-						<svg
-							class="w-8 h-8"
-							stroke-width="2"
-							viewBox="0 0 24 24"
-							fill="none"
-							xmlns="http://www.w3.org/2000/svg"
-							color="currentColor"
-						>
-							<path
-								d="M12 22a2 2 0 110-4 2 2 0 010 4zM12 15V2m0 0l3 3m-3-3L9 5"
-								stroke="currentColor"
-								stroke-width="2"
-								stroke-linecap="round"
-								stroke-linejoin="round"
-							/>
-						</svg>
-					</button>
-					<p class="w-full text-center p-2 text-2xl" style="color: white;">{answer.answer}</p>
-
-					<button
-						on:click={() => {
-							question.answers = swapArrayElements(question.answers, i, i + 1);
-						}}
-						class="disabled:opacity-50 transition shadow-lg bg-black bg-opacity-30 w-full flex justify-center rounded-lg p-2 hover:bg-opacity-20 transition"
-						style="color: white;"
-						type="button"
-						disabled={i === question.answers.length - 1 || order_corrected}
-					>
-						<svg
-							class="w-8 h-8"
-							stroke-width="2"
-							viewBox="0 0 24 24"
-							fill="none"
-							xmlns="http://www.w3.org/2000/svg"
-							color="currentColor"
-						>
-							<path
-								d="M12 6a2 2 0 110-4 2 2 0 010 4zM12 9v13m0 0l3-3m-3 3l-3-3"
-								stroke="currentColor"
-								stroke-width="2"
-								stroke-linecap="round"
-								stroke-linejoin="round"
-							/>
-						</svg>
-					</button>
+					<p class="w-full text-center p-1 text-2xl text-white">
+						{item.answer.answer}
+					</p>
+					{#if item[SHADOW_ITEM_MARKER_PROPERTY_NAME]}
+						<div in:fade={{duration:200, easing: cubicIn}} class='custom-shadow-item w-full h-full flex-row rounded-lg p-1 align-middle opacity-10' style="color: {getTextColor(item.color ?? '#004A93')}; ">
+							<p class="w-full text-center p-1 text-2xl text-white">
+								{item.answer.answer}
+							</p>
+						</div>
+					{/if}
 				</div>
 			{/each}
-			<button
-				class="bg-[#004A93] hover:bg-amber-700 text-white font-bold py-2 px-4 rounded-lg mt-2 transition w-full"
+		</section>	
+		<div class="w-full flex justify-center mt-4">
+			<button 
 				type="button"
-				disabled={timer_res === '0'}
-				on:click={() => {
-					select_complex_answer();
-				}}
+				class="bg-[#0056BD] border-[#fff] flex items-center border-2 gap-2 text-[#fff] font-semibold px-9 py-2 rounded-full disabled:cursor-not-allowed disabled:opacity-90"
+				on:click={() => select_complex_answer()}
+				disabled={true}
 			>
-				{$t('words.submit')}
+				<RightArrow />
+				Submit
 			</button>
 		</div>
+	</div>
 	{:else if question.type === QuizQuestionType.CHECK}
 		{#if show_results}
 			<div class='grid grid-rows-2 gap-2 w-full grid-cols-2'>
@@ -448,3 +426,14 @@ SPDX-License-Identifier: MPL-2.0
 		{/if}
 	{/if}
 </div>
+<style>
+	.custom-shadow-item {
+		position: absolute;
+		top: 0; left:0; right: 0; bottom: 0;
+		visibility: visible;
+		border: 1px dashed grey;
+		background: lightblue;
+		opacity: 0.5;
+		margin: 0;
+	}
+</style>
