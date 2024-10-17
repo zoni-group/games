@@ -14,8 +14,11 @@ async def fetch_game_state(game_pin: str):
     data = PlayGame.parse_raw(data_redis_res)
     print(data)
     return {
+        "quiz_id": data.quiz_id,
+        "game_id": data.game_id,
         "game_pin": data.game_pin,
         "started": data.started,
+        "game_mode": data.game_mode,
         "current_question": data.current_question,
         "questions_count": len(data.questions),
         "title": data.title,
@@ -23,5 +26,6 @@ async def fetch_game_state(game_pin: str):
         "cover_image": data.cover_image,
         "background_color": data.background_color,
         "background_image": data.background_image,
-        "question_show": data.question_show
+        "question_show": data.question_show,
+        "language_toggle": data.language_toggle
     }
