@@ -15,13 +15,50 @@ SPDX-License-Identifier: MPL-2.0
 	import BrownButton from '$lib/components/buttons/brown.svelte';
 	import { fade } from 'svelte/transition';
 	import { onMount } from 'svelte';
+	import { dndzone } from 'svelte-dnd-action';
+	import { flip } from 'svelte/animate';
 
 	const { t } = getLocalization();
 
 	export let data: EditorData;
 	export let selected_question = -1;
-
+	const flipDurationMs = 200;
 	let reorder_mode = false;
+	let items = data.questions.map((question, index) => {
+		
+		return {
+			id: index,
+			...question
+		};
+	});
+	$: items = data.questions.map((question, index) => { // Ensure reactivity
+		
+		return {
+			id: index,
+			...question
+		};
+	});
+	// Sort handler when items are rearranged using drag-and-drop
+	function handleSort(e) {
+		items = e.detail.items;
+		data.questions = items;
+		data.questions = [...data.questions]; // Ensure reactivity
+	}
+
+
+	// Remove Question functionality
+	function removeQuestion(index: number) {
+		data.questions.splice(index, 1);
+		items = data.questions.map((question, i) => {
+			return {
+				...question,
+				id: i,
+			};
+		});
+		// console.log(items, "items After delete");
+		
+		data.questions = [...items]; // Trigger reactivity
+	}
 
 	const tippy = createTippy({
 		arrow: true,
@@ -101,6 +138,7 @@ SPDX-License-Identifier: MPL-2.0
     	}
     	return url;
   	}
+	
 </script>
 
 <div class="h-screen relative">
@@ -114,6 +152,7 @@ SPDX-License-Identifier: MPL-2.0
 		</div>
 	</div>
 	<div class="border-r-2 pt-6 px-6 overflow-scroll h-full">
+		<!-- svelte-ignore a11y-click-events-have-key-events -->
 		<div
 			bind:this={propertyCard}
 			class="bg-white shadow rounded-lg h-40 p-2 mb-6 hover:cursor-pointer drop-shadow-2xl border border-gray-500 dark:bg-gray-600 transition"
@@ -202,10 +241,18 @@ SPDX-License-Identifier: MPL-2.0
 				</button>
 			</div>
 		</div>
-		{#each data.questions as question, index}
+		<section 
+			use:dndzone={{items, flipDurationMs}} 
+			on:consider={handleSort} 
+			on:finalize={handleSort}
+			class="flex flex-col justify-center items-center w-full py-4 gap-4 px-4 "
+			style="overflow-y: auto; -webkit-overflow-scrolling: touch;"
+		>
+		{#each items as question, index (question.id)}
 			<!-- svelte-ignore a11y-click-events-have-key-events -->
 			<div
-				class="bg-white shadow rounded-lg h-40 p-2 mb-6 hover:cursor-pointer drop-shadow-2xl border border-gray-500 dark:bg-gray-600 transition relative"
+				class="bg-white shadow rounded-lg h-40 p-2 mb-6 hover:cursor-pointer drop-shadow-2xl w-full border border-gray-500 dark:bg-gray-600 transition relative"
+				animate:flip={{ duration: flipDurationMs }}
 				class:bg-green-300={index === selected_question}
 				class:dark:bg-green-500={index === selected_question}
 				on:click={() => {
@@ -219,6 +266,7 @@ SPDX-License-Identifier: MPL-2.0
 						class="absolute z-10 grid grid-cols-2 bg-transparent w-full rounded h-full"
 					>
 						<!-- Div is used, since it just put me on the dashboard when using button elements... Idk why and I hate it-->
+						<!-- svelte-ignore a11y-interactive-supports-focus -->
 						<div
 							class="h-full"
 							role="button"
@@ -248,6 +296,7 @@ SPDX-License-Identifier: MPL-2.0
 								/>
 							</svg>
 						</div>
+						<!-- svelte-ignore a11y-interactive-supports-focus -->
 						<div
 							class="h-full"
 							role="button"
@@ -283,11 +332,12 @@ SPDX-License-Identifier: MPL-2.0
 				<button
 					class="rounded-full absolute -top-3 -right-3 opacity-70 hover:opacity-100 transition"
 					type="button"
+					on:mousedown|stopPropagation
+					on:touchstart|stopPropagation
 					on:click={() => {
 						if (confirm('Do you really want to delete this Question?')) {
 							selected_question = -1;
-							data.questions.splice(index, 1);
-							data.questions = data.questions;
+							removeQuestion(index);
 						}
 					}}
 				>
@@ -426,14 +476,15 @@ SPDX-License-Identifier: MPL-2.0
 						</div>
 					{/if}
 				{:else if question.type === QuizQuestionType.SLIDE}
-					<p>Some smart information on a slide</p>
+					<p class="text-center text-sm p-0.5 text-[#0056BD] dark:text-white">Some smart information on a slide</p>
 				{:else if question.type === QuizQuestionType.ORDER}
-					<p>Get thing's into the right order!</p>
+					<p class="text-center text-sm p-0.5 text-[#0056BD] dark:text-white" >Get thing's into the right order!</p>
 				{:else}
-					<p>Unknown Question Type (shouldn't happen)</p>
+					<p class="text-center text-sm p-0.5 text-[#0056BD] dark:text-white">Unknown Question Type (shouldn't happen)</p>
 				{/if}
 			</div>
 		{/each}
+	</section>	
 		<div
 			class="bg-white shadow rounded-lg h-40 p-2 hover:cursor-pointer drop-shadow-2xl border border-gray-500 dark:bg-gray-600 grid grid-cols-2"
 		>
@@ -488,6 +539,7 @@ SPDX-License-Identifier: MPL-2.0
 </div>
 {#if add_new_question_popup_open}
 	<AddNewQuestionPopup
+	bind:items
 		bind:questions={data.questions}
 		bind:open={add_new_question_popup_open}
 		bind:selected_question

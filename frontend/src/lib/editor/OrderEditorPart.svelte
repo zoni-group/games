@@ -11,7 +11,7 @@
 
 	export let selected_question: number;
 	export let data: EditorData;
-
+	let oldSelectedQuestion = -1;
 	const default_colors = ['#FFA800', '#00A3FF', '#FF1D38', '#00D749'];
 
 	let idCounter = 0;
@@ -67,6 +67,22 @@
 		data.questions[selected_question].answers.splice(index, 1);
 		items = [...data.questions[selected_question].answers];
 		data.questions[selected_question].answers = [...data.questions[selected_question].answers]; // Trigger reactivity
+	}
+	
+
+	$: {
+		if(oldSelectedQuestion !== selected_question){
+			oldSelectedQuestion = selected_question;
+			items = data.questions[selected_question].answers.map((answer, index) => {
+				if (typeof answer.id !== 'number') {
+					answer.id = idCounter++;
+				}
+				return {
+					...answer,
+					color: answer.color || default_colors[index % default_colors.length], // Apply default color if undefined
+				};
+			});
+		}
 	}
 </script>
 
