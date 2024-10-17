@@ -52,6 +52,13 @@ SPDX-License-Identifier: MPL-2.0
         answer, 
         color: answer.color
 	})) : [];
+	$: {
+		items = Array.isArray(question.answers) ? question.answers.map((answer, index) => ({
+			id: index, 
+			answer, 
+			color: answer.color
+		})) : [];
+	}
 	$: console.log(items, "moIn!", question.answers);
 	
 	function handleSort(e) {
