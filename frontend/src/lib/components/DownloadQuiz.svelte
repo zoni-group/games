@@ -28,6 +28,12 @@ SPDX-License-Identifier: MPL-2.0
 	<div
 		class="w-screen h-screen fixed top-0 left-0 bg-opacity-50 bg-black z-20 flex justify-center"
 		on:click={handle_on_click}
+		on:keydown={(e) => {
+			// Allow selection with Enter 
+			if (e.key === 'Enter') {
+				handle_on_click();
+			}
+		}}
 		transition:fade|local={{ duration: 100 }}
 	>
 		<div class="m-auto w-1/3 h-auto bg-white dark:bg-gray-700 p-4 rounded">

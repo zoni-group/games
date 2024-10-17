@@ -22,8 +22,10 @@ SPDX-License-Identifier: MPL-2.0
 
 	export let data: EditorData;
 	export let quiz_id: string | null;
+	export let submit_button_text: string = "Submit";
 	let selected_question = -1;
 	let imgur_links_valid = false;
+console.log(submit_button_text);
 
 	const validateInput = async (data: EditorData) => {
 		let warnings = [''];

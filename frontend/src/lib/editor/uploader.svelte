@@ -31,15 +31,19 @@ SPDX-License-Identifier: MPL-2.0
 	const { t } = getLocalization();
 
 	export let modalOpen = false;
-	export let edit_id: string;
+	export let edit_id: string = '0';
 	export let data: EditorData;
-	export let selected_question: number;
+	export let selected_question: number = null;
 	export let video_upload = false;
 	export let other_upload = false;
 	export let option_upload = false;
 	export let library_enabled = true;
 	export let selected_answer = -1;
 
+	$:{
+		edit_id
+	}
+	
 	// eslint-disable-next-line no-undef
 	let video_popup: undefined | WindowProxy = undefined;
 

@@ -239,11 +239,3 @@ SPDX-License-Identifier: MPL-2.0
 
     </div>
 </div>
-<style>
-	.style-text{
-		-webkit-text-stroke: 1px #00529B;
-		color: white;
-
-		
-	}
-</style>
