@@ -24,6 +24,9 @@ SPDX-License-Identifier: MPL-2.0
 	// import GrayButton from "$lib/components/buttons/gray.svelte";
 
 	export let data: PageData;
+	$: {
+		data
+	}
 	let search_term = '';
 	let start_game = null;
 	let download_id: string | null = null;

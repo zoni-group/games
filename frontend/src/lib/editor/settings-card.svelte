@@ -35,7 +35,7 @@
 		animation: 'perspective-subtle'
 	});
 
-	$: data.background_color = custom_bg_color ? data.background_color : undefined;
+	$: data.background_color = custom_bg_color ? data.background_color : "#FFFFFF";
 	$: data.language_toggle = language;
 	let contentTypes: { [id: string]: string | null } = {};
 
@@ -123,7 +123,7 @@
 				{#await import('$lib/inline-editor.svelte')}
 					<Spinner my_20={false} />
 				{:then c}
-					<svelte:component this={c.default} bind:text={data.title} />
+					<svelte:component this={c.default} data={data} bind:text={data.title} />
 				{/await}
 			</div>
 			<div class="flex justify-center pt-10 w-full max-h-32">

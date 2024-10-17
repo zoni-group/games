@@ -217,7 +217,7 @@ SPDX-License-Identifier: MPL-2.0
 						{#await import('$lib/editor/VotingEditorPart.svelte')}
 							<Spinner my_20={false} />
 						{:then c}
-							<svelte:component this={c.default} bind:data bind:selected_question />
+							<svelte:component this={c.default} edit_id={edit_id} bind:data bind:selected_question />
 						{/await}
 					{:else if type === QuizQuestionType.TEXT}
 						{#await import('$lib/editor/TextEditorPart.svelte')}
