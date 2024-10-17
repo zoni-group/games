@@ -59,7 +59,6 @@ SPDX-License-Identifier: MPL-2.0
 			color: answer.color
 		})) : [];
 	}
-	$: console.log(items, "moIn!", question.answers);
 	
 	function handleSort(e) {
         items = e.detail.items;
@@ -89,7 +88,7 @@ SPDX-License-Identifier: MPL-2.0
 
 	if (question.type === QuizQuestionType.ORDER) {
 		for (let i = 0; i < question.answers.length; i++) {
-			question.answers[i] = { answer: question.answers[i].answer, id: i };
+			question.answers[i] = { answer: question.answers[i].answer, id: i, color: question.answers[i].color };
 		}
 		original_order = [...question.answers];
 		console.log(original_order);
