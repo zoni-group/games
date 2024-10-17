@@ -13,7 +13,7 @@ SPDX-License-Identifier: MPL-2.0
 
 	export let questions: Question[];
 	export let open: boolean;
-
+	export let items;
 	export let selected_question: number;
 
 	const { t } = getLocalization();
@@ -89,6 +89,10 @@ SPDX-License-Identifier: MPL-2.0
 			answers: question_types[index].answers
 		};
 		questions = [...questions, { ...empty_question }];
+		items = questions.map((question, i) => ({
+			...question,
+			id: i,
+		}));
 		selected_question = questions.length - 1;
 		open = false;
 	};
