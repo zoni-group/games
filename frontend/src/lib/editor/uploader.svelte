@@ -31,7 +31,7 @@ SPDX-License-Identifier: MPL-2.0
 	const { t } = getLocalization();
 
 	export let modalOpen = false;
-	export const edit_id: string = '0';
+	export let edit_id: string = '0';
 	export let data: EditorData;
 	export let selected_question: number = null;
 	export let video_upload = false;
