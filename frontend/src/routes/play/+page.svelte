@@ -13,6 +13,7 @@
 	import { getLocalization, initLocalizationContext } from '$lib/i18n';
 	import ZoniLogo from '$lib/components/zoniLogoPlay.svelte';
 	import en from '$lib/i18n/locales/en.json';
+	import { toast } from '@zerodevx/svelte-toast';
 	const { t, currentLanguage } = getLocalization();
 
 	let noSleep;
@@ -55,6 +56,18 @@
 	let gameEnded = false;
 	let hasRejoined = false;
 
+	let isConnectionLostToastShown = false;
+	let toastTimeout = null;
+
+	function showToastOnce(message) {
+		if (toastTimeout) {
+			clearTimeout(toastTimeout);
+		}
+		toastTimeout = setTimeout(() => {
+			toast.push(message);
+		}, 200); // Adjust the delay as needed
+	}
+
 	// Restore game state on load
 	onMount(() => {
     	if (browser) {
@@ -71,19 +84,27 @@
 
 			window.addEventListener('visibilitychange', handleVisibilityChange);
     		socket.on('disconnect', handleDisconnect);
-    		//socket.on('connect', handleConnect);
+    		socket.on('connect', handleConnect);
+			socket.on('reconnect', handleReconnect);
     	}
 	});
 
 	onDestroy(() => {
 		if (browser) {
     		window.removeEventListener('visibilitychange', handleVisibilityChange);
-    		socket.off('disconnect', handleDisconnect);
+			console.log("Removing socket event listeners");
+        	socket.off('disconnect', handleDisconnect);
+        	socket.off('connect', handleConnect);
+        	socket.off('reconnect', handleReconnect);
 		}
   	});
 
 	async function handleConnect() {
     	console.log('Connected!');
+		if (isConnectionLostToastShown === true) {
+        	showToastOnce('Reconnected to the server.');
+        	isConnectionLostToastShown = false;
+    	}
 		localStorage.setItem('socket_id', socket.id);  // Store the current Socket ID
 		//restoreState(); // Restore the state from localStorage if present
 		const savedState = localStorage.getItem('game_state');
@@ -124,11 +145,20 @@
 			}		
 		}
   	}
-		
+
+	async function handleReconnect(attemptNumber) {
+		showToastOnce('Reconnected to the server after number of attempts: ' + attemptNumber);
+		restoreState();
+		isConnectionLostToastShown = false; // Reset the flag when reconnected
+	}
 
 	function handleDisconnect(reason) {
     	console.log('Socket disconnected:', reason);
-    	// Optionally update UI or state to reflect disconnection
+		hasRejoined = false; // Indicate that the connection is lost
+		if (!isConnectionLostToastShown) {
+        	showToastOnce('Connection lost. Attempting to reconnect...');
+        	isConnectionLostToastShown = true;
+    	}
   	}
 
 	// Fetch game state in the browser
@@ -259,6 +289,7 @@
 	function handleVisibilityChange() {
 		if (document.visibilityState === 'visible') {
       		if (!socket.connected) {
+				hasRejoined = false;
         		console.log('Attempting to reconnect...');
         		socket.connect();
       		}
