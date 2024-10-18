@@ -53,14 +53,14 @@ SPDX-License-Identifier: MPL-2.0
 		<div class="flex justify-center align-middle items-center">		
 			{#if contentType?.startsWith('image')}
 				<img
-					css_classes="max-h-[35vh] object-cover mx-auto mb-1 w-auto"
+					class="max-h-[35vh] object-cover mx-auto mb-1 w-auto"
 					src={`/api/v1/storage/download/${cover_image}`}
 					alt="Not provided"
 				/>
 			{:else if contentType?.startsWith('video')}
 				<!-- svelte-ignore a11y-media-has-caption -->
 				<video
-					css_classes="max-h-[35vh] object-cover mx-auto mb-1 w-auto"
+					class="max-h-[35vh] object-cover mx-auto mb-1 w-auto"
 					src={getVideoUrl(`/api/v1/storage/download/${cover_image}`)}
 					controls
 					autoplay={false}

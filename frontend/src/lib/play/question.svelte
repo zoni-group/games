@@ -291,6 +291,7 @@
 								{#if question.ansType === 'IMAGE'}
 									<MediaComponent 
 										css_classes="inline-block m-auto max-h-[30vh]" 
+										allow_fullscreen={false}
 										src={answer.answer} 
 									/>
 								{:else}
@@ -300,6 +301,7 @@
 								{#if question.ansType === 'IMAGE'}
 									<MediaComponent 
 										css_classes="inline-block m-auto max-h-[30vh]" 
+										allow_fullscreen={false}
 										src={answer.answer} 
 									/>
 								{:else}
