@@ -53,15 +53,13 @@
 	};
 	let selected_answer = '';
 	let gameEnded = false;
-
-	if (browser) {
-    	restoreState();
-  	}
+	let hasRejoined = false;
 
 	// Restore game state on load
 	onMount(() => {
     	if (browser) {
 			restoreState();
+			checkFinalizedGame(game_pin);
 			noSleep = new NoSleep(); // Create a NoSleep instance
         	const enableNoSleep = () => {
 				noSleep.enable(); // Enable wake lock to prevent the screen from locking
@@ -73,7 +71,7 @@
 
 			window.addEventListener('visibilitychange', handleVisibilityChange);
     		socket.on('disconnect', handleDisconnect);
-    		socket.on('connect', handleConnect);
+    		//socket.on('connect', handleConnect);
     	}
 	});
 
@@ -81,21 +79,52 @@
 		if (browser) {
     		window.removeEventListener('visibilitychange', handleVisibilityChange);
     		socket.off('disconnect', handleDisconnect);
-    		socket.off('connect', handleConnect);
 		}
   	});
 
-	function handleConnect() {
-    	console.log('Socket connected');
-    	// Rejoin the game session
-    	if (username && game_pin) {
-      		socket.emit('rejoin_game', {
-        		old_sid: socket.id,
-        		username: username,
-        		game_pin: game_pin,
-      		});
-    	}
+	async function handleConnect() {
+    	console.log('Connected!');
+		localStorage.setItem('socket_id', socket.id);  // Store the current Socket ID
+		//restoreState(); // Restore the state from localStorage if present
+		const savedState = localStorage.getItem('game_state');
+		if (savedState) {
+			const { game_pin: savedGamePin, username: savedUsername } = JSON.parse(savedState);
+			// Rejoin the game automatically with saved session data
+			if (!hasRejoined) {
+				hasRejoined = true;
+				socket.emit('rejoin_game', { old_sid: socket.id, username: savedUsername, game_pin: savedGamePin });
+			}
+		} else {
+			// Check if game already started and allow late joining
+			if (gameMeta.started) {
+				socket.emit('join_late', { sid: socket.id , username: username, game_pin: game_pin });
+
+				// Rejoin logic, emitting a late join event if the game has already started
+				// Use the fetchGameState function to get the game state
+				fetchGameState(game_pin).then((gameState) => {
+					if (gameState) {
+						checkFinalizedGame(game_pin);
+						gameData = gameState;
+						game_mode = gameState.game_mode;
+						if (gameState.started) {
+							gameMeta.started = true;
+							question_index = gameState.question_index;
+							if (gameData.question_show === false) {
+        						acknowledgement.answered = true;
+        					} else {
+								acknowledgement.answered = false;
+							}
+						}
+					}
+				});
+				if (!hasRejoined) {
+					hasRejoined = true;
+					socket.emit('rejoin_game', { old_sid: socket.id, username: username, game_pin: game_pin });
+				}
+			}		
+		}
   	}
+		
 
 	function handleDisconnect(reason) {
     	console.log('Socket disconnected:', reason);
@@ -204,11 +233,14 @@
 			question = storedQuestion || question;
 			solution = storedSolution || solution;
 			acknowledgement = storedAcknowledgement || acknowledgement;
+
+			console.log('Stored Game Data:', storedGameData);
 			selected_answer = storedSelectedAnswer || selected_answer;
 
 			// Retrieve the stored socket ID and emit rejoin event
 			const storedSocketId = localStorage.getItem('socket_id');
-			if (storedSocketId) {
+			if (!hasRejoined && storedSocketId) {
+				hasRejoined = true;
 				socket.emit('rejoin_game', {
 					old_sid: storedSocketId,  // Use the stored Socket ID
 					username: storedUsername,
@@ -224,14 +256,7 @@
 		localStorage.removeItem('socket_id');
 	}
 
-	function handlePageHide() {
-		storeState();
-	}
-
 	function handleVisibilityChange() {
-  		if (document.visibilityState === 'hidden') {
-    		storeState();
-  		}
 		if (document.visibilityState === 'visible') {
       		if (!socket.connected) {
         		console.log('Attempting to reconnect...');
@@ -240,61 +265,32 @@
     	}
 	}
 
-	function checkFinalizedGame(gameData) {
-		if (gameData.current_question + 1 === gameData.question_count && gameData.question_show === false) {
-			gameEnded = true;
-			clearState();
-			alert('This session has already ended.');
-			window.location.href = '/play';
-		}
+	function checkFinalizedGame(game_pin) {
+		fetchGameState(game_pin).then((gameState) => {
+			if (gameState) {
+				if (gameState.current_question + 1 === gameState.question_count && gameState.question_show === false) {
+					gameEnded = true;
+					clearState();
+					alert('This session has already ended.');
+					window.location.href = '/play';
+				}
+			}
+		});
 	}
 
 	// Socket events for managing the game connection and state
 	socket.on('time_sync', (data) => {
+		console.log('Time sync:', data);
 		socket.emit('echo_time_sync', data);
 	});
 
-	socket.on('connect', async () => {
-		console.log('Connected!');
-		localStorage.setItem('socket_id', socket.id);  // Store the current Socket ID
-		restoreState(); // Restore the state from localStorage if present
-		const savedState = localStorage.getItem('game_state');
-		if (savedState) {
-			const { game_pin: savedGamePin, username: savedUsername } = JSON.parse(savedState);
-			// Rejoin the game automatically with saved session data
-			socket.emit('rejoin_game', { old_sid: socket.id, username: savedUsername, game_pin: savedGamePin });
-		} else {
-			// Check if game already started and allow late joining
-			if (gameMeta.started) {
-				socket.emit('join_late', { sid: socket.id , username: username, game_pin: game_pin });
-
-				// Rejoin logic, emitting a late join event if the game has already started
-				// Use the fetchGameState function to get the game state
-				fetchGameState(game_pin).then((gameState) => {
-					if (gameState) {
-						checkFinalizedGame(gameData);
-						gameData = gameState;
-						game_mode = gameState.game_mode;
-						if (gameState.started) {
-							gameMeta.started = true;
-							question_index = gameState.question_index;
-							if (gameData.question_show === false) {
-        						acknowledgement.answered = true;
-        					} else {
-								acknowledgement.answered = false;
-							}
-						}
-					}
-				});
-				socket.emit('rejoin_game', { old_sid: socket.id, username: username, game_pin: game_pin });
-			}		
-		}
-	});
+	socket.on('connect', handleConnect);
 
 	socket.on('joined_game', (data) => {
+		console.log('Joined game:', data);
 		gameData = data;
 		game_mode = data.game_mode;
-		selected_answer = '';
+		//selected_answer = '';
 
 		if (data.question_show === false) {
         	acknowledgement.answered = true;
@@ -307,8 +303,8 @@
 
 	socket.on('joined_game_late', (data) => {
 		// Handle receiving the current game state for late joiners
-		console.log('Joined late:', data);
-		checkFinalizedGame(data);
+		console.log('Joined game late:', data);
+		checkFinalizedGame(game_pin);
 		let converted_scores =  Object.fromEntries(Object.entries(data.player_scores).map(([key, value]) => [key, Number(value)])); // This statement converts string values to numbers in an object
 		scores = converted_scores;
 		console.log('scores', scores);
@@ -328,7 +324,7 @@
 
 
 	socket.on('rejoined_game', (data) => {
-		console.log('Game rejoined successfully!');
+		console.log('Rejoined game:', data);
 		console.log('Latest answer:', data.latest_answer);
 		gameData = data;
 		if (data.started) {
@@ -354,12 +350,14 @@
 	});
 
 	socket.on('game_not_found', () => {
+		console.log('Game session not found!');
 		clearState();
 		alert('Game session not found!');
 		window.location.reload();
 	});
 
 	socket.on('set_question_number', (data) => {
+		console.log('Set question number:', data);
 		solution = undefined;
 		restart();
 		question = data.question;
@@ -377,12 +375,14 @@
 	});
 
 	socket.on('start_game', () => {
+		console.log('Game started!');
 		gameMeta.started = true;
 		window.scrollTo(0, 0);
 		storeState();
 	});
 
 	socket.on('question_results', (data) => {
+		console.log('Question results:', data);
 		restart();
 		answer_results = data;
 		storeState();
@@ -393,6 +393,7 @@
 	});
 
 	socket.on('kick', () => {
+		console.log('You got kicked');
 		window.alert('You got kicked');
 		preventReload = false;
 		clearState();
@@ -400,10 +401,12 @@
 	});
 
 	socket.on('disconnect_reason', (data) => {
+		console.log('Disconnected:', data);
 		disconnectedMessage = data.reason;
 	});
 
 	socket.on('final_results', (data) => {
+		console.log('Final results:', data);
 		final_results = data;
 		gameEnded = true;
 		clearState();  // Clear state when the game ends
@@ -413,6 +416,7 @@
 	});
 
 	socket.on('solutions', (data) => {
+		console.log('Solutions:', data);
 		solution = data;
 		acknowledgement.answered = true;
 		console.log('Acknowledgement before store:', acknowledgement);
@@ -434,7 +438,7 @@
 	
 </script>
 
-<svelte:window on:pagehide={handlePageHide} on:visibilitychange={handleVisibilityChange} />
+<svelte:window on:visibilitychange={handleVisibilityChange} />
 <svelte:head>
 	<title>Zoni® AI - Play</title>
 </svelte:head>
