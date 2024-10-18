@@ -75,7 +75,7 @@
 
 			window.addEventListener('visibilitychange', handleVisibilityChange);
     		socket.on('disconnect', handleDisconnect);
-    		socket.on('connect', handleConnect);
+    		//socket.on('connect', handleConnect);
     	}
 	});
 
@@ -83,21 +83,53 @@
 		if (browser) {
     		window.removeEventListener('visibilitychange', handleVisibilityChange);
     		socket.off('disconnect', handleDisconnect);
-    		socket.off('connect', handleConnect);
+    		//socket.off('connect', handleConnect);
 		}
   	});
 
-	function handleConnect() {
-    	console.log('Socket connected');
-    	// Rejoin the game session
-    	if (username && game_pin) {
-      		socket.emit('rejoin_game', {
-        		old_sid: socket.id,
-        		username: username,
-        		game_pin: game_pin,
-      		});
-    	}
+	async function handleConnect() {
+    	console.log('Connected!');
+		localStorage.setItem('socket_id', socket.id);  // Store the current Socket ID
+		//restoreState(); // Restore the state from localStorage if present
+		const savedState = localStorage.getItem('game_state');
+		if (savedState) {
+			const { game_pin: savedGamePin, username: savedUsername } = JSON.parse(savedState);
+			// Rejoin the game automatically with saved session data
+			if (!hasRejoined) {
+				hasRejoined = true;
+				socket.emit('rejoin_game', { old_sid: socket.id, username: savedUsername, game_pin: savedGamePin });
+			}
+		} else {
+			// Check if game already started and allow late joining
+			if (gameMeta.started) {
+				socket.emit('join_late', { sid: socket.id , username: username, game_pin: game_pin });
+
+				// Rejoin logic, emitting a late join event if the game has already started
+				// Use the fetchGameState function to get the game state
+				fetchGameState(game_pin).then((gameState) => {
+					if (gameState) {
+						checkFinalizedGame(game_pin);
+						gameData = gameState;
+						game_mode = gameState.game_mode;
+						if (gameState.started) {
+							gameMeta.started = true;
+							question_index = gameState.question_index;
+							if (gameData.question_show === false) {
+        						acknowledgement.answered = true;
+        					} else {
+								acknowledgement.answered = false;
+							}
+						}
+					}
+				});
+				if (!hasRejoined) {
+					hasRejoined = true;
+					socket.emit('rejoin_game', { old_sid: socket.id, username: username, game_pin: game_pin });
+				}
+			}		
+		}
   	}
+		
 
 	function handleDisconnect(reason) {
     	console.log('Socket disconnected:', reason);
@@ -257,42 +289,7 @@
 		socket.emit('echo_time_sync', data);
 	});
 
-	socket.on('connect', async () => {
-		console.log('Connected!');
-		localStorage.setItem('socket_id', socket.id);  // Store the current Socket ID
-		//restoreState(); // Restore the state from localStorage if present
-		const savedState = localStorage.getItem('game_state');
-		if (savedState) {
-			const { game_pin: savedGamePin, username: savedUsername } = JSON.parse(savedState);
-			// Rejoin the game automatically with saved session data
-			socket.emit('rejoin_game', { old_sid: socket.id, username: savedUsername, game_pin: savedGamePin });
-		} else {
-			// Check if game already started and allow late joining
-			if (gameMeta.started) {
-				socket.emit('join_late', { sid: socket.id , username: username, game_pin: game_pin });
-
-				// Rejoin logic, emitting a late join event if the game has already started
-				// Use the fetchGameState function to get the game state
-				fetchGameState(game_pin).then((gameState) => {
-					if (gameState) {
-						checkFinalizedGame(game_pin);
-						gameData = gameState;
-						game_mode = gameState.game_mode;
-						if (gameState.started) {
-							gameMeta.started = true;
-							question_index = gameState.question_index;
-							if (gameData.question_show === false) {
-        						acknowledgement.answered = true;
-        					} else {
-								acknowledgement.answered = false;
-							}
-						}
-					}
-				});
-				socket.emit('rejoin_game', { old_sid: socket.id, username: username, game_pin: game_pin });
-			}		
-		}
-	});
+	socket.on('connect', handleConnect);
 
 	socket.on('joined_game', (data) => {
 		console.log('Joined game:', data);
