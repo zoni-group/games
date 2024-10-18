@@ -294,7 +294,7 @@
 	socket.on('joined_game', (data) => {
 		gameData = data;
 		game_mode = data.game_mode;
-		selected_answer = '';
+		//selected_answer = '';
 
 		if (data.question_show === false) {
         	acknowledgement.answered = true;
