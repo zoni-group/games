@@ -65,7 +65,7 @@
 		}
 		toastTimeout = setTimeout(() => {
 			toast.push(message);
-		}, 200); // Adjust the delay as needed
+		}, 1000); // Adjust the delay as needed
 	}
 
 	// Restore game state on load
