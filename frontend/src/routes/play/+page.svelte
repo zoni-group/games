@@ -55,10 +55,6 @@
 	let gameEnded = false;
 	let hasRejoined = false;
 
-	//if (browser) {
-    //	restoreState();
-  	//}
-
 	// Restore game state on load
 	onMount(() => {
     	if (browser) {
@@ -83,7 +79,6 @@
 		if (browser) {
     		window.removeEventListener('visibilitychange', handleVisibilityChange);
     		socket.off('disconnect', handleDisconnect);
-    		//socket.off('connect', handleConnect);
 		}
   	});
 
