@@ -91,10 +91,10 @@ SPDX-License-Identifier: MPL-2.0
 			question.answers[i] = { answer: question.answers[i].answer, id: i, color: question.answers[i].color };
 		}
 		original_order = [...question.answers];
-		console.log(original_order);
 		shuffleArray(question.answers);
 	}
-
+	console.log(question.answers, "moIn!", original_order);
+	
 	let order_corrected = false;
 	const select_complex_answer = () => {
 		/*		const correct_order_ids = []
@@ -106,6 +106,11 @@ SPDX-License-Identifier: MPL-2.0
                     correct_order_ids.push(e.id)
                 }*/
 		question.answers = original_order;
+		items = original_order.map((answer, index) => ({
+			id: index, 
+			answer, 
+			color: answer.color
+		}));
 		order_corrected = true;
 		timer_res = '0';
 	};
@@ -350,7 +355,7 @@ SPDX-License-Identifier: MPL-2.0
 				type="button"
 				class="bg-[#0056BD] border-[#fff] flex items-center border-2 gap-2 text-[#fff] font-semibold px-9 py-2 rounded-full disabled:cursor-not-allowed disabled:opacity-90"
 				on:click={() => select_complex_answer()}
-				disabled={true}
+				disabled={false}
 			>
 				<RightArrow />
 				Submit
