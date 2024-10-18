@@ -416,7 +416,7 @@
 				</p>
 			{/if}
 		{:else if question.type === QuizQuestionType.ORDER}
-		<div class="flex flex-col justify-center items-center w-full" >
+		<div class="flex flex-col justify-center items-center min-h-screen w-full" >
 			<section 
 				use:dndzone={{items, flipDurationMs, dropTargetStyle:{"outline": "none"} ,dropTargetClasses: ["py-4","red-text","border-0","dark:bg-[#0AEDFE]/30","shadow-lg", "outline-none","rounded-lg","dark:shadow-black","shadow-black/40","transition-all","ease-in-out", "bg-[#E9F3FF]"]}} 
 				on:consider={handleSort} 
