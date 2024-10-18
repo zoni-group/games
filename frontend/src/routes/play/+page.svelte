@@ -55,6 +55,8 @@
 	let gameEnded = false;
 	let hasRejoined = false;
 
+	let stateAlreadySaved = false;
+
 	//if (browser) {
     //	restoreState();
   	//}
@@ -228,14 +230,7 @@
 		localStorage.removeItem('socket_id');
 	}
 
-	function handlePageHide() {
-		storeState();
-	}
-
 	function handleVisibilityChange() {
-  		if (document.visibilityState === 'hidden') {
-    		storeState();
-  		}
 		if (document.visibilityState === 'visible') {
       		if (!socket.connected) {
         		console.log('Attempting to reconnect...');
@@ -448,7 +443,7 @@
 	
 </script>
 
-<svelte:window on:pagehide={handlePageHide} on:visibilitychange={handleVisibilityChange} />
+<svelte:window on:visibilitychange={handleVisibilityChange} />
 <svelte:head>
 	<title>Zoni® AI - Play</title>
 </svelte:head>
