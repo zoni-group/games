@@ -55,8 +55,6 @@
 	let gameEnded = false;
 	let hasRejoined = false;
 
-	let stateAlreadySaved = false;
-
 	//if (browser) {
     //	restoreState();
   	//}
