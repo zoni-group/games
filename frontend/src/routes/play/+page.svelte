@@ -53,10 +53,11 @@
 	};
 	let selected_answer = '';
 	let gameEnded = false;
+	let hasRejoined = false;
 
-	if (browser) {
-    	restoreState();
-  	}
+	//if (browser) {
+    //	restoreState();
+  	//}
 
 	// Restore game state on load
 	onMount(() => {
@@ -204,11 +205,14 @@
 			question = storedQuestion || question;
 			solution = storedSolution || solution;
 			acknowledgement = storedAcknowledgement || acknowledgement;
+
+			console.log('Stored Game Data:', storedGameData);
 			selected_answer = storedSelectedAnswer || selected_answer;
 
 			// Retrieve the stored socket ID and emit rejoin event
 			const storedSocketId = localStorage.getItem('socket_id');
-			if (storedSocketId) {
+			if (!hasRejoined && storedSocketId) {
+				hasRejoined = true;
 				socket.emit('rejoin_game', {
 					old_sid: storedSocketId,  // Use the stored Socket ID
 					username: storedUsername,
@@ -251,13 +255,14 @@
 
 	// Socket events for managing the game connection and state
 	socket.on('time_sync', (data) => {
+		console.log('Time sync:', data);
 		socket.emit('echo_time_sync', data);
 	});
 
 	socket.on('connect', async () => {
 		console.log('Connected!');
 		localStorage.setItem('socket_id', socket.id);  // Store the current Socket ID
-		restoreState(); // Restore the state from localStorage if present
+		//restoreState(); // Restore the state from localStorage if present
 		const savedState = localStorage.getItem('game_state');
 		if (savedState) {
 			const { game_pin: savedGamePin, username: savedUsername } = JSON.parse(savedState);
@@ -292,6 +297,7 @@
 	});
 
 	socket.on('joined_game', (data) => {
+		console.log('Joined game:', data);
 		gameData = data;
 		game_mode = data.game_mode;
 		//selected_answer = '';
@@ -307,7 +313,7 @@
 
 	socket.on('joined_game_late', (data) => {
 		// Handle receiving the current game state for late joiners
-		console.log('Joined late:', data);
+		console.log('Joined game late:', data);
 		checkFinalizedGame(data);
 		let converted_scores =  Object.fromEntries(Object.entries(data.player_scores).map(([key, value]) => [key, Number(value)])); // This statement converts string values to numbers in an object
 		scores = converted_scores;
@@ -328,7 +334,7 @@
 
 
 	socket.on('rejoined_game', (data) => {
-		console.log('Game rejoined successfully!');
+		console.log('Rejoined game:', data);
 		console.log('Latest answer:', data.latest_answer);
 		gameData = data;
 		if (data.started) {
@@ -354,12 +360,14 @@
 	});
 
 	socket.on('game_not_found', () => {
+		console.log('Game session not found!');
 		clearState();
 		alert('Game session not found!');
 		window.location.reload();
 	});
 
 	socket.on('set_question_number', (data) => {
+		console.log('Set question number:', data);
 		solution = undefined;
 		restart();
 		question = data.question;
@@ -377,12 +385,14 @@
 	});
 
 	socket.on('start_game', () => {
+		console.log('Game started!');
 		gameMeta.started = true;
 		window.scrollTo(0, 0);
 		storeState();
 	});
 
 	socket.on('question_results', (data) => {
+		console.log('Question results:', data);
 		restart();
 		answer_results = data;
 		storeState();
@@ -393,6 +403,7 @@
 	});
 
 	socket.on('kick', () => {
+		console.log('You got kicked');
 		window.alert('You got kicked');
 		preventReload = false;
 		clearState();
@@ -400,10 +411,12 @@
 	});
 
 	socket.on('disconnect_reason', (data) => {
+		console.log('Disconnected:', data);
 		disconnectedMessage = data.reason;
 	});
 
 	socket.on('final_results', (data) => {
+		console.log('Final results:', data);
 		final_results = data;
 		gameEnded = true;
 		clearState();  // Clear state when the game ends
@@ -413,6 +426,7 @@
 	});
 
 	socket.on('solutions', (data) => {
+		console.log('Solutions:', data);
 		solution = data;
 		acknowledgement.answered = true;
 		console.log('Acknowledgement before store:', acknowledgement);
