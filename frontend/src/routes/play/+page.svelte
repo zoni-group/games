@@ -63,6 +63,7 @@
 	onMount(() => {
     	if (browser) {
 			restoreState();
+			checkFinalizedGame(game_pin);
 			noSleep = new NoSleep(); // Create a NoSleep instance
         	const enableNoSleep = () => {
 				noSleep.enable(); // Enable wake lock to prevent the screen from locking
@@ -237,13 +238,17 @@
     	}
 	}
 
-	function checkFinalizedGame(gameData) {
-		if (gameData.current_question + 1 === gameData.question_count && gameData.question_show === false) {
-			gameEnded = true;
-			clearState();
-			alert('This session has already ended.');
-			window.location.href = '/play';
-		}
+	function checkFinalizedGame(game_pin) {
+		fetchGameState(game_pin).then((gameState) => {
+			if (gameState) {
+				if (gameState.current_question + 1 === gameState.question_count && gameState.question_show === false) {
+					gameEnded = true;
+					clearState();
+					alert('This session has already ended.');
+					window.location.href = '/play';
+				}
+			}
+		});
 	}
 
 	// Socket events for managing the game connection and state
@@ -270,7 +275,7 @@
 				// Use the fetchGameState function to get the game state
 				fetchGameState(game_pin).then((gameState) => {
 					if (gameState) {
-						checkFinalizedGame(gameData);
+						checkFinalizedGame(game_pin);
 						gameData = gameState;
 						game_mode = gameState.game_mode;
 						if (gameState.started) {
@@ -307,7 +312,7 @@
 	socket.on('joined_game_late', (data) => {
 		// Handle receiving the current game state for late joiners
 		console.log('Joined game late:', data);
-		checkFinalizedGame(data);
+		checkFinalizedGame(game_pin);
 		let converted_scores =  Object.fromEntries(Object.entries(data.player_scores).map(([key, value]) => [key, Number(value)])); // This statement converts string values to numbers in an object
 		scores = converted_scores;
 		console.log('scores', scores);
