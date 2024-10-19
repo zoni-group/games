@@ -1,5 +1,6 @@
 <script lang="ts">
 	import { onMount, onDestroy } from 'svelte';
+	import socketManager from '$lib/socketManager';
 	import NoSleep from 'nosleep.js';
 	import { socket } from '$lib/socket';
 	import { browser } from '$app/environment';
@@ -56,9 +57,149 @@
 	let gameEnded = false;
 	let hasRejoined = false;
 
+	function handleTimeSync(data) {
+		console.log('Time sync:', data);
+		socket.emit('echo_time_sync', data);
+	}
+
+	function handleJoinedGame(data) {
+		console.log('Joined game:', data);
+		gameData = data;
+		game_mode = data.game_mode;
+		//selected_answer = '';
+
+		if (data.question_show === false) {
+			acknowledgement.answered = true;
+		} else {
+			acknowledgement.answered = false;
+		}
+
+		storeState();  // Save state after joining the game
+	}
+
+	function handleJoinedGameLate(data) {
+		console.log('Joined game late:', data);
+		checkFinalizedGame(game_pin);
+		let converted_scores =  Object.fromEntries(Object.entries(data.player_scores).map(([key, value]) => [key, Number(value)])); // This statement converts string values to numbers in an object
+		scores = converted_scores;
+		console.log('scores', scores);
+		
+		gameData = data;
+		game_mode = data.game_mode;
+		gameMeta.started = true;  // Ensure the game state reflects that it's in progress
+
+		if (data.question_show === false) {
+			acknowledgement.answered = true;
+		} else {
+			acknowledgement.answered = false;
+		}
+
+		storeState();  // Store the current game state locally
+	}
+
+	function handleRejoinedGame(data) {
+		console.log('Rejoined game:', data);
+		console.log('Latest answer:', data.latest_answer);
+		gameData = data;
+		if (data.started) {
+			gameMeta.started = true;
+			question_index = data.current_question;  // Set current question
+		}
+
+		if (data.latest_answer) {
+			if (data.latest_answer.question_index === question_index) {
+				acknowledgement.answered = true;
+				acknowledgement.answer = data.latest_answer.answer;
+			} else {
+				acknowledgement.answered = false;
+			}
+		} else {
+			if (data.question_show === false) {
+				acknowledgement.answered = true;
+			} else {
+				acknowledgement.answered = false;
+			}
+		}
+		storeState();  // Store state after rejoining
+	}
+
+	function handleGameNotFound() {
+		console.log('Game session not found!');
+		clearState();
+		alert('Game session not found!');
+		window.location.reload();
+	}
+
+	function handleSetQuestionNumber(data) {
+		console.log('Set question number:', data);
+		solution = undefined;
+		restart();
+		question = data.question;
+		question_index = data.question_index;
+		answer_results = undefined;
+		if (data.question_show === false) {
+			acknowledgement.answered = true;
+		} else {
+			acknowledgement.answered = false;
+		}
+		acknowledgement.answer = '';
+		selected_answer = '';
+		window.scrollTo(0, 0);
+		storeState();  // Save state when the question index changes
+	}
+
+	function handleStartGame() {
+		console.log('Game started!');
+		gameMeta.started = true;
+		window.scrollTo(0, 0);
+		storeState();
+	}
+
+	function handleQuestionResults(data) {
+		console.log('Question results:', data);
+		restart();
+		answer_results = data;
+		storeState();
+	}
+
+	function handleUsernameAlreadyExists() {
+		console.log('Username already exists!');
+		alert('Username already exists!');
+	}
+
+	function handleKick() {
+		console.log('You got kicked');
+		alert('You got kicked');
+		preventReload = false;
+		clearState();
+		window.location.reload();
+	}
+
+	function handleDisconnectReason(data) {
+		console.log('Disconnected:', data);
+		disconnectedMessage = data.reason;
+	}
+
+	function handleFinalResults(data) {
+		console.log('Final results:', data);
+		final_results = data;
+		gameEnded = true;
+		clearState();  // Clear state when the game ends
+		if (browser) {
+			noSleep.disable(); // Disable wake lock when the game ends
+		}
+	}
+
+	function handleSolutions(data) {
+		console.log('Solutions:', data);
+		solution = data;
+		acknowledgement.answered = true;
+		storeState();
+	}
+
 	// Restore game state on load
 	onMount(() => {
-    	if (browser && socket) {
+    	//if (browser && socket) {
 			restoreState();
 			checkFinalizedGame(game_pin);
 			noSleep = new NoSleep(); // Create a NoSleep instance
@@ -71,172 +212,44 @@
 			window.addEventListener('click', enableNoSleep);
 
 			window.addEventListener('visibilitychange', handleVisibilityChange);
-    		socket.on('disconnect', handleDisconnect);
-    		socket.on('connect', handleConnect);
-			socket.on('time_sync', (data) => {
-				console.log('Time sync:', data);
-				socket.emit('echo_time_sync', data);
-			});
-
-			socket.on('joined_game', (data) => {
-				console.log('Joined game:', data);
-				gameData = data;
-				game_mode = data.game_mode;
-				//selected_answer = '';
-
-				if (data.question_show === false) {
-					acknowledgement.answered = true;
-				} else {
-					acknowledgement.answered = false;
-				}
-
-				storeState();  // Save state after joining the game
-			});
-
-			socket.on('joined_game_late', (data) => {
-				// Handle receiving the current game state for late joiners
-				console.log('Joined game late:', data);
-				checkFinalizedGame(game_pin);
-				let converted_scores =  Object.fromEntries(Object.entries(data.player_scores).map(([key, value]) => [key, Number(value)])); // This statement converts string values to numbers in an object
-				scores = converted_scores;
-				console.log('scores', scores);
-				
-				gameData = data;
-				game_mode = data.game_mode;
-				gameMeta.started = true;  // Ensure the game state reflects that it's in progress
-
-				if (data.question_show === false) {
-					acknowledgement.answered = true;
-				} else {
-					acknowledgement.answered = false;
-				}
-
-				storeState();  // Store the current game state locally
-			});
-
-
-			socket.on('rejoined_game', (data) => {
-				console.log('Rejoined game:', data);
-				console.log('Latest answer:', data.latest_answer);
-				gameData = data;
-				if (data.started) {
-					gameMeta.started = true;
-					question_index = data.current_question;  // Set current question
-				}
-
-				if (data.latest_answer) {
-					if (data.latest_answer.question_index === question_index) {
-						acknowledgement.answered = true;
-						acknowledgement.answer = data.latest_answer.answer;
-					} else {
-						acknowledgement.answered = false;
-					}
-				} else {
-					if (data.question_show === false) {
-						acknowledgement.answered = true;
-					} else {
-						acknowledgement.answered = false;
-					}
-				}
-				storeState();  // Store state after rejoining
-			});
-
-			socket.on('game_not_found', () => {
-				console.log('Game session not found!');
-				clearState();
-				alert('Game session not found!');
-				window.location.reload();
-			});
-
-			socket.on('set_question_number', (data) => {
-				console.log('Set question number:', data);
-				solution = undefined;
-				restart();
-				question = data.question;
-				question_index = data.question_index;
-				answer_results = undefined;
-				if (data.question_show === false) {
-					acknowledgement.answered = true;
-				} else {
-					acknowledgement.answered = false;
-				}
-				acknowledgement.answer = '';
-				selected_answer = '';
-				window.scrollTo(0, 0);
-				storeState();  // Save state when the question index changes
-			});
-
-			socket.on('start_game', () => {
-				console.log('Game started!');
-				gameMeta.started = true;
-				window.scrollTo(0, 0);
-				storeState();
-			});
-
-			socket.on('question_results', (data) => {
-				console.log('Question results:', data);
-				restart();
-				answer_results = data;
-				storeState();
-			});
-
-			socket.on('username_already_exists', () => {
-				window.alert('Username already exists!');
-			});
-
-			socket.on('kick', () => {
-				console.log('You got kicked');
-				window.alert('You got kicked');
-				preventReload = false;
-				clearState();
-				window.location.reload();
-			});
-
-			socket.on('disconnect_reason', (data) => {
-				console.log('Disconnected:', data);
-				disconnectedMessage = data.reason;
-			});
-
-			socket.on('final_results', (data) => {
-				console.log('Final results:', data);
-				final_results = data;
-				gameEnded = true;
-				clearState();  // Clear state when the game ends
-				if (browser) {
-					noSleep.disable(); // Disable wake lock when the game ends
-				}
-			});
-
-			socket.on('solutions', (data) => {
-				console.log('Solutions:', data);
-				solution = data;
-				acknowledgement.answered = true;
-				console.log('Acknowledgement before store:', acknowledgement);
-				storeState();
-				console.log('Acknowledgement after store:', acknowledgement);
-			});
-    	}
+    		socketManager.addEventListener('disconnect', handleDisconnect);
+    		socketManager.addEventListener('connect', handleConnect);
+			socketManager.addEventListener('time_sync', handleTimeSync);
+			socketManager.addEventListener('joined_game', handleJoinedGame);
+			socketManager.addEventListener('joined_game_late', handleJoinedGameLate);
+			socketManager.addEventListener('rejoined_game', handleRejoinedGame);
+			socketManager.addEventListener('game_not_found', handleGameNotFound);
+			socketManager.addEventListener('set_question_number', handleSetQuestionNumber);
+			socketManager.addEventListener('start_game', handleStartGame);
+			socketManager.addEventListener('question_results', handleQuestionResults);
+			socketManager.addEventListener('username_already_exists', handleUsernameAlreadyExists);
+			socketManager.addEventListener('kick', handleKick);
+			socketManager.addEventListener('disconnect_reason', handleDisconnectReason);
+			socketManager.addEventListener('final_results', handleFinalResults);
+			socketManager.addEventListener('solutions', handleSolutions);
+    	//}
 	});
 
 	onDestroy(() => {
-		if (browser && socket) {
+		if (browser) {
     		window.removeEventListener('visibilitychange', handleVisibilityChange);
-			console.log("Removing socket event listeners");
-        	socket.off('disconnect', handleDisconnect);
-        	socket.off('connect', handleConnect);
-			socket.off('time_sync');
-			socket.off('joined_game_late');
-			socket.off('rejoined_game');
-			socket.off('game_not_found');
-			socket.off('set_question_number');
-			socket.off('start_game');
-			socket.off('question_results');
-			socket.off('username_already_exists');
-			socket.off('kick');
-			socket.off('disconnect_reason');
-			socket.off('final_results');
-			socket.off('solutions');
 		}
+		console.log("Removing socket event listeners");
+		socketManager.removeEventListener('disconnect', handleDisconnect);
+		socketManager.removeEventListener('connect', handleConnect);
+		socketManager.removeEventListener('time_sync', handleTimeSync);
+		socketManager.removeEventListener('joined_game_late', handleJoinedGameLate);
+		socketManager.removeEventListener('rejoined_game', handleRejoinedGame);
+		socketManager.removeEventListener('game_not_found', handleGameNotFound);
+		socketManager.removeEventListener('set_question_number', handleSetQuestionNumber);
+		socketManager.removeEventListener('start_game', handleStartGame);
+		socketManager.removeEventListener('question_results', handleQuestionResults);
+		socketManager.removeEventListener('username_already_exists', handleUsernameAlreadyExists);
+		socketManager.removeEventListener('kick', handleKick);
+		socketManager.removeEventListener('disconnect_reason', handleDisconnectReason);
+		socketManager.removeEventListener('final_results', handleFinalResults);
+		socketManager.removeEventListener('solutions', handleSolutions);
+	
   	});
 
 	function handleConnect() {

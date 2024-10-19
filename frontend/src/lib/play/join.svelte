@@ -1,12 +1,11 @@
 <script lang="ts">
 	import { socket } from '$lib/socket';
 	import { onDestroy, onMount } from 'svelte';
+	import socketManager from '$lib/socketManager';
 	import { browser } from '$app/environment';
 	import * as Sentry from '@sentry/browser';
-	// import { alertModal } from '../stores';
 	import { getLocalization } from '$lib/i18n';
 	import Cookies from 'js-cookie';
-	import BrownButton from '$lib/components/buttons/brown.svelte';
 	import login_icon from "$lib/assets/all/login_icon.webp";
 	import hand_click_icon from "$lib/assets/all/hand_click_icon.svg";
 	import hand_click_icon_dark from "$lib/assets/all/hand_click_icon_dark.svg";
@@ -29,8 +28,14 @@
 	};
 	let hcaptchaWidgetID;
 
+	function handleGameNotFound() {
+		if (browser) {
+			alert($t('words.game_not_found'));
+		}
+	}
+
 	onMount(() => {
-		if (browser && socket) {
+		if (browser) {
 			prefetch_username();
 			hcaptcha = window.hcaptcha;
 			if (hcaptcha && hcaptcha.render) {
@@ -44,24 +49,20 @@
 			if (game_pin && game_pin.length > 5) {
 				set_game_pin();
 			}
-			socket.on('game_not_found', () => {
-				game_pin = '';
-				if (browser) {
-				alert($t('words.game_not_found'));
-			}
-	});
+			
 		}
+		socketManager.addEventListener('game_not_found', handleGameNotFound);
 	});
 
 	onDestroy(() => {
-		if (browser && socket) {
+		if (browser) {
 			hcaptcha = {
 				execute: async () => ({ response: '' }),
 				// eslint-disable-next-line @typescript-eslint/no-empty-function
 				render: () => {}
 			};
-			socket.off('game_not_found');
 		}
+		socketManager.removeEventListener('game_not_found', handleGameNotFound);
 	});
 
 	async function fetchGameState(game_pin: string) {
