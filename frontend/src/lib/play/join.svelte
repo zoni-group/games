@@ -30,7 +30,7 @@
 	let hcaptchaWidgetID;
 
 	onMount(() => {
-		if (browser) {
+		if (browser && socket) {
 			prefetch_username();
 			hcaptcha = window.hcaptcha;
 			if (hcaptcha && hcaptcha.render) {
@@ -44,16 +44,23 @@
 			if (game_pin && game_pin.length > 5) {
 				set_game_pin();
 			}
+			socket.on('game_not_found', () => {
+				game_pin = '';
+				if (browser) {
+				alert($t('words.game_not_found'));
+			}
+	});
 		}
 	});
 
 	onDestroy(() => {
-		if (browser) {
+		if (browser && socket) {
 			hcaptcha = {
 				execute: async () => ({ response: '' }),
 				// eslint-disable-next-line @typescript-eslint/no-empty-function
 				render: () => {}
 			};
+			socket.off('game_not_found');
 		}
 	});
 
@@ -196,12 +203,7 @@
 			});
 		}
 	};
-	socket.on('game_not_found', () => {
-		game_pin = '';
-		if (browser) {
-			alert($t('words.game_not_found'));
-		}
-	});
+
 
 	// $: console.log(game_pin, game_pin && game_pin.length > 6);
 	$: game_pin = (game_pin || '').replace(/\D/g, '');

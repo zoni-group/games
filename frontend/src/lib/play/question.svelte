@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { createEventDispatcher } from 'svelte';
-	import { onMount } from 'svelte';
+	import { onMount, onDestroy } from 'svelte';
 	import type { Question } from '$lib/quiz_types';
 	import { QuizQuestionType } from '$lib/quiz_types';
 	import { socket } from '$lib/socket';
@@ -17,6 +17,7 @@
 	import { toast } from '@zerodevx/svelte-toast';
 	import RightArrow from '$lib/icons/rightArrow.svelte';
 	import en from '$lib/i18n/locales/en.json';
+	import { browser } from '$app/environment';
 
 
 	const { t } = getLocalization();
@@ -64,11 +65,43 @@
 
 
 	onMount(() => {
-		// Read gameState from localStorage once
-		triggerRestoreState();
+		if (browser && socket) {
+			// Read gameState from localStorage once
+			triggerRestoreState();
+			socket.on('everyone_answered', (_) => {
+				timer_res = '0';
+			});
 
-		// Initialize and start timer based on `timer_res`
-		startTimer(timer_res, acknowledgement.answered);
+			// Listen to server events for remaining time and time_up
+			socket.on('remaining_time', (data) => {
+				console.log('Remaining time received:', data.time_left);
+				timer_res = Math.floor(data.time_left).toString(); // Update timer_res
+				startTimer(timer_res, acknowledgement.answered); // Restart timer with remaining time
+			});
+
+			socket.on('time_up', () => {
+				console.log('Time is up!');
+				timer_res = '0'; // Set timer_res to 0 when time is up
+				clearInterval(timer_interval); // Ensure the timer stops
+			});
+
+			socket.on('answer_acknowledged', () => {
+				acknowledgement.answered = true;
+				acknowledgement.selected_answer = selected_answer;
+				triggerStoreState();
+			});
+			// Initialize and start timer based on `timer_res`
+			startTimer(timer_res, acknowledgement.answered);
+		}
+	});
+
+	onDestroy(() => {
+		if (browser && socket) {
+			socket.off('everyone_answered');
+			socket.off('remaining_time');
+			socket.off('time_up');
+			socket.off('answer_acknowledged');
+		}
 	});
 
 	// Function to handle the timer and count down
@@ -89,22 +122,7 @@
 	}
 
 	
-	socket.on('everyone_answered', (_) => {
-		timer_res = '0';
-	});
 
-	// Listen to server events for remaining time and time_up
-	socket.on('remaining_time', (data) => {
-		console.log('Remaining time received:', data.time_left);
-		timer_res = Math.floor(data.time_left).toString(); // Update timer_res
-		startTimer(timer_res, acknowledgement.answered); // Restart timer with remaining time
-	});
-
-	socket.on('time_up', () => {
-		console.log('Time is up!');
-		timer_res = '0'; // Set timer_res to 0 when time is up
-		clearInterval(timer_interval); // Ensure the timer stops
-	});
 
 
 	$: {
@@ -130,12 +148,6 @@
 		}
 		triggerStoreState();
 	};
-
-	socket.on('answer_acknowledged', () => {
-		acknowledgement.answered = true;
-		acknowledgement.selected_answer = selected_answer;
-		triggerStoreState();
-	});
 
 	const selectRangeAnswer = (answer: string) => {
 		selected_answer = answer;
