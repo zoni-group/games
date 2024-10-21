@@ -199,36 +199,35 @@
 
 	// Restore game state on load
 	onMount(() => {
-    	//if (browser && socket) {
-			restoreState();
-			checkFinalizedGame(game_pin);
-			noSleep = new NoSleep(); // Create a NoSleep instance
-        	const enableNoSleep = () => {
-				noSleep.enable(); // Enable wake lock to prevent the screen from locking
-				window.removeEventListener('click', enableNoSleep);
-			};
+		restoreState();
+		checkFinalizedGame(game_pin);
+		noSleep = new NoSleep(); // Create a NoSleep instance
+		const enableNoSleep = () => {
+			noSleep.enable(); // Enable wake lock to prevent the screen from locking
+			window.removeEventListener('click', enableNoSleep);
+		};
 
-			// Add event listener to enable NoSleep on the first user interaction
-			window.addEventListener('click', enableNoSleep);
+		// Add event listener to enable NoSleep on the first user interaction
+		window.addEventListener('click', enableNoSleep);
 
-			window.addEventListener('visibilitychange', handleVisibilityChange);
-    		socketManager.addEventListener('disconnect', handleDisconnect);
-    		socketManager.addEventListener('connect', handleConnect);
-			socketManager.addEventListener('time_sync', handleTimeSync);
-			socketManager.addEventListener('joined_game', handleJoinedGame);
-			socketManager.addEventListener('joined_game_late', handleJoinedGameLate);
-			socketManager.addEventListener('rejoined_game', handleRejoinedGame);
-			socketManager.addEventListener('game_not_found', handleGameNotFound);
-			socketManager.addEventListener('set_question_number', handleSetQuestionNumber);
-			socketManager.addEventListener('start_game', handleStartGame);
-			socketManager.addEventListener('question_results', handleQuestionResults);
-			socketManager.addEventListener('username_already_exists', handleUsernameAlreadyExists);
-			socketManager.addEventListener('kick', handleKick);
-			socketManager.addEventListener('disconnect_reason', handleDisconnectReason);
-			socketManager.addEventListener('final_results', handleFinalResults);
-			socketManager.addEventListener('solutions', handleSolutions);
-    	//}
+		window.addEventListener('visibilitychange', handleVisibilityChange);
 	});
+
+	socketManager.addEventListener('disconnect', handleDisconnect);
+	socketManager.addEventListener('connect', handleConnect);
+	socketManager.addEventListener('time_sync', handleTimeSync);
+	socketManager.addEventListener('joined_game', handleJoinedGame);
+	socketManager.addEventListener('joined_game_late', handleJoinedGameLate);
+	socketManager.addEventListener('rejoined_game', handleRejoinedGame);
+	socketManager.addEventListener('game_not_found', handleGameNotFound);
+	socketManager.addEventListener('set_question_number', handleSetQuestionNumber);
+	socketManager.addEventListener('start_game', handleStartGame);
+	socketManager.addEventListener('question_results', handleQuestionResults);
+	socketManager.addEventListener('username_already_exists', handleUsernameAlreadyExists);
+	socketManager.addEventListener('kick', handleKick);
+	socketManager.addEventListener('disconnect_reason', handleDisconnectReason);
+	socketManager.addEventListener('final_results', handleFinalResults);
+	socketManager.addEventListener('solutions', handleSolutions);
 
 	onDestroy(() => {
 		if (browser) {

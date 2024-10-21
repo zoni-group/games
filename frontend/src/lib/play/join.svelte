@@ -51,8 +51,9 @@
 			}
 			
 		}
-		socketManager.addEventListener('game_not_found', handleGameNotFound);
 	});
+
+	socketManager.addEventListener('game_not_found', handleGameNotFound);
 
 	onDestroy(() => {
 		if (browser) {
