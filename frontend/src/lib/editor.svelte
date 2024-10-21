@@ -14,6 +14,7 @@ SPDX-License-Identifier: MPL-2.0
 	import Spinner from './Spinner.svelte';
 	import { getLocalization } from '$lib/i18n';
 	import { toast } from '@zerodevx/svelte-toast';
+	import Hamburger from './components/Hamburger.svelte';
 
 	const { t } = getLocalization();
 
@@ -23,6 +24,7 @@ SPDX-License-Identifier: MPL-2.0
 	export let data: EditorData;
 	export let quiz_id: string | null;
 	export let submit_button_text: string = "Submit";
+	let open = false;
 	let selected_question = -1;
 	let imgur_links_valid = false;
 console.log(submit_button_text);
@@ -161,14 +163,16 @@ console.log(submit_button_text);
 	<Spinner />
 {:then _}
 	<form on:submit|preventDefault={saveQuiz}>
-		<div class="grid grid-cols-6 h-screen w-screen">
-			<div>
-				<Sidebar bind:data bind:selected_question />
+		<div class="grid grid-cols-6 h-screen w-screen relative">
+			<div class={`md:col-span-1 col-span-6`} >
+				
+				<Sidebar bind:data bind:selected_question bind:open />
 			</div>
-			<div class="col-span-5 flex flex-col">
+			<div class="lg:col-span-5 col-span-6 flex flex-col">
 				<div
-					class="h-10 w-full bg-white mb-10 flex align-middle justify-center rounded-br-lg"
+					class="h-auto w-full bg-white mb-10 flex align-middle justify-center rounded-br-lg"
 				>
+					<Hamburger bind:open />
 					{#if schemaInvalid}
 						<p class="text-center w-full text-red-600 h-full mt-0.5 font-semibold">
 							{yupErrorMessage}

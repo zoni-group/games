@@ -198,7 +198,7 @@ SPDX-License-Identifier: MPL-2.0
 				<div class="flex justify-center py-5">
 					<p>{type_to_name[String(data.questions[selected_question].type)]}</p>
 				</div>
-				<div class="flex justify-center w-full">
+				<div class="flex justify-center w-full pb-10">
 					{#if type === QuizQuestionType.ABCD || type === QuizQuestionType.CHECK}
 						{#await import('$lib/editor/ABCDEditorPart.svelte')}
 							<Spinner my_20={false} />
