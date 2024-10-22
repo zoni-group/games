@@ -83,17 +83,22 @@ SPDX-License-Identifier: MPL-2.0
 		return _arr;
 	};
 
+	// Initial setup for ORDER-type questions
 	if (question.type === QuizQuestionType.ORDER) {
-		items = question.answers.map((answer, index) => ({
+		// Create a local copy of the answers for the original order
+		original_order = question.answers.map((answer, index) => ({
 			id: index,
 			answer,
 			color: answer.color,
 		}));
-		original_order = [...question.answers];
-		shuffleArray(question.answers);
+		// Copy the original order to items
+		items = [...original_order];
+		// Shuffle the items
+		shuffleArray(items);
 	}
 	console.log(question.answers, "moIn!", original_order);
 
+	// Reactive statement to reset state when question changes
 	$: if (question !== prevQuestion) {
 		selected_answer = undefined;
 		timer_res = question.time;
@@ -101,13 +106,16 @@ SPDX-License-Identifier: MPL-2.0
 		order_corrected = false;
 
 		if (question.type === QuizQuestionType.ORDER) {
-			items = question.answers.map((answer, index) => ({
+			// Create a local copy of the answers for the original order
+			original_order = question.answers.map((answer, index) => ({
 				id: index,
 				answer,
 				color: answer.color,
 			}));
-			original_order = [...question.answers];
-			shuffleArray(question.answers);
+			// Copy the original order to items
+			items = [...original_order];
+			// Shuffle the items
+			shuffleArray(items);
 		}
 
 		// Reset other question-type-specific variables if necessary
@@ -123,22 +131,10 @@ SPDX-License-Identifier: MPL-2.0
 
 	
 	const select_complex_answer = () => {
-		/*		const correct_order_ids = []
-                for (const e of original_order) {
-                    correct_order_ids.push(e.id)
-                }
-                const user_set_ids = []
-                for (const e of answer) {
-                    correct_order_ids.push(e.id)
-                }*/
-		question.answers = original_order;
-		items = original_order.map((answer, index) => ({
-			id: index, 
-			answer, 
-			color: answer.color
-		}));
-		order_corrected = true;
-		timer_res = '0';
+		// Reset items to the original order
+		items = [...original_order];
+    	order_corrected = true;
+    	timer_res = '0';
 	};
 
 	const default_colors = ['#FFA800', '#00A3FF', '#FF1D38', '#00D749'];
