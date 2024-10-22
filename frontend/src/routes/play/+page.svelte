@@ -302,20 +302,22 @@
 
 	// Fetch game state in the browser
 	async function fetchGameState(game_pin: string) {
-		try {
-		// Replace the URL with your actual backend URL
-		const response = await fetch(`/api/v1/game_state/${game_pin}`);
-		console.log('Fetch Game State Response:', response);
+		if (game_pin && /^\d{6}$/.test(game_pin)) {
+			try {
+			// Replace the URL with your actual backend URL
+			const response = await fetch(`/api/v1/game_state/${game_pin}`);
+			console.log('Fetch Game State Response:', response);
 
-		if (!response.ok) {
-			throw new Error(`Failed to fetch game state: ${response.statusText}`);
-		}
+			if (!response.ok) {
+				throw new Error(`Failed to fetch game state: ${response.statusText}`);
+			}
 
-		const gameState = await response.json();
-		return gameState;
-		} catch (error) {
-			console.error('Error fetching game state:', error);
-			return null;
+			const gameState = await response.json();
+			return gameState;
+			} catch (error) {
+				console.error('Error fetching game state:', error);
+				return null;
+			}
 		}
 	}
 

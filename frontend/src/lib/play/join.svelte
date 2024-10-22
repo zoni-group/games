@@ -9,6 +9,7 @@
 	import login_icon from "$lib/assets/all/login_icon.webp";
 	import hand_click_icon from "$lib/assets/all/hand_click_icon.svg";
 	import hand_click_icon_dark from "$lib/assets/all/hand_click_icon_dark.svg";
+	import { toast } from '@zerodevx/svelte-toast';
 
 	const { t } = getLocalization();
 	export let game_pin: string = '';
@@ -67,19 +68,21 @@
 	});
 
 	async function fetchGameState(game_pin: string) {
-		try {
-		const response = await fetch(`/api/v1/game_state/${game_pin}`);
-		console.log('Fetch Game State Response:', response);
+		if (game_pin && /^\d{6}$/.test(game_pin)) {
+			try {
+			const response = await fetch(`/api/v1/game_state/${game_pin}`);
+			console.log('Fetch Game State Response:', response);
 
-		if (!response.ok) {
-			throw new Error(`Failed to fetch game state: ${response.statusText}`);
-		}
+			if (!response.ok) {
+				throw new Error(`Failed to fetch game state: ${response.statusText}`);
+			}
 
-		const gameState = await response.json();
-		return gameState;
-		} catch (error) {
-			console.error('Error fetching game state:', error);
-			return null;
+			const gameState = await response.json();
+			return gameState;
+			} catch (error) {
+				console.error('Error fetching game state:', error);
+				return null;
+			}
 		}
 	}
 
@@ -106,15 +109,17 @@
 		}
 
 		if (browser) {
-			fetchGameState(game_pin).then((gameState) => {
-				console.log('Game State:', gameState);
-				if (gameState) {
-					if ((gameState.current_question + 1 === gameState.questions_count) && !gameState.question_show) {
-						alert('This session has already ended.');
-						window.location.href = '/play';
+			if (game_pin && /^\d{6}$/.test(game_pin)) {
+				fetchGameState(game_pin).then((gameState) => {
+					console.log('Game State:', gameState);
+					if (gameState) {
+						if ((gameState.current_question + 1 === gameState.questions_count) && !gameState.question_show) {
+							toast.push('This session has already ended.');
+							window.location.href = '/play';
+						}
 					}
-				}
-			});
+				});
+			}
 		}
 
 		const res = await fetch(
