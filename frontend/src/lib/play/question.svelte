@@ -32,10 +32,12 @@
 
 	console.log(question);
 	
-	if (question.type === undefined) {
-		question.type = QuizQuestionType.ABCD;
-	} else {
-		question.type = QuizQuestionType[question.type];
+	if (question) {
+		if (question.type === undefined) {
+			question.type = QuizQuestionType.ABCD;
+		} else {
+			question.type = QuizQuestionType[question.type];
+		}
 	}
 
 	let timer_res = question.time;
