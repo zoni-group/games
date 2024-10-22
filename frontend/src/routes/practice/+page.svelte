@@ -6,8 +6,6 @@
 	import Question from '$lib/practice/question.svelte';
 
 	let quiz: QuizData;
-	let unique = {};
-
 	let selected_question = -1;
 
 	const get_quiz = async () => {
@@ -18,9 +16,6 @@
 		quiz = await res.json();
 		return quiz;
 	};
-	const reload_q = () => {
-		unique = {};
-	};
 </script>
 
 {#await get_quiz()}
@@ -30,7 +25,7 @@
 		{#if selected_question === -1}
 			<TitleScreen bind:data={quiz} />
 		{:else}
-			{#key unique}
+			{#key selected_question}
 				<Question bind:question={quiz.questions[selected_question]} />
 			{/key}
 		{/if}
@@ -62,7 +57,6 @@
 				class="flex justify-end transition-all disabled:opacity-60 pointer-events-none"
 				disabled={selected_question >= quiz.questions.length - 1}
 				on:click={() => {
-					reload_q();
 					selected_question += 1;
 				}}
 			>
@@ -87,6 +81,6 @@
 	{#if e === 404 || e === 400}
 		<h1 class="text-center text-5xl">Quiz not found!</h1>
 	{:else}
-		<h1 class="text-center text-5xl">unknown error!</h1>
+		<h1 class="text-center text-5xl">Unknown error!</h1>
 	{/if}
 {/await}
