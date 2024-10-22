@@ -195,8 +195,8 @@ async def rejoin_game(sid: str, data: dict):
         room=sid,
     )
 
-    # Send the current question to the rejoiner if didn't answer yet    
-    if latest_answer is None:
+    # Send the current question to the rejoiner if didn't answer yet and the game started
+    if latest_answer is None and game_data.started:
         current_question = game_data.questions[game_data.current_question]
         if current_question.type == QuizQuestionType.SLIDE:
             await sio.emit("set_question_number", {"question_index": game_data.current_question}, room=sid)
