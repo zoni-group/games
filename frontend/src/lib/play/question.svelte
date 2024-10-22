@@ -17,6 +17,7 @@
 	import { toast } from '@zerodevx/svelte-toast';
 	import RightArrow from '$lib/icons/rightArrow.svelte';
 	import en from '$lib/i18n/locales/en.json';
+	import { time_ranges_to_array } from 'svelte/internal';
 
 
 	const { t } = getLocalization();
@@ -31,17 +32,20 @@
 	$: console.log(question_index, question, 'hi!');
 
 	console.log(question);
-	
-	if (question.type === undefined) {
-		question.type = QuizQuestionType.ABCD;
-	} else {
-		question.type = QuizQuestionType[question.type];
-	}
-
-	let timer_res = question.time;
+	let timer_res;
 	let timer_interval; // Declare this outside to ensure there's only one interval running at a time
 	let text_answer = [];
+	
+	if (question) {
+		if (question.type === undefined) {
+			question.type = QuizQuestionType.ABCD;
+		} else {
+			question.type = QuizQuestionType[question.type];
+		}
+		timer_res = question.time;
+	}
 
+	
 	let items = Array.isArray(question.answers) ? question.answers.map((answer, index) => ({
         id: index, 
         answer, 
@@ -291,6 +295,7 @@
 								{#if question.ansType === 'IMAGE'}
 									<MediaComponent 
 										css_classes="inline-block m-auto max-h-[30vh]" 
+										allow_fullscreen={false}
 										src={answer.answer} 
 									/>
 								{:else}
@@ -300,6 +305,7 @@
 								{#if question.ansType === 'IMAGE'}
 									<MediaComponent 
 										css_classes="inline-block m-auto max-h-[30vh]" 
+										allow_fullscreen={false}
 										src={answer.answer} 
 									/>
 								{:else}
@@ -414,7 +420,7 @@
 				</p>
 			{/if}
 		{:else if question.type === QuizQuestionType.ORDER}
-		<div class="flex flex-col justify-center items-center w-full" >
+		<div class={`flex flex-col justify-center ${game_mode !== 'normal' ? 'min-h-[100vh]' : ''} items-center w-full`} >
 			<section 
 				use:dndzone={{items, flipDurationMs, dropTargetStyle:{"outline": "none"} ,dropTargetClasses: ["py-4","red-text","border-0","dark:bg-[#0AEDFE]/30","shadow-lg", "outline-none","rounded-lg","dark:shadow-black","shadow-black/40","transition-all","ease-in-out", "bg-[#E9F3FF]"]}} 
 				on:consider={handleSort} 
