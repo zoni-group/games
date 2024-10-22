@@ -341,6 +341,11 @@
 		if (!username || !game_pin || question_index === null || question_index === undefined || gameEnded) {
 			return;
 		}
+		// Use URL `game_pin` from the `data` first
+		if (data?.game_pin && /^\d{6}$/.test(data?.game_pin)) {
+			game_pin = data?.game_pin;
+			console.log('Store using Game Pin from URL:', game_pin);
+		}
 		const state = {
 			game_pin,
 			username,
@@ -362,6 +367,12 @@
 
 	function restoreState() {
 		const savedState = localStorage.getItem('game_state');
+
+		// Use URL `game_pin` from the `data` first
+		if (data?.game_pin && /^\d{6}$/.test(data?.game_pin)) {
+			game_pin = data?.game_pin;
+			console.log('Resore using Game Pin from URL:', game_pin);
+		}
 
 		if (savedState) {
 			const {
