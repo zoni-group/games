@@ -26,6 +26,12 @@ SPDX-License-Identifier: MPL-2.0
 	let selected_answer = undefined;
 	let timer_res = question.time;
 	let show_results = false;
+	let slider_value = [0];
+	let slider_values = [question.answers.min_correct ?? 0, question.answers.max_correct ?? 0];
+	let items = [];
+	let original_order: OrderQuizAnswer[] = [];
+	let prevQuestion = question;
+	let order_corrected = false;
 
 	// Stop the timer if the question is answered
 	const timer = (time: string) => {
@@ -42,23 +48,16 @@ SPDX-License-Identifier: MPL-2.0
 			timer_res = seconds.toString();
 		}, 1000);
 	};
-	let slider_value = [0];
+	
 	if (question.type === QuizQuestionType.RANGE) {
 		slider_value[0] = (question.answers.max - question.answers.min) / 2 + question.answers.min;
 	}
-	let slider_values = [question.answers.min_correct ?? 0, question.answers.max_correct ?? 0];
-	let items = Array.isArray(question.answers) ? question.answers.map((answer, index) => ({
+	
+	items = Array.isArray(question.answers) ? question.answers.map((answer, index) => ({
         id: index, 
         answer, 
         color: answer.color
 	})) : [];
-	$: {
-		items = Array.isArray(question.answers) ? question.answers.map((answer, index) => ({
-			id: index, 
-			answer, 
-			color: answer.color
-		})) : [];
-	}
 	
 	function handleSort(e) {
         items = e.detail.items;
@@ -84,18 +83,45 @@ SPDX-License-Identifier: MPL-2.0
 		return _arr;
 	};
 
-	let original_order: OrderQuizAnswer[] = [];
-
 	if (question.type === QuizQuestionType.ORDER) {
-		for (let i = 0; i < question.answers.length; i++) {
-			question.answers[i] = { answer: question.answers[i].answer, id: i, color: question.answers[i].color };
-		}
+		items = question.answers.map((answer, index) => ({
+			id: index,
+			answer,
+			color: answer.color,
+		}));
 		original_order = [...question.answers];
 		shuffleArray(question.answers);
 	}
 	console.log(question.answers, "moIn!", original_order);
+
+	$: if (question !== prevQuestion) {
+		selected_answer = undefined;
+		timer_res = question.time;
+		show_results = false;
+		order_corrected = false;
+
+		if (question.type === QuizQuestionType.ORDER) {
+			items = question.answers.map((answer, index) => ({
+				id: index,
+				answer,
+				color: answer.color,
+			}));
+			original_order = [...question.answers];
+			shuffleArray(question.answers);
+		}
+
+		// Reset other question-type-specific variables if necessary
+		if (question.type === QuizQuestionType.RANGE) {
+			slider_value = [
+				(question.answers.max - question.answers.min) / 2 + question.answers.min,
+			];
+			slider_values = [question.answers.min_correct ?? 0, question.answers.max_correct ?? 0];
+		}
+
+		prevQuestion = question;
+	}
+
 	
-	let order_corrected = false;
 	const select_complex_answer = () => {
 		/*		const correct_order_ids = []
                 for (const e of original_order) {
