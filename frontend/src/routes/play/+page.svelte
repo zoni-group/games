@@ -296,6 +296,7 @@
   	}
 
 	function handleDisconnect(reason) {
+		hasRejoined = false;
     	console.log('Socket disconnected:', reason);
 		toast.push('Connection lost. Attempting to reconnect...');
   	}
