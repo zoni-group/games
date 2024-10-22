@@ -1,15 +1,15 @@
 <script lang="ts">
 	import { socket } from '$lib/socket';
 	import { onDestroy, onMount } from 'svelte';
+	import socketManager from '$lib/socketManager';
 	import { browser } from '$app/environment';
 	import * as Sentry from '@sentry/browser';
-	// import { alertModal } from '../stores';
 	import { getLocalization } from '$lib/i18n';
 	import Cookies from 'js-cookie';
-	import BrownButton from '$lib/components/buttons/brown.svelte';
 	import login_icon from "$lib/assets/all/login_icon.webp";
 	import hand_click_icon from "$lib/assets/all/hand_click_icon.svg";
 	import hand_click_icon_dark from "$lib/assets/all/hand_click_icon_dark.svg";
+	import { toast } from '@zerodevx/svelte-toast';
 
 	const { t } = getLocalization();
 	export let game_pin: string = '';
@@ -29,6 +29,12 @@
 	};
 	let hcaptchaWidgetID;
 
+	function handleGameNotFound() {
+		if (browser) {
+			alert($t('words.game_not_found'));
+		}
+	}
+
 	onMount(() => {
 		if (browser) {
 			prefetch_username();
@@ -44,8 +50,11 @@
 			if (game_pin && game_pin.length > 5) {
 				set_game_pin();
 			}
+			
 		}
 	});
+
+	socketManager.addEventListener('game_not_found', handleGameNotFound);
 
 	onDestroy(() => {
 		if (browser) {
@@ -55,22 +64,25 @@
 				render: () => {}
 			};
 		}
+		socketManager.removeEventListener('game_not_found', handleGameNotFound);
 	});
 
 	async function fetchGameState(game_pin: string) {
-		try {
-		const response = await fetch(`/api/v1/game_state/${game_pin}`);
-		console.log('Fetch Game State Response:', response);
+		if (game_pin && /^\d{6}$/.test(game_pin)) {
+			try {
+			const response = await fetch(`/api/v1/game_state/${game_pin}`);
+			console.log('Fetch Game State Response:', response);
 
-		if (!response.ok) {
-			throw new Error(`Failed to fetch game state: ${response.statusText}`);
-		}
+			if (!response.ok) {
+				throw new Error(`Failed to fetch game state: ${response.statusText}`);
+			}
 
-		const gameState = await response.json();
-		return gameState;
-		} catch (error) {
-			console.error('Error fetching game state:', error);
-			return null;
+			const gameState = await response.json();
+			return gameState;
+			} catch (error) {
+				console.error('Error fetching game state:', error);
+				return null;
+			}
 		}
 	}
 
@@ -97,15 +109,17 @@
 		}
 
 		if (browser) {
-			fetchGameState(game_pin).then((gameState) => {
-				console.log('Game State:', gameState);
-				if (gameState) {
-					if ((gameState.current_question + 1 === gameState.questions_count) && !gameState.question_show) {
-						alert('This session has already ended.');
-						window.location.href = '/play';
+			if (game_pin && /^\d{6}$/.test(game_pin)) {
+				fetchGameState(game_pin).then((gameState) => {
+					console.log('Game State:', gameState);
+					if (gameState) {
+						if ((gameState.current_question + 1 === gameState.questions_count) && !gameState.question_show) {
+							toast.push('This session has already ended.');
+							window.location.href = '/play';
+						}
 					}
-				}
-			});
+				});
+			}
 		}
 
 		const res = await fetch(
@@ -196,12 +210,7 @@
 			});
 		}
 	};
-	socket.on('game_not_found', () => {
-		game_pin = '';
-		if (browser) {
-			alert($t('words.game_not_found'));
-		}
-	});
+
 
 	// $: console.log(game_pin, game_pin && game_pin.length > 6);
 	$: game_pin = (game_pin || '').replace(/\D/g, '');

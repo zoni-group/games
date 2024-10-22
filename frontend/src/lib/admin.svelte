@@ -14,7 +14,8 @@ SPDX-License-Identifier: MPL-2.0
 	import Spinner from '$lib/Spinner.svelte';
 	import Controls from '$lib/play/admin/controls.svelte';
 	import Question from '$lib/play/admin/question.svelte';
-	import { onMount } from 'svelte';
+	import { onMount, onDestroy } from 'svelte';
+	import { browser } from '$app/environment';
 
 	export let game_token: string;
 	export let quiz_data: QuizData;
@@ -45,66 +46,85 @@ SPDX-License-Identifier: MPL-2.0
 		return response.headers.get('Content-Type');
 	}
 
-	onMount(async () => {
+	async function fetch_cover_image() {
 		if (quiz_data.cover_image) {
 			contentType = await fetchContentType(`/api/v1/storage/download/${quiz_data.cover_image}`);
 		}
-	});
+	}
 
-	socket.on('get_question_results', () => {
-		console.log('get_question_results');
-	});
-	socket.on('set_question_number', (data) => {
-		timer_res = '0';
-		clearInterval(timer_interval);
-		question_results = null;
-		shown_question_now = data.question_index;
-		timer_res = quiz_data.questions[data.question_index].time;
-		selected_question = selected_question + 1;
-		answer_count = 0;
-		timer(timer_res);
-	});
-
-	socket.on('solutions', (_) => {
-		timer_res = '0';
-		clearInterval(timer_interval);
-	});
-
-	socket.on('final_results', (data) => {
-		// data = JSON.parse(data);
-		final_results_clicked = true;
-		timer_res = '0';
-		final_results = data;
-	});
-
-	socket.on('everyone_answered', (_) => {
-		timer_res = '0';
-	});
-
-	socket.on('question_results', (data) => {
-		console.log('question_results:', data);
-		question_results = data;
-		timer_res = '0';
-	});
-
-	socket.on('player_answer', (_) => {
-		answer_count += 1;
-	});
-
-	const timer = (time: string) => {
-		let seconds = Number(time);
-		timer_interval = setInterval(() => {
-			if (timer_res === '0') {
+	onMount(() =>{
+		fetch_cover_image();
+		if (browser && socket) {
+			socket.on('get_question_results', () => {
+				console.log('get_question_results');
+			});
+			socket.on('set_question_number', (data) => {
+				timer_res = '0';
 				clearInterval(timer_interval);
-				// socket.emit('show_solutions', {});
-				return;
-			} else {
-				seconds--;
-			}
+				question_results = null;
+				shown_question_now = data.question_index;
+				timer_res = quiz_data.questions[data.question_index].time;
+				selected_question = selected_question + 1;
+				answer_count = 0;
+				timer(timer_res);
+			});
 
-			timer_res = seconds.toString();
-		}, 1000);
-	};
+			socket.on('solutions', (_) => {
+				timer_res = '0';
+				clearInterval(timer_interval);
+			});
+
+			socket.on('final_results', (data) => {
+				// data = JSON.parse(data);
+				final_results_clicked = true;
+				timer_res = '0';
+				final_results = data;
+			});
+
+			socket.on('everyone_answered', (_) => {
+				timer_res = '0';
+			});
+
+			socket.on('question_results', (data) => {
+				console.log('question_results:', data);
+				question_results = data;
+				timer_res = '0';
+			});
+
+			socket.on('player_answer', (_) => {
+				answer_count += 1;
+			});
+
+			const timer = (time: string) => {
+				let seconds = Number(time);
+				timer_interval = setInterval(() => {
+					if (timer_res === '0') {
+						clearInterval(timer_interval);
+						// socket.emit('show_solutions', {});
+						return;
+					} else {
+						seconds--;
+					}
+
+					timer_res = seconds.toString();
+				}, 1000);
+			};
+		}
+	});
+
+	onDestroy(() => {
+		if (browser && socket) {
+			socket.off('get_question_results');
+			socket.off('set_question_number');
+			socket.off('solutions');
+			socket.off('final_results');
+			socket.off('everyone_answered');
+			socket.off('question_results');
+			socket.off('player_answer');
+		}
+	});
+
+	
 
 	// Function to ensure the .mp4 extension is present
 	function getVideoUrl(url) {

@@ -14,7 +14,7 @@ SPDX-License-Identifier: MPL-2.0
 	import SomeAdminScreen from '$lib/admin.svelte';
 	import GameNotStarted from '$lib/play/admin/game_not_started.svelte';
 	import { browser } from '$app/environment';
-	import { onMount } from 'svelte';
+	import { onMount, onDestroy } from 'svelte';
 	import FinalResults from '$lib/play/admin/final_results.svelte';
 	import GrayButton from '$lib/components/buttons/gray.svelte';
 	import { page } from '$app/stores';
@@ -61,56 +61,60 @@ SPDX-License-Identifier: MPL-2.0
 		if (auto_connect) {
 			connect();
 		}
+		if (browser && socket) {
+			socket.on('registered_as_admin', (data) => {
+				quiz_data = JSON.parse(data['game']);
+				console.log(quiz_data);
+				success = true;
+			});
+			socket.on('player_joined', (int_data) => {
+				if (!players.some((player) => player.username === int_data.username)) {
+					players = [...players, int_data];
+					console.log('New player joined:',int_data);
+					console.log('Players:',players);
+				}
+			});
+			socket.on('already_registered_as_admin', () => {
+				// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+				// @ts-ignore
+				errorMessage = $t('admin_page.already_registered_as_admin');
+			});
+
+			socket.on('start_game', (_) => {
+				game_started = true;
+			});
+
+			socket.on('control_visibility', (data) => {
+				control_visible = data.visible;
+			});
+
+			socket.on('export_token', (int_data) => {
+				warnToLeave = false;
+				export_token = int_data;
+
+				setTimeout(() => {
+					warnToLeave = true;
+				}, 200);
+			});
+
+			socket.on('results_saved_successfully', (_) => {
+				results_saved = true;
+			});
+		}
 	});
 
-	socket.on('registered_as_admin', (data) => {
-		quiz_data = JSON.parse(data['game']);
-		console.log(quiz_data);
-		success = true;
+	onDestroy(() => {
+		if (browser && socket) {
+			socket.off('registered_as_admin');
+			socket.off('player_joined');
+			socket.off('already_registered_as_admin');
+			socket.off('start_game');
+			socket.off('control_visibility');
+			socket.off('export_token');
+			socket.off('results_saved_successfully');
+		}
 	});
-	socket.on('player_joined', (int_data) => {
-		if (!players.some((player) => player.username === int_data.username)) {
-    		players = [...players, int_data];
-			console.log('New player joined:',int_data);
-			console.log('Players:',players);
-  		}
-	});
-	socket.on('already_registered_as_admin', () => {
-		// eslint-disable-next-line @typescript-eslint/ban-ts-comment
-		// @ts-ignore
-		errorMessage = $t('admin_page.already_registered_as_admin');
-	});
-
-	socket.on('start_game', (_) => {
-		game_started = true;
-	});
-
-	socket.on('control_visibility', (data) => {
-		control_visible = data.visible;
-	});
-
-	/*	socket.on('question_results', (int_data) => {
-        try {
-            int_data = JSON.parse(int_data);
-        } catch (e) {
-            console.error('Failed to parse question results');
-            return;
-        }
-        question_results = int_data;
-    });*/
-	socket.on('export_token', (int_data) => {
-		warnToLeave = false;
-		export_token = int_data;
-
-		setTimeout(() => {
-			warnToLeave = true;
-		}, 200);
-	});
-
-	socket.on('results_saved_successfully', (_) => {
-		results_saved = true;
-	});
-
+	
 	const confirmUnload = () => {
 		if (warnToLeave) {
 			event.preventDefault();
@@ -223,13 +227,10 @@ SPDX-License-Identifier: MPL-2.0
 			/>
 		{/if}
 	</div>
-	<a
+	<button
 		on:click|preventDefault={request_answer_export}
-		href="#"
-		target="_blank"
+		on:keydown|preventDefault={request_answer_export}
 		bind:this={dataexport_download_a}
-		download=""
-		class="absolute -top-3/4 -left-3/4 opacity-0">Download</a
-	>
+		class="absolute -top-3/4 -left-3/4 opacity-0">Download</button>
 
 </section>

@@ -1,16 +1,30 @@
-// SPDX-FileCopyrightText: 2023 Marlon W (Mawoka)
-//
-// SPDX-License-Identifier: MPL-2.0
+// $lib/socket.ts
+import { browser } from '$app/environment';
+import { io, type Socket } from 'socket.io-client';
 
-import { io } from 'socket.io-client';
+declare global {
+  interface Window {
+    socket: Socket;
+  }
+}
 
-export const socket = io(
-    {
-        reconnection: true,             // Enable reconnection
-        reconnectionAttempts: Infinity, // Retry forever
-        reconnectionDelay: 1000,        // Start with a 1-second delay
-        reconnectionDelayMax: 5000,     // Maximum delay of 5 seconds
-        transports: ['websocket'],      // Use WebSocket transport
-        autoConnect: true,              // Automatically connect on creation
-    }
-);
+let socket: Socket;
+
+if (browser) {
+  if (!window.socket) {
+    window.socket = io({
+      reconnection: true,
+      reconnectionAttempts: Infinity,
+      reconnectionDelay: 1000,
+      reconnectionDelayMax: 5000,
+      transports: ['websocket'],
+      autoConnect: true,
+    });
+  }
+  socket = window.socket;
+} else {
+  // We're on the server; socket remains undefined
+  socket = null;
+}
+
+export { socket };
