@@ -79,7 +79,7 @@ SPDX-License-Identifier: MPL-2.0
 	$: optionsType = data.questions[selected_question].ansType;
 </script>
 
-<div class="grid grid-rows-2 grid-flow-col auto-cols-auto gap-4 w-full px-10">
+<div class="grid md:grid-rows-2 md:grid-flow-col grid-flow-row auto-cols-auto gap-4 w-full px-10">
 	{#if Array.isArray(data.questions[selected_question].answers)}
 		{#each data.questions[selected_question].answers as answer, index}
 			<div

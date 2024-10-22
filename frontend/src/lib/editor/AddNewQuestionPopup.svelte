@@ -111,7 +111,7 @@ SPDX-License-Identifier: MPL-2.0
 >
 	<div class="m-auto w-2/3 h-5/6 rounded shadow-2xl bg-white dark:bg-gray-600 p-6 flex flex-col">
 		<h1 class="text-center text-3xl mb-6">{$t('quiztivity.editor.select_page_type')}</h1>
-		<div class="grid grid-cols-4 gap-4 overflow-y-scroll">
+		<div class="grid lg:grid-cols-4 grid-cols-1 gap-4 overflow-y-scroll">
 			{#each question_types as qt, i}
 				<div class="rounded p-6 border-[#004A93] border">
 					<button

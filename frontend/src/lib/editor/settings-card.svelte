@@ -109,8 +109,8 @@
 	}
 </script>
 
-<div class="w-full h-full pb-20 px-20">
-	<div class="rounded-lg bg-white w-full h-full border-gray-500 dark:bg-gray-700">
+<div class="w-full h-full md:pb-20 pb-10 md:px-20 px-10">
+	<div class="rounded-lg bg-white w-full h-full border-gray-500 dark:bg-gray-700 pb-10">
 		<div class="h-fit bg-gray-300 rounded-t-lg dark:bg-gray-500">
 			<div class="flex align-middle p-4 gap-3">
 				<span class="inline-block bg-gray-600 w-4 h-4 rounded-full hover:bg-red-400 transition" />
@@ -128,7 +128,7 @@
 			</div>
 			<div class="flex justify-center pt-10 w-full max-h-32">
 				<textarea type="text" placeholder="Description" bind:value={data.description}
-					class="p-3 rounded-lg border-gray-500 border text-center w-1/3 h-20 resize-none dark:bg-gray-500 outline-none focus:shadow-2xl transition-all" />
+					class="p-3 rounded-lg border-gray-500 border text-center md:w-1/3 w-2/3 h-20 resize-none dark:bg-gray-500 outline-none focus:shadow-2xl transition-all" />
 			</div>
 
 			{#if data.cover_image != undefined && data.cover_image !== ''}
@@ -182,7 +182,7 @@
 			</div>
 
 			<div class="pt-10 w-full flex flex-col items-center justify-center">
-				<p class="text-center mb-5" >English Language</p>
+				<p class="text-center mb-5 text-black dark:text-[#fffff]" >English Language</p>
 				<div class="grid grid-cols-3 w-fit h-fit gap-4">
 					<div class="max-w-full transition-all">
 						<div class=" rounded-lg w-full h-full p-1">

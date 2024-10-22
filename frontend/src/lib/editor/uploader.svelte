@@ -204,9 +204,9 @@ SPDX-License-Identifier: MPL-2.0
 		transition:fade|local={{ duration: 100 }}
 	>
 		{#if selected_type === null}
-			<div class="m-auto h-auto bg-white dark:bg-[#0056BD] p-4 rounded">
-				<h1 class="text-3xl text-center mb-4 text-[#0056BD] dark:text-white">{$t('uploader.select_upload_type')}</h1>
-				<div class="flex flex-row gap-4">
+			<div class="m-auto h-auto w-full bg-white dark:bg-[#0056BD] p-4 rounded mx-2">
+				<h1 class="md:text-3xl text-xl text-center mb-4 text-[#0056BD] dark:text-white">{$t('uploader.select_upload_type')}</h1>
+				<div class="flex md:flex-row flex-wrap gap-4">
 					<div class="w-full">
 						<BrownButton
 							on:click={() => {
@@ -256,14 +256,14 @@ SPDX-License-Identifier: MPL-2.0
 				</div>
 			</div>
 		{:else if selected_type === AvailableUploadTypes.Image}
-			<div class="m-auto w-1/3 h-5/6" transition:fade|local={{ duration: 100 }}>
+			<div class="m-auto md:w-1/3 w-4/5 h-5/6" transition:fade|local={{ duration: 100 }}>
 				<div>
 					<SvelteDashboard {uppy} width="100%" {imageProps} />
 				</div>
 			</div>
 		{:else if selected_type === AvailableUploadTypes.Video}
 			<div
-				class="m-auto w-1/3 h-auto bg-white dark:bg-gray-700 p-4 rounded"
+				class="m-auto md:w-1/3 w-4/5 h-auto bg-white dark:bg-gray-700 p-4 rounded"
 				transition:fade|local={{ duration: 100 }}
 			>
 				<h1 class="text-3xl text-center mb-4">{$t('uploader.upload_a_video')}</h1>
@@ -286,7 +286,7 @@ SPDX-License-Identifier: MPL-2.0
 				<Pixabay bind:data {selected_question} bind:modalOpen />
 			</div>
 		{:else if selected_type === AvailableUploadTypes.Audio}
-			<div class="m-auto w-1/3 h-5/6" transition:fade|local={{ duration: 100 }}>
+			<div class="m-auto md:w-1/3 w-4/5 h-5/6" transition:fade|local={{ duration: 100 }}>
 				<div>
 					<SvelteDashboard {uppy} width="100%" {audioProps} />
 				</div>
