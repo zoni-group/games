@@ -14,8 +14,6 @@ async def fetch_game_state(game_pin: str):
     data = PlayGame.parse_raw(data_redis_res)
     print(data)
     return {
-        "quiz_id": data.quiz_id,
-        "game_id": data.game_id,
         "game_pin": data.game_pin,
         "started": data.started,
         "game_mode": data.game_mode,
