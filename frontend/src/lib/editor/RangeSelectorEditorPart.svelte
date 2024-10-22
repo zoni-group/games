@@ -92,3 +92,26 @@ SPDX-License-Identifier: MPL-2.0
 		{/await}
 	</div>
 </div>
+<style>
+	:root {
+	  --range-slider:            hsl(0, 17.2%, 46.9%);
+	  --range-handle-inactive:   hsl(358.6, 84.7%, 59%);
+	  --range-handle:            hsl(358.6, 84.7%, 59%);
+	  --range-handle-focus:      hsl(358.6, 84.7%, 59%);
+	  --range-handle-border:     hsl(0, 80%, 2%);
+	  --range-range-inactive:    hsl(208.3, 100%, 30.4%);
+	  --range-range:             hsl(208.3, 100%, 30.4%);
+	  --range-float-inactive:    hsl(208.3, 100%, 30.4%);
+	  --range-float:             hsl(358.6, 84.7%, 59%);
+	  --range-float-text:        hsl(0, 0%, 85.9%);
+  
+	  --range-pip:               hsl(0, 0%, 98%);
+	  --range-pip-text:          hsl(0, 0%, 72.2%);
+	  --range-pip-active:        hsl(214, 100%, 37.1%);
+	  --range-pip-active-text:   hsl(209.2, 100%, 37.1%);
+	  --range-pip-hover:         hsl(214, 100%, 46.1%);
+	  --range-pip-hover-text:    hsl(209.2, 100%, 35.1%);
+	  --range-pip-in-range:      hsl(206, 100%, 33.9%);
+	  --range-pip-in-range-text: hsl(214, 100%, 38%);
+	}
+  </style>
