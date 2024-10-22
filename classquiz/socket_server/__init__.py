@@ -144,7 +144,7 @@ async def rejoin_game(sid: str, data: dict):
 
     # Retrieve the player's old SID and check if they were in the game before
     redis_sid_key = f"game_session:{data.game_pin}:players:{data.username}"
-    old_sid = await redis.get(redis_sid_key)
+    # old_sid = await redis.get(redis_sid_key)
 
     # Ensure the player was already part of the game
     # if old_sid != data.old_sid:
@@ -172,25 +172,44 @@ async def rejoin_game(sid: str, data: dict):
     await sio.save_session(sid, session)
     await sio.enter_room(sid, data.game_pin)
 
+    latest_answer: dict | None = None
     latest_answer = await get_latest_submitted_answer(data.game_pin, data.username, game_data.current_question)
-
-    # Send the restored game state to the player
-    await sio.emit(
-        "rejoined_game",
-        {
-            **json.loads(game_data.json(exclude={"quiz_id", "questions", "user_id"})),
-            "question_count": len(game_data.questions),
-            "question_show": game_data.question_show,
-            "latest_answer": latest_answer
-        },
-        room=sid,
-    )
 
     # Restore player score or any other game data if necessary
     player_scores = await redis.hgetall(f"game_session:{data.game_pin}:player_scores")
     if data.username not in player_scores:
         await redis.hset(f"game_session:{data.game_pin}:player_scores", data.username, 0)
     await sio.emit("player_scores", player_scores, room=sid)
+
+    # Send the restored game state to the player
+    await sio.emit(
+        "rejoined_game",
+        {
+            **json.loads(game_data.json(exclude={"quiz_id", "questions", "user_id"})),
+            "current_question": game_data.current_question,
+            "question_count": len(game_data.questions),
+            "question_show": game_data.question_show,
+            "latest_answer": latest_answer,
+            "player_scores": player_scores
+        },
+        room=sid,
+    )
+
+    # Send the current question to the rejoiner if didn't answer yet    
+    if latest_answer is None:
+        current_question = game_data.questions[game_data.current_question]
+        if current_question.type == QuizQuestionType.SLIDE:
+            await sio.emit("set_question_number", {"question_index": game_data.current_question}, room=sid)
+        else:
+            await sio.emit(
+                "set_question_number",
+                {
+                    "question_index": game_data.current_question,
+                    "question": current_question.dict(),
+                    "question_show": game_data.question_show,
+                },
+                room=sid,
+            )
 
     remaining_time = await calculate_remaining_time(data.game_pin, game_data)
     if remaining_time is not None:

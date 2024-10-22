@@ -99,6 +99,13 @@
 
 	function handleRejoinedGame(data) {
 		console.log('Rejoined game:', data);
+		checkFinalizedGame(game_pin);
+		let converted_scores =  Object.fromEntries(Object.entries(data.player_scores).map(([key, value]) => [key, Number(value)])); // This statement converts string values to numbers in an object
+		scores = converted_scores;
+		console.log('scores', scores);
+
+		game_mode = data.game_mode;
+
 		console.log('Latest answer:', data.latest_answer);
 		gameData = data;
 		if (data.started) {
