@@ -260,7 +260,13 @@
 
 	function handleConnect() {
     	console.log('Connected!');
-		toast.push('Connected to the server.');
+		toast.push('Connected!', {
+			theme: {
+    			'--toastColor': 'mintcream',
+    			'--toastBackground': 'rgba(72,187,120,0.9)',
+    			'--toastBarBackground': '#2F855A'
+  			}
+		});
 		localStorage.setItem('socket_id', socket.id);  // Store the current Socket ID
 		//restoreState(); // Restore the state from localStorage if present
 		const savedState = localStorage.getItem('game_state');
@@ -305,7 +311,13 @@
 	function handleDisconnect(reason) {
 		hasRejoined = false;
     	console.log('Socket disconnected:', reason);
-		toast.push('Connection lost. Attempting to reconnect...');
+		toast.push('Connection lost. Attempting to reconnect...', {
+  			theme: {
+				'--toastColor': 'white',
+				'--toastBackground': 'rgba(255,69,58,0.9)',
+				'--toastBarBackground': '#FF453A'
+  			}	
+		});
   	}
 
 	// Fetch game state in the browser
