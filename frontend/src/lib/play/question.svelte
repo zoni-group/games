@@ -174,9 +174,9 @@
 
 	let text_input = '';
 
-	let slider_value = [0];
+	let slider_value = [0,0];
 	if (question.type === QuizQuestionType.RANGE) {
-		slider_value[0] = (question.answers.max - question.answers.min) / 2 + question.answers.min;
+		slider_value[1] = (question.answers.max - question.answers.min) / 2 + question.answers.min;
 	}
 	const set_answer_if_not_set_range = (time) => {
 		if (question.type !== QuizQuestionType.RANGE) {
@@ -329,8 +329,8 @@
 							pips
 							float
 							all="label"
-							
-							class="w-full !border-[#00EDFF] border-2 "
+							range
+							class="w-full !border-[#00EDFF] !border-2 "
 						/>
 					</div>
 
@@ -339,7 +339,7 @@
 						type="button"
 						class="bg-[#0056BD] border-[#fff] flex items-center border-2 gap-2 text-[#fff] font-semibold px-9 py-2 rounded-full disabled:cursor-not-allowed disabled:opacity-90"
 						disabled={selected_answer !== ''}
-						on:click={() => selectRangeAnswer(slider_value[0])}
+						on:click={() => selectRangeAnswer(slider_value[1])}
 						>
 							<RightArrow />
 							{#if language}
@@ -549,5 +549,26 @@
 		background: lightblue;
 		opacity: 0.5;
 		margin: 0;
+	}
+	:root {
+	  --range-slider:            hsl(0, 17.2%, 46.9%);
+	  --range-handle-inactive:   hsl(358.6, 84.7%, 59%);
+	  --range-handle:            hsl(358.6, 84.7%, 59%);
+	  --range-handle-focus:      hsl(358.6, 84.7%, 59%);
+	  --range-handle-border:     hsl(0, 80%, 2%);
+	  --range-range-inactive:    hsl(208.3, 100%, 30.4%);
+	  --range-range:             hsl(208.3, 100%, 30.4%);
+	  --range-float-inactive:    hsl(208.3, 100%, 30.4%);
+	  --range-float:             hsl(358.6, 84.7%, 59%);
+	  --range-float-text:        hsl(0, 0%, 85.9%);
+  
+	  --range-pip:               hsl(0, 0%, 98%);
+	  --range-pip-text:          hsl(0, 0%, 72.2%);
+	  --range-pip-active:        hsl(214, 100%, 37.1%);
+	  --range-pip-active-text:   hsl(209.2, 100%, 37.1%);
+	  --range-pip-hover:         hsl(214, 100%, 46.1%);
+	  --range-pip-hover-text:    hsl(209.2, 100%, 35.1%);
+	  --range-pip-in-range:      hsl(206, 100%, 33.9%);
+	  --range-pip-in-range-text: hsl(214, 100%, 38%);
 	}
 </style>
