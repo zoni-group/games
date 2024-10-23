@@ -644,7 +644,15 @@ async def get_final_results(sid: str, _data: dict):
     if not session["admin"]:
         return
     results = await generate_final_results(game_data, session["game_pin"])
-    await sio.emit("final_results", results, room=session["game_pin"])
+    player_scores = await redis.hgetall(f"game_session:{session['game_pin']}:player_scores")
+    await sio.emit(
+        "final_results",
+        {
+            "results": results,
+            "player_scores": player_scores
+        },
+        room=session["game_pin"]
+    )
 
 
 @sio.event
