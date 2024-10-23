@@ -10,9 +10,9 @@ async def fetch_game_state(game_pin: str):
     data_redis_res = await redis.get(f"game:{game_pin}")
     if data_redis_res is None:
         raise HTTPException(status_code=404, detail="Game not found or API key not found")
-    
+
     data = PlayGame.parse_raw(data_redis_res)
-    print(data)
+
     return {
         "game_pin": data.game_pin,
         "started": data.started,

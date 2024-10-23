@@ -189,7 +189,10 @@
 
 	function handleFinalResults(data) {
 		console.log('Final results:', data);
-		final_results = data;
+		final_results = data.results;
+		let converted_scores =  Object.fromEntries(Object.entries(data.player_scores).map(([key, value]) => [key, Number(value)])); // This statement converts string values to numbers in an object
+		scores = converted_scores;
+		console.log('Final scores:', scores);
 		gameEnded = true;
 		clearState();  // Clear state when the game ends
 		if (browser) {
